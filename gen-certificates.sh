@@ -1,0 +1,1 @@
+openssl req -x509 -newkey rsa:4096 -keyout certificates/key.pem -out certificates/cert.pem -sha256 -days 36500 -nodes -subj "/C=US/ST=CA/L=SanJose/O=ezheck/OU=ezcheck/CN=localhost"

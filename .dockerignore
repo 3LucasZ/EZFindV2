@@ -1,0 +1,22 @@
+# docker
+Dockerfile
+.dockerignore
+
+# git
+.git
+.gitignore
+
+# env
+.env
+.env.local
+certificates
+certs
+*.pem
+
+# node
+node_modules
+npm-debug.log
+
+# misc
+README.md
+.next

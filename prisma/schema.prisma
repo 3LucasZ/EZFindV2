@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets   = ["native", "linux-musl-arm64-openssl-3.0.x"] // **VERY important to have the bin targets!**
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique @db.VarChar(255)
+  PIN       String      @unique @db.VarChar(255)
+  machines   machine[]    @relation("authorized")
+  using     machine?     @relation("using")
+}
+
+model machine {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique @db.VarChar(255)
+  students  Student[]   @relation("authorized")
+  lastSeen  String?     @db.VarChar(255)
+  usedBy    Student?    @relation("using", fields: [usedById], references: [id])
+  usedById  Int?        @unique
+  IP        String?     @db.VarChar(255)
+}
+
+model Admin {
+  id        Int         @id @default(autoincrement())
+  email     String      @unique @db.VarChar(255)
+}

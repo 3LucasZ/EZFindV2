@@ -1,0 +1,55 @@
+version: "3.9"
+services:
+  nginx:
+    platform: "linux/arm64"
+    image: daftdove/ezcheck-nginx:latest
+    container_name: ezcheck-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+  db:
+    platform: "linux/arm64"
+    image: postgres
+    container_name: "ezcheck-db"
+    ports:
+      - "5555:5432"
+    environment:
+      - POSTGRES_USER=${CMP_PG_USER}
+      - POSTGRES_PASSWORD=${CMP_PG_PW}
+      - POSTGRES_DB=${CMP_PG_DB}
+    volumes:
+      - db:/var/lib/postgresql/data
+    restart: always
+  app:
+    platform: "linux/arm64"
+    image: daftdove/ezcheck-app:latest
+    container_name: ezcheck-app
+    depends_on: # wait for postgres to be installed before running prisma migrate
+      - db
+      - nginx
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_CLIENTVAR: "clientvar"
+    user: root # generate certificates without password during start.sh
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    working_dir: /app
+    ports:
+      - "3001:3000"
+    environment: #change @ezcheck-db to container name of db
+      - DATABASE_URL=postgresql://${CMP_PG_USER}:${CMP_PG_PW}@ezcheck-db:5432/${CMP_PG_DB}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - GOOGLE_ID=${GOOGLE_ID}
+      - GOOGLE_SECRET=${GOOGLE_SECRET}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - EZCHECK_SECRET=${EZCHECK_SECRET}
+volumes:
+  db:
+    driver: local
+# NOTE: DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
