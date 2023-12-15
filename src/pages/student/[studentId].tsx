@@ -8,9 +8,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { StudentProps } from "components/Widget/StudentWidget";
+import { StudentProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
-import { MachineProps } from "components/Widget/MachineWidget";
+import { MachineProps } from "components/Widget/StorageWidget";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 import Router from "next/router";
 import Layout from "components/Layout";
@@ -19,7 +19,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import MachineWidget2 from "components/Widget/MachineWidget2";
+import MachineWidget2 from "components/Widget/StorageWidget2";
 import { debugMode } from "services/constants";
 
 type PageProps = {

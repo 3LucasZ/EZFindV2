@@ -1,43 +1,42 @@
-import { MachineProps } from "./MachineWidget";
+import { MachineProps } from "./StorageWidget";
 import BaseWidget2 from "./BaseWidget2";
 import Router from "next/router";
-import { StudentProps } from "./StudentWidget";
+import { StudentProps } from "./ItemWidget";
 import { debugMode } from "services/constants";
 import { useToast } from "@chakra-ui/react";
 import { errorToast, successToast } from "services/toasty";
 
-type MachineWidget2Props = {
-  machine: MachineProps;
-  targetStudent: StudentProps;
+type StudentWidget2Props = {
+  student: StudentProps;
+  targetmachine: MachineProps;
   invert: boolean;
   isAdmin: boolean;
 };
 
-export default function MachineWidget2({
-  machine,
-  targetStudent,
+export default function StudentWidget2({
+  student,
+  targetmachine,
   invert,
   isAdmin,
-}: MachineWidget2Props) {
+}: StudentWidget2Props) {
   const toaster = useToast();
   const handleRemove = async () => {
     try {
       const body = {
-        id: targetStudent.id,
-        name: targetStudent.name,
-        PIN: targetStudent.PIN,
-        machineIds: targetStudent.machines
-          .filter((item) => item.id != machine.id)
+        id: targetmachine.id,
+        name: targetmachine.name,
+        studentIds: targetmachine.students
+          .filter((item) => item.id != student.id)
           .map((item) => ({ id: item.id })),
       };
       if (debugMode) console.log(body);
-      const res = await fetch("/api/upsert-student", {
+      const res = await fetch("/api/upsert-machine", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (res.status != 200) {
-        errorToast(toaster, "Unknown error on id: " + machine.id);
+        errorToast(toaster, "Unknown error on id: " + student.id);
       } else {
         successToast(toaster, "Success!");
         Router.reload();
@@ -48,24 +47,23 @@ export default function MachineWidget2({
   };
   const handleAdd = async () => {
     try {
-      const machineIds = targetStudent.machines.map((item) => ({
+      const studentIds = targetmachine.students.map((item) => ({
         id: item.id,
       }));
-      machineIds.push({ id: machine.id });
+      studentIds.push({ id: student.id });
       const body = {
-        id: targetStudent.id,
-        name: targetStudent.name,
-        PIN: targetStudent.PIN,
-        machineIds,
+        id: targetmachine.id,
+        name: targetmachine.name,
+        studentIds,
       };
       if (debugMode) console.log(body);
-      const res = await fetch("/api/upsert-student", {
+      const res = await fetch("/api/upsert-machine", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      if (res.status != 200) {
-        errorToast(toaster, "Unknown error on id: " + machine.id);
+      if (res.status == 500) {
+        errorToast(toaster, "Unknown error on id: " + student.id);
       } else {
         successToast(toaster, "Success!");
         Router.reload();
@@ -76,8 +74,8 @@ export default function MachineWidget2({
   };
   return (
     <BaseWidget2
-      href={"/machine/" + machine.id}
-      title={machine.name}
+      href={"/student/" + student.id}
+      title={student.name}
       bg={"blue.300"}
       handleRemove={handleRemove}
       safeRemove={false}

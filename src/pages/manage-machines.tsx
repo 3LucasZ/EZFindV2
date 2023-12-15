@@ -1,4 +1,4 @@
-import MachineWidget, { MachineProps } from "components/Widget/MachineWidget";
+import MachineWidget, { MachineProps } from "components/Widget/StorageWidget";
 import Layout from "components/Layout";
 import { GetServerSideProps } from "next";
 import SearchView from "components/SearchView";

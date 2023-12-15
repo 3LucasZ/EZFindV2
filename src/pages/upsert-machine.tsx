@@ -10,9 +10,9 @@ import {
   Flex,
   Box,
 } from "@chakra-ui/react";
-import { MachineProps } from "components/Widget/MachineWidget";
+import { MachineProps } from "components/Widget/StorageWidget";
 import { GetServerSideProps } from "next";
-import { StudentProps } from "components/Widget/StudentWidget";
+import { StudentProps } from "components/Widget/ItemWidget";
 import Layout from "components/Layout";
 import prisma from "services/prisma";
 import { errorToast, successToast } from "services/toasty";

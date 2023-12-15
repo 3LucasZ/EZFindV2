@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem, Link } from "@chakra-ui/react";
 
-import { StudentProps } from "./StudentWidget";
+import { StudentProps } from "./ItemWidget";
 import BaseWidget from "./BaseWidget";
 
 export type MachineProps = {
