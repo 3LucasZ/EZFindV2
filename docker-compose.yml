@@ -2,8 +2,8 @@ version: "3.9"
 services:
   nginx:
     platform: "linux/arm64"
-    image: daftdove/ezcheck-nginx:latest
-    container_name: ezcheck-nginx
+    image: daftdove/ezfind-nginx:latest
+    container_name: ezfind-nginx
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
   db:
     platform: "linux/arm64"
     image: postgres
-    container_name: "ezcheck-db"
+    container_name: "ezfind-db"
     ports:
       - "5555:5432"
     environment:
@@ -26,8 +26,8 @@ services:
     restart: always
   app:
     platform: "linux/arm64"
-    image: daftdove/ezcheck-app:latest
-    container_name: ezcheck-app
+    image: daftdove/ezfind-app:latest
+    container_name: ezfind-app
     depends_on: # wait for postgres to be installed before running prisma migrate
       - db
       - nginx
@@ -42,13 +42,13 @@ services:
     working_dir: /app
     ports:
       - "3001:3000"
-    environment: #change @ezcheck-db to container name of db
-      - DATABASE_URL=postgresql://${CMP_PG_USER}:${CMP_PG_PW}@ezcheck-db:5432/${CMP_PG_DB}
+    environment: #change @ezfind-db to container name of db
+      - DATABASE_URL=postgresql://${CMP_PG_USER}:${CMP_PG_PW}@ezfind-db:5432/${CMP_PG_DB}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - GOOGLE_ID=${GOOGLE_ID}
       - GOOGLE_SECRET=${GOOGLE_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
-      - EZCHECK_SECRET=${EZCHECK_SECRET}
+      - ezfind_SECRET=${ezfind_SECRET}
 volumes:
   db:
     driver: local

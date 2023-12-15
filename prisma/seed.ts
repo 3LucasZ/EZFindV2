@@ -10,20 +10,24 @@ async function main() {
       email: "lucas.zheng@warriorlife.net",
     },
   });
-  for (let i = 0; i < 200; i++) {
-    await prisma.machine.upsert({
+  for (let i = 0; i < 5; i++) {
+    await prisma.item.upsert({
       create: {
-        name: "machine #" + i,
+        name: "item #" + i,
       },
       update: {},
-      where: { name: "machine #" + i },
+      where: { name: "item #" + i },
     });
   }
-  const student1 = await prisma.student.upsert({
-    create: { name: "Lucas Zheng", PIN: "123456" },
-    update: {},
-    where: { name: "Lucas Zheng", PIN: "123456" },
-  });
+  for (let i = 0; i < 5; i++) {
+    await prisma.storage.upsert({
+      create: {
+        name: "storage #" + i,
+      },
+      update: {},
+      where: { name: "storage #" + i },
+    });
+  }
 }
 main()
   .then(async () => {
