@@ -15,39 +15,37 @@ import SearchView from "components/SearchView";
 import Layout from "components/Layout";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { StudentProps } from "components/Widget/ItemWidget";
-import { MachineProps } from "components/Widget/StorageWidget";
+import { ItemProps } from "components/Widget/ItemWidget";
+import { StorageProps } from "components/Widget/StorageWidget";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import StudentWidget2 from "components/Widget/StudentWidget2";
+import ItemWidget2 from "components/Widget/ItemWidget2";
 import { debugMode } from "services/constants";
 type PageProps = {
-  machine: MachineProps;
-  students: StudentProps[];
+  storage: StorageProps;
+  items: ItemProps[];
   admins: AdminProps[];
 };
-export default function MachinePage({ machine, students, admins }: PageProps) {
+export default function StoragePage({ storage, items, admins }: PageProps) {
   //admin
   const { data: session, status } = useSession();
   const isAdmin = checkAdmin(session, admins);
   //toaster
   const toaster = useToast();
   //inId outId
-  const inId = machine.students.map((item) => item.id);
-  const outId = students
-    .map((item) => item.id)
-    .filter((id) => !inId.includes(id));
+  const inId = storage.items.map((item) => item.id);
+  const outId = items.map((item) => item.id).filter((id) => !inId.includes(id));
   //modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
     try {
-      const body = { id: machine.id };
-      const res = await fetch("/api/delete-machine", {
+      const body = { id: storage.id };
+      const res = await fetch("/api/delete-storage", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      await Router.push({ pathname: "/manage-machines" });
+      await Router.push({ pathname: "/manage-storages" });
     } catch (error) {
       if (debugMode) console.error(error);
     }
@@ -57,7 +55,7 @@ export default function MachinePage({ machine, students, admins }: PageProps) {
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
         <Flex>
-          <Heading>{machine.name}</Heading>
+          <Heading>{storage.name}</Heading>
           {isAdmin && (
             <>
               <IconButton
@@ -68,8 +66,8 @@ export default function MachinePage({ machine, students, admins }: PageProps) {
                 icon={<EditIcon />}
                 onClick={() =>
                   Router.push({
-                    pathname: "/upsert-machine",
-                    query: { id: machine.id },
+                    pathname: "/upsert-storage",
+                    query: { id: storage.id },
                   })
                 }
               />
@@ -82,30 +80,30 @@ export default function MachinePage({ machine, students, admins }: PageProps) {
               <ConfirmDeleteModal
                 isOpen={isOpen}
                 onClose={onClose}
-                name={" the machine: " + machine.name}
+                name={" the storage: " + storage.name}
                 handleDelete={handleDelete}
               />
             </>
           )}
         </Flex>
         {
-          <Badge colorScheme={machine.usedBy ? "green" : "red"}>
-            {machine.usedBy ? machine.usedBy.name : "Standby"}
+          <Badge colorScheme={storage.usedBy ? "green" : "red"}>
+            {storage.usedBy ? storage.usedBy.name : "Standby"}
           </Badge>
         }
       </Center>
       {status != "loading" && (
         <SearchView
           setIn={inId.map((id) => {
-            var student = students.find((x) => x.id == id);
-            if (!student) student = students[0];
+            var item = items.find((x) => x.id == id);
+            if (!item) item = items[0];
             return {
-              name: student.name,
+              name: item.name,
               widget: (
-                <StudentWidget2
-                  student={student}
-                  key={student.id}
-                  targetmachine={machine}
+                <ItemWidget2
+                  item={item}
+                  key={item.id}
+                  targetstorage={storage}
                   invert={false}
                   isAdmin={isAdmin}
                 />
@@ -113,15 +111,15 @@ export default function MachinePage({ machine, students, admins }: PageProps) {
             };
           })}
           setOut={outId.map((id) => {
-            var student = students.find((x) => x.id == id);
-            if (!student) student = students[0];
+            var item = items.find((x) => x.id == id);
+            if (!item) item = items[0];
             return {
-              name: student.name,
+              name: item.name,
               widget: (
-                <StudentWidget2
-                  student={student}
-                  key={student.id}
-                  targetmachine={machine}
+                <ItemWidget2
+                  item={item}
+                  key={item.id}
+                  targetstorage={storage}
                   invert={true}
                   isAdmin={isAdmin}
                 />
@@ -136,21 +134,21 @@ export default function MachinePage({ machine, students, admins }: PageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const machine = await prisma.machine.findUnique({
+  const storage = await prisma.storage.findUnique({
     where: {
-      id: Number(context.params?.machineId),
+      id: Number(context.params?.storageId),
     },
     include: {
-      students: true,
+      items: true,
       usedBy: true,
     },
   });
-  const students = await prisma.student.findMany();
+  const items = await prisma.item.findMany();
   const admins = await prisma.admin.findMany();
   return {
     props: {
-      machine: machine,
-      students: students,
+      storage: storage,
+      items: items,
       admins: admins,
     },
   };

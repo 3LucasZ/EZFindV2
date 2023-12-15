@@ -22,7 +22,7 @@ export default function Layout({
     <>
       <Head>
         <title>EZ-Check</title>
-        <meta name="description" content="Student Authentication" />
+        <meta name="description" content="Item Authentication" />
         <link rel="icon" href="/favicon.ico" />
         {/*PWA UI-->*/}
         <meta

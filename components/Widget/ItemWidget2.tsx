@@ -1,42 +1,42 @@
-import { MachineProps } from "./StorageWidget";
+import { StorageProps } from "./StorageWidget";
 import BaseWidget2 from "./BaseWidget2";
 import Router from "next/router";
-import { StudentProps } from "./ItemWidget";
+import { ItemProps } from "./ItemWidget";
 import { debugMode } from "services/constants";
 import { useToast } from "@chakra-ui/react";
 import { errorToast, successToast } from "services/toasty";
 
-type StudentWidget2Props = {
-  student: StudentProps;
-  targetmachine: MachineProps;
+type ItemWidget2Props = {
+  item: ItemProps;
+  targetstorage: StorageProps;
   invert: boolean;
   isAdmin: boolean;
 };
 
-export default function StudentWidget2({
-  student,
-  targetmachine,
+export default function ItemWidget2({
+  item,
+  targetstorage,
   invert,
   isAdmin,
-}: StudentWidget2Props) {
+}: ItemWidget2Props) {
   const toaster = useToast();
   const handleRemove = async () => {
     try {
       const body = {
-        id: targetmachine.id,
-        name: targetmachine.name,
-        studentIds: targetmachine.students
-          .filter((item) => item.id != student.id)
+        id: targetstorage.id,
+        name: targetstorage.name,
+        itemIds: targetstorage.items
+          .filter((item) => item.id != item.id)
           .map((item) => ({ id: item.id })),
       };
       if (debugMode) console.log(body);
-      const res = await fetch("/api/upsert-machine", {
+      const res = await fetch("/api/upsert-storage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (res.status != 200) {
-        errorToast(toaster, "Unknown error on id: " + student.id);
+        errorToast(toaster, "Unknown error on id: " + item.id);
       } else {
         successToast(toaster, "Success!");
         Router.reload();
@@ -47,23 +47,23 @@ export default function StudentWidget2({
   };
   const handleAdd = async () => {
     try {
-      const studentIds = targetmachine.students.map((item) => ({
+      const itemIds = targetstorage.items.map((item) => ({
         id: item.id,
       }));
-      studentIds.push({ id: student.id });
+      itemIds.push({ id: item.id });
       const body = {
-        id: targetmachine.id,
-        name: targetmachine.name,
-        studentIds,
+        id: targetstorage.id,
+        name: targetstorage.name,
+        itemIds,
       };
       if (debugMode) console.log(body);
-      const res = await fetch("/api/upsert-machine", {
+      const res = await fetch("/api/upsert-storage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (res.status == 500) {
-        errorToast(toaster, "Unknown error on id: " + student.id);
+        errorToast(toaster, "Unknown error on id: " + item.id);
       } else {
         successToast(toaster, "Success!");
         Router.reload();
@@ -74,8 +74,8 @@ export default function StudentWidget2({
   };
   return (
     <BaseWidget2
-      href={"/student/" + student.id}
-      title={student.name}
+      href={"/item/" + item.id}
+      title={item.name}
       bg={"blue.300"}
       handleRemove={handleRemove}
       safeRemove={false}

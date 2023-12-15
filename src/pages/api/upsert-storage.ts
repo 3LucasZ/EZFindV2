@@ -6,31 +6,31 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id, name, studentIds } = req.body;
+  const { id, name, itemIds } = req.body;
   if (name == "") {
     const prep = res.status(500);
     prep.json("form is incomplete");
     return prep;
   }
   try {
-    const op = await prisma.machine.upsert({
+    const op = await prisma.storage.upsert({
       where: {
         id: id,
       },
       update: {
         name: name,
-        students: {
-          set: studentIds,
+        items: {
+          set: itemIds,
         },
       },
       create: {
         name: name,
-        students: {
-          connect: studentIds,
+        items: {
+          connect: itemIds,
         },
       },
       include: {
-        students: true,
+        items: true,
       },
     });
     return res.status(200).json(op);

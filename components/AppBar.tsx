@@ -1,7 +1,7 @@
 import { HStack, Icon, IconButton } from "@chakra-ui/react";
 import { FaHome } from "react-icons/fa";
 import { MdManageAccounts } from "react-icons/md";
-import { GiSewingMachine } from "react-icons/gi";
+import { GiSewingStorage } from "react-icons/gi";
 import AppBarBtn from "./AppBarBtn";
 
 export default function AppBar() {
@@ -15,8 +15,8 @@ export default function AppBar() {
       p={0}
     >
       <AppBarBtn icon={FaHome} href="/" />
-      <AppBarBtn icon={MdManageAccounts} href="/manage-students" />
-      <AppBarBtn icon={GiSewingMachine} href="/manage-machines" />
+      <AppBarBtn icon={MdManageAccounts} href="/manage-items" />
+      <AppBarBtn icon={GiSewingStorage} href="/manage-storages" />
     </HStack>
   );
 }

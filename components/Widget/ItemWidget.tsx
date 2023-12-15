@@ -1,37 +1,34 @@
 import { Box, Grid, GridItem, Link } from "@chakra-ui/react";
-import { MachineProps } from "./StorageWidget";
+import { StorageProps } from "./StorageWidget";
 import BaseWidget from "./BaseWidget";
 
-export type StudentProps = {
+export type ItemProps = {
   id: number;
   name: string;
   PIN: string;
-  machines: MachineProps[];
-  using: MachineProps;
+  storages: StorageProps[];
+  using: StorageProps;
 };
-type StudentWidgetProps = {
-  student: StudentProps;
+type ItemWidgetProps = {
+  item: ItemProps;
   bare?: boolean;
 };
 
-export default function StudentWidgetProps({
-  student,
-  bare,
-}: StudentWidgetProps) {
+export default function ItemWidgetProps({ item, bare }: ItemWidgetProps) {
   return (
     <Box display="flex" position="relative">
       <Grid templateColumns={["repeat(2, 1fr)"]} w="100%">
         <BaseWidget
-          href={"/student/" + student.id}
-          title={student.name}
+          href={"/item/" + item.id}
+          title={item.name}
           bg={"teal.300"}
           colSpan={bare ? 2 : 1}
         />
         {!bare && (
           <BaseWidget
-            href={student.using ? "/machine/" + student.using.id : ""}
-            title={student.using ? student.using.name : "Offline"}
-            bg={student.using ? "blue.300" : "red.300"}
+            href={item.using ? "/storage/" + item.using.id : ""}
+            title={item.using ? item.using.name : "Offline"}
+            bg={item.using ? "blue.300" : "red.300"}
             colSpan={1}
           />
         )}

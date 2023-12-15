@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
 import { MdManageAccounts } from "react-icons/md";
-import { GiSewingMachine } from "react-icons/gi";
+import { GiSewingStorage } from "react-icons/gi";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
 
@@ -30,15 +30,15 @@ export default function Home({ admins }: PageProps) {
         {/* {session && admins.includes(session!.user!.email!) && (
           <RouteButton
             route={""}
-            text={"machine Status"}
+            text={"storage Status"}
             icon={MdManageAccounts}
             color={"red.400"}
             hoverColor={"red.100"}
           ></RouteButton>
         )} */}
         <RouteButton
-          route={"manage-students"}
-          text={"Manage Students"}
+          route={"manage-items"}
+          text={"Manage Items"}
           icon={MdManageAccounts}
           color={"teal.300"}
           hoverColor={"teal.100"}
@@ -53,9 +53,9 @@ export default function Home({ admins }: PageProps) {
           ></RouteButton>
         )} */}
         <RouteButton
-          route={"manage-machines"}
-          text={"Manage Machines"}
-          icon={GiSewingMachine}
+          route={"manage-storages"}
+          text={"Manage Storages"}
+          icon={GiSewingStorage}
           color={"blue.300"}
           hoverColor={"blue.100"}
         ></RouteButton>

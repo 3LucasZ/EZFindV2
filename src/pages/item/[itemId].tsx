@@ -8,9 +8,9 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { StudentProps } from "components/Widget/ItemWidget";
+import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
-import { MachineProps } from "components/Widget/StorageWidget";
+import { StorageProps } from "components/Widget/StorageWidget";
 import ConfirmDeleteModal from "components/ConfirmDeleteModal";
 import Router from "next/router";
 import Layout from "components/Layout";
@@ -19,37 +19,37 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import MachineWidget2 from "components/Widget/StorageWidget2";
+import StorageWidget2 from "components/Widget/StorageWidget2";
 import { debugMode } from "services/constants";
 
 type PageProps = {
-  student: StudentProps;
-  machines: MachineProps[];
+  item: ItemProps;
+  storages: StorageProps[];
   admins: AdminProps[];
 };
 
-export default function StudentPage({ student, machines, admins }: PageProps) {
+export default function ItemPage({ item, storages, admins }: PageProps) {
   //admin
   const { data: session, status } = useSession();
   const isAdmin = checkAdmin(session, admins);
   //toaster
   const toaster = useToast();
   //inId and outId
-  const inId = student.machines.map((item) => item.id);
-  const outId = machines
+  const inId = item.storages.map((item) => item.id);
+  const outId = storages
     .map((item) => item.id)
     .filter((id) => !inId.includes(id));
   // delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
     try {
-      const body = { id: student.id };
-      const res = await fetch("/api/delete-student", {
+      const body = { id: item.id };
+      const res = await fetch("/api/delete-item", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      await Router.push({ pathname: "/manage-students" });
+      await Router.push({ pathname: "/manage-items" });
     } catch (error) {
       if (debugMode) console.error(error);
     }
@@ -59,7 +59,7 @@ export default function StudentPage({ student, machines, admins }: PageProps) {
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
         <Flex>
-          <Heading>{student.name}</Heading>
+          <Heading>{item.name}</Heading>
           {isAdmin && (
             <>
               <IconButton
@@ -70,8 +70,8 @@ export default function StudentPage({ student, machines, admins }: PageProps) {
                 icon={<EditIcon />}
                 onClick={() =>
                   Router.push({
-                    pathname: "/upsert-student",
-                    query: { id: student.id },
+                    pathname: "/upsert-item",
+                    query: { id: item.id },
                   })
                 }
               />
@@ -84,30 +84,30 @@ export default function StudentPage({ student, machines, admins }: PageProps) {
               <ConfirmDeleteModal
                 isOpen={isOpen}
                 onClose={onClose}
-                name={" the student: " + student.name}
+                name={" the item: " + item.name}
                 handleDelete={handleDelete}
               />
             </>
           )}
         </Flex>
         {
-          <Badge colorScheme={student.using ? "green" : "red"}>
-            {student.using ? student.using.name : "Offline"}
+          <Badge colorScheme={item.using ? "green" : "red"}>
+            {item.using ? item.using.name : "Offline"}
           </Badge>
         }
       </Center>
       {status != "loading" && (
         <SearchView
           setIn={inId.map((id) => {
-            var machine = machines.find((x) => x.id == id);
-            if (!machine) machine = machines[0];
+            var storage = storages.find((x) => x.id == id);
+            if (!storage) storage = storages[0];
             return {
-              name: machine.name,
+              name: storage.name,
               widget: (
-                <MachineWidget2
-                  machine={machine}
-                  key={machine.id}
-                  targetStudent={student}
+                <StorageWidget2
+                  storage={storage}
+                  key={storage.id}
+                  targetItem={item}
                   invert={false}
                   isAdmin={isAdmin}
                 />
@@ -115,15 +115,15 @@ export default function StudentPage({ student, machines, admins }: PageProps) {
             };
           })}
           setOut={outId.map((id) => {
-            var machine = machines.find((x) => x.id == id);
-            if (!machine) machine = machines[0];
+            var storage = storages.find((x) => x.id == id);
+            if (!storage) storage = storages[0];
             return {
-              name: machine.name,
+              name: storage.name,
               widget: (
-                <MachineWidget2
-                  machine={machine}
-                  key={machine.id}
-                  targetStudent={student}
+                <StorageWidget2
+                  storage={storage}
+                  key={storage.id}
+                  targetItem={item}
                   invert={true}
                   isAdmin={isAdmin}
                 />
@@ -138,21 +138,21 @@ export default function StudentPage({ student, machines, admins }: PageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const student = await prisma.student.findUnique({
+  const item = await prisma.item.findUnique({
     where: {
-      id: Number(context.params?.studentId),
+      id: Number(context.params?.itemId),
     },
     include: {
-      machines: true,
+      storages: true,
       using: true,
     },
   });
-  const machines = await prisma.machine.findMany();
+  const storages = await prisma.storage.findMany();
   const admins = await prisma.admin.findMany();
   return {
     props: {
-      student: student,
-      machines: machines,
+      item: item,
+      storages: storages,
       admins: admins,
     },
   };

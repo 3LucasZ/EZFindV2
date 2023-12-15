@@ -6,7 +6,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { id } = req.body;
-  const op = await prisma.student.delete({
+  const op = await prisma.item.delete({
     where: {
       id: id,
     },
