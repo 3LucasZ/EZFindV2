@@ -21,8 +21,8 @@ export default function Layout({
   return (
     <>
       <Head>
-        <title>EZ-Check</title>
-        <meta name="description" content="Item Authentication" />
+        <title>EZ-Find</title>
+        <meta name="description" content="Modern Inventory Tracker" />
         <link rel="icon" href="/favicon.ico" />
         {/*PWA UI-->*/}
         <meta
