@@ -19,8 +19,6 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import StorageWidget2 from "components/Widget/StorageWidget2";
-import { debugMode } from "services/constants";
 import { useState } from "react";
 import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget2";
@@ -38,7 +36,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   const isAdmin = checkAdmin(session, admins);
   //toaster
   const toaster = useToast();
-  //inId and outId
+  //outRelations
   const inIds = item.relations.map((relation) => relation.storageId);
   const outRelations: RelationProps[] = storages
     .filter((storage) => !inIds.includes(storage.id))
@@ -51,18 +49,9 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         count: 0,
       };
     });
-
-  // const outIds = storages
-  //   .filter((storage) => !inIds.includes(storage.id))
-  //   .map((storage) => storage.id);
-  // const inRelations = item.relations;
-  // const outRelations = relations.filter((relation) =>
-  //   outIds.includes(relation.storageId)
-  // );
-  //state 0 = view, 1 = edit
-
+  // state: 0=normal, 1=editing
   const [state, setState] = useState(0);
-  // delete modal
+  // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
     try {
