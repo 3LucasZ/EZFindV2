@@ -7,7 +7,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
 import { StorageProps } from "components/Widget/StorageWidget";
@@ -50,7 +50,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       };
     });
   // state: 0=normal, 1=editing
-  const [state, setState] = useState(0);
+  const [editing, setEditing] = useState(false);
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -66,7 +66,6 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       errorToast(toaster, "" + error);
     }
   };
-
   // ret
   return (
     <Layout isAdmin={isAdmin}>
@@ -79,20 +78,15 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 ml={2}
                 mr={2}
                 colorScheme="teal"
-                aria-label="edit"
-                icon={<EditIcon />}
-                onClick={() =>
-                  Router.push({
-                    pathname: "/upsert-item",
-                    query: { id: item.id },
-                  })
-                }
+                aria-label="x"
+                icon={editing ? <CheckIcon /> : <EditIcon />}
+                onClick={() => setEditing(!editing)}
               />
               <IconButton
                 onClick={onOpen}
                 colorScheme="red"
                 aria-label="delete"
-                icon={<DeleteIcon />}
+                icon={editing ? <CloseIcon /> : <DeleteIcon />}
               />
               <ConfirmDeleteModal
                 isOpen={isOpen}
@@ -103,7 +97,6 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
             </>
           )}
         </Flex>
-        {<Badge colorScheme="green">"Offline"</Badge>}
       </Center>
       {status != "loading" && (
         <SearchView
