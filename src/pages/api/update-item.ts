@@ -6,33 +6,20 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id, name, PIN, storageIds } = req.body;
-  if (name == "" || PIN == "") {
+  const { id, name, description, storageIds, counts } = req.body;
+  if (name == "" || storageIds.length != counts.length) {
     const prep = res.status(500);
-    prep.json("form is incomplete");
+    prep.json("Invalid Update");
     return prep;
   }
   try {
-    const op = await prisma.item.upsert({
+    const op = await prisma.item.update({
       where: {
         id: id,
       },
-      update: {
+      data: {
         name: name,
-        PIN: PIN,
-        storages: {
-          set: storageIds,
-        },
-      },
-      create: {
-        name: name,
-        PIN: PIN,
-        storages: {
-          connect: storageIds,
-        },
-      },
-      include: {
-        storages: true,
+        description: description,
       },
     });
     return res.status(200).json(op);

@@ -23,6 +23,8 @@ import StorageWidget2 from "components/Widget/StorageWidget2";
 import { debugMode } from "services/constants";
 import { useState } from "react";
 import { errorToast } from "services/toasty";
+import RelationWidget2 from "components/Widget/RelationWidget2";
+import { RelationProps } from "components/Widget/RelationWidget";
 
 type PageProps = {
   item: ItemProps;
@@ -37,13 +39,29 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   //toaster
   const toaster = useToast();
   //inId and outId
-  const inId = item.relations.map((relation) => relation.itemId);
-  const outId = storages
-    .map((item) => item.id)
-    .filter((id) => !inId.includes(id));
-  //state 0 = view, 1 = edit
-  const [state, setState] = useState(0);
+  const inIds = item.relations.map((relation) => relation.storageId);
+  const outRelations: RelationProps[] = storages
+    .filter((storage) => !inIds.includes(storage.id))
+    .map((storage) => {
+      return {
+        item: item,
+        itemId: item.id,
+        storage: storage,
+        storageId: storage.id,
+        count: 0,
+      };
+    });
 
+  // const outIds = storages
+  //   .filter((storage) => !inIds.includes(storage.id))
+  //   .map((storage) => storage.id);
+  // const inRelations = item.relations;
+  // const outRelations = relations.filter((relation) =>
+  //   outIds.includes(relation.storageId)
+  // );
+  //state 0 = view, 1 = edit
+
+  const [state, setState] = useState(0);
   // delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -100,32 +118,26 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       </Center>
       {status != "loading" && (
         <SearchView
-          setIn={inId.map((id) => {
-            var storage = storages.find((x) => x.id == id);
-            if (!storage) storage = storages[0];
+          setIn={item.relations.map((relation) => {
             return {
-              name: storage.name,
+              name: relation.storage.name,
               widget: (
-                <StorageWidget2
-                  storage={storage}
-                  key={storage.id}
-                  targetItem={item}
+                <RelationWidget2
+                  relation={relation}
+                  isItem={false}
                   invert={false}
                   isAdmin={isAdmin}
                 />
               ),
             };
           })}
-          setOut={outId.map((id) => {
-            var storage = storages.find((x) => x.id == id);
-            if (!storage) storage = storages[0];
+          setOut={outRelations.map((relation) => {
             return {
-              name: storage.name,
+              name: relation.storage.name,
               widget: (
-                <StorageWidget2
-                  storage={storage}
-                  key={storage.id}
-                  targetItem={item}
+                <RelationWidget2
+                  relation={relation}
+                  isItem={false}
                   invert={true}
                   isAdmin={isAdmin}
                 />
@@ -145,10 +157,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.itemId),
     },
     include: {
-      relations: true,
+      relations: {
+        include: {
+          item: true,
+          storage: true,
+        },
+      },
     },
   });
-  const storages = await prisma.storage.findMany();
+  const storages = await prisma.storage.findMany({});
   const admins = await prisma.admin.findMany();
   return {
     props: {

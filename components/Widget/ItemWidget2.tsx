@@ -5,17 +5,16 @@ import { ItemProps } from "./ItemWidget";
 import { debugMode } from "services/constants";
 import { useToast } from "@chakra-ui/react";
 import { errorToast, successToast } from "services/toasty";
+import { RelationProps } from "./RelationWidget";
 
 type ItemWidget2Props = {
-  item: ItemProps;
-  targetstorage: StorageProps;
+  relation: RelationProps;
   invert: boolean;
   isAdmin: boolean;
 };
 
 export default function ItemWidget2({
-  item,
-  targetstorage,
+  relation,
   invert,
   isAdmin,
 }: ItemWidget2Props) {
@@ -23,10 +22,13 @@ export default function ItemWidget2({
   const handleRemove = async () => {
     try {
       const body = {
-        id: targetstorage.id,
-        name: targetstorage.name,
-        itemIds: targetstorage.items
-          .filter((item) => item.id != item.id)
+        id: relation.storage.id,
+        name: relation.storage.name,
+
+        itemIds: relation.storage.relations
+          .filter(
+            (storageRelation) => storageRelation.itemId != relation.item.id
+          )
           .map((item) => ({ id: item.id })),
       };
       if (debugMode) console.log(body);

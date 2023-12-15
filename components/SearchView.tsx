@@ -8,6 +8,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
+import { debugMode } from "services/constants";
 
 type SearchViewProps = {
   setIn: PairProps[];
@@ -46,8 +47,8 @@ export default function SearchView(props: SearchViewProps) {
   const [subset, setSubset] = useState(checked ? setOut : setIn);
 
   function filtered(pairset: PairProps[], q: string) {
-    console.log(pairset);
-    console.log(q);
+    if (debugMode) console.log(pairset);
+    if (debugMode) console.log(q);
     return pairset.filter((pair) => {
       return q === "" || pair.name.toLowerCase().includes(q.toLowerCase());
     });
