@@ -25,7 +25,6 @@ export default function StorageWidget2({
       const body = {
         id: targetItem.id,
         name: targetItem.name,
-        PIN: targetItem.PIN,
         storageIds: targetItem.storages
           .filter((item) => item.id != storage.id)
           .map((item) => ({ id: item.id })),

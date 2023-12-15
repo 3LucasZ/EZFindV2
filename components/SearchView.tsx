@@ -12,7 +12,7 @@ import { ReactNode, useState } from "react";
 type SearchViewProps = {
   setIn: PairProps[];
   setOut?: PairProps[];
-  onAdd: Function;
+  onAdd?: Function;
   isAdmin: boolean;
 };
 type PairProps = {

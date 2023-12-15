@@ -6,6 +6,9 @@ import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
+import Router from "next/router";
+import { errorToast } from "services/toasty";
+import { useToast } from "@chakra-ui/react";
 
 type PageProps = {
   items: ItemProps[];
@@ -14,6 +17,7 @@ type PageProps = {
 export default function ManageItems({ items, admins }: PageProps) {
   const { data: session } = useSession();
   const isAdmin = checkAdmin(session, admins);
+  const toaster = useToast();
   return (
     <Layout isAdmin={isAdmin}>
       <SearchView
@@ -21,8 +25,17 @@ export default function ManageItems({ items, admins }: PageProps) {
           name: item.name,
           widget: <ItemWidget item={item} key={item.id} />,
         }))}
-        onAdd={() => {
-          console.log("hi");
+        onAdd={async () => {
+          try {
+            const res = await fetch("/api/create-item", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(""),
+            });
+            await Router.push({ pathname: "/item/" + (await res.json()) });
+          } catch (error) {
+            errorToast(toaster, "" + error);
+          }
         }}
         isAdmin={isAdmin}
       />

@@ -5,11 +5,11 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { id } = req.body;
-  const op = await prisma.storage.delete({
-    where: {
-      id: id,
+  const op = await prisma.item.create({
+    data: {
+      name: "Item-" + new Date().getTime(),
+      description: "",
     },
   });
-  return res.status(200).json(op);
+  return res.status(200).json(op.id);
 }

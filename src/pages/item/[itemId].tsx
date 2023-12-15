@@ -21,6 +21,8 @@ import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
 import StorageWidget2 from "components/Widget/StorageWidget2";
 import { debugMode } from "services/constants";
+import { useState } from "react";
+import { errorToast } from "services/toasty";
 
 type PageProps = {
   item: ItemProps;
@@ -35,10 +37,13 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   //toaster
   const toaster = useToast();
   //inId and outId
-  const inId = item.storages.map((item) => item.id);
+  const inId = item.relations.map((relation) => relation.itemId);
   const outId = storages
     .map((item) => item.id)
     .filter((id) => !inId.includes(id));
+  //state 0 = view, 1 = edit
+  const [state, setState] = useState(0);
+
   // delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -51,9 +56,10 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       });
       await Router.push({ pathname: "/manage-items" });
     } catch (error) {
-      if (debugMode) console.error(error);
+      errorToast(toaster, "" + error);
     }
   };
+
   // ret
   return (
     <Layout isAdmin={isAdmin}>
@@ -90,11 +96,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
             </>
           )}
         </Flex>
-        {
-          <Badge colorScheme={item.using ? "green" : "red"}>
-            {item.using ? item.using.name : "Offline"}
-          </Badge>
-        }
+        {<Badge colorScheme="green">"Offline"</Badge>}
       </Center>
       {status != "loading" && (
         <SearchView
@@ -143,8 +145,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.itemId),
     },
     include: {
-      storages: true,
-      using: true,
+      relations: true,
     },
   });
   const storages = await prisma.storage.findMany();

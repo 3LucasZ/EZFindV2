@@ -14,7 +14,7 @@ datasource db {
 model Item {
   id Int @id @default(autoincrement())
   name String @unique @db.VarChar(255)
-  PIN String @unique @db.VarChar(255)
+  description String @db.VarChar(255)
   relations Relation[]
 }
 
@@ -22,7 +22,7 @@ model Storage {
   id Int @id @default(autoincrement())
   name String @unique @db.VarChar(255)
   description String @db.VarChar(255)
-  storages Relation[]
+  relations Relation[]
 }
 
 model Relation {

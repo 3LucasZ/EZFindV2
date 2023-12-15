@@ -33,7 +33,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
   //toaster
   const toaster = useToast();
   //inId outId
-  const inId = storage.items.map((item) => item.id);
+  const inId = storage.relations.map((relation) => relation.itemId);
   const outId = items.map((item) => item.id).filter((id) => !inId.includes(id));
   //modal
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -86,11 +86,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
             </>
           )}
         </Flex>
-        {
-          <Badge colorScheme={storage.usedBy ? "green" : "red"}>
-            {storage.usedBy ? storage.usedBy.name : "Standby"}
-          </Badge>
-        }
+        {<Badge colorScheme={"green"}>"Standby"</Badge>}
       </Center>
       {status != "loading" && (
         <SearchView
@@ -139,8 +135,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.storageId),
     },
     include: {
-      items: true,
-      usedBy: true,
+      relations: true,
     },
   });
   const items = await prisma.item.findMany();

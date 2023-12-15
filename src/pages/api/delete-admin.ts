@@ -11,5 +11,5 @@ export default async function handle(
       id: id,
     },
   });
-  return res.status(200).json(op);
+  return res.status(200).json(op.id);
 }
