@@ -21,14 +21,16 @@ export default function ManageItems({ items, admins }: PageProps) {
           name: item.name,
           widget: <ItemWidget item={item} key={item.id} />,
         }))}
-        url={"upsert-item"}
+        onAdd={() => {
+          console.log("hi");
+        }}
         isAdmin={isAdmin}
       />
     </Layout>
   );
 }
 export const getServerSideProps: GetServerSideProps = async () => {
-  const items = await prisma.item.findMany({ include: { using: true } });
+  const items = await prisma.item.findMany({ include: { relations: true } });
   const admins = await prisma.admin.findMany();
   return {
     props: { items: items, admins: admins },

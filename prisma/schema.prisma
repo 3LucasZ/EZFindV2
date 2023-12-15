@@ -3,33 +3,38 @@
 
 generator client {
   provider = "prisma-client-js"
-  binaryTargets   = ["native", "linux-musl-arm64-openssl-3.0.x"] // **VERY important to have the bin targets!**
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"] // **VERY important to have the bin targets!**
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
-model Student {
-  id        Int         @id @default(autoincrement())
-  name      String      @unique @db.VarChar(255)
-  PIN       String      @unique @db.VarChar(255)
-  machines   machine[]    @relation("authorized")
-  using     machine?     @relation("using")
+model Item {
+  id Int @id @default(autoincrement())
+  name String @unique @db.VarChar(255)
+  PIN String @unique @db.VarChar(255)
+  relations Relation[]
 }
 
-model machine {
-  id        Int         @id @default(autoincrement())
-  name      String      @unique @db.VarChar(255)
-  students  Student[]   @relation("authorized")
-  lastSeen  String?     @db.VarChar(255)
-  usedBy    Student?    @relation("using", fields: [usedById], references: [id])
-  usedById  Int?        @unique
-  IP        String?     @db.VarChar(255)
+model Storage {
+  id Int @id @default(autoincrement())
+  name String @unique @db.VarChar(255)
+  description String @db.VarChar(255)
+  storages Relation[]
+}
+
+model Relation {
+  item Item @relation(fields: [itemId], references: [id])
+  itemId Int 
+  storage Storage @relation (fields: [storageId], references: [id])
+  storageId Int
+  count Int
+  @@id([itemId, storageId])
 }
 
 model Admin {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique @db.VarChar(255)
+  id Int @id @default(autoincrement())
+  email String @unique @db.VarChar(255)
 }

@@ -6,15 +6,13 @@ import {
   Flex,
   IconButton,
   Input,
-  useDimensions,
 } from "@chakra-ui/react";
-import Router from "next/router";
-import { ReactNode, useState, useRef } from "react";
+import { ReactNode, useState } from "react";
 
 type SearchViewProps = {
   setIn: PairProps[];
   setOut?: PairProps[];
-  url?: string;
+  onAdd: Function;
   isAdmin: boolean;
 };
 type PairProps = {
@@ -43,9 +41,6 @@ export default function SearchView(props: SearchViewProps) {
       })
     : [];
 
-  const elementRef = useRef<HTMLDivElement>(null);
-  const dimensions = useDimensions(elementRef, true);
-  const yOffset = dimensions == null ? 0 : dimensions.borderBox.y;
   const [checked, setChecked] = useState(false);
   const [query, setQuery] = useState("");
   const [subset, setSubset] = useState(checked ? setOut : setIn);
@@ -74,18 +69,14 @@ export default function SearchView(props: SearchViewProps) {
           value={query}
           onChange={handleSearchQueryChange}
         />
-        {props.url && props.isAdmin && (
+        {props.onAdd && props.isAdmin && (
           <IconButton
             ml={2}
             mr={2}
             colorScheme="teal"
             aria-label="edit"
             icon={<AddIcon />}
-            onClick={() =>
-              Router.push({
-                pathname: props.url,
-              })
-            }
+            onClick={() => props.onAdd()}
           />
         )}
         {props.setOut && (
@@ -104,7 +95,6 @@ export default function SearchView(props: SearchViewProps) {
         )}
       </Flex>
       <Flex
-        ref={elementRef}
         flexDir="column"
         gap="2"
         overflowY="auto"

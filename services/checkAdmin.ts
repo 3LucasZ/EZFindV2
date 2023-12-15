@@ -10,6 +10,7 @@ export function checkAdmin(
       session.user &&
       session.user.email &&
       (admins.map((admin) => admin.email).includes(session.user.email) ||
-        session.user.email == "lucas.j.zheng@gmail.com")) == true
+        session.user.email == "lucas.j.zheng@gmail.com" ||
+        session.user.email == "lucas.zheng@warriorlife.net")) == true
   );
 }
