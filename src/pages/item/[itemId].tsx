@@ -1,6 +1,9 @@
 import {
   Badge,
   Center,
+  Editable,
+  EditableInput,
+  EditablePreview,
   Flex,
   Heading,
   IconButton,
@@ -71,9 +74,18 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
         <Flex>
-          <Heading>{item.name}</Heading>
+          <Editable
+            defaultValue={item.name}
+            fontSize="4xl"
+            as="b"
+            isPreviewFocusable={editing}
+          >
+            <EditablePreview />
+            <EditableInput />
+          </Editable>
+
           {isAdmin && (
-            <>
+            <Center>
               <IconButton
                 ml={2}
                 mr={2}
@@ -94,7 +106,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 name={" the item: " + item.name}
                 handleDelete={handleDelete}
               />
-            </>
+            </Center>
           )}
         </Flex>
       </Center>
