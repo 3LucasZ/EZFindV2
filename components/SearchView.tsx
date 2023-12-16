@@ -7,7 +7,7 @@ import {
   IconButton,
   Input,
 } from "@chakra-ui/react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { debugMode } from "services/constants";
 
 type SearchViewProps = {
@@ -15,12 +15,14 @@ type SearchViewProps = {
   setOut?: PairProps[];
   onAdd?: Function;
   isAdmin: boolean;
+  editing: boolean;
 };
 type PairProps = {
   name: string;
   widget: ReactNode;
 };
 export default function SearchView(props: SearchViewProps) {
+  //sort setIn, setOut
   const setIn = props.setIn.sort(function (a, b) {
     if (a.name < b.name) {
       return -1;
@@ -41,11 +43,11 @@ export default function SearchView(props: SearchViewProps) {
         return 0;
       })
     : [];
-
+  //state
   const [checked, setChecked] = useState(false);
   const [query, setQuery] = useState("");
   const [subset, setSubset] = useState(checked ? setOut : setIn);
-
+  //functions
   function filtered(pairset: PairProps[], q: string) {
     if (debugMode) console.log(pairset);
     if (debugMode) console.log(q);
@@ -53,13 +55,18 @@ export default function SearchView(props: SearchViewProps) {
       return q === "" || pair.name.toLowerCase().includes(q.toLowerCase());
     });
   }
-
+  //handlers
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
     checked
       ? setSubset(filtered(setOut, e.target.value))
       : setSubset(filtered(setIn, e.target.value));
   };
+  //reactive
+  useEffect(() => {
+    setSubset(checked ? setOut : setIn);
+  }, [props.editing]);
+  //ret
   return (
     <>
       <Flex gap={2} pb={5} px={[2, "5vw", "10vw", "15vw"]}>
@@ -77,7 +84,7 @@ export default function SearchView(props: SearchViewProps) {
             colorScheme="teal"
             aria-label="edit"
             icon={<AddIcon />}
-            onClick={() => props.onAdd()}
+            onClick={() => props.onAdd && props.onAdd()}
           />
         )}
         {props.setOut && (
@@ -105,7 +112,9 @@ export default function SearchView(props: SearchViewProps) {
         {subset.length == 0 ? (
           <Center>No data available to display.</Center>
         ) : (
-          subset.map((pair) => pair.widget)
+          subset.map((pair) => {
+            return pair.widget;
+          })
         )}
       </Flex>
       <Box h={"calc(100px + 2 * env(safe-area-inset-bottom))"}></Box>

@@ -22,7 +22,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget2";
 import { RelationProps } from "components/Widget/RelationWidget";
@@ -39,6 +39,10 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   const isAdmin = checkAdmin(session, admins);
   //toaster
   const toaster = useToast();
+  //newItem state
+  const [newName, setNewName] = useState(item.name);
+  const [newDescription, setNewDescription] = useState(item.description);
+  const [newRelations, setNewRelations] = useState(item.relations);
   //outRelations
   const inIds = item.relations.map((relation) => relation.storageId);
   const outRelations: RelationProps[] = storages
@@ -70,6 +74,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
     }
   };
   // ret
+  console.log("itemId", "rerender", "editing", editing);
   return (
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
@@ -90,15 +95,28 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 ml={2}
                 mr={2}
                 colorScheme="teal"
-                aria-label="x"
+                aria-label=""
                 icon={editing ? <CheckIcon /> : <EditIcon />}
-                onClick={() => setEditing(!editing)}
+                onClick={() => {
+                  if (editing) {
+                    setEditing(false);
+                    //push and reload
+                  } else {
+                    setEditing(true);
+                  }
+                }}
               />
               <IconButton
-                onClick={onOpen}
                 colorScheme="red"
-                aria-label="delete"
+                aria-label=""
                 icon={editing ? <CloseIcon /> : <DeleteIcon />}
+                onClick={() => {
+                  if (editing) {
+                    setEditing(false);
+                  } else {
+                    onOpen();
+                  }
+                }}
               />
               <ConfirmDeleteModal
                 isOpen={isOpen}
@@ -120,7 +138,8 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                   relation={relation}
                   isItem={false}
                   invert={false}
-                  showAction={isAdmin}
+                  showAction={editing}
+                  editing={editing}
                 />
               ),
             };
@@ -133,12 +152,14 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                   relation={relation}
                   isItem={false}
                   invert={true}
-                  showAction={isAdmin}
+                  showAction={editing}
+                  editing={editing}
                 />
               ),
             };
           })}
           isAdmin={isAdmin}
+          editing={editing}
         />
       )}
     </Layout>

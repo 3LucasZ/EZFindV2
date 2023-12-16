@@ -1,4 +1,4 @@
-import { Flex, IconButton, Link, useToast } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Link, useToast } from "@chakra-ui/react";
 import { ItemProps } from "./ItemWidget";
 import { RelationProps } from "./RelationWidget";
 import { StorageProps } from "./StorageWidget";
@@ -6,12 +6,14 @@ import { errorToast, successToast } from "services/toasty";
 import Router from "next/router";
 import BaseWidget2 from "./BaseWidget2";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 
 type RelationWidget2Props = {
   relation: RelationProps;
   isItem: boolean;
   invert: boolean;
   showAction: boolean;
+  editing: boolean;
 };
 
 export default function RelationWidget2({
@@ -19,8 +21,13 @@ export default function RelationWidget2({
   isItem,
   invert,
   showAction,
+  editing,
 }: RelationWidget2Props) {
+  //toaster
   const toaster = useToast();
+  //state
+  const [nextCount, setNextCount] = useState(relation.count);
+  //handlers
   const handleRemove = async () => {
     try {
       const body = {
@@ -64,6 +71,28 @@ export default function RelationWidget2({
       errorToast(toaster, "" + error);
     }
   };
+  const handleUpdate = async () => {
+    try {
+      const body = {
+        itemId: relation.itemId,
+        storageId: relation.storageId,
+        count: nextCount,
+      };
+      const res = await fetch("/api/update-relation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (res.status != 200) {
+        errorToast(toaster, await res.json());
+      } else {
+        successToast(toaster, "Success!");
+        Router.reload();
+      }
+    } catch (error) {
+      errorToast(toaster, "" + error);
+    }
+  };
   return (
     <Flex h={8}>
       <Link
@@ -84,7 +113,9 @@ export default function RelationWidget2({
       >
         {isItem ? relation.item.name : relation.storage.name}
       </Link>
-
+      <Box bg="orange.200" px={5} color="white">
+        {relation.count}
+      </Box>
       {showAction && (
         <IconButton
           onClick={invert ? handleAdd : handleRemove}
