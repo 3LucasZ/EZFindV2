@@ -40,11 +40,11 @@ export default function Layout({
           width={"100%"}
           position={"fixed"}
           sx={{
-            userSelect: "none",
+            // userSelect: "none",
             touchAction: "none",
             overscrollBehavior: "none",
             WebkitOverflowScrolling: "touch",
-            WebkitUserSelect: "none",
+            // WebkitUserSelect: "none",
             WebkitTouchCallout: "none",
             WebkitUserDrag: "none",
             WebkitTapHighlightColor: "rgba(0,0,0,0)",
