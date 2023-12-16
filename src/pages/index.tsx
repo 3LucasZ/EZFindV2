@@ -5,8 +5,8 @@ import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
-import { MdManageAccounts } from "react-icons/md";
-import { GiSewingStorage } from "react-icons/gi";
+import { FaTools } from "react-icons/fa";
+import { FaBoxes } from "react-icons/fa";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
 
@@ -39,7 +39,7 @@ export default function Home({ admins }: PageProps) {
         <RouteButton
           route={"manage-items"}
           text={"Manage Items"}
-          icon={MdManageAccounts}
+          icon={FaTools}
           color={"teal.300"}
           hoverColor={"teal.100"}
         ></RouteButton>
@@ -55,7 +55,7 @@ export default function Home({ admins }: PageProps) {
         <RouteButton
           route={"manage-storages"}
           text={"Manage Storages"}
-          icon={GiSewingStorage}
+          icon={FaBoxes}
           color={"blue.300"}
           hoverColor={"blue.100"}
         ></RouteButton>

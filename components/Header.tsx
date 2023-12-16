@@ -66,7 +66,7 @@ export default function Header({ isAdmin }: HeaderProps) {
         <Center>
           <Link href={"/"} style={{ textDecoration: "none" }}>
             <Heading size={["xl", "2xl", "3xl"]} color="teal.500">
-              EZCheck
+              EZFind
             </Heading>
           </Link>
         </Center>

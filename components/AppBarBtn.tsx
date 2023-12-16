@@ -1,7 +1,4 @@
-import { Center, HStack, Icon, IconButton, Link } from "@chakra-ui/react";
-import { FaHome } from "react-icons/fa";
-import { MdManageAccounts } from "react-icons/md";
-import { GiSewingStorage } from "react-icons/gi";
+import { Center, Icon, Link } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 
 type AppBarBtnProps = {

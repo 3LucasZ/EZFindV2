@@ -152,15 +152,16 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
             </Center>
           )}
         </Flex>
+        {isEdit ? (
+          <Input
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+          ></Input>
+        ) : (
+          <Text>{item.description ? item.description : "No description."}</Text>
+        )}
       </Center>
-      {isEdit ? (
-        <Input
-          value={newDescription}
-          onChange={(e) => setNewDescription(e.target.value)}
-        ></Input>
-      ) : (
-        <Text>{item.description}</Text>
-      )}
+
       <Box h="5"></Box>
       {status != "loading" && (
         <SearchView

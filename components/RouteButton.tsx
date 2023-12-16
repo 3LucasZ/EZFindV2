@@ -42,7 +42,7 @@ export const RouteButton = ({
               </Heading>
             </Center>
             <Center>
-              <Icon as={icon} boxSize={150} color={color} />
+              <Icon as={icon} boxSize={150} color={color} pt={5} />
             </Center>
           </CardBody>
         </Card>
