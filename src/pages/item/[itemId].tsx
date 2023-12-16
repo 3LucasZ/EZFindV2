@@ -95,6 +95,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           display={"block"}
           isDisabled={!isEdit}
           _disabled={{ color: "black", borderColor: "white" }}
+          textAlign={"center"}
         />
 
         {isAdmin && (
@@ -163,7 +164,6 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
               ? item.description
               : "No description."
           }
-          textAlign={"center"}
           onChange={(e) => setNewDescription(e.target.value)}
           isDisabled={!isEdit}
           _disabled={{ color: "black", borderColor: "white" }}
