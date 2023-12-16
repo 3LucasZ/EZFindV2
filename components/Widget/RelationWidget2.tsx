@@ -55,7 +55,7 @@ export default function RelationWidget2({
             <Input
               value={relation.count}
               type="number"
-              onChange={(e) => handleUpdate(e.target.value)}
+              onChange={(e) => handleUpdate(parseInt(e.target.value))}
             />
           ) : (
             relation.count
