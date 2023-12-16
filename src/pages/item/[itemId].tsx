@@ -120,7 +120,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                   relation={relation}
                   isItem={false}
                   invert={false}
-                  isAdmin={isAdmin}
+                  showAction={isAdmin}
                 />
               ),
             };
@@ -133,7 +133,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                   relation={relation}
                   isItem={false}
                   invert={true}
-                  isAdmin={isAdmin}
+                  showAction={isAdmin}
                 />
               ),
             };

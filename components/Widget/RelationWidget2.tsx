@@ -10,14 +10,14 @@ type RelationWidget2Props = {
   relation: RelationProps;
   isItem: boolean;
   invert: boolean;
-  isAdmin: boolean;
+  showAction: boolean;
 };
 
 export default function RelationWidget2({
   relation,
   isItem,
   invert,
-  isAdmin,
+  showAction,
 }: RelationWidget2Props) {
   const toaster = useToast();
   const handleRemove = async () => {
@@ -74,7 +74,7 @@ export default function RelationWidget2({
       safeRemove={false}
       handleAdd={handleAdd}
       invert={invert}
-      isAdmin={isAdmin}
+      showAction={showAction}
     />
   );
 }

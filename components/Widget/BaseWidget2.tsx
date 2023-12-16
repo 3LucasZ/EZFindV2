@@ -25,7 +25,7 @@ type BaseWidgetProps = {
   safeRemove: boolean;
   handleAdd: () => Promise<void>;
   invert: boolean;
-  isAdmin: boolean;
+  showAction: boolean;
 };
 
 export default function BaseWidget({
@@ -36,7 +36,7 @@ export default function BaseWidget({
   safeRemove,
   handleAdd,
   invert,
-  isAdmin,
+  showAction,
 }: BaseWidgetProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -55,13 +55,13 @@ export default function BaseWidget({
         pointerEvents={href ? "auto" : "none"}
         px={5}
         borderRadius={"md"}
-        roundedRight={isAdmin ? "none" : "auto"}
+        roundedRight={showAction ? "none" : "auto"}
       >
         <Text noOfLines={1} h={6}>
           {title}
         </Text>
       </Link>
-      {isAdmin && (
+      {showAction && (
         <IconButton
           onClick={invert ? handleAdd : safeRemove ? onOpen : handleRemove}
           bg={invert ? "green.300" : "red.300"}
