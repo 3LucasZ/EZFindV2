@@ -42,12 +42,15 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   const isAdmin = checkAdmin(session, admins);
   //toaster
   const toaster = useToast();
+  // state: 0=normal, 1=isEdit
+  const [isEdit, setIsEdit] = useState(false);
   //newItem state
   const [newName, setNewName] = useState(item.name);
   const [newDescription, setNewDescription] = useState(item.description);
   const [newRelations, setNewRelations] = useState(item.relations);
-  //outRelations
-  const inIds = item.relations.map((relation) => relation.storageId);
+  //track widgets
+  const inRelations = isEdit ? newRelations : item.relations;
+  const inIds = inRelations.map((relation) => relation.storageId);
   const outRelations: RelationProps[] = storages
     .filter((storage) => !inIds.includes(storage.id))
     .map((storage) => {
@@ -59,8 +62,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         count: 0,
       };
     });
-  // state: 0=normal, 1=isEdit
-  const [isEdit, setisEdit] = useState(false);
+
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -76,8 +78,9 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       errorToast(toaster, "" + error);
     }
   };
+  //widgets
   // ret
-  console.log("itemId", "rerender", "isEdit", isEdit);
+  //console.log("itemId", "rerender", "newRelations", newRelations);
   return (
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
@@ -100,15 +103,31 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 colorScheme="teal"
                 aria-label=""
                 icon={isEdit ? <CheckIcon /> : <EditIcon />}
-                onClick={() => {
+                onClick={async () => {
                   if (isEdit) {
-                    setisEdit(false);
-                    //push and reload
+                    setIsEdit(false);
+                    try {
+                      const body = {
+                        id: item.id,
+                        newName,
+                        newDescription,
+                        newRelations,
+                      };
+                      const res = await fetch("/api/update-item-full", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body),
+                      });
+                      Router.reload();
+                      errorToast(toaster, await res.json());
+                    } catch (error) {
+                      errorToast(toaster, "" + error);
+                    }
                   } else {
                     setNewName(item.name);
                     setNewDescription(item.description);
                     setNewRelations(item.relations);
-                    setisEdit(true);
+                    setIsEdit(true);
                   }
                 }}
               />
@@ -118,7 +137,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
                 onClick={() => {
                   if (isEdit) {
-                    setisEdit(false);
+                    setIsEdit(false);
                   } else {
                     onOpen();
                   }
@@ -145,7 +164,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       <Box h="5"></Box>
       {status != "loading" && (
         <SearchView
-          setIn={item.relations.map((relation) => {
+          setIn={inRelations.map((relation) => {
             return {
               name: relation.storage.name,
               widget: (
@@ -154,6 +173,28 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                   isItem={false}
                   isInvert={false}
                   isEdit={isEdit}
+                  handleRemove={() => {
+                    setNewRelations(
+                      newRelations.filter(
+                        (t) => t.storageId != relation.storageId
+                      )
+                    );
+                  }}
+                  handleAdd={() => {
+                    const copy = [...newRelations];
+                    copy.push(relation);
+                    setNewRelations(copy);
+                  }}
+                  handleUpdate={(e: number) => {
+                    const copy = newRelations.map((a) => ({ ...a }));
+                    const tar = copy.find(
+                      (t) => t.storageId == relation.storageId
+                    );
+                    if (tar != null) {
+                      tar.count = e;
+                      setNewRelations(copy);
+                    }
+                  }}
                 />
               ),
             };
@@ -167,6 +208,28 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                   isItem={false}
                   isInvert={true}
                   isEdit={isEdit}
+                  handleRemove={() =>
+                    setNewRelations(
+                      newRelations.filter(
+                        (t) => t.storageId != relation.storageId
+                      )
+                    )
+                  }
+                  handleAdd={() => {
+                    const copy = [...newRelations];
+                    copy.push(relation);
+                    setNewRelations(copy);
+                  }}
+                  handleUpdate={(e: number) => {
+                    const copy = [...newRelations];
+                    const tar = copy.find(
+                      (t) => t.storageId == relation.storageId
+                    );
+                    if (tar != null) {
+                      tar.count = e;
+                      setNewRelations(copy);
+                    }
+                  }}
                 />
               ),
             };

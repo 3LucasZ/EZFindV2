@@ -65,7 +65,7 @@ export default function SearchView(props: SearchViewProps) {
   //reactive
   useEffect(() => {
     setSubset(checked ? setOut : setIn);
-  }, [props.isEdit]);
+  }, [props.isEdit, props.setIn, props.setOut]);
   //ret
   return (
     <>

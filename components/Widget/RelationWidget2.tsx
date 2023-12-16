@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Link, useToast } from "@chakra-ui/react";
+import { Box, Flex, IconButton, Input, Link, useToast } from "@chakra-ui/react";
 import { ItemProps } from "./ItemWidget";
 import { RelationProps } from "./RelationWidget";
 import { StorageProps } from "./StorageWidget";
@@ -13,6 +13,9 @@ type RelationWidget2Props = {
   isItem: boolean;
   isInvert: boolean;
   isEdit: boolean;
+  handleRemove: Function;
+  handleAdd: Function;
+  handleUpdate: Function;
 };
 
 export default function RelationWidget2({
@@ -20,77 +23,13 @@ export default function RelationWidget2({
   isItem,
   isInvert,
   isEdit,
+  handleRemove,
+  handleAdd,
+  handleUpdate,
 }: RelationWidget2Props) {
   //toaster
   const toaster = useToast();
-  //state
-  const [nextCount, setNextCount] = useState(relation.count);
-  //handlers
-  const handleRemove = async () => {
-    try {
-      const body = {
-        itemId: relation.itemId,
-        storageId: relation.storageId,
-      };
-      const res = await fetch("/api/delete-relation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (res.status != 200) {
-        errorToast(toaster, await res.json());
-      } else {
-        successToast(toaster, "Success!");
-        Router.reload();
-      }
-    } catch (error) {
-      errorToast(toaster, "" + error);
-    }
-  };
-  const handleAdd = async () => {
-    try {
-      const body = {
-        itemId: relation.itemId,
-        storageId: relation.storageId,
-        count: relation.count,
-      };
-      const res = await fetch("/api/create-relation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (res.status != 200) {
-        errorToast(toaster, await res.json());
-      } else {
-        successToast(toaster, "Success!");
-        Router.reload();
-      }
-    } catch (error) {
-      errorToast(toaster, "" + error);
-    }
-  };
-  const handleUpdate = async () => {
-    try {
-      const body = {
-        itemId: relation.itemId,
-        storageId: relation.storageId,
-        count: nextCount,
-      };
-      const res = await fetch("/api/update-relation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (res.status != 200) {
-        errorToast(toaster, await res.json());
-      } else {
-        successToast(toaster, "Success!");
-        Router.reload();
-      }
-    } catch (error) {
-      errorToast(toaster, "" + error);
-    }
-  };
+  //ret
   return (
     <Flex h={8}>
       <Link
@@ -110,12 +49,22 @@ export default function RelationWidget2({
       >
         {isItem ? relation.item.name : relation.storage.name}
       </Link>
-      <Box bg="orange.200" px={5} color="white">
-        {relation.count}
-      </Box>
+      {!isInvert && (
+        <Box bg="orange.200" px={5} color="white">
+          {isEdit ? (
+            <Input
+              value={relation.count}
+              type="number"
+              onChange={(e) => handleUpdate(e.target.value)}
+            />
+          ) : (
+            relation.count
+          )}
+        </Box>
+      )}
       {isEdit && (
         <IconButton
-          onClick={isInvert ? handleAdd : handleRemove}
+          onClick={() => (isInvert ? handleAdd() : handleRemove())}
           bg={isInvert ? "green.300" : "red.300"}
           _hover={{ bg: isInvert ? "green.400" : "red.400" }}
           color="white"
