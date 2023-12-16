@@ -9,6 +9,9 @@ import {
   IconButton,
   useDisclosure,
   useToast,
+  Text,
+  Input,
+  Box,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ItemProps } from "components/Widget/ItemWidget";
@@ -79,15 +82,15 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
         <Flex>
-          <Editable
-            defaultValue={item.name}
-            fontSize="4xl"
-            as="b"
-            isPreviewFocusable={isEdit}
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
+          {isEdit ? (
+            <Input
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              fontSize="4xl"
+            ></Input>
+          ) : (
+            <Text fontSize="4xl">{item.name}</Text>
+          )}
 
           {isAdmin && (
             <Center>
@@ -102,6 +105,9 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                     setisEdit(false);
                     //push and reload
                   } else {
+                    setNewName(item.name);
+                    setNewDescription(item.description);
+                    setNewRelations(item.relations);
                     setisEdit(true);
                   }
                 }}
@@ -128,6 +134,15 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           )}
         </Flex>
       </Center>
+      {isEdit ? (
+        <Input
+          value={newDescription}
+          onChange={(e) => setNewDescription(e.target.value)}
+        ></Input>
+      ) : (
+        <Text>{item.description}</Text>
+      )}
+      <Box h="5"></Box>
       {status != "loading" && (
         <SearchView
           setIn={item.relations.map((relation) => {
