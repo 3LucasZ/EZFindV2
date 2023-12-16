@@ -15,7 +15,6 @@ type SearchViewProps = {
   setOut?: PairProps[];
   onAdd?: Function;
   isAdmin: boolean;
-  editing: boolean;
 };
 type PairProps = {
   name: string;
@@ -46,12 +45,10 @@ export default function SearchView(props: SearchViewProps) {
   const [checked, setChecked] = useState(false);
   const [query, setQuery] = useState("");
   const [subset, setSubset] = useState(checked ? setOut : setIn);
-  console.log("editing", props.editing);
-  console.log("hi");
+
   function filtered(pairset: PairProps[], q: string) {
     if (debugMode) console.log(pairset);
     if (debugMode) console.log(q);
-
     return pairset.filter((pair) => {
       return q === "" || pair.name.toLowerCase().includes(q.toLowerCase());
     });
@@ -80,7 +77,7 @@ export default function SearchView(props: SearchViewProps) {
             colorScheme="teal"
             aria-label="edit"
             icon={<AddIcon />}
-            onClick={() => props.onAdd && props.onAdd()}
+            onClick={() => props.onAdd()}
           />
         )}
         {props.setOut && (
@@ -108,9 +105,7 @@ export default function SearchView(props: SearchViewProps) {
         {subset.length == 0 ? (
           <Center>No data available to display.</Center>
         ) : (
-          subset.map((pair) => {
-            return pair.widget;
-          })
+          subset.map((pair) => pair.widget)
         )}
       </Flex>
       <Box h={"calc(100px + 2 * env(safe-area-inset-bottom))"}></Box>
