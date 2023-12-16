@@ -56,8 +56,8 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         count: 0,
       };
     });
-  // state: 0=normal, 1=editing
-  const [editing, setEditing] = useState(false);
+  // state: 0=normal, 1=isEdit
+  const [isEdit, setisEdit] = useState(false);
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -74,7 +74,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
     }
   };
   // ret
-  console.log("itemId", "rerender", "editing", editing);
+  console.log("itemId", "rerender", "isEdit", isEdit);
   return (
     <Layout isAdmin={isAdmin}>
       <Center pb={3} flexDir={"column"}>
@@ -83,7 +83,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
             defaultValue={item.name}
             fontSize="4xl"
             as="b"
-            isPreviewFocusable={editing}
+            isPreviewFocusable={isEdit}
           >
             <EditablePreview />
             <EditableInput />
@@ -96,23 +96,23 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 mr={2}
                 colorScheme="teal"
                 aria-label=""
-                icon={editing ? <CheckIcon /> : <EditIcon />}
+                icon={isEdit ? <CheckIcon /> : <EditIcon />}
                 onClick={() => {
-                  if (editing) {
-                    setEditing(false);
+                  if (isEdit) {
+                    setisEdit(false);
                     //push and reload
                   } else {
-                    setEditing(true);
+                    setisEdit(true);
                   }
                 }}
               />
               <IconButton
                 colorScheme="red"
                 aria-label=""
-                icon={editing ? <CloseIcon /> : <DeleteIcon />}
+                icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
                 onClick={() => {
-                  if (editing) {
-                    setEditing(false);
+                  if (isEdit) {
+                    setisEdit(false);
                   } else {
                     onOpen();
                   }
@@ -137,9 +137,8 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 <RelationWidget2
                   relation={relation}
                   isItem={false}
-                  invert={false}
-                  showAction={editing}
-                  editing={editing}
+                  isInvert={false}
+                  isEdit={isEdit}
                 />
               ),
             };
@@ -151,15 +150,14 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 <RelationWidget2
                   relation={relation}
                   isItem={false}
-                  invert={true}
-                  showAction={editing}
-                  editing={editing}
+                  isInvert={true}
+                  isEdit={isEdit}
                 />
               ),
             };
           })}
           isAdmin={isAdmin}
-          editing={editing}
+          isEdit={isEdit}
         />
       )}
     </Layout>

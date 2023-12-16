@@ -11,17 +11,15 @@ import { useState } from "react";
 type RelationWidget2Props = {
   relation: RelationProps;
   isItem: boolean;
-  invert: boolean;
-  showAction: boolean;
-  editing: boolean;
+  isInvert: boolean;
+  isEdit: boolean;
 };
 
 export default function RelationWidget2({
   relation,
   isItem,
-  invert,
-  showAction,
-  editing,
+  isInvert,
+  isEdit,
 }: RelationWidget2Props) {
   //toaster
   const toaster = useToast();
@@ -96,7 +94,8 @@ export default function RelationWidget2({
   return (
     <Flex h={8}>
       <Link
-        bg={"blue.300"}
+        bg={isItem ? "teal.300" : "blue.300"}
+        _hover={{ bg: isItem ? "teal.400" : "blue.400" }}
         color="white"
         href={
           isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId
@@ -108,26 +107,23 @@ export default function RelationWidget2({
         w="100%"
         h="100%"
         px={5}
-        borderRadius={"md"}
-        roundedRight={showAction ? "none" : "auto"}
       >
         {isItem ? relation.item.name : relation.storage.name}
       </Link>
       <Box bg="orange.200" px={5} color="white">
         {relation.count}
       </Box>
-      {showAction && (
+      {isEdit && (
         <IconButton
-          onClick={invert ? handleAdd : handleRemove}
-          bg={invert ? "green.300" : "red.300"}
-          _hover={{ bg: invert ? "green.400" : "red.400" }}
+          onClick={isInvert ? handleAdd : handleRemove}
+          bg={isInvert ? "green.300" : "red.300"}
+          _hover={{ bg: isInvert ? "green.400" : "red.400" }}
           color="white"
-          aria-label={invert ? "add" : "delete"}
-          icon={invert ? <SmallAddIcon /> : <SmallCloseIcon />}
+          aria-label={isInvert ? "add" : "delete"}
+          icon={isInvert ? <SmallAddIcon /> : <SmallCloseIcon />}
           h={8}
           w={8}
-          roundedLeft="none"
-          borderRadius="md"
+          rounded="none"
         />
       )}
     </Flex>

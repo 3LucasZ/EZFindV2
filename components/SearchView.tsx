@@ -15,7 +15,7 @@ type SearchViewProps = {
   setOut?: PairProps[];
   onAdd?: Function;
   isAdmin: boolean;
-  editing: boolean;
+  isEdit: boolean;
 };
 type PairProps = {
   name: string;
@@ -65,7 +65,7 @@ export default function SearchView(props: SearchViewProps) {
   //reactive
   useEffect(() => {
     setSubset(checked ? setOut : setIn);
-  }, [props.editing]);
+  }, [props.isEdit]);
   //ret
   return (
     <>
