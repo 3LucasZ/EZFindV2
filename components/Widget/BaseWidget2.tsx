@@ -61,6 +61,7 @@ export default function BaseWidget({
           {title}
         </Text>
       </Link>
+
       {showAction && (
         <IconButton
           onClick={invert ? handleAdd : safeRemove ? onOpen : handleRemove}

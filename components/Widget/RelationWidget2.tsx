@@ -1,10 +1,11 @@
-import { useToast } from "@chakra-ui/react";
+import { Flex, IconButton, Link, useToast } from "@chakra-ui/react";
 import { ItemProps } from "./ItemWidget";
 import { RelationProps } from "./RelationWidget";
 import { StorageProps } from "./StorageWidget";
 import { errorToast, successToast } from "services/toasty";
 import Router from "next/router";
 import BaseWidget2 from "./BaseWidget2";
+import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 
 type RelationWidget2Props = {
   relation: RelationProps;
@@ -64,17 +65,40 @@ export default function RelationWidget2({
     }
   };
   return (
-    <BaseWidget2
-      href={
-        isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId
-      }
-      title={isItem ? relation.item.name : relation.storage.name}
-      bg={"blue.300"}
-      handleRemove={handleRemove}
-      safeRemove={false}
-      handleAdd={handleAdd}
-      invert={invert}
-      showAction={showAction}
-    />
+    <Flex h={8}>
+      <Link
+        bg={"blue.300"}
+        color="white"
+        href={
+          isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId
+        }
+        style={{ textDecoration: "none" }}
+        sx={{
+          WebkitUserDrag: "none",
+        }}
+        w="100%"
+        h="100%"
+        px={5}
+        borderRadius={"md"}
+        roundedRight={showAction ? "none" : "auto"}
+      >
+        {isItem ? relation.item.name : relation.storage.name}
+      </Link>
+
+      {showAction && (
+        <IconButton
+          onClick={invert ? handleAdd : handleRemove}
+          bg={invert ? "green.300" : "red.300"}
+          _hover={{ bg: invert ? "green.400" : "red.400" }}
+          color="white"
+          aria-label={invert ? "add" : "delete"}
+          icon={invert ? <SmallAddIcon /> : <SmallCloseIcon />}
+          h={8}
+          w={8}
+          roundedLeft="none"
+          borderRadius="md"
+        />
+      )}
+    </Flex>
   );
 }
