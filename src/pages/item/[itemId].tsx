@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Center,
   Editable,
   EditableInput,
@@ -7,6 +8,7 @@ import {
   Flex,
   Heading,
   IconButton,
+  Input,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -22,7 +24,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import { useState } from "react";
+import React, { ReactElement, ReactNode, useState } from "react";
 import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget2";
 import { RelationProps } from "components/Widget/RelationWidget";
@@ -34,12 +36,14 @@ type PageProps = {
 };
 
 export default function ItemPage({ item, storages, admins }: PageProps) {
-  //admin
+  // admin
   const { data: session, status } = useSession();
   const isAdmin = checkAdmin(session, admins);
-  //toaster
+  // toaster
   const toaster = useToast();
-  //outRelations
+  // editing
+  const [editing, setEditing] = useState(false);
+  //setIn and setOut
   const inIds = item.relations.map((relation) => relation.storageId);
   const outRelations: RelationProps[] = storages
     .filter((storage) => !inIds.includes(storage.id))
@@ -52,8 +56,45 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         count: 0,
       };
     });
-  // state: 0=normal, 1=editing
-  const [editing, setEditing] = useState(false);
+  function genSetIn(editing: boolean) {
+    return item.relations.map((relation) => {
+      return {
+        name: relation.storage.name,
+        widget: (
+          <RelationWidget2
+            relation={relation}
+            isItem={false}
+            invert={false}
+            showAction={isAdmin && !editing}
+            editing={editing}
+          />
+        ),
+      };
+    });
+  }
+  const [setIn, setSetIn] = useState<{ name: string; widget: ReactNode }[]>(
+    genSetIn(editing)
+  );
+  function genSetOut(editing: boolean) {
+    console.log(editing);
+    return outRelations.map((relation) => {
+      return {
+        name: relation.storage.name,
+        widget: (
+          <RelationWidget2
+            relation={relation}
+            isItem={false}
+            invert={true}
+            showAction={isAdmin && !editing}
+            editing={false}
+          />
+        ),
+      };
+    });
+  }
+  const [setOut, setSetOut] = useState<{ name: string; widget: JSX.Element }[]>(
+    genSetOut(editing)
+  );
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -69,6 +110,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       errorToast(toaster, "" + error);
     }
   };
+  const handleSubmit = async () => {};
   // ret
   return (
     <Layout isAdmin={isAdmin}>
@@ -90,21 +132,33 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 ml={2}
                 mr={2}
                 colorScheme="teal"
-                aria-label="x"
+                aria-label="_"
                 icon={editing ? <CheckIcon /> : <EditIcon />}
-                onClick={() => setEditing(!editing)}
+                onClick={() => {
+                  if (editing) {
+                    setEditing(false);
+                    setSetIn(genSetIn(false));
+                    setSetOut(genSetOut(false));
+                  } else {
+                    setEditing(true);
+                    setSetIn(genSetIn(true));
+                    setSetOut(genSetOut(true));
+                  }
+                }}
               />
               <IconButton
-                onClick={onOpen}
                 colorScheme="red"
-                aria-label="delete"
+                aria-label="_"
                 icon={editing ? <CloseIcon /> : <DeleteIcon />}
+                onClick={onOpen}
               />
               <ConfirmDeleteModal
                 isOpen={isOpen}
                 onClose={onClose}
                 name={" the item: " + item.name}
-                handleDelete={handleDelete}
+                handleDelete={
+                  editing ? async () => Router.reload() : handleDelete
+                }
               />
             </Center>
           )}
@@ -112,33 +166,10 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       </Center>
       {status != "loading" && (
         <SearchView
-          setIn={item.relations.map((relation) => {
-            return {
-              name: relation.storage.name,
-              widget: (
-                <RelationWidget2
-                  relation={relation}
-                  isItem={false}
-                  invert={false}
-                  isAdmin={isAdmin}
-                />
-              ),
-            };
-          })}
-          setOut={outRelations.map((relation) => {
-            return {
-              name: relation.storage.name,
-              widget: (
-                <RelationWidget2
-                  relation={relation}
-                  isItem={false}
-                  invert={true}
-                  isAdmin={isAdmin}
-                />
-              ),
-            };
-          })}
+          setIn={setIn}
+          setOut={setOut}
           isAdmin={isAdmin}
+          editing={editing}
         />
       )}
     </Layout>

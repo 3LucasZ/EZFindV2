@@ -11,6 +11,11 @@ import {
   GridItem,
   IconButton,
   Link,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Text,
   useDisclosure,
   useToast,
@@ -21,25 +26,29 @@ type BaseWidgetProps = {
   href: string;
   title: string;
   bg: string;
+  count: number;
   handleRemove: () => Promise<void>;
   safeRemove: boolean;
   handleAdd: () => Promise<void>;
   invert: boolean;
-  isAdmin: boolean;
+  showAction: boolean;
+  editing: boolean;
 };
 
 export default function BaseWidget({
   href,
   title,
   bg,
+  count,
   handleRemove,
   safeRemove,
   handleAdd,
   invert,
-  isAdmin,
+  showAction,
+  editing,
 }: BaseWidgetProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  console.log(editing);
   return (
     <Flex h={8}>
       <Link
@@ -55,13 +64,26 @@ export default function BaseWidget({
         pointerEvents={href ? "auto" : "none"}
         px={5}
         borderRadius={"md"}
-        roundedRight={isAdmin ? "none" : "auto"}
+        roundedRight={showAction ? "none" : "auto"}
       >
         <Text noOfLines={1} h={6}>
           {title}
         </Text>
       </Link>
-      {isAdmin && (
+      <Box bg="orange.200" color="white" px={5}>
+        {editing ? (
+          <NumberInput defaultValue={15} min={10} max={20}>
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+        ) : (
+          <Text>{count}</Text>
+        )}
+      </Box>
+      {showAction && (
         <IconButton
           onClick={invert ? handleAdd : safeRemove ? onOpen : handleRemove}
           bg={invert ? "green.300" : "red.300"}
