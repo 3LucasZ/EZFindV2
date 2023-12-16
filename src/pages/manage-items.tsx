@@ -9,6 +9,7 @@ import { AdminProps } from "components/Widget/AdminWidget2";
 import Router from "next/router";
 import { errorToast } from "services/toasty";
 import { useToast } from "@chakra-ui/react";
+import Header from "components/Header";
 
 type PageProps = {
   items: ItemProps[];
@@ -19,7 +20,8 @@ export default function ManageItems({ items, admins }: PageProps) {
   const isAdmin = checkAdmin(session, admins);
   const toaster = useToast();
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout>
+      <Header isAdmin={isAdmin} />
       <SearchView
         setIn={items.map((item) => ({
           name: item.name,
@@ -38,6 +40,7 @@ export default function ManageItems({ items, admins }: PageProps) {
           }
         }}
         isAdmin={isAdmin}
+        isEdit={false}
       />
     </Layout>
   );

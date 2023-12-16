@@ -19,7 +19,8 @@ export default function ManageStorages({ storages, admins }: PageProps) {
   const isAdmin = checkAdmin(session, admins);
   const toaster = useToast();
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout>
+      <Header isAdmin={isAdmin} />
       <SearchView
         setIn={storages.map((storage) => ({
           name: storage.name,
@@ -38,6 +39,7 @@ export default function ManageStorages({ storages, admins }: PageProps) {
           }
         }}
         isAdmin={isAdmin}
+        isEdit={false}
       />
     </Layout>
   );

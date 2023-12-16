@@ -9,6 +9,7 @@ import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
+import Header from "components/Header";
 
 type PageProps = {
   admins: AdminProps[];
@@ -17,7 +18,8 @@ export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();
   const isAdmin = checkAdmin(session, admins);
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout>
+      <Header isAdmin={isAdmin} />
       <SimpleGrid
         columns={[1, 2]}
         spacing={10}

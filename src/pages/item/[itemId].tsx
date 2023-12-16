@@ -12,6 +12,7 @@ import {
   Text,
   Input,
   Box,
+  Textarea,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ItemProps } from "components/Widget/ItemWidget";
@@ -29,6 +30,8 @@ import { useReducer, useState } from "react";
 import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget2";
 import { RelationProps } from "components/Widget/RelationWidget";
+import React from "react";
+import { AutoResizeTextarea } from "components/AutoResizeTextarea";
 
 type PageProps = {
   item: ItemProps;
@@ -62,7 +65,6 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         count: 0,
       };
     });
-
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
@@ -78,89 +80,95 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       errorToast(toaster, "" + error);
     }
   };
+  //textareas
+
   //widgets
   // ret
   //console.log("itemId", "rerender", "newRelations", newRelations);
   return (
-    <Layout isAdmin={isAdmin}>
-      <Center pb={3} flexDir={"column"}>
-        <Flex>
-          {isEdit ? (
-            <Input
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              fontSize="4xl"
-            ></Input>
-          ) : (
-            <Text fontSize="4xl">{item.name}</Text>
-          )}
+    <Layout>
+      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+        <AutoResizeTextarea
+          value={isEdit ? newName : item.name}
+          onChange={(e) => setNewName(e.target.value)}
+          fontSize="4xl"
+          display={"block"}
+          isDisabled={!isEdit}
+          _disabled={{ color: "black", borderColor: "white" }}
+        />
 
-          {isAdmin && (
-            <Center>
-              <IconButton
-                ml={2}
-                mr={2}
-                colorScheme="teal"
-                aria-label=""
-                icon={isEdit ? <CheckIcon /> : <EditIcon />}
-                onClick={async () => {
-                  if (isEdit) {
-                    setIsEdit(false);
-                    try {
-                      const body = {
-                        id: item.id,
-                        newName,
-                        newDescription,
-                        newRelations,
-                      };
-                      const res = await fetch("/api/update-item-full", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(body),
-                      });
-                      Router.reload();
-                      errorToast(toaster, await res.json());
-                    } catch (error) {
-                      errorToast(toaster, "" + error);
-                    }
-                  } else {
-                    setNewName(item.name);
-                    setNewDescription(item.description);
-                    setNewRelations(item.relations);
-                    setIsEdit(true);
+        {isAdmin && (
+          <Center>
+            <IconButton
+              ml={2}
+              mr={2}
+              colorScheme="teal"
+              aria-label=""
+              icon={isEdit ? <CheckIcon /> : <EditIcon />}
+              onClick={async () => {
+                if (isEdit) {
+                  setIsEdit(false);
+                  try {
+                    const body = {
+                      id: item.id,
+                      newName,
+                      newDescription,
+                      newRelations,
+                    };
+                    const res = await fetch("/api/update-item-full", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(body),
+                    });
+                    Router.reload();
+                    errorToast(toaster, await res.json());
+                  } catch (error) {
+                    errorToast(toaster, "" + error);
                   }
-                }}
-              />
-              <IconButton
-                colorScheme="red"
-                aria-label=""
-                icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
-                onClick={() => {
-                  if (isEdit) {
-                    setIsEdit(false);
-                  } else {
-                    onOpen();
-                  }
-                }}
-              />
-              <ConfirmDeleteModal
-                isOpen={isOpen}
-                onClose={onClose}
-                name={" the item: " + item.name}
-                handleDelete={handleDelete}
-              />
-            </Center>
-          )}
-        </Flex>
-        {isEdit ? (
-          <Input
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-          ></Input>
-        ) : (
-          <Text>{item.description ? item.description : "No description."}</Text>
+                } else {
+                  setNewName(item.name);
+                  setNewDescription(item.description);
+                  setNewRelations(item.relations);
+                  setIsEdit(true);
+                }
+              }}
+            />
+            <IconButton
+              colorScheme="red"
+              aria-label=""
+              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+              onClick={() => {
+                if (isEdit) {
+                  setIsEdit(false);
+                } else {
+                  onOpen();
+                }
+              }}
+            />
+            <ConfirmDeleteModal
+              isOpen={isOpen}
+              onClose={onClose}
+              name={" the item: " + item.name}
+              handleDelete={handleDelete}
+            />
+          </Center>
         )}
-      </Center>
+      </Flex>
+      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+        <AutoResizeTextarea
+          value={
+            isEdit
+              ? newDescription
+              : item.description
+              ? item.description
+              : "No description."
+          }
+          textAlign={"center"}
+          onChange={(e) => setNewDescription(e.target.value)}
+          isDisabled={!isEdit}
+          _disabled={{ color: "black", borderColor: "white" }}
+        />
+      </Flex>
 
       <Box h="5"></Box>
       {status != "loading" && (

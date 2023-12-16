@@ -10,19 +10,21 @@ async function main() {
       email: "lucas.zheng@warriorlife.net",
     },
   });
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 50; i++) {
     await prisma.item.upsert({
       create: {
         name: "item #" + i,
+        description: "",
       },
       update: {},
       where: { name: "item #" + i },
     });
   }
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 50; i++) {
     await prisma.storage.upsert({
       create: {
         name: "storage #" + i,
+        description: "",
       },
       update: {},
       where: { name: "storage #" + i },

@@ -1,4 +1,12 @@
-import { Box, Flex, IconButton, Input, Link, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  IconButton,
+  Input,
+  Link,
+  useToast,
+} from "@chakra-ui/react";
 import { ItemProps } from "./ItemWidget";
 import { RelationProps } from "./RelationWidget";
 import { StorageProps } from "./StorageWidget";
@@ -34,7 +42,7 @@ export default function RelationWidget2({
     <Flex h={8}>
       <Link
         bg={isItem ? "teal.300" : "blue.300"}
-        _hover={{ bg: isItem ? "teal.400" : "blue.400" }}
+        _hover={isEdit ? {} : { bg: isItem ? "teal.400" : "blue.400" }}
         color="white"
         href={
           isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId
@@ -42,6 +50,7 @@ export default function RelationWidget2({
         style={{ textDecoration: "none" }}
         sx={{
           WebkitUserDrag: "none",
+          pointerEvents: isEdit && "none",
         }}
         w="100%"
         h="100%"
@@ -50,16 +59,18 @@ export default function RelationWidget2({
         {isItem ? relation.item.name : relation.storage.name}
       </Link>
       {!isInvert && (
-        <Box bg="orange.200" px={5} color="white">
-          {isEdit ? (
-            <Input
-              value={relation.count}
-              type="number"
-              onChange={(e) => handleUpdate(parseInt(e.target.value))}
-            />
-          ) : (
-            relation.count
-          )}
+        <Box bg="orange.200" width={"60px"}>
+          <Input
+            color="white"
+            value={relation.count}
+            type="number"
+            p="0"
+            h={8}
+            onChange={(e) => handleUpdate(parseInt(e.target.value))}
+            textAlign={"center"}
+            isDisabled={!isEdit}
+            _disabled={{ color: "white", border: "none" }}
+          />
         </Box>
       )}
       {isEdit && (

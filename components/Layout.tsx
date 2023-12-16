@@ -4,13 +4,7 @@ import Header from "./Header";
 import { Flex } from "@chakra-ui/react";
 import AppBar from "./AppBar";
 
-export default function Layout({
-  children,
-  isAdmin,
-}: {
-  children: ReactNode;
-  isAdmin: boolean;
-}) {
+export default function Layout({ children }: { children: ReactNode }) {
   useEffect(() => {
     const html = document.querySelector("html") || new HTMLBodyElement();
     const body = document.querySelector("body") || new HTMLBodyElement();
@@ -50,7 +44,6 @@ export default function Layout({
             WebkitTapHighlightColor: "rgba(0,0,0,0)",
           }}
         >
-          <Header isAdmin={isAdmin} />
           {children}
           <AppBar />
         </Flex>

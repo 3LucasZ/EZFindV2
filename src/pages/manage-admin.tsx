@@ -10,6 +10,7 @@ import prisma from "services/prisma";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
+import Header from "components/Header";
 
 type PageProps = {
   admins: AdminProps[];
@@ -43,7 +44,8 @@ export default function ManageAdmin({ admins }: PageProps) {
     }
   };
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout>
+      <Header isAdmin={isAdmin} />
       <Flex px={[2, "5vw", "10vw", "15vw"]} gap={2}>
         <Input
           variant="filled"

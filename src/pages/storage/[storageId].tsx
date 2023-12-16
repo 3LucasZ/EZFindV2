@@ -52,7 +52,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
   };
   //ret
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout>
       <Center pb={3} flexDir={"column"}>
         <Flex>
           <Heading>{storage.name}</Heading>
