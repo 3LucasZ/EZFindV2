@@ -34,7 +34,7 @@ export default function RelationWidget2({
   const toaster = useToast();
   //ret
   return (
-    <Box display="flex" overflow="hidden" rounded="md" h={8}>
+    <Box display="flex" overflow="hidden" rounded="md" minH={8}>
       <Link
         bg={isItem ? "cyan.400" : "blue.400"}
         _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
