@@ -25,46 +25,52 @@ export default function Home({ admins }: PageProps) {
     <Layout>
       <Header isAdmin={isAdmin} />
 
-      <Box px="5">
-        <Heading>Dymo Instructions</Heading>
-        <Text>In order to have dymo printing functionality:</Text>
-        <UnorderedList>
-          <ListItem>
+      <Box px="5" overflowY="auto">
+        <Text fontSize="4xl">Dymo Instructions</Text>
+        <Text fontSize="xl">In order to have dymo printing functionality:</Text>
+        <UnorderedList fontSize="xl">
+          <ListItem fontSize="xl">
             Install the official Dymo Connect SDK for Mac or Windows from:
             https://www.dymo.com/support?cfid=online-support-sdk
           </ListItem>
-          <ListItem>
+          <ListItem fontSize="xl">
             Accept/allow any changes the SDK wants to make on your device
           </ListItem>
         </UnorderedList>
-        <Text>Make sure:</Text>
-        <UnorderedList>
-          <ListItem>Dymo Connect Service is running on your computer</ListItem>
-          <ListItem>
+        <Text fontSize="xl">Make sure:</Text>
+        <UnorderedList fontSize="xl">
+          <ListItem fontSize="xl">
+            Dymo Connect Service is running on your computer
+          </ListItem>
+          <ListItem fontSize="xl">
             Service port is at 41951 (default) Connected to a printer via USB
             Dymo
           </ListItem>
-          <ListItem>Certificate is trusted</ListItem>
-        </UnorderedList>{" "}
-        <Heading>Documents</Heading>
-        <UnorderedList>
-          <ListItem>
-            <Link
-              color="teal.500"
-              href="https://www.freeprivacypolicy.com/live/ecbf96ef-5d3a-49e3-a3b1-c4d00ade0934"
-            >
-              Privacy Policy
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link
-              color="teal.500"
-              href="https://www.freeprivacypolicy.com/live/f2d9ef3d-0010-4737-84ac-55143be8a3a0"
-            >
-              Terms of Service
-            </Link>
-          </ListItem>
+          <ListItem fontSize="xl">Certificate is trusted</ListItem>
         </UnorderedList>
+        <Text fontSize={"4xl"}>Documents</Text>
+        <Link
+          color="teal.500"
+          href="https://www.freeprivacypolicy.com/live/ecbf96ef-5d3a-49e3-a3b1-c4d00ade0934"
+          display={"block"}
+          fontSize={"xl"}
+        >
+          Privacy Policy
+        </Link>
+        <Link
+          color="teal.500"
+          href="https://www.freeprivacypolicy.com/live/f2d9ef3d-0010-4737-84ac-55143be8a3a0"
+          display={"block"}
+          fontSize={"xl"}
+        >
+          Terms of Service
+        </Link>
+        <Text fontSize="4xl">Help</Text>
+        <Text fontSize="xl">
+          Please do not hesitate to email us at REDACTED if you have any
+          questions, need further instruction, or have suggestions for
+          improvement.
+        </Text>
       </Box>
     </Layout>
   );
