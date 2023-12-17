@@ -55,7 +55,12 @@ export default function RelationWidget2({
           WebkitUserDrag: "none",
           pointerEvents: isEdit && "none",
         }}
-        w={isEdit ? "calc(100% - 100px)" : "calc(100% - 60px)"}
+        w={
+          "calc(100%" +
+          (!isInvert ? " - 60px" : "") +
+          (isEdit ? " - 40px" : "") +
+          ")"
+        }
         h={8}
         px={5}
       >
