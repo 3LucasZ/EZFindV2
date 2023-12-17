@@ -1,18 +1,10 @@
 import {
-  Badge,
   Center,
-  Editable,
-  EditableInput,
-  EditablePreview,
   Flex,
-  Heading,
   IconButton,
   useDisclosure,
   useToast,
-  Text,
-  Input,
   Box,
-  Textarea,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ItemProps } from "components/Widget/ItemWidget";
@@ -26,7 +18,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget2";
 import { RelationProps } from "components/Widget/RelationWidget";
@@ -80,11 +72,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       errorToast(toaster, "" + error);
     }
   };
-  //textareas
 
-  //widgets
-  // ret
-  //console.log("itemId", "rerender", "newRelations", newRelations);
   return (
     <Layout>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -170,7 +158,6 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         />
       </Flex>
 
-      <Box h="5"></Box>
       {status != "loading" && (
         <SearchView
           setIn={inRelations.map((relation) => {

@@ -1,20 +1,6 @@
-import {
-  Box,
-  Center,
-  Flex,
-  IconButton,
-  Input,
-  Link,
-  useToast,
-} from "@chakra-ui/react";
-import { ItemProps } from "./ItemWidget";
+import { Box, Flex, IconButton, Input, Link, useToast } from "@chakra-ui/react";
 import { RelationProps } from "./RelationWidget";
-import { StorageProps } from "./StorageWidget";
-import { errorToast, successToast } from "services/toasty";
-import Router from "next/router";
-import BaseWidget2 from "./BaseWidget2";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
-import { useState } from "react";
 
 type RelationWidget2Props = {
   relation: RelationProps;

@@ -16,10 +16,8 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { id, newName, newDescription, newRelations } = req.body;
-  console.log(req.body);
   const relations = newRelations.map((relation) => ({
     count: relation.count,
-
     storageId: relation.storageId,
   }));
   const op = await prisma.item.update({
