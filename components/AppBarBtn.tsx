@@ -17,6 +17,10 @@ export default function AppBarBtn({ icon, href }: AppBarBtnProps) {
       color="white"
       pt="13px"
       href={href}
+      style={{ textDecoration: "none" }}
+      sx={{
+        WebkitUserDrag: "none",
+      }}
     >
       {
         <Center>

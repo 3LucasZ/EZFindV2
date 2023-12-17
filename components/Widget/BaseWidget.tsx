@@ -27,13 +27,13 @@ export default function BaseWidget({
       <Link
         href={href}
         display={"flex"}
+        w="100%"
+        h="100%"
+        pointerEvents={href ? "auto" : "none"}
         style={{ textDecoration: "none" }}
         sx={{
           WebkitUserDrag: "none",
         }}
-        w="100%"
-        h="100%"
-        pointerEvents={href ? "auto" : "none"}
       >
         <Text noOfLines={1} h={6}>
           {title}

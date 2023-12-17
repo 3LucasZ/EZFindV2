@@ -64,7 +64,13 @@ export default function Header({ isAdmin }: HeaderProps) {
       <Box w={"33%"}></Box>
       <Box w={"33%"}>
         <Center>
-          <Link href={"/"} style={{ textDecoration: "none" }}>
+          <Link
+            href={"/"}
+            style={{ textDecoration: "none" }}
+            sx={{
+              WebkitUserDrag: "none",
+            }}
+          >
             <Heading size={["xl", "2xl", "3xl"]} color="teal.500">
               EZFind
             </Heading>
