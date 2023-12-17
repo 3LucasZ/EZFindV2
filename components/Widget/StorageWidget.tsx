@@ -16,7 +16,7 @@ export default function StorageWidget({ storage }: StorageWidgetProps) {
   var sum = 0;
   storage.relations.forEach((relation) => (sum += relation.count));
   return (
-    <Box display="flex" position="relative">
+    <Box display="flex">
       <Grid
         templateColumns={[
           "repeat(6, 1fr)",
@@ -25,6 +25,8 @@ export default function StorageWidget({ storage }: StorageWidgetProps) {
           "repeat(12, 1fr)",
         ]}
         w="100%"
+        overflow="hidden"
+        rounded="md"
       >
         <BaseWidget
           href={"/storage/" + storage.id}
@@ -36,14 +38,6 @@ export default function StorageWidget({ storage }: StorageWidgetProps) {
         <BaseWidget title={storage.description} bg={"blue.300"} colSpan={4} />
         <BaseWidget title={"" + sum} bg={"blue.200"} colSpan={2} />
       </Grid>
-      <Box
-        position="absolute"
-        w="100%"
-        h="100%"
-        border="1px solid white"
-        borderRadius={"md"}
-        outline="2px solid white"
-      ></Box>
     </Box>
   );
 }

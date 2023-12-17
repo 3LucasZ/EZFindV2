@@ -17,24 +17,20 @@ export default function BaseWidget({
 }: BaseWidgetProps) {
   return (
     <GridItem
-      h={8}
+      minH={8}
       colSpan={colSpan}
       px={4}
       bg={bg}
       color="white"
-      display="flex"
-      overflow={"hidden"}
       _hover={{ bg: bgHover }}
     >
       <Link
         href={href}
-        position="relative"
         display={"flex"}
         style={{ textDecoration: "none" }}
         sx={{
           WebkitUserDrag: "none",
         }}
-        zIndex={1000}
         w="100%"
         h="100%"
         pointerEvents={href ? "auto" : "none"}
