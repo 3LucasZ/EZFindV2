@@ -2,6 +2,7 @@ import { HStack, Icon, IconButton } from "@chakra-ui/react";
 import { FaHome } from "react-icons/fa";
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
+import { FaCircleInfo } from "react-icons/fa6";
 import AppBarBtn from "./AppBarBtn";
 
 export default function AppBar() {
@@ -17,6 +18,7 @@ export default function AppBar() {
       <AppBarBtn icon={FaHome} href="/" />
       <AppBarBtn icon={FaTools} href="/manage-items" />
       <AppBarBtn icon={FaBoxes} href="/manage-storages" />
+      <AppBarBtn icon={FaCircleInfo} href="/help" />
     </HStack>
   );
 }
