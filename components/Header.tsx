@@ -25,8 +25,10 @@ export default function Header({ isAdmin }: HeaderProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const loginUI = (
-    <Stack>
-      <Text>{session ? session.user!.email : "You are not signed in"}</Text>
+    <div>
+      <Text noOfLines={1} h="6">
+        {session ? session.user!.email : "You are not signed in"}
+      </Text>
       <Flex>
         <IconButton
           isLoading={loading}
@@ -45,7 +47,7 @@ export default function Header({ isAdmin }: HeaderProps) {
         />
         {isAdmin && (
           <>
-            <Box w="2"></Box>
+            <Box w="8px"></Box>
             <IconButton
               colorScheme="teal"
               onClick={() => {
@@ -57,10 +59,10 @@ export default function Header({ isAdmin }: HeaderProps) {
           </>
         )}
       </Flex>
-    </Stack>
+    </div>
   );
   return (
-    <HStack spacing={10} pb={5} pt={1}>
+    <HStack spacing={10} pb={"8px"} pt={1}>
       <Box w={"33%"}></Box>
       <Box w={"33%"}>
         <Center>

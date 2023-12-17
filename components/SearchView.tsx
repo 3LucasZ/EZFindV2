@@ -69,7 +69,7 @@ export default function SearchView(props: SearchViewProps) {
   //ret
   return (
     <>
-      <Flex gap={2} pb={5} px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex gap={"8px"} px={[2, "5vw", "10vw", "15vw"]}>
         <Input
           variant="filled"
           placeholder="Search"
@@ -79,8 +79,6 @@ export default function SearchView(props: SearchViewProps) {
         />
         {props.onAdd && props.isAdmin && (
           <IconButton
-            ml={2}
-            mr={2}
             colorScheme="teal"
             aria-label="edit"
             icon={<AddIcon />}
@@ -102,9 +100,10 @@ export default function SearchView(props: SearchViewProps) {
           </Checkbox>
         )}
       </Flex>
+      <Box minH={"8px"}></Box>
       <Flex
         flexDir="column"
-        gap="2"
+        gap="8px"
         overflowY="auto"
         px={[2, "5vw", "10vw", "15vw"]}
         h="100%"
@@ -117,7 +116,7 @@ export default function SearchView(props: SearchViewProps) {
           })
         )}
       </Flex>
-      <Box h={"calc(100px + 2 * env(safe-area-inset-bottom))"}></Box>
+      <Box minH={"calc(58px + env(safe-area-inset-bottom))"}></Box>
     </>
   );
 }
