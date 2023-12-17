@@ -63,7 +63,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
     try {
       const body = { id: storage.id };
       const res = await fetch("/api/delete-storage", {
-        method: "DELETE",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -140,7 +140,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
             <ConfirmDeleteModal
               isOpen={isOpen}
               onClose={onClose}
-              name={" the item: " + storage.name}
+              name={" the storage: " + storage.name}
               handleDelete={handleDelete}
             />
           </Center>
