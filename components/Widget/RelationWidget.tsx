@@ -42,7 +42,7 @@ export default function RelationWidget2({
   const toaster = useToast();
   //ret
   return (
-    <Box display="flex" overflow="hidden" rounded="md" minH={8}>
+    <Box display="flex" overflow="hidden" rounded="md" minH={8} maxW="100%">
       <Link
         bg={isItem ? "cyan.400" : "blue.400"}
         _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
@@ -55,7 +55,7 @@ export default function RelationWidget2({
           WebkitUserDrag: "none",
           pointerEvents: isEdit && "none",
         }}
-        w="100%"
+        w={isEdit ? "calc(100% - 100px)" : "calc(100% - 60px)"}
         h={8}
         px={5}
       >
@@ -64,7 +64,7 @@ export default function RelationWidget2({
         </Text>
       </Link>
       {!isInvert && (
-        <Box bg="orange.200" w={"60px"}>
+        <Box bg="orange.200" w="60px">
           <Input
             value={relation.count}
             onChange={(e) => {
@@ -80,7 +80,7 @@ export default function RelationWidget2({
             _disabled={{ color: "white", border: "none" }}
             sx={{ opacity: "1" }}
             rounded="none"
-            maxLength={4}
+            maxLength={5} //9999
           />
         </Box>
       )}
@@ -93,7 +93,7 @@ export default function RelationWidget2({
           aria-label={isInvert ? "add" : "delete"}
           icon={isInvert ? <SmallAddIcon /> : <SmallCloseIcon />}
           h={8}
-          w={8}
+          w={"40px"}
           rounded="none"
         />
       )}
