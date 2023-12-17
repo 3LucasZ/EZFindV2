@@ -34,7 +34,7 @@ export default function RelationWidget2({
   const toaster = useToast();
   //ret
   return (
-    <Box display="flex" overflow="hidden" rounded="md">
+    <Box display="flex" overflow="hidden" rounded="md" h={8}>
       <Link
         bg={isItem ? "cyan.400" : "blue.400"}
         _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
@@ -61,7 +61,7 @@ export default function RelationWidget2({
             isDisabled={!isEdit}
             type="number"
             color="white"
-            p="0"
+            p={0}
             h={8}
             textAlign={"center"}
             _disabled={{ color: "white", border: "none" }}
