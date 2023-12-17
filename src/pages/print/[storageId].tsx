@@ -139,7 +139,7 @@ const StoragePage: React.FC<Props> = (props) => {
     <Layout>
       <Header isAdmin={isAdmin} />
       <Box overflowY="auto">
-        <SimpleGrid columns={2} spacing={10}>
+        <SimpleGrid columns={[1, 2]} spacing={10} px={5}>
           {/* Manual Printing */}
           <Flex flexDir="column">
             <Center>
@@ -149,29 +149,32 @@ const StoragePage: React.FC<Props> = (props) => {
               <Text>Take a screenshot of the image below:</Text>
             </Center>
             <Center>
-              <Image
-                text={props.url}
-                options={{
-                  type: "image/jpeg",
-                  quality: 0.3,
-                  margin: 3,
-                  scale: 4,
-                  width: 200,
-                  color: {
-                    dark: "#4FD1C5FF",
-                    light: "#FFFFFFFF",
-                  },
-                }}
-              />
-            </Center>
-            <Center>
-              <Text fontSize="2xl" whiteSpace="pre-line">
-                {fixate(props.name)}
-              </Text>
+              <Box borderColor="black" borderWidth={2} width="max-content">
+                <Image
+                  text={props.url}
+                  options={{
+                    type: "image/jpeg",
+                    quality: 0.3,
+                    margin: 3,
+                    scale: 4,
+                    width: 200,
+                    color: {
+                      dark: "#4FD1C5FF",
+                      light: "#FFFFFFFF",
+                    },
+                  }}
+                />
+
+                <Center>
+                  <Text fontSize="2xl" whiteSpace="pre-line" textAlign="center">
+                    {fixate(props.name)}
+                  </Text>
+                </Center>
+              </Box>
             </Center>
           </Flex>
           {/* DYMO Printing */}
-          <div>
+          <Flex>
             {img == "" ? (
               <Stack spacing={3}>
                 <Center>
@@ -191,72 +194,78 @@ const StoragePage: React.FC<Props> = (props) => {
                 </Text>
               </Stack>
             ) : (
-              <Stack spacing={3} marginRight={10}>
+              <Stack>
                 <Center>
                   <Heading>Dymo</Heading>
                 </Center>
-                <Select value={value} options={options} />
-                <Center>
-                  <Button
-                    colorScheme="teal"
-                    onClick={() => {
-                      console.log("Print");
-                      const Dymo = require("dymojs"),
-                        dymo = new Dymo();
-                      dymo
-                        .print(value?.label, props.xml)
-                        .then((response: any, result: any) => {
-                          console.log(
-                            "Response: ",
-                            response,
-                            "result: ",
-                            result
-                          );
-                        })
-                        .catch(() => {
-                          Router.push({ pathname: "/print/" + props.id });
-                        });
-                    }}
-                  >
-                    Print
-                  </Button>
-                </Center>
-                <Center>
-                  <ChImage
-                    padding="4"
-                    bgColor="teal.100"
-                    borderRadius="3vmin"
-                    src={"data:image/png;base64, " + img}
-                    alt="label"
-                  />
-                </Center>
-                <Box
-                  bg={status ? "green.400" : "tomato"}
-                  p={4}
-                  color="white"
-                  borderRadius="10"
-                >
-                  {status
-                    ? "Connected to DYMO service"
-                    : "Not connected to DYMO service"}
-                </Box>
-                <Box
-                  bg={
-                    value != null && printers[value.value].isConnected
-                      ? "green.400"
-                      : "tomato"
-                  }
-                  p={4}
-                  color="white"
-                  borderRadius="10"
-                >
-                  {value != null && printers[value.value].isConnected
-                    ? "Connected to printer"
-                    : "Not connected to printer"}
-                </Box>
+                <SimpleGrid columns={[1, 1, 2]} spacing="8px">
+                  <Center>
+                    <ChImage
+                      padding="4"
+                      bgColor="teal.100"
+                      borderRadius="3vmin"
+                      src={"data:image/png;base64, " + img}
+                      alt="label"
+                    />
+                  </Center>
+                  <Stack spacing={3}>
+                    <Select value={value} options={options} />
+
+                    <Button
+                      colorScheme="teal"
+                      onClick={() => {
+                        console.log("Print");
+                        const Dymo = require("dymojs"),
+                          dymo = new Dymo();
+                        dymo
+                          .print(value?.label, props.xml)
+                          .then((response: any, result: any) => {
+                            console.log(
+                              "Response: ",
+                              response,
+                              "result: ",
+                              result
+                            );
+                          })
+                          .catch(() => {
+                            Router.push({ pathname: "/print/" + props.id });
+                          });
+                      }}
+                    >
+                      Print
+                    </Button>
+
+                    <Box
+                      bg={status ? "green.400" : "tomato"}
+                      color="white"
+                      borderRadius="md"
+                      p={2}
+                      textAlign={"center"}
+                    >
+                      {status
+                        ? "DYMO Service Connected"
+                        : "DYMO Service Disconnected"}
+                    </Box>
+                    <Box
+                      bg={
+                        value != null && printers[value.value].isConnected
+                          ? "green.400"
+                          : "tomato"
+                      }
+                      p={2}
+                      color="white"
+                      borderRadius="md"
+                      textAlign={"center"}
+                    >
+                      {value != null && printers[value.value].isConnected
+                        ? "Printer Connected"
+                        : "Printer Disconnected"}
+                    </Box>
+                  </Stack>
+                </SimpleGrid>
               </Stack>
             )}
-          </div>
+          </Flex>
         </SimpleGrid>
         <Box minH={"calc(58px + env(safe-area-inset-bottom))"}></Box>
       </Box>
