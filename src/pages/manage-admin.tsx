@@ -28,7 +28,7 @@ export default function ManageAdmin({ admins }: PageProps) {
     e.preventDefault();
     try {
       const body = { email };
-      const res = await fetch("/api/add-admin", {
+      const res = await fetch("/api/create-admin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -73,6 +73,7 @@ export default function ManageAdmin({ admins }: PageProps) {
             widget: <Admin admin={admin} key={admin.id} />,
           }))}
           isAdmin={isAdmin}
+          isEdit={false}
         />
       )}
     </Layout>
