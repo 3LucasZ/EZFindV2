@@ -13,21 +13,21 @@ async function main() {
   for (let i = 0; i < 50; i++) {
     await prisma.item.upsert({
       create: {
-        name: "item #" + i,
+        name: "Item #" + i,
         description: "",
       },
       update: {},
-      where: { name: "item #" + i },
+      where: { name: "Item #" + i },
     });
   }
   for (let i = 0; i < 50; i++) {
     await prisma.storage.upsert({
       create: {
-        name: "storage #" + i,
+        name: "Storage #" + i,
         description: "",
       },
       update: {},
-      where: { name: "storage #" + i },
+      where: { name: "Storage #" + i },
     });
   }
 }
