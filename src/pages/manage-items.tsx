@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget2";
+import { AdminProps } from "components/Widget/AdminWidget";
 import Router from "next/router";
 import { errorToast } from "services/toasty";
 import { useToast } from "@chakra-ui/react";

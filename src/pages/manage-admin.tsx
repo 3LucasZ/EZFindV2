@@ -1,5 +1,5 @@
 import { Box, Flex, IconButton, Input, useToast } from "@chakra-ui/react";
-import Admin, { AdminProps } from "components/Widget/AdminWidget2";
+import Admin, { AdminProps } from "components/Widget/AdminWidget";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import Router from "next/router";

@@ -16,9 +16,9 @@ export default async function handle(
   const { id, newName, newDescription, newRelations } = req.body;
   const relations = newRelations.map((relation) => ({
     count: relation.count,
-    storageId: relation.storageId,
+    itemId: relation.itemId,
   }));
-  const op = await prisma.item.update({
+  const op = await prisma.storage.update({
     where: {
       id,
     },

@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import { GetServerSideProps } from "next";
 import SearchView from "components/SearchView";
 import prisma from "services/prisma";
-import { AdminProps } from "components/Widget/AdminWidget2";
+import { AdminProps } from "components/Widget/AdminWidget";
 import { useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
 import { errorToast } from "services/toasty";

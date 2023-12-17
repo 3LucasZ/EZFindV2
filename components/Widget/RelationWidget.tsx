@@ -36,8 +36,8 @@ export default function RelationWidget2({
   return (
     <Flex h={8}>
       <Link
-        bg={isItem ? "teal.300" : "blue.300"}
-        _hover={isEdit ? {} : { bg: isItem ? "teal.400" : "blue.400" }}
+        bg={isItem ? "cyan.400" : "blue.400"}
+        _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
         color="white"
         href={
           isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId

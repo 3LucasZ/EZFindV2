@@ -8,7 +8,7 @@ import prisma from "services/prisma";
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget2";
+import { AdminProps } from "components/Widget/AdminWidget";
 import Header from "components/Header";
 
 type PageProps = {

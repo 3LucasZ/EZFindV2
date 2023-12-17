@@ -17,7 +17,7 @@ import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget2";
+import { AdminProps } from "components/Widget/AdminWidget";
 import { useState } from "react";
 import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget";

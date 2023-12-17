@@ -1,5 +1,4 @@
-import { Box, Grid, GridItem, Link } from "@chakra-ui/react";
-import { StorageProps } from "./StorageWidget";
+import { Box, Grid } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
 import { RelationProps } from "./RelationWidget";
 
