@@ -1,11 +1,11 @@
 import { GridItem, Link, Text } from "@chakra-ui/react";
 
 type BaseWidgetProps = {
-  href: string;
+  href?: string;
   title: string;
   bg: string;
+  bgHover?: string;
   colSpan: number;
-  round?: boolean;
 };
 
 export default function BaseWidget({
@@ -13,7 +13,7 @@ export default function BaseWidget({
   title,
   bg,
   colSpan,
-  round,
+  bgHover,
 }: BaseWidgetProps) {
   return (
     <GridItem
@@ -24,7 +24,7 @@ export default function BaseWidget({
       color="white"
       display="flex"
       overflow={"hidden"}
-      borderRadius={round ? "md" : "none"}
+      _hover={{ bg: bgHover }}
     >
       <Link
         href={href}

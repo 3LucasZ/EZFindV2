@@ -42,8 +42,8 @@ export default function Home({ admins }: PageProps) {
           route={"manage-items"}
           text={"Manage Items"}
           icon={FaTools}
-          color={"teal.300"}
-          hoverColor={"teal.100"}
+          color={"cyan.300"}
+          hoverColor={"cyan.100"}
         ></RouteButton>
         {/* {session && admins.includes(session!.user!.email!) && (
           <RouteButton

@@ -9,6 +9,7 @@ import { checkAdmin } from "services/checkAdmin";
 import { errorToast } from "services/toasty";
 import Router from "next/router";
 import { useToast } from "@chakra-ui/react";
+import Header from "components/Header";
 
 type PageProps = {
   storages: StorageProps[];

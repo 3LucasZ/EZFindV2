@@ -20,7 +20,7 @@ import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget2";
 import { useState } from "react";
 import { errorToast } from "services/toasty";
-import RelationWidget2 from "components/Widget/RelationWidget2";
+import RelationWidget2 from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import { AutoResizeTextarea } from "components/AutoResizeTextarea";
