@@ -86,6 +86,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
           isDisabled={!isEdit}
           _disabled={{ color: "black", borderColor: "white" }}
           textAlign={"center"}
+          sx={{ opacity: "1" }}
         />
 
         {isAdmin && (
@@ -162,6 +163,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
           }}
           isDisabled={!isEdit}
           _disabled={{ color: "black", borderColor: "white" }}
+          sx={{ opacity: "1" }}
         />
       </Flex>
 

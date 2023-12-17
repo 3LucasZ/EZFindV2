@@ -85,6 +85,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           display={"block"}
           _disabled={{ color: "black", borderColor: "white" }}
           textAlign={"center"}
+          sx={{ opacity: "1" }}
         />
 
         {isAdmin && (
@@ -158,6 +159,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           maxLength={250}
           _disabled={{ color: "black", borderColor: "white" }}
           fontSize={["xs", "xs", "sm", "md", "lg", "xl"]}
+          sx={{ opacity: "1" }}
         />
       </Flex>
 

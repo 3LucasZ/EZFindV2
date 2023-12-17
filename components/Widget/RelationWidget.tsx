@@ -65,6 +65,8 @@ export default function RelationWidget2({
             h={8}
             textAlign={"center"}
             _disabled={{ color: "white", border: "none" }}
+            sx={{ opacity: "1" }}
+            rounded="none"
           />
         </Box>
       )}
