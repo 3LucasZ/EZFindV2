@@ -49,8 +49,6 @@ export default function SearchView(props: SearchViewProps) {
   const [subset, setSubset] = useState(checked ? setOut : setIn);
   //functions
   function filtered(pairset: PairProps[], q: string) {
-    if (debugMode) console.log(pairset);
-    if (debugMode) console.log(q);
     return pairset.filter((pair) => {
       return q === "" || pair.name.toLowerCase().includes(q.toLowerCase());
     });
