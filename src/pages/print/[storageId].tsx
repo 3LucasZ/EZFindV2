@@ -59,8 +59,8 @@ const StoragePage: React.FC<Props> = (props) => {
         <Heading>Dymo</Heading>
       </Center>
       <Text fontSize="2xl">
-        Sorry, you can not use the DYMO print feature. We could not detect the
-        DYMO Connect service on your device. Please checkout
+        Sorry, you can not use the automatic DYMO print feature. We could not
+        detect the DYMO Connect service on your device. Please checkout
         <Link color="teal.500" href="/help">
           {" our instructions "}
         </Link>

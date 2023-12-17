@@ -46,7 +46,7 @@ export default function ManageAdmin({ admins }: PageProps) {
   return (
     <Layout>
       <Header isAdmin={isAdmin} />
-      <Flex px={[2, "5vw", "10vw", "15vw"]} gap={2}>
+      <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <Input
           variant="filled"
           placeholder="Admin email"
@@ -55,17 +55,15 @@ export default function ManageAdmin({ admins }: PageProps) {
         />
         {isAdmin && (
           <IconButton
-            p={0}
-            ml={2}
-            mr={2}
+            ml={"8px"}
             colorScheme="teal"
-            aria-label="edit"
+            aria-label=""
             icon={<AddIcon />}
             onClick={submitData}
           />
         )}
       </Flex>
-      <Box h={2} />
+      <Box minH={"8px"} />
       {isAdmin && (
         <SearchView
           setIn={admins.map((admin) => ({

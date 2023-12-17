@@ -146,7 +146,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
             <IconButton
               ml={2}
               mr={2}
-              colorScheme="teal"
+              colorScheme="blue"
               aria-label="edit"
               icon={<Icon as={SlPrinter} />}
               onClick={() =>
