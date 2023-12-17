@@ -78,7 +78,9 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : storage.name}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={(e) =>
+            e.target.value.length <= 250 && setNewName(e.target.value)
+          }
           fontSize="4xl"
           display={"block"}
           isDisabled={!isEdit}
@@ -152,7 +154,12 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
               ? storage.description
               : "No description."
           }
-          onChange={(e) => setNewDescription(e.target.value)}
+          onChange={(e) => {
+            console.log(e);
+            if (e.target.value.length <= 250) {
+              setNewDescription(e.target.value);
+            }
+          }}
           isDisabled={!isEdit}
           _disabled={{ color: "black", borderColor: "white" }}
         />
@@ -187,6 +194,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
                       setNewRelations(copy);
                     }
                   }}
+                  key={relation.itemId}
                 />
               ),
             };
@@ -218,6 +226,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
                       setNewRelations(copy);
                     }
                   }}
+                  key={relation.itemId}
                 />
               ),
             };

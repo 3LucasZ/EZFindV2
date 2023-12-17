@@ -79,9 +79,10 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
         <AutoResizeTextarea
           value={isEdit ? newName : item.name}
           onChange={(e) => setNewName(e.target.value)}
-          fontSize="4xl"
-          display={"block"}
           isDisabled={!isEdit}
+          maxLength={50}
+          fontSize={["xl", "xl", "2xl", "3xl", "4xl"]}
+          display={"block"}
           _disabled={{ color: "black", borderColor: "white" }}
           textAlign={"center"}
         />
@@ -154,7 +155,9 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           }
           onChange={(e) => setNewDescription(e.target.value)}
           isDisabled={!isEdit}
+          maxLength={250}
           _disabled={{ color: "black", borderColor: "white" }}
+          fontSize={["xs", "xs", "sm", "md", "lg", "xl"]}
         />
       </Flex>
 
@@ -191,6 +194,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                       setNewRelations(copy);
                     }
                   }}
+                  key={relation.storageId}
                 />
               ),
             };
@@ -226,6 +230,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                       setNewRelations(copy);
                     }
                   }}
+                  key={relation.storageId}
                 />
               ),
             };

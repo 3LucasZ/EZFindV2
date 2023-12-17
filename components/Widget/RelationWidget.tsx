@@ -50,16 +50,11 @@ export default function RelationWidget2({
         w="100%"
         h={8}
         px={5}
-        roundedLeft="md"
       >
         {isItem ? relation.item.name : relation.storage.name}
       </Link>
       {!isInvert && (
-        <Box
-          bg="orange.200"
-          width={"60px"}
-          roundedRight={isEdit ? "none" : "md"}
-        >
+        <Box bg="orange.200" width={"60px"}>
           <Input
             value={relation.count}
             onChange={(e) => handleUpdate(parseInt(e.target.value))}
@@ -83,8 +78,7 @@ export default function RelationWidget2({
           icon={isInvert ? <SmallAddIcon /> : <SmallCloseIcon />}
           h={8}
           w={8}
-          roundedLeft="none"
-          roundedRight="md"
+          rounded="none"
         />
       )}
     </Flex>
