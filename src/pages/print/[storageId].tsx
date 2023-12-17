@@ -10,7 +10,6 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
-import { PrismaClient } from "@prisma/client";
 import { GetServerSideProps } from "next";
 import { useQRCode } from "next-qrcode";
 import Router from "next/router";
@@ -77,7 +76,7 @@ const StoragePage: React.FC<Props> = (props) => {
     const fetchData = async () => {
       const Dymo = require("dymojs"),
         dymo = new Dymo();
-      //dymo.
+      //dymo
       await dymo //get sticker preview as h265 string
         .renderLabel(props.xml)
         .then((imageData: string) => {
