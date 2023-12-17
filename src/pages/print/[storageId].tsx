@@ -61,10 +61,7 @@ const StoragePage: React.FC<Props> = (props) => {
       <Text fontSize="2xl">
         Sorry, you can not use the DYMO print feature. We could not detect the
         DYMO Connect service on your device. Please checkout
-        <Link
-          color="teal.500"
-          href="https://github.com/3LucasZ/ez-find/blob/main/README.md"
-        >
+        <Link color="teal.500" href="/help">
           {" our instructions "}
         </Link>
         on how to enable the service. Thank you!
