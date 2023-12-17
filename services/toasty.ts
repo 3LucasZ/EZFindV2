@@ -13,7 +13,7 @@ export function errorToast(toaster: any, desc: string) {
     title: "Error",
     description: desc,
     status: "error",
-    duration: 5000,
+    duration: 10000,
     isClosable: true,
   });
 }
