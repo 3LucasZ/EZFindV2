@@ -63,7 +63,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
     try {
       const body = { id: item.id };
       const res = await fetch("/api/delete-item", {
-        method: "DELETE",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -263,9 +263,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const admins = await prisma.admin.findMany();
   return {
     props: {
-      item: item,
-      storages: storages,
-      admins: admins,
+      item,
+      storages,
+      admins,
     },
   };
 };

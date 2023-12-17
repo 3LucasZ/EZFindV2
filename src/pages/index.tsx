@@ -22,12 +22,12 @@ export default function Home({ admins }: PageProps) {
       <Header isAdmin={isAdmin} />
       <SimpleGrid
         columns={[1, 2]}
-        spacing={10}
         overflowY="auto"
         w="100svw"
         h={"100%"}
-        top={"50%"}
-        pb="10"
+        position={"fixed"}
+        py={16}
+        top={"0%"}
       >
         {/* {session && admins.includes(session!.user!.email!) && (
           <RouteButton

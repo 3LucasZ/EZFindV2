@@ -6,7 +6,14 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  CloseIcon,
+  DeleteIcon,
+  EditIcon,
+  Icon,
+} from "@chakra-ui/icons";
+import { SlPrinter } from "react-icons/sl";
 import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
 import { StorageProps } from "components/Widget/StorageWidget";
@@ -78,12 +85,11 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : storage.name}
-          onChange={(e) =>
-            e.target.value.length <= 250 && setNewName(e.target.value)
-          }
-          fontSize="4xl"
-          display={"block"}
+          onChange={(e) => setNewName(e.target.value)}
           isDisabled={!isEdit}
+          maxLength={50}
+          fontSize={["xl", "xl", "2xl", "3xl", "4xl"]}
+          display={"block"}
           _disabled={{ color: "black", borderColor: "white" }}
           textAlign={"center"}
           sx={{ opacity: "1" }}
@@ -137,6 +143,18 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
                 }
               }}
             />
+            <IconButton
+              ml={2}
+              mr={2}
+              colorScheme="teal"
+              aria-label="edit"
+              icon={<Icon as={SlPrinter} />}
+              onClick={() =>
+                Router.push({
+                  pathname: "/print/" + storage.id,
+                })
+              }
+            />
             <ConfirmDeleteModal
               isOpen={isOpen}
               onClose={onClose}
@@ -155,14 +173,11 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
               ? storage.description
               : "No description."
           }
-          onChange={(e) => {
-            console.log(e);
-            if (e.target.value.length <= 250) {
-              setNewDescription(e.target.value);
-            }
-          }}
+          onChange={(e) => setNewDescription(e.target.value)}
           isDisabled={!isEdit}
+          maxLength={250}
           _disabled={{ color: "black", borderColor: "white" }}
+          fontSize={["xs", "xs", "sm", "md", "lg", "xl"]}
           sx={{ opacity: "1" }}
         />
       </Flex>
