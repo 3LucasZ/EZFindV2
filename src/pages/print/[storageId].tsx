@@ -53,7 +53,26 @@ const StoragePage: React.FC<Props> = (props) => {
     []
   );
   const [value, setValue] = useState<{ value: number; label: string }>();
-
+  //UI
+  const NoDymoUI = (
+    <Stack spacing={3}>
+      <Center>
+        <Heading>Dymo</Heading>
+      </Center>
+      <Text fontSize="2xl">
+        Sorry, you can not use the DYMO print feature. We could not detect the
+        DYMO Connect service on your device. Please checkout
+        <Link
+          color="teal.500"
+          href="https://github.com/3LucasZ/ez-find/blob/main/README.md"
+        >
+          {" our instructions "}
+        </Link>
+        on how to enable the service. Thank you!
+      </Text>
+    </Stack>
+  );
+  //useEffect
   useEffect(() => {
     const fetchData = async () => {
       const Dymo = require("dymojs"),
@@ -148,8 +167,14 @@ const StoragePage: React.FC<Props> = (props) => {
             <Center>
               <Text>Take a screenshot of the image below:</Text>
             </Center>
+            <Box h="8px" />
             <Center>
-              <Box borderColor="black" borderWidth={2} width="max-content">
+              <Box
+                borderColor="black"
+                borderWidth={2}
+                width="max-content"
+                p={10}
+              >
                 <Image
                   text={props.url}
                   options={{
@@ -174,98 +199,79 @@ const StoragePage: React.FC<Props> = (props) => {
             </Center>
           </Flex>
           {/* DYMO Printing */}
-          <Flex>
-            {img == "" ? (
-              <Stack spacing={3}>
+
+          {img == "" ? (
+            NoDymoUI
+          ) : (
+            <Flex flexDir="column">
+              <Center>
+                <Heading>Dymo</Heading>
+              </Center>
+              <SimpleGrid columns={[1, 1, 2]} spacing="8px">
                 <Center>
-                  <Heading>Dymo</Heading>
+                  <ChImage
+                    padding="4"
+                    bgColor="teal.100"
+                    borderRadius="3vmin"
+                    src={"data:image/png;base64, " + img}
+                    alt="label"
+                  />
                 </Center>
-                <Text fontSize="2xl">
-                  {
-                    "Sorry, you can not use the DYMO print feature. We could not detect the DYMO Connect service on your device. Please checkout "
-                  }
-                  <Link
-                    color="teal.500"
-                    href="https://github.com/3LucasZ/ez-find/blob/main/README.md"
+                <Stack spacing={3}>
+                  <Select value={value} options={options} />
+                  <Button
+                    colorScheme="teal"
+                    onClick={() => {
+                      console.log("Print");
+                      const Dymo = require("dymojs"),
+                        dymo = new Dymo();
+                      dymo
+                        .print(value?.label, props.xml)
+                        .then((response: any, result: any) => {
+                          console.log(
+                            "Response: ",
+                            response,
+                            "result: ",
+                            result
+                          );
+                        })
+                        .catch(() => {
+                          Router.push({ pathname: "/print/" + props.id });
+                        });
+                    }}
                   >
-                    {" our instructions "}
-                  </Link>
-                  on how to enable the service. Thank you!
-                </Text>
-              </Stack>
-            ) : (
-              <Stack>
-                <Center>
-                  <Heading>Dymo</Heading>
-                </Center>
-                <SimpleGrid columns={[1, 1, 2]} spacing="8px">
-                  <Center>
-                    <ChImage
-                      padding="4"
-                      bgColor="teal.100"
-                      borderRadius="3vmin"
-                      src={"data:image/png;base64, " + img}
-                      alt="label"
-                    />
-                  </Center>
-                  <Stack spacing={3}>
-                    <Select value={value} options={options} />
-
-                    <Button
-                      colorScheme="teal"
-                      onClick={() => {
-                        console.log("Print");
-                        const Dymo = require("dymojs"),
-                          dymo = new Dymo();
-                        dymo
-                          .print(value?.label, props.xml)
-                          .then((response: any, result: any) => {
-                            console.log(
-                              "Response: ",
-                              response,
-                              "result: ",
-                              result
-                            );
-                          })
-                          .catch(() => {
-                            Router.push({ pathname: "/print/" + props.id });
-                          });
-                      }}
-                    >
-                      Print
-                    </Button>
-
-                    <Box
-                      bg={status ? "green.400" : "tomato"}
-                      color="white"
-                      borderRadius="md"
-                      p={2}
-                      textAlign={"center"}
-                    >
-                      {status
-                        ? "DYMO Service Connected"
-                        : "DYMO Service Disconnected"}
-                    </Box>
-                    <Box
-                      bg={
-                        value != null && printers[value.value].isConnected
-                          ? "green.400"
-                          : "tomato"
-                      }
-                      p={2}
-                      color="white"
-                      borderRadius="md"
-                      textAlign={"center"}
-                    >
-                      {value != null && printers[value.value].isConnected
-                        ? "Printer Connected"
-                        : "Printer Disconnected"}
-                    </Box>
-                  </Stack>
-                </SimpleGrid>
-              </Stack>
-            )}
-          </Flex>
+                    Print
+                  </Button>
+                  <Box
+                    bg={status ? "green.400" : "tomato"}
+                    color="white"
+                    borderRadius="md"
+                    p={2}
+                    textAlign={"center"}
+                  >
+                    {status
+                      ? "DYMO Service Connected"
+                      : "DYMO Service Disconnected"}
+                  </Box>
+                  <Box
+                    bg={
+                      value != null && printers[value.value].isConnected
+                        ? "green.400"
+                        : "tomato"
+                    }
+                    p={2}
+                    color="white"
+                    borderRadius="md"
+                    textAlign={"center"}
+                  >
+                    {value != null && printers[value.value].isConnected
+                      ? "Printer Connected"
+                      : "Printer Disconnected"}
+                  </Box>
+                </Stack>
+              </SimpleGrid>
+            </Flex>
+          )}
         </SimpleGrid>
         <Box minH={"calc(58px + env(safe-area-inset-bottom))"}></Box>
       </Box>
