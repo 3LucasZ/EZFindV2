@@ -39,22 +39,27 @@ export default function RelationWidget2({
           pointerEvents: isEdit && "none",
         }}
         w="100%"
-        h="100%"
+        h={8}
         px={5}
+        roundedLeft="md"
       >
         {isItem ? relation.item.name : relation.storage.name}
       </Link>
       {!isInvert && (
-        <Box bg="orange.200" width={"60px"}>
+        <Box
+          bg="orange.200"
+          width={"60px"}
+          roundedRight={isEdit ? "none" : "md"}
+        >
           <Input
-            color="white"
             value={relation.count}
+            onChange={(e) => handleUpdate(parseInt(e.target.value))}
+            isDisabled={!isEdit}
             type="number"
+            color="white"
             p="0"
             h={8}
-            onChange={(e) => handleUpdate(parseInt(e.target.value))}
             textAlign={"center"}
-            isDisabled={!isEdit}
             _disabled={{ color: "white", border: "none" }}
           />
         </Box>
@@ -69,7 +74,8 @@ export default function RelationWidget2({
           icon={isInvert ? <SmallAddIcon /> : <SmallCloseIcon />}
           h={8}
           w={8}
-          rounded="none"
+          roundedLeft="none"
+          roundedRight="md"
         />
       )}
     </Flex>
