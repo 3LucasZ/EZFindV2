@@ -1,4 +1,12 @@
-import { Box, Flex, IconButton, Input, Link, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Input,
+  Link,
+  useToast,
+  Text,
+} from "@chakra-ui/react";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { ItemProps } from "./ItemWidget";
 import { StorageProps } from "./StorageWidget";
@@ -51,15 +59,20 @@ export default function RelationWidget2({
         h={8}
         px={5}
       >
-        {isItem ? relation.item.name : relation.storage.name}
+        <Text noOfLines={1} h={6}>
+          {isItem ? relation.item.name : relation.storage.name}
+        </Text>
       </Link>
       {!isInvert && (
-        <Box bg="orange.200" width={"60px"}>
+        <Box bg="orange.200" w={"60px"}>
           <Input
             value={relation.count}
-            onChange={(e) => handleUpdate(parseInt(e.target.value))}
+            onChange={(e) => {
+              const num = parseInt(e.target.value);
+              handleUpdate(Number.isNaN(num) ? 0 : parseInt(e.target.value));
+            }}
             isDisabled={!isEdit}
-            type="number"
+            type="tel"
             color="white"
             p={0}
             h={8}
@@ -67,6 +80,7 @@ export default function RelationWidget2({
             _disabled={{ color: "white", border: "none" }}
             sx={{ opacity: "1" }}
             rounded="none"
+            maxLength={4}
           />
         </Box>
       )}
