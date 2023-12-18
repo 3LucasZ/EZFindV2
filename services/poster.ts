@@ -1,6 +1,10 @@
 import { errorToast, successToast } from "./toasty";
 
-export async function poster(path: string, body: any, toaster: any) {
+export async function poster(
+  path: string,
+  body: any,
+  toaster: any
+): Promise<Response> {
   try {
     const res = await fetch(path, {
       method: "POST",
@@ -9,13 +13,12 @@ export async function poster(path: string, body: any, toaster: any) {
     });
     if (res.status != 200) {
       errorToast(toaster, "" + (await res.json()));
-      return false;
     } else {
       successToast(toaster, "Success!");
-      return true;
     }
+    return res;
   } catch (error) {
     errorToast(toaster, "Unknown error: " + error);
-    return false;
+    return new Response();
   }
 }
