@@ -10,6 +10,7 @@ import Router from "next/router";
 import { errorToast } from "services/toasty";
 import { useToast } from "@chakra-ui/react";
 import Header from "components/Header";
+import { poster } from "services/poster";
 
 type PageProps = {
   items: ItemProps[];
@@ -28,16 +29,10 @@ export default function ManageItems({ items, admins }: PageProps) {
           widget: <ItemWidget item={item} key={item.id} />,
         }))}
         onAdd={async () => {
-          try {
-            const res = await fetch("/api/create-item", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(""),
-            });
+          const body = JSON.stringify("");
+          const res = await poster("/api/create-item", body, toaster);
+          if (res.status == 200)
             await Router.push({ pathname: "/item/" + (await res.json()) });
-          } catch (error) {
-            errorToast(toaster, "" + error);
-          }
         }}
         isAdmin={isAdmin}
         isEdit={false}

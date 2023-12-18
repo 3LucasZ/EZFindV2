@@ -10,6 +10,7 @@ import { errorToast } from "services/toasty";
 import Router from "next/router";
 import { useToast } from "@chakra-ui/react";
 import Header from "components/Header";
+import { poster } from "services/poster";
 
 type PageProps = {
   storages: StorageProps[];
@@ -28,16 +29,10 @@ export default function ManageStorages({ storages, admins }: PageProps) {
           widget: <StorageWidget storage={storage} key={storage.id} />,
         }))}
         onAdd={async () => {
-          try {
-            const res = await fetch("/api/create-storage", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(""),
-            });
+          const body = JSON.stringify("");
+          const res = await poster("/api/create-storage", body, toaster);
+          if (res.status == 200)
             await Router.push({ pathname: "/storage/" + (await res.json()) });
-          } catch (error) {
-            errorToast(toaster, "" + error);
-          }
         }}
         isAdmin={isAdmin}
         isEdit={false}
