@@ -272,6 +272,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
   const items = await prisma.item.findMany({});
   const admins = await prisma.admin.findMany();
+  if (storage == null) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  }
   return {
     props: {
       storage,

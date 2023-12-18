@@ -290,7 +290,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const path = "/storage/" + storage?.id;
   const url = "https://" + domain + path;
   const xml: string = genXML(url, "" + storage?.name);
-
+  if (storage == null) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+    };
+  }
   return {
     props: {
       url,
