@@ -36,6 +36,6 @@ export function prismaErrHandler(e: any): string {
       //   return "Unhandled error: " + e.code + " | " + e.message;
     }
   } else {
-    return "0";
+    return "Unknown error: " + e;
   }
 }
