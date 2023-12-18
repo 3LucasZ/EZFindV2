@@ -97,8 +97,8 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
           sx={{ opacity: "1" }}
         />
 
-        {isAdmin && (
-          <Center>
+        <Center>
+          {isAdmin && (
             <IconButton
               ml={2}
               mr={2}
@@ -116,6 +116,8 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
                 }
               }}
             />
+          )}
+          {isAdmin && (
             <IconButton
               colorScheme="red"
               aria-label=""
@@ -128,26 +130,26 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
                 }
               }}
             />
-            <IconButton
-              ml={2}
-              mr={2}
-              colorScheme="blue"
-              aria-label="edit"
-              icon={<Icon as={SlPrinter} />}
-              onClick={() =>
-                Router.push({
-                  pathname: "/print/" + storage.id,
-                })
-              }
-            />
-            <ConfirmDeleteModal
-              isOpen={isOpen}
-              onClose={onClose}
-              name={" the storage: " + storage.name}
-              handleDelete={handleDelete}
-            />
-          </Center>
-        )}
+          )}
+          <IconButton
+            ml={2}
+            mr={2}
+            colorScheme="blue"
+            aria-label="edit"
+            icon={<Icon as={SlPrinter} />}
+            onClick={() =>
+              Router.push({
+                pathname: "/print/" + storage.id,
+              })
+            }
+          />
+          <ConfirmDeleteModal
+            isOpen={isOpen}
+            onClose={onClose}
+            name={" the storage: " + storage.name}
+            handleDelete={handleDelete}
+          />
+        </Center>
       </Flex>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
