@@ -264,6 +264,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (item == null) {
     return {
       redirect: {
+        permanent: false,
         destination: "/",
       },
     };
