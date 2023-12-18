@@ -100,7 +100,6 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
               icon={isEdit ? <CheckIcon /> : <EditIcon />}
               onClick={async () => {
                 if (isEdit) {
-                  setIsEdit(false);
                   handleUpdateItem();
                 } else {
                   setNewName(item.name);
