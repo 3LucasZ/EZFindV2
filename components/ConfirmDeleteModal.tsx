@@ -7,9 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useToast,
 } from "@chakra-ui/react";
-import { successToast } from "services/toasty";
 
 type PageProps = {
   onClose: () => void;
@@ -18,7 +16,6 @@ type PageProps = {
   handleDelete: () => Promise<void>;
 };
 export default function ConfirmDeleteModal(props: PageProps) {
-  const toaster = useToast();
   return (
     <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
       <ModalOverlay />
@@ -32,7 +29,6 @@ export default function ConfirmDeleteModal(props: PageProps) {
           </Button>
           <Button
             onClick={() => {
-              successToast(toaster, "Success!");
               props.onClose();
               props.handleDelete();
             }}
