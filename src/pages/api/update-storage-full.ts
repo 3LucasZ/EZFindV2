@@ -19,7 +19,7 @@ export default async function handle(
     itemId: relation.itemId,
   }));
   if (newName == "")
-    return res.status(500).json("Object name can not be empty");
+    return res.status(500).json("Storage name can not be empty.");
   try {
     const op = await prisma.storage.update({
       where: {
@@ -36,8 +36,6 @@ export default async function handle(
     });
     return res.status(200).json(op);
   } catch (e) {
-    const msg = prismaErrHandler(e);
-    if (msg != "0") return res.status(500).json(msg);
-    else return res.status(500).json("Unknown error: " + e);
+    return res.status(500).json(prismaErrHandler(e));
   }
 }
