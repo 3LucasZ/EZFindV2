@@ -61,7 +61,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   const handleDelete = async () => {
     const body = { id: item.id };
     const res = await poster("/api/delete-item", body, toaster);
-    if (res) await Router.push({ pathname: "/manage-items" });
+    if (res.status == 200) await Router.push({ pathname: "/manage-items" });
   };
   // handle update item
   const handleUpdateItem = async () => {
@@ -72,7 +72,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       newRelations,
     };
     const res = await poster("/api/update-item-full", body, toaster);
-    if (res) Router.reload();
+    if (res.status == 200) Router.reload();
   };
 
   return (

@@ -29,7 +29,7 @@ export default function ManageAdmin({ admins }: PageProps) {
     e.preventDefault();
     const body = { email };
     const res = await poster("/api/create-admin", body, toaster);
-    if (res) Router.reload();
+    if (res.status == 200) Router.reload();
   };
   return (
     <Layout>

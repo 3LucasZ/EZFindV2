@@ -68,7 +68,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
   const handleDelete = async () => {
     const body = { id: storage.id };
     const res = await poster("/api/delete-storage", body, toaster);
-    if (res) await Router.push({ pathname: "/manage-storages" });
+    if (res.status == 200) await Router.push({ pathname: "/manage-storages" });
   };
   //handle update storage
   const handleUpdateStorage = async () => {
@@ -79,7 +79,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
       newRelations,
     };
     const res = await poster("/api/update-storage-full", body, toaster);
-    if (res) Router.reload();
+    if (res.status == 200) Router.reload();
   };
 
   return (
