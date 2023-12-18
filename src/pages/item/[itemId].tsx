@@ -4,7 +4,6 @@ import {
   IconButton,
   useDisclosure,
   useToast,
-  Box,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ItemProps } from "components/Widget/ItemWidget";
@@ -19,11 +18,11 @@ import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget";
 import { useState } from "react";
-import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import { AutoResizeTextarea } from "components/AutoResizeTextarea";
+import { poster } from "services/poster";
 
 type PageProps = {
   item: ItemProps;
@@ -60,17 +59,20 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
-    try {
-      const body = { id: item.id };
-      const res = await fetch("/api/delete-item", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await Router.push({ pathname: "/manage-items" });
-    } catch (error) {
-      errorToast(toaster, "" + error);
-    }
+    const body = { id: item.id };
+    const res = await poster("/api/delete-item", body, toaster);
+    if (res) await Router.push({ pathname: "/manage-items" });
+  };
+  // handle update item
+  const handleUpdateItem = async () => {
+    const body = {
+      id: item.id,
+      newName,
+      newDescription,
+      newRelations,
+    };
+    const res = await poster("/api/update-item-full", body, toaster);
+    if (res) Router.reload();
   };
 
   return (
@@ -99,23 +101,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
               onClick={async () => {
                 if (isEdit) {
                   setIsEdit(false);
-                  try {
-                    const body = {
-                      id: item.id,
-                      newName,
-                      newDescription,
-                      newRelations,
-                    };
-                    const res = await fetch("/api/update-item-full", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(body),
-                    });
-                    Router.reload();
-                    errorToast(toaster, await res.json());
-                  } catch (error) {
-                    errorToast(toaster, "" + error);
-                  }
+                  handleUpdateItem();
                 } else {
                   setNewName(item.name);
                   setNewDescription(item.description);

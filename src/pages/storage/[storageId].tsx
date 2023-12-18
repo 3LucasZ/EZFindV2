@@ -4,7 +4,6 @@ import {
   IconButton,
   useDisclosure,
   useToast,
-  Box,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -26,11 +25,11 @@ import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
 import { AdminProps } from "components/Widget/AdminWidget";
 import { useState } from "react";
-import { errorToast } from "services/toasty";
 import RelationWidget2 from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import { AutoResizeTextarea } from "components/AutoResizeTextarea";
+import { poster } from "services/poster";
 
 type PageProps = {
   storage: StorageProps;
@@ -67,17 +66,20 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
   // handle delete modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDelete = async () => {
-    try {
-      const body = { id: storage.id };
-      const res = await fetch("/api/delete-storage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await Router.push({ pathname: "/manage-storages" });
-    } catch (error) {
-      errorToast(toaster, "" + error);
-    }
+    const body = { id: storage.id };
+    const res = await poster("/api/delete-storage", body, toaster);
+    if (res) await Router.push({ pathname: "/manage-storages" });
+  };
+  //handle update storage
+  const handleUpdateStorage = async () => {
+    const body = {
+      id: storage.id,
+      newName,
+      newDescription,
+      newRelations,
+    };
+    const res = await poster("/api/update-storage-full", body, toaster);
+    if (res) Router.reload();
   };
 
   return (
@@ -106,23 +108,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
               onClick={async () => {
                 if (isEdit) {
                   setIsEdit(false);
-                  try {
-                    const body = {
-                      id: storage.id,
-                      newName,
-                      newDescription,
-                      newRelations,
-                    };
-                    const res = await fetch("/api/update-storage-full", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(body),
-                    });
-                    Router.reload();
-                    errorToast(toaster, await res.json());
-                  } catch (error) {
-                    errorToast(toaster, "" + error);
-                  }
+                  handleUpdateStorage();
                 } else {
                   setNewName(storage.name);
                   setNewDescription(storage.description);
