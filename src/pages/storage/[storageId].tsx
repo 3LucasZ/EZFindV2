@@ -107,7 +107,6 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
               icon={isEdit ? <CheckIcon /> : <EditIcon />}
               onClick={async () => {
                 if (isEdit) {
-                  setIsEdit(false);
                   handleUpdateStorage();
                 } else {
                   setNewName(storage.name);
