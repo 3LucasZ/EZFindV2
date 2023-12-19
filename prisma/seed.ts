@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { debugMode } from "services/constants";
 const prisma = new PrismaClient();
 async function main() {
   const admin1 = await prisma.admin.upsert({
@@ -10,25 +11,27 @@ async function main() {
       email: "lucas.zheng@warriorlife.net",
     },
   });
-  for (let i = 0; i < 50; i++) {
-    await prisma.item.upsert({
-      create: {
-        name: "Item #" + i,
-        description: "",
-      },
-      update: {},
-      where: { name: "Item #" + i },
-    });
-  }
-  for (let i = 0; i < 50; i++) {
-    await prisma.storage.upsert({
-      create: {
-        name: "Storage #" + i,
-        description: "",
-      },
-      update: {},
-      where: { name: "Storage #" + i },
-    });
+  if (debugMode) {
+    for (let i = 0; i < 50; i++) {
+      await prisma.item.upsert({
+        create: {
+          name: "Item #" + i,
+          description: "",
+        },
+        update: {},
+        where: { name: "Item #" + i },
+      });
+    }
+    for (let i = 0; i < 50; i++) {
+      await prisma.storage.upsert({
+        create: {
+          name: "Storage #" + i,
+          description: "",
+        },
+        update: {},
+        where: { name: "Storage #" + i },
+      });
+    }
   }
 }
 main()
