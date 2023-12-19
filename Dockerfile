@@ -1,6 +1,6 @@
 # Dockerfile
 
-##### DEPENDENCIES
+##### DEPENDENCIES 
 
 #EDIT: Use 20.9.0, arm64
 FROM --platform=linux/arm64 node:20.9.0-alpine3.17 AS deps
