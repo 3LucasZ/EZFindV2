@@ -28,6 +28,7 @@ export default function Home({ admins }: PageProps) {
         position={"fixed"}
         py={16}
         top={"0%"}
+        zIndex={-100}
       >
         {/* {session && admins.includes(session!.user!.email!) && (
           <RouteButton
