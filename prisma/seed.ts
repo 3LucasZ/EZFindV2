@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { debugMode } from "services/constants";
+
 const prisma = new PrismaClient();
 async function main() {
   const admin1 = await prisma.admin.upsert({
@@ -11,7 +11,7 @@ async function main() {
       email: "lucas.zheng@warriorlife.net",
     },
   });
-  if (debugMode) {
+  if (false) {
     for (let i = 0; i < 50; i++) {
       await prisma.item.upsert({
         create: {
