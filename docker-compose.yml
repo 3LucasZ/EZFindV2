@@ -4,6 +4,8 @@ services:
     platform: "linux/arm64"
     image: daftdove/ezfind-nginx:latest
     container_name: ezfind-nginx
+    depends_on:
+      - app
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -30,7 +32,6 @@ services:
     container_name: ezfind-app
     depends_on: # wait for postgres to be installed before running prisma migrate
       - db
-      - nginx
     build:
       context: .
       dockerfile: Dockerfile
