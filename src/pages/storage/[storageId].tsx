@@ -28,7 +28,7 @@ import { useState } from "react";
 import RelationWidget2 from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
-import { AutoResizeTextarea } from "components/AutoResizeTextarea";
+import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
 
 type PageProps = {
