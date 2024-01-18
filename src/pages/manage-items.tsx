@@ -22,7 +22,6 @@ export default function ManageItems({ items, admins }: PageProps) {
   const toaster = useToast();
   return (
     <Layout>
-      <Header />
       <Box minH="8px"></Box>
       <SearchView
         setIn={items.map((item) => ({

@@ -33,7 +33,7 @@ export default function ManageAdmin({ admins }: PageProps) {
   };
   return (
     <Layout>
-      <Header />
+      <Box minH="8px"></Box>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <Input
           variant="filled"

@@ -152,7 +152,6 @@ const StoragePage: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <Header isAdmin={isAdmin} />
       <Box overflowY="auto">
         <SimpleGrid columns={[1, 2]} spacing={10} px={5}>
           {/* Manual Printing */}

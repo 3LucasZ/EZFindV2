@@ -50,6 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             WebkitTapHighlightColor: "rgba(0,0,0,0)",
           }}
         >
+          <Header />
           {children}
           <AppBar />
         </Flex>

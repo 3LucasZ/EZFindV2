@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
 import { debugMode } from "services/constants";
+import { FAB } from "./FAB";
 
 type SearchViewProps = {
   setIn: PairProps[];
@@ -76,12 +77,13 @@ export default function SearchView(props: SearchViewProps) {
           onChange={handleSearchQueryChange}
         />
         {props.onAdd && props.isAdmin && (
-          <IconButton
-            colorScheme="teal"
-            aria-label="edit"
-            icon={<AddIcon />}
-            onClick={() => props.onAdd && props.onAdd()}
-          />
+          // <IconButton
+          //   colorScheme="teal"
+          //   aria-label="edit"
+          //   icon={<AddIcon />}
+          //   onClick={() => props.onAdd && props.onAdd()}
+          // />
+          <FAB onClick={() => props.onAdd && props.onAdd()} />
         )}
         {props.setOut && (
           <Checkbox
@@ -113,8 +115,9 @@ export default function SearchView(props: SearchViewProps) {
             return pair.widget;
           })
         )}
+        <Box h={"8px"}></Box>
       </Flex>
-      <Box minH={"calc(58px + env(safe-area-inset-bottom))"}></Box>
+      <Box minH={"calc(50px + env(safe-area-inset-bottom))"}></Box>
     </>
   );
 }

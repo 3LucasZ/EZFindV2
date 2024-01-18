@@ -23,6 +23,7 @@ import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
+import Header from "components/Header";
 
 type PageProps = {
   item: ItemProps;

@@ -30,6 +30,13 @@ export default function AvatarMenu() {
         </Text>
         <MenuItem
           onClick={(e) => {
+            Router.push("/manage-admin");
+          }}
+        >
+          Admin Dashboard
+        </MenuItem>
+        <MenuItem
+          onClick={(e) => {
             if (debugMode) console.log(e);
             e.preventDefault();
 
@@ -39,13 +46,6 @@ export default function AvatarMenu() {
           }}
         >
           {session ? "Sign out" : "Sign in"}
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            Router.push("/");
-          }}
-        >
-          Home
         </MenuItem>
       </MenuList>
     </Menu>
