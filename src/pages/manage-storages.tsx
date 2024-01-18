@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
 import { errorToast } from "services/toasty";
 import Router from "next/router";
-import { useToast } from "@chakra-ui/react";
+import { Box, useToast } from "@chakra-ui/react";
 import Header from "components/Header";
 import { poster } from "services/poster";
 
@@ -22,7 +22,8 @@ export default function ManageStorages({ storages, admins }: PageProps) {
   const toaster = useToast();
   return (
     <Layout>
-      <Header isAdmin={isAdmin} />
+      <Header />
+      <Box minH="8px"></Box>
       <SearchView
         setIn={storages.map((storage) => ({
           name: storage.name,
