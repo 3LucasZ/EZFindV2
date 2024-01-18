@@ -15,8 +15,8 @@ const { GOOGLE_ID = "", GOOGLE_SECRET = "" } = process.env;
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const { host } = req.headers;
 
-  if (!host) return res.status(400).send(`Bad Request, missing host header`);
-  //else return res.status(400).send("Debug: " + host);
+  if (!host) return res.status(400).json(`Bad Request, missing host header`);
+  // else return res.status(400).json("Debug: " + host);
 
   process.env.NEXTAUTH_URL = "https://" + host;
 
