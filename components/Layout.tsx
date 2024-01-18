@@ -5,7 +5,12 @@ import { useSession } from "next-auth/react";
 import AppBar from "./AppBar";
 import Header from "./Header";
 
-export default function Layout({ children }: { children: ReactNode }) {
+type LayoutProps = {
+  isAdmin: boolean;
+  children: ReactNode;
+};
+
+export default function Layout({ isAdmin, children }: LayoutProps) {
   const { data: session, status } = useSession();
   useEffect(() => {
     const html = document.querySelector("html") || new HTMLBodyElement();
@@ -50,7 +55,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             WebkitTapHighlightColor: "rgba(0,0,0,0)",
           }}
         >
-          <Header />
+          <Header isAdmin={isAdmin} />
           {children}
           <AppBar />
         </Flex>

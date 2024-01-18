@@ -32,7 +32,7 @@ export default function ManageAdmin({ admins }: PageProps) {
     if (res.status == 200) Router.reload();
   };
   return (
-    <Layout>
+    <Layout isAdmin={isAdmin}>
       <Box minH="8px"></Box>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <Input

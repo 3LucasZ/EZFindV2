@@ -18,7 +18,7 @@ export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();
   const isAdmin = checkAdmin(session, admins);
   return (
-    <Layout>
+    <Layout isAdmin={isAdmin}>
       <SimpleGrid
         columns={[1, 2]}
         overflowY="auto"

@@ -83,7 +83,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
   };
 
   return (
-    <Layout>
+    <Layout isAdmin={isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : storage.name}

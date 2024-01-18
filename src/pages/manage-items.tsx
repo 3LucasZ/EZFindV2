@@ -21,7 +21,7 @@ export default function ManageItems({ items, admins }: PageProps) {
   const isAdmin = checkAdmin(session, admins);
   const toaster = useToast();
   return (
-    <Layout>
+    <Layout isAdmin={isAdmin}>
       <Box minH="8px"></Box>
       <SearchView
         setIn={items.map((item) => ({

@@ -77,7 +77,7 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
   };
 
   return (
-    <Layout>
+    <Layout isAdmin={isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : item.name}

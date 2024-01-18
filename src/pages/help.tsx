@@ -22,7 +22,7 @@ export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();
   const isAdmin = checkAdmin(session, admins);
   return (
-    <Layout>
+    <Layout isAdmin={isAdmin}>
       <Box px="5" overflowY="auto">
         <Text fontSize="4xl">Version</Text>
         <Text fontSize="xl">2.2 (Alpha)</Text>
