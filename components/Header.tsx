@@ -13,7 +13,7 @@ export default function Header() {
         py="1"
       >
         <Heading size={["xl", "2xl", "3xl"]} color="teal.500" w="100%">
-          EZCheck
+          EZFind
         </Heading>
         <AvatarMenu />
       </HStack>
