@@ -80,7 +80,7 @@ export default function Home({ admins }: PageProps) {
         <Text fontSize={"4xl"}>Documents</Text>
         <Link
           color="teal.500"
-          href="https://www.freeprivacypolicy.com/live/ecbf96ef-5d3a-49e3-a3b1-c4d00ade0934"
+          href="https://www.freeprivacypolicy.com/live/867a55b1-f612-458c-a96b-73337e43fe99"
           display={"block"}
           fontSize={"xl"}
         >
@@ -88,7 +88,7 @@ export default function Home({ admins }: PageProps) {
         </Link>
         <Link
           color="teal.500"
-          href="https://www.freeprivacypolicy.com/live/f2d9ef3d-0010-4737-84ac-55143be8a3a0"
+          href="https://www.freeprivacypolicy.com/live/a127aadd-459e-4134-89e1-c2773f78391f"
           display={"block"}
           fontSize={"xl"}
         >
@@ -96,7 +96,7 @@ export default function Home({ admins }: PageProps) {
         </Link>
         <Text fontSize="4xl">Help</Text>
         <Text fontSize="xl">
-          Please do not hesitate to email us at REDACTED if you have any
+          Please do not hesitate to email us at sahuber@vcs.net if you have any
           questions, need further instruction, or have suggestions for
           improvement.
         </Text>
