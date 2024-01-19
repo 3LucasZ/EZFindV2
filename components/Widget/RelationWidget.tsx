@@ -42,11 +42,32 @@ export default function RelationWidget2({
   const toaster = useToast();
   //ret
   return (
-    <Box display="flex" overflow="hidden" rounded="md" minH={8} maxW="100%">
+    <Box
+      //size
+      minH={8}
+      maxW="100%"
+      //color
+      bg={isItem ? "cyan.400" : "blue.400"}
+      _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
+      color="white"
+      //position
+      flexDir="row"
+      alignItems={"center"}
+      //misc
+      display="flex"
+      overflow="hidden"
+      rounded="md"
+    >
       <Link
-        bg={isItem ? "cyan.400" : "blue.400"}
-        _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
-        color="white"
+        //size
+        w={
+          "calc(100%" +
+          (!isInvert ? " - 60px" : "") +
+          (isEdit ? " - 40px" : "") +
+          ")"
+        }
+        px={4}
+        //misc
         href={
           isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId
         }
@@ -55,16 +76,8 @@ export default function RelationWidget2({
           WebkitUserDrag: "none",
           pointerEvents: isEdit && "none",
         }}
-        w={
-          "calc(100%" +
-          (!isInvert ? " - 60px" : "") +
-          (isEdit ? " - 40px" : "") +
-          ")"
-        }
-        h={8}
-        px={5}
       >
-        <Text noOfLines={1} h={6}>
+        <Text noOfLines={1}>
           {isItem ? relation.item.name : relation.storage.name}
         </Text>
       </Link>
@@ -79,7 +92,6 @@ export default function RelationWidget2({
             isDisabled={!isEdit}
             type="tel"
             color="white"
-            p={0}
             h={8}
             textAlign={"center"}
             _disabled={{ color: "white", border: "none" }}
