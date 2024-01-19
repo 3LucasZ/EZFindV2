@@ -35,8 +35,12 @@ export default function StorageWidget({ storage }: StorageWidgetProps) {
           bgHover={"blue.500"}
           colSpan={6}
         />
-        <BaseWidget title={storage.description} bg={"blue.300"} colSpan={4} />
-        <BaseWidget title={"" + sum} bg={"blue.200"} colSpan={2} />
+        <BaseWidget
+          title={storage.description}
+          bg={"blue.300"}
+          colSpan={6}
+          cnt={sum ? sum : -1}
+        />
       </Grid>
     </Box>
   );

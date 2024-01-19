@@ -35,8 +35,12 @@ export default function ItemWidgetProps({ item }: ItemWidgetProps) {
           bgHover={"cyan.500"}
           colSpan={6}
         />
-        <BaseWidget title={item.description} bg={"cyan.300"} colSpan={4} />
-        <BaseWidget title={"" + sum} bg={"cyan.200"} colSpan={2} />
+        <BaseWidget
+          title={item.description}
+          bg={"cyan.300"}
+          colSpan={6}
+          cnt={sum ? sum : -1}
+        />
       </Grid>
     </Box>
   );
