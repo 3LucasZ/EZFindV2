@@ -154,53 +154,16 @@ const StoragePage: React.FC<Props> = (props) => {
     <Layout isAdmin={isAdmin}>
       <Box overflowY="auto">
         <SimpleGrid columns={[1, 2]} spacing={10} px={5}>
-          {/* Manual Printing */}
-          <Flex flexDir="column">
-            <Center>
-              <Heading>Manual Printing</Heading>
-            </Center>
-            <Center>
-              <Text>Take a screenshot of the image below:</Text>
-            </Center>
-            <Box h="8px" />
-            <Center>
-              <Box
-                borderColor="black"
-                borderWidth={2}
-                width="max-content"
-                p={10}
-              >
-                <Image
-                  text={props.url}
-                  options={{
-                    type: "image/jpeg",
-                    quality: 0.3,
-                    margin: 3,
-                    scale: 4,
-                    width: 200,
-                    color: {
-                      dark: "#4FD1C5FF",
-                      light: "#FFFFFFFF",
-                    },
-                  }}
-                />
-
-                <Center>
-                  <Text fontSize="2xl" whiteSpace="pre-line" textAlign="center">
-                    {fixate(props.name)}
-                  </Text>
-                </Center>
-              </Box>
-            </Center>
-          </Flex>
           {/* DYMO Printing */}
-
           {img == "" ? (
             NoDymoUI
           ) : (
             <Flex flexDir="column">
               <Center>
                 <Heading>Dymo</Heading>
+              </Center>
+              <Center>
+                <Text>Quickly and easily print using a Dymo Printer.</Text>
               </Center>
               <SimpleGrid columns={[1, 1, 2]} spacing="8px">
                 <Center>
@@ -267,6 +230,48 @@ const StoragePage: React.FC<Props> = (props) => {
               </SimpleGrid>
             </Flex>
           )}
+          {/* Manual Printing */}
+          <Flex flexDir="column">
+            <Center>
+              <Heading>Manual</Heading>
+            </Center>
+            <Center>
+              <Text>
+                To manually print a QR code, take a screenshot of the image
+                below and print it.
+              </Text>
+            </Center>
+            <Box h="8px" />
+            <Center>
+              <Box
+                borderColor="black"
+                borderWidth={2}
+                width="max-content"
+                p={10}
+              >
+                <Image
+                  text={props.url}
+                  options={{
+                    type: "image/jpeg",
+                    quality: 0.3,
+                    margin: 3,
+                    scale: 4,
+                    width: 200,
+                    color: {
+                      dark: "#4FD1C5FF",
+                      light: "#FFFFFFFF",
+                    },
+                  }}
+                />
+
+                <Center>
+                  <Text fontSize="2xl" whiteSpace="pre-line" textAlign="center">
+                    {fixate(props.name)}
+                  </Text>
+                </Center>
+              </Box>
+            </Center>
+          </Flex>
         </SimpleGrid>
         <Box minH={"calc(58px + env(safe-area-inset-bottom))"}></Box>
       </Box>
