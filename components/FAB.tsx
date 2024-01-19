@@ -21,7 +21,7 @@ export const FAB = ({ onClick }: FABProps) => {
       aria-label={""}
       position="fixed"
       right="8px"
-      bottom="58px"
+      bottom="calc(58px + env(safe-area-inset-bottom))"
       rounded="full"
       h="16"
       w="16"
