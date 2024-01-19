@@ -84,11 +84,12 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           onChange={(e) => setNewName(e.target.value)}
           isDisabled={!isEdit}
           maxLength={50}
-          fontSize={["xl", "xl", "2xl", "3xl", "4xl"]}
+          fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}
           display={"block"}
           _disabled={{ color: "black", borderColor: "white" }}
           textAlign={"center"}
           sx={{ opacity: "1" }}
+          py={"5px"}
         />
 
         {isAdmin && (
