@@ -1,24 +1,11 @@
 version: "3.9"
 services:
-  nginx:
-    platform: "linux/arm64"
-    image: daftdove/ezfind-nginx:latest
-    container_name: ezfind-nginx
-    depends_on:
-      - app
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-      - "443:443"
-    restart: always
   db:
     platform: "linux/arm64"
     image: postgres
     container_name: "ezfind-db"
     ports:
-      - "5555:5432"
+      - "7001:5432"
     environment:
       - POSTGRES_USER=${CMP_PG_USER}
       - POSTGRES_PASSWORD=${CMP_PG_PW}
@@ -49,8 +36,12 @@ services:
       - GOOGLE_ID=${GOOGLE_ID}
       - GOOGLE_SECRET=${GOOGLE_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
-      - ezfind_SECRET=${ezfind_SECRET}
+    restart: always
 volumes:
   db:
     driver: local
+networks:
+  ezserver-network:
+    name: ezserver-network
+    external: true
 # NOTE: DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
