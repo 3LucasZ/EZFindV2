@@ -13,6 +13,8 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
     restart: always
+    networks:
+      - ezserver-network
   app:
     platform: "linux/arm64"
     image: daftdove/ezfind-app:latest
@@ -37,6 +39,8 @@ services:
       - GOOGLE_SECRET=${GOOGLE_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
     restart: always
+    networks:
+      - ezserver-network
 volumes:
   db:
     driver: local
