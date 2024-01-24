@@ -1,12 +1,14 @@
+import Router from "next/router";
 import { errorToast, successToast } from "./toasty";
 
 export async function poster(
   path: string,
   body: any,
-  toaster: any
+  toaster: any,
+  external?: boolean
 ): Promise<Response> {
   try {
-    const res = await fetch(path, {
+    const res = await fetch(external ? path : Router.basePath + path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
