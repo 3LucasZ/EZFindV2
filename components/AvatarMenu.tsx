@@ -49,8 +49,8 @@ export default function AvatarMenu({ isAdmin }: AvatarMenuProps) {
             e.preventDefault();
 
             session
-              ? signOut({ callbackUrl: "/" })
-              : signIn("google", { callbackUrl: "/" });
+              ? signOut({ callbackUrl: "/ezfind/" })
+              : signIn("google", { callbackUrl: "/ezfind/" });
           }}
         >
           {session ? "Sign out" : "Sign in"}
