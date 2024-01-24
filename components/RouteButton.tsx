@@ -1,4 +1,14 @@
-import { Card, CardBody, Heading, Center, Link, Icon } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  Heading,
+  Center,
+  Link,
+  Icon,
+  Button,
+  Box,
+} from "@chakra-ui/react";
+import Router from "next/router";
 import { IconType } from "react-icons";
 
 type RouteButtonProps = {
@@ -22,8 +32,8 @@ export const RouteButton = ({
 
   return (
     <Center>
-      <Link
-        href={route}
+      <Box
+        onClick={() => Router.push(route)}
         style={{ textDecoration: "none" }}
         sx={{
           WebkitUserDrag: "none",
@@ -46,7 +56,7 @@ export const RouteButton = ({
             </Center>
           </CardBody>
         </Card>
-      </Link>
+      </Box>
     </Center>
   );
 };

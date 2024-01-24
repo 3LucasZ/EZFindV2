@@ -10,6 +10,7 @@ import {
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { ItemProps } from "./ItemWidget";
 import { StorageProps } from "./StorageWidget";
+import Router from "next/router";
 
 export type RelationProps = {
   item: ItemProps;
@@ -58,7 +59,7 @@ export default function RelationWidget2({
       overflow="hidden"
       rounded="md"
     >
-      <Link
+      <Box
         //size
         w={
           "calc(100%" +
@@ -68,8 +69,12 @@ export default function RelationWidget2({
         }
         px={4}
         //misc
-        href={
-          isItem ? "/item/" + relation.itemId : "/storage/" + relation.storageId
+        onClick={() =>
+          Router.push(
+            isItem
+              ? "/item/" + relation.itemId
+              : "/storage/" + relation.storageId
+          )
         }
         style={{ textDecoration: "none" }}
         sx={{
@@ -80,7 +85,7 @@ export default function RelationWidget2({
         <Text noOfLines={1}>
           {isItem ? relation.item.name : relation.storage.name}
         </Text>
-      </Link>
+      </Box>
       {!isInvert && (
         <Box bg="orange.200" w="60px">
           <Input

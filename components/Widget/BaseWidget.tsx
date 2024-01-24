@@ -1,4 +1,5 @@
 import { Box, GridItem, Link, Text } from "@chakra-ui/react";
+import Router from "next/router";
 
 type BaseWidgetProps = {
   href?: string;
@@ -31,12 +32,12 @@ export default function BaseWidget({
       flexDir="row"
       alignItems={"center"}
     >
-      <Link
+      <Box
         //size
         w="100%"
         px={4}
         //misc
-        href={href}
+        onClick={() => Router.push(href ? href : "")}
         pointerEvents={href ? "auto" : "none"}
         style={{ textDecoration: "none" }}
         sx={{
@@ -44,7 +45,7 @@ export default function BaseWidget({
         }}
       >
         <Text noOfLines={1}>{title}</Text>
-      </Link>
+      </Box>
       {cnt && (
         <Box
           //size

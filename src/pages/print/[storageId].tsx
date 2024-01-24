@@ -61,9 +61,9 @@ const StoragePage: React.FC<Props> = (props) => {
       <Text fontSize="2xl">
         Sorry, you can not use the automatic DYMO print feature. We could not
         detect the DYMO Connect service on your device. Please checkout
-        <Link color="teal.500" href="/help">
+        <Box color="teal.500" onClick={() => Router.push("/help")}>
           {" our instructions "}
-        </Link>
+        </Box>
         on how to enable the service. Thank you!
       </Text>
     </Stack>

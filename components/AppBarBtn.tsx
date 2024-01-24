@@ -1,4 +1,5 @@
-import { Center, Icon, Link } from "@chakra-ui/react";
+import { Box, Button, Center, Icon, Link } from "@chakra-ui/react";
+import Router from "next/router";
 import { IconType } from "react-icons";
 
 type AppBarBtnProps = {
@@ -7,7 +8,7 @@ type AppBarBtnProps = {
 };
 export default function AppBarBtn({ icon, href }: AppBarBtnProps) {
   return (
-    <Link
+    <Box
       w={"33%"}
       h={"100%"}
       rounded="unset"
@@ -16,7 +17,7 @@ export default function AppBarBtn({ icon, href }: AppBarBtnProps) {
       _hover={{ bg: "teal.400" }}
       color="white"
       pt="13px"
-      href={href}
+      onClick={() => Router.push(href)}
       style={{ textDecoration: "none" }}
       sx={{
         WebkitUserDrag: "none",
@@ -27,6 +28,6 @@ export default function AppBarBtn({ icon, href }: AppBarBtnProps) {
           <Icon as={icon} boxSize="23" />
         </Center>
       }
-    </Link>
+    </Box>
   );
 }
