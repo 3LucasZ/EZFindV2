@@ -25,7 +25,7 @@ export default function Home({ admins }: PageProps) {
     <Layout isAdmin={isAdmin}>
       <Box px="5" overflowY="auto">
         <Text fontSize="4xl">Version</Text>
-        <Text fontSize="xl">2.2 (Alpha)</Text>
+        <Text fontSize="xl">2.4 (Alpha)</Text>
         <Text fontSize="4xl">Q&A</Text>
 
         <Text fontSize="xl">Q: What does the invert checkbox do?</Text>
