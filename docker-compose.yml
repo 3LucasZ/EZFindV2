@@ -1,3 +1,6 @@
+# Compose file for the EZ-Find Webapp
+# Spins up a NextJS Webserver Container and PostgreSQL Database Container
+# Host machine must run the EZ-Server compose file for proper integration
 version: "3.9"
 services:
   db:
@@ -19,20 +22,20 @@ services:
     platform: "linux/arm64"
     image: daftdove/ezfind-app:latest
     container_name: ezfind-app
-    depends_on: # wait for postgres to be installed before running prisma migrate
+    depends_on: # wait for postgres container to be spun before running prisma migrate
       - db
     build:
       context: .
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_CLIENTVAR: "clientvar"
-    user: root # generate certificates without password during start.sh
+    user: root # allows you to generate certificates without password during start.sh
     extra_hosts:
       - "host.docker.internal:host-gateway"
     working_dir: /app
     ports:
       - "3001:3000"
-    environment: #change @ezfind-db to container name of db
+    environment: #change @<name>-db to container name of db service
       - DATABASE_URL=postgresql://${CMP_PG_USER}:${CMP_PG_PW}@ezfind-db:5432/${CMP_PG_DB}
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - GOOGLE_ID=${GOOGLE_ID}
