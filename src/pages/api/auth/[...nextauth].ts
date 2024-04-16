@@ -1,6 +1,9 @@
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import prisma from "services/prisma";
+import type { Adapter } from "next-auth/adapters";
 const { GOOGLE_ID = "", GOOGLE_SECRET = "" } = process.env;
 
 // export default NextAuth({
@@ -21,6 +24,7 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   process.env.NEXTAUTH_URL = "https://" + host + "/ezfind/api/auth";
 
   return NextAuth({
+    adapter: PrismaAdapter(prisma) as Adapter,
     providers: [
       GoogleProvider({
         clientId: GOOGLE_ID,
