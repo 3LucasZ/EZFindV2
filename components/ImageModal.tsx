@@ -16,6 +16,8 @@ import { debugMode } from "services/constants";
 type PageProps = {
   onClose: () => void;
   isOpen: boolean;
+  onUpload: (imageStr: string) => Promise<void>;
+  imageStr?: string;
 };
 export default function ImageModal(props: PageProps) {
   //state
@@ -26,7 +28,7 @@ export default function ImageModal(props: PageProps) {
       const reader = new FileReader();
       reader.onload = function () {
         if (typeof reader.result == "string") {
-          setPreviewImage(reader.result);
+          setPreviewImage(reader.result.split("base64,")[1]);
         }
       };
       const imageFile = input.target.files[0];
@@ -48,9 +50,6 @@ export default function ImageModal(props: PageProps) {
         console.log(error);
       }
     }
-  }
-  async function uploadImage() {
-    Buffer.from(previewImage, "base64");
   }
   return (
     <Modal
@@ -76,7 +75,7 @@ export default function ImageModal(props: PageProps) {
             accept="image/*"
             onChange={(e) => loadImage(e)}
           />
-          {!previewImage ? (
+          {!previewImage && !props.imageStr ? (
             <Box
               bg="white"
               w="100%"
@@ -89,14 +88,17 @@ export default function ImageModal(props: PageProps) {
             >
               <Icon as={IoCloudUploadOutline} mt="6" boxSize={"50%"} />
               <Heading fontSize="lg" color="gray.700" fontWeight="bold" mt="4">
-                Click to Upload Image
+                Click to Upload Image (.jpg)
               </Heading>
             </Box>
           ) : (
             <Box
               w="100%"
               aspectRatio={1}
-              backgroundImage={previewImage}
+              backgroundImage={
+                "data:image/jpeg;base64," +
+                (previewImage ? previewImage : props.imageStr)
+              }
               backgroundRepeat={"no-repeat"}
               backgroundSize={"contain"}
               backgroundPosition={"center"}
@@ -113,6 +115,7 @@ export default function ImageModal(props: PageProps) {
           icon={<CheckIcon />}
           isDisabled={!previewImage}
           display={previewImage ? "block" : "none"}
+          onClick={async (e) => props.onUpload(previewImage)}
         />
       </ModalContent>
     </Modal>
