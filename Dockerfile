@@ -1,9 +1,14 @@
 # Dockerfile
 
+##### ARGUMENTS 
+
+# ARG ARCH=
+
 ##### DEPENDENCIES 
 
-#EDIT: Use 20.9.0, arm64
-FROM --platform=linux/arm64 node:20.9.0-alpine3.17 AS deps
+#EDIT: Use 20.9.0, custom ARCH
+# FROM --platform=${ARCH} node:20.9.0-alpine3.17 AS deps
+FROM node:20.9.0-alpine3.17 AS deps
 RUN apk add --no-cache libc6-compat openssl1.1-compat
 
 WORKDIR /app
@@ -17,8 +22,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 ##### BUILDER
-#EDIT: Use 20.9.0, arm64
-FROM --platform=linux/arm64 node:20.9.0-alpine3.17 AS builder
+#EDIT: Use 20.9.0, custom ARCH
+# FROM --platform=${ARCH} node:20.9.0-alpine3.17 AS builder
+FROM node:20.9.0-alpine3.17 AS builder
 #EDIT: delete arg for database_url since it's unused
 ARG NEXT_PUBLIC_CLIENTVAR
 WORKDIR /app
@@ -32,8 +38,9 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN SKIP_ENV_VALIDATION=1 npm run build
 
 ##### RUNNER
-#EDIT: Use 20.9.0, arm64
-FROM --platform=linux/arm64 node:20.9.0-alpine3.17 AS runner
+#EDIT: Use 20.9.0, custom ARCH
+# FROM --platform=${ARCH} node:20.9.0-alpine3.17 AS runner
+FROM node:20.9.0-alpine3.17 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
