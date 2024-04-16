@@ -4,7 +4,7 @@
 version: "3.9"
 services:
   db:
-    platform: "linux/arm64"
+    platform: ${ARCH} # change based on host
     image: postgres
     container_name: "ezfind-db"
     ports:
@@ -19,7 +19,7 @@ services:
     networks:
       - ezserver-network
   app:
-    platform: "linux/arm64"
+    platform: ${ARCH} # change based on host
     image: daftdove/ezfind-app:latest
     container_name: ezfind-app
     depends_on: # wait for postgres container to be spun before running prisma migrate
@@ -27,6 +27,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      platforms:
+        - "linux/amd64" # change based on what platform you want to build for
       args:
         NEXT_PUBLIC_CLIENTVAR: "clientvar"
     user: root # allows you to generate certificates without password during start.sh
