@@ -82,6 +82,13 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
     onOpen: onOpenViewer,
     onClose: onCloseViewer,
   } = useDisclosure();
+  //handle upload image
+  const uploadImage = async (imageStr: string) => {
+    const body = { id: item.id, newImageStr: imageStr };
+    console.log(body);
+    const res = await poster("/api/update-item-image", body, toaster);
+    if (res.status == 200) Router.reload();
+  };
   // handle update item
   const handleUpdateItem = async () => {
     const body = {
