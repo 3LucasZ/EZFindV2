@@ -127,7 +127,12 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
               onOpenViewer();
             }}
           />
-          <ImageModal onClose={onCloseViewer} isOpen={isOpenViewer} />
+          <ImageModal
+            onClose={onCloseViewer}
+            isOpen={isOpenViewer}
+            onUpload={uploadImage}
+            imageStr={item.image}
+          />
           {isAdmin && (
             <IconButton
               ml={2}
