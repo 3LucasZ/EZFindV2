@@ -5,7 +5,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  CloseIcon,
+  DeleteIcon,
+  EditIcon,
+  Icon,
+} from "@chakra-ui/icons";
+import { IoImageOutline } from "react-icons/io5";
 import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
 import { StorageProps } from "components/Widget/StorageWidget";
@@ -24,6 +31,7 @@ import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
 import Header from "components/Header";
+import ImageModal from "components/ImageModal";
 
 type PageProps = {
   item: ItemProps;
@@ -58,12 +66,22 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
       };
     });
   // handle delete modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenTrash,
+    onOpen: onOpenTrash,
+    onClose: onCloseTrash,
+  } = useDisclosure();
   const handleDelete = async () => {
     const body = { id: item.id };
     const res = await poster("/api/delete-item", body, toaster);
     if (res.status == 200) await Router.push({ pathname: "/manage-items" });
   };
+  // handle view modal
+  const {
+    isOpen: isOpenViewer,
+    onOpen: onOpenViewer,
+    onClose: onCloseViewer,
+  } = useDisclosure();
   // handle update item
   const handleUpdateItem = async () => {
     const body = {
@@ -92,8 +110,18 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
           py={"5px"}
         />
 
-        {isAdmin && (
-          <Center>
+        <Center>
+          <IconButton
+            ml="2"
+            colorScheme="blue"
+            aria-label=""
+            icon={<Icon as={IoImageOutline} boxSize={5} />}
+            onClick={() => {
+              onOpenViewer();
+            }}
+          />
+          <ImageModal onClose={onCloseViewer} isOpen={isOpenViewer} />
+          {isAdmin && (
             <IconButton
               ml={2}
               mr={2}
@@ -111,6 +139,8 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 }
               }}
             />
+          )}
+          {isAdmin && (
             <IconButton
               colorScheme="red"
               aria-label=""
@@ -119,18 +149,18 @@ export default function ItemPage({ item, storages, admins }: PageProps) {
                 if (isEdit) {
                   setIsEdit(false);
                 } else {
-                  onOpen();
+                  onOpenTrash();
                 }
               }}
             />
-            <ConfirmDeleteModal
-              isOpen={isOpen}
-              onClose={onClose}
-              name={" the item: " + item.name}
-              handleDelete={handleDelete}
-            />
-          </Center>
-        )}
+          )}
+          <ConfirmDeleteModal
+            isOpen={isOpenTrash}
+            onClose={onCloseTrash}
+            name={" the item: " + item.name}
+            handleDelete={handleDelete}
+          />
+        </Center>
       </Flex>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
