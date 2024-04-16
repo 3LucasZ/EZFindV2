@@ -21,14 +21,14 @@ import { checkAdmin } from "services/checkAdmin";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
 import Header from "components/Header";
-import { AdminProps } from "components/Widget/AdminWidget";
+import { UserProps } from "components/Widget/UserWidget";
 
 type Props = {
   url: string;
   xml: string;
   id: number;
   name: string;
-  admins: AdminProps[];
+  admins: UserProps[];
 };
 
 type LabelWriterPrinter = {

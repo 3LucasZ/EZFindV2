@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget";
+import { UserProps } from "components/Widget/UserWidget";
 import Header from "components/Header";
 import {
   Box,
@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 type PageProps = {
-  admins: AdminProps[];
+  admins: UserProps[];
 };
 export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();

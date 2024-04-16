@@ -1,9 +1,9 @@
-import { AdminProps } from "components/Widget/AdminWidget";
+import { UserProps } from "components/Widget/UserWidget";
 import { Session } from "next-auth";
 
 export function checkAdmin(
   session: Session | null,
-  admins: AdminProps[]
+  admins: UserProps[]
 ): boolean {
   return (
     (session &&

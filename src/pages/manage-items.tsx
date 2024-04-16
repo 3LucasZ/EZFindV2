@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget";
+import { UserProps } from "components/Widget/UserWidget";
 import Router from "next/router";
 import { errorToast } from "services/toasty";
 import { Box, useToast } from "@chakra-ui/react";
@@ -14,10 +14,11 @@ import { poster } from "services/poster";
 
 type PageProps = {
   items: ItemProps[];
-  admins: AdminProps[];
+  admins: UserProps[];
 };
 export default function ManageItems({ items, admins }: PageProps) {
   const { data: session } = useSession();
+
   const isAdmin = checkAdmin(session, admins);
   const toaster = useToast();
   return (

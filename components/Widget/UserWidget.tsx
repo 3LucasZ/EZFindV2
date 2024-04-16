@@ -12,14 +12,14 @@ import ConfirmDeleteModal from "../ConfirmDeleteModal";
 import { debugMode } from "services/constants";
 import { poster } from "services/poster";
 
-export type AdminProps = {
+export type UserProps = {
   id: number;
   email: string;
 };
 
-const AdminWidget: React.FC<{
-  admin: AdminProps;
-}> = ({ admin }) => {
+const UserWidget: React.FC<{
+  user: UserProps;
+}> = ({ user: admin }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toaster = useToast();
   const handleDelete = async () => {
@@ -61,4 +61,4 @@ const AdminWidget: React.FC<{
   );
 };
 
-export default AdminWidget;
+export default UserWidget;

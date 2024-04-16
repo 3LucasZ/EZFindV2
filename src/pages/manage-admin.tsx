@@ -1,5 +1,5 @@
 import { Box, Flex, IconButton, Input, useToast } from "@chakra-ui/react";
-import Admin, { AdminProps } from "components/Widget/AdminWidget";
+import Admin, { UserProps } from "components/Widget/UserWidget";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import Router from "next/router";
@@ -14,7 +14,7 @@ import Header from "components/Header";
 import { poster } from "services/poster";
 
 type PageProps = {
-  admins: AdminProps[];
+  admins: UserProps[];
 };
 export default function ManageAdmin({ admins }: PageProps) {
   const { data: session } = useSession();
@@ -56,7 +56,7 @@ export default function ManageAdmin({ admins }: PageProps) {
         <SearchView
           setIn={admins.map((admin) => ({
             name: admin.email,
-            widget: <Admin admin={admin} key={admin.id} />,
+            widget: <Admin user={admin} key={admin.id} />,
           }))}
           isAdmin={isAdmin}
           isEdit={false}

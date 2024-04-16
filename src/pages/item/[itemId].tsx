@@ -23,7 +23,7 @@ import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget";
+import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
 import RelationWidget2 from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
@@ -36,7 +36,7 @@ import ImageModal from "components/ImageModal";
 type PageProps = {
   item: ItemProps;
   storages: StorageProps[];
-  admins: AdminProps[];
+  admins: UserProps[];
 };
 
 export default function ItemPage({ item, storages, admins }: PageProps) {

@@ -8,11 +8,11 @@ import prisma from "services/prisma";
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import { checkAdmin } from "services/checkAdmin";
-import { AdminProps } from "components/Widget/AdminWidget";
+import { UserProps } from "components/Widget/UserWidget";
 import Header from "components/Header";
 
 type PageProps = {
-  admins: AdminProps[];
+  admins: UserProps[];
 };
 export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();
