@@ -28,6 +28,9 @@ model User {
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  //custom
+  isAdmin       Boolean @default(false)
 }
  
 model Account {
@@ -69,6 +72,13 @@ model VerificationToken {
   @@id([identifier, token])
 }
 //----DB----
+// model Group {
+//   id Int @id @default(autoincrement())
+//   name String @unique @db.VarChar(255)
+//   description String @db.VarChar(255)
+//   iamge Bytes @default("")
+// }
+
 model Item {
   id Int @id @default(autoincrement())
   name String @unique @db.VarChar(255)
