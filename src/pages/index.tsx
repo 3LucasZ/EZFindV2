@@ -40,7 +40,7 @@ export default function Home({ admins }: PageProps) {
         )} */}
         <RouteButton
           route={"manage-items"}
-          text={"Manage Items"}
+          text={"Items"}
           icon={FaTools}
           color={"cyan.300"}
           hoverColor={"cyan.100"}
@@ -56,7 +56,7 @@ export default function Home({ admins }: PageProps) {
         )} */}
         <RouteButton
           route={"manage-storages"}
-          text={"Manage Storages"}
+          text={"Storages"}
           icon={FaBoxes}
           color={"blue.300"}
           hoverColor={"blue.100"}
