@@ -8,11 +8,13 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
+  Text,
 } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import imageCompression from "browser-image-compression";
 import { debugMode } from "services/constants";
+import imagePlaceholder from "public/images/image-placeholder.png";
 type PageProps = {
   onClose: () => void;
   isOpen: boolean;
@@ -75,39 +77,38 @@ export default function ImageModal(props: PageProps) {
             accept="image/*"
             onChange={(e) => loadImage(e)}
           />
-          {!previewImage && !props.imageStr ? (
-            <Box
-              bg="white"
-              w="100%"
-              aspectRatio={1}
-              borderColor="gray.300"
-              borderStyle="dashed"
-              borderWidth="2px"
-              rounded="md"
-              textAlign={"center"}
-            >
-              <Icon as={IoCloudUploadOutline} mt="6" boxSize={"50%"} />
-              <Heading fontSize="lg" color="gray.700" fontWeight="bold" mt="4">
-                Click to Upload Image (.jpg)
-              </Heading>
-            </Box>
-          ) : (
-            <Box
-              w="100%"
-              aspectRatio={1}
-              backgroundImage={
-                "data:image/jpeg;base64," +
-                (previewImage ? previewImage : props.imageStr)
-              }
-              backgroundRepeat={"no-repeat"}
-              backgroundSize={"contain"}
-              backgroundPosition={"center"}
-              rounded="md"
-              borderColor="gray.300"
-              borderStyle="dashed"
-              borderWidth={"2px"}
-            />
-          )}
+          <Box
+            w="100%"
+            aspectRatio={1}
+            backgroundImage={
+              !previewImage && !props.imageStr
+                ? `url(${imagePlaceholder.src})`
+                : "data:image/jpeg;base64," +
+                  (previewImage ? previewImage : props.imageStr)
+            }
+            backgroundRepeat={"no-repeat"}
+            backgroundSize={"contain"}
+            backgroundPosition={"center"}
+            rounded="lg"
+            borderColor="gray.300"
+            borderStyle={!previewImage && !props.imageStr ? "dashed" : "solid"}
+            borderWidth={"2px"}
+            textAlign={"center"}
+          >
+            {!previewImage && !props.imageStr && (
+              <Text
+                fontSize={["sm", "lg"]}
+                color="gray.700"
+                fontWeight="bold"
+                position={"absolute"}
+                bottom="20%"
+                left="0"
+                right="0"
+              >
+                Click to upload an image
+              </Text>
+            )}
+          </Box>
         </Box>
         <IconButton
           aria-label={""}
