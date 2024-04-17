@@ -29,6 +29,8 @@ import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
+import { IoImageOutline } from "react-icons/io5";
+import ImageModal from "components/ImageModal";
 
 type PageProps = {
   storage: StorageProps;
@@ -60,11 +62,28 @@ export default function StoragePage({ storage, items }: PageProps) {
       };
     });
   // handle delete modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenTrash,
+    onOpen: onOpenTrash,
+    onClose: onCloseTrash,
+  } = useDisclosure();
   const handleDelete = async () => {
     const body = { id: storage.id };
     const res = await poster("/api/delete-storage", body, toaster);
     if (res.status == 200) await Router.push({ pathname: "/manage-storages" });
+  };
+  // handle view modal
+  const {
+    isOpen: isOpenViewer,
+    onOpen: onOpenViewer,
+    onClose: onCloseViewer,
+  } = useDisclosure();
+  //handle upload image
+  const uploadImage = async (imageStr: string) => {
+    const body = { id: storage.id, newImageStr: imageStr };
+    console.log(body);
+    const res = await poster("/api/update-storage-image", body, toaster);
+    if (res.status == 200) Router.reload();
   };
   //handle update storage
   const handleUpdateStorage = async () => {
@@ -94,6 +113,21 @@ export default function StoragePage({ storage, items }: PageProps) {
         />
 
         <Center>
+          <IconButton
+            ml="2"
+            colorScheme="blue"
+            aria-label=""
+            icon={<Icon as={IoImageOutline} boxSize={5} />}
+            onClick={() => {
+              onOpenViewer();
+            }}
+          />
+          <ImageModal
+            onClose={onCloseViewer}
+            isOpen={isOpenViewer}
+            onUpload={uploadImage}
+            imageStr={storage.image}
+          />
           {session?.user.isAdmin && (
             <IconButton
               ml={2}
@@ -122,7 +156,7 @@ export default function StoragePage({ storage, items }: PageProps) {
                 if (isEdit) {
                   setIsEdit(false);
                 } else {
-                  onOpen();
+                  onOpenTrash();
                 }
               }}
             />
@@ -140,8 +174,8 @@ export default function StoragePage({ storage, items }: PageProps) {
             }
           />
           <ConfirmActionModal
-            isOpen={isOpen}
-            onClose={onClose}
+            isOpen={isOpenTrash}
+            onClose={onCloseTrash}
             actionStr={"delete the storage: " + storage.name}
             protectedAction={handleDelete}
           />

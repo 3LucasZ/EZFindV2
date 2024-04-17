@@ -7,6 +7,7 @@ export type StorageProps = {
   name: string;
   description: string;
   relations: RelationProps[];
+  image: string;
 };
 type StorageWidgetProps = {
   storage: StorageProps;

@@ -12,6 +12,16 @@ let prisma = new PrismaClient().$extends({
         },
       },
     },
+    storage: {
+      image: {
+        needs: {
+          image: true,
+        },
+        compute(storage) {
+          return storage.image.toString("base64");
+        },
+      },
+    },
     user: {
       createdAt: {
         needs: {
