@@ -61,6 +61,7 @@ export default function ImageModal(props: PageProps) {
       }}
       isOpen={props.isOpen}
       isCentered
+      size="xl"
     >
       <ModalOverlay />
       <ModalContent p={6} gap={6}>
