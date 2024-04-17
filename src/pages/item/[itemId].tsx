@@ -104,7 +104,7 @@ export default function ItemPage({ item, storages }: PageProps) {
           value={isEdit ? newName : item.name}
           onChange={(e) => setNewName(e.target.value)}
           isDisabled={!isEdit}
-          maxLength={50}
+          maxLength={100}
           fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}
           display={"block"}
           _disabled={{ color: "black", borderColor: "white" }}
@@ -165,7 +165,7 @@ export default function ItemPage({ item, storages }: PageProps) {
           <ConfirmActionModal
             isOpen={isOpenTrash}
             onClose={onCloseTrash}
-            actionStr={" the item: " + item.name}
+            actionStr={"delete the item: " + item.name}
             protectedAction={handleDelete}
           />
         </Center>

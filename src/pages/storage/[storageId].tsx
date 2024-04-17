@@ -142,7 +142,7 @@ export default function StoragePage({ storage, items }: PageProps) {
           <ConfirmActionModal
             isOpen={isOpen}
             onClose={onClose}
-            actionStr={" the storage: " + storage.name}
+            actionStr={"delete the storage: " + storage.name}
             protectedAction={handleDelete}
           />
         </Center>
