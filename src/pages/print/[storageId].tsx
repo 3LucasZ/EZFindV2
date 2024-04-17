@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import { Select } from "chakra-react-select";
 import Layout from "components/Layout";
 import prisma from "services/prisma";
-import { checkAdmin } from "services/checkAdmin";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
 import Header from "components/Header";
@@ -43,7 +42,6 @@ type LabelWriterPrinter = {
 const StoragePage: React.FC<Props> = (props) => {
   //admin
   const { data: session } = useSession();
-  const isAdmin = checkAdmin(session, props.admins);
   //rest
   const [img, setImg] = useState<string>("");
   const [status, setStatus] = useState<string>("");
@@ -151,7 +149,7 @@ const StoragePage: React.FC<Props> = (props) => {
   // console.log("xml", props.xml);
 
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <Box overflowY="auto">
         <SimpleGrid columns={[1, 2]} spacing={10} px={5}>
           {/* DYMO Printing */}

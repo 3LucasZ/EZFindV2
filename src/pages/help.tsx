@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
-import { checkAdmin } from "services/checkAdmin";
 import { UserProps } from "components/Widget/UserWidget";
 import Header from "components/Header";
 import {
@@ -20,9 +19,8 @@ type PageProps = {
 };
 export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();
-  const isAdmin = checkAdmin(session, admins);
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <Box px="5" overflowY="auto">
         <Text fontSize="4xl">Version</Text>
         <Text fontSize="xl">2.4 (Alpha)</Text>

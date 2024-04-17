@@ -6,7 +6,7 @@ import AppBar from "./AppBar";
 import Header from "./Header";
 
 type LayoutProps = {
-  isAdmin: boolean;
+  isAdmin: boolean | undefined;
   children: ReactNode;
 };
 

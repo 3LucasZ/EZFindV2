@@ -9,7 +9,6 @@ import { errorToast, successToast } from "services/toasty";
 import prisma from "services/prisma";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
-import { checkAdmin } from "services/checkAdmin";
 import Header from "components/Header";
 import { poster } from "services/poster";
 
@@ -18,7 +17,6 @@ type PageProps = {
 };
 export default function ManageAdmin({ admins }: PageProps) {
   const { data: session } = useSession();
-  const isAdmin = checkAdmin(session, admins);
   const [email, setEmail] = useState("");
   const toaster = useToast();
 
@@ -32,7 +30,7 @@ export default function ManageAdmin({ admins }: PageProps) {
     if (res.status == 200) Router.reload();
   };
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <Box minH="8px"></Box>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <Input
@@ -41,7 +39,7 @@ export default function ManageAdmin({ admins }: PageProps) {
           value={email}
           onChange={handleCreateChange}
         />
-        {isAdmin && (
+        {session?.user.isAdmin && (
           <IconButton
             ml={"8px"}
             colorScheme="teal"
@@ -52,13 +50,13 @@ export default function ManageAdmin({ admins }: PageProps) {
         )}
       </Flex>
       <Box minH={"8px"} />
-      {isAdmin && (
+      {session?.user.isAdmin && (
         <SearchView
           setIn={admins.map((admin) => ({
             name: admin.email,
             widget: <Admin user={admin} key={admin.id} />,
           }))}
-          isAdmin={isAdmin}
+          isAdmin={session.user.isAdmin}
           isEdit={false}
         />
       )}

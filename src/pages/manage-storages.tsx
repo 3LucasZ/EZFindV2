@@ -5,7 +5,6 @@ import SearchView from "components/SearchView";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useSession } from "next-auth/react";
-import { checkAdmin } from "services/checkAdmin";
 import { errorToast } from "services/toasty";
 import Router from "next/router";
 import { Box, useToast } from "@chakra-ui/react";
@@ -18,10 +17,9 @@ type PageProps = {
 };
 export default function ManageStorages({ storages, admins }: PageProps) {
   const { data: session } = useSession();
-  const isAdmin = checkAdmin(session, admins);
   const toaster = useToast();
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <Box minH="8px"></Box>
       <SearchView
         setIn={storages.map((storage) => ({
@@ -34,7 +32,7 @@ export default function ManageStorages({ storages, admins }: PageProps) {
           if (res.status == 200)
             await Router.push({ pathname: "/storage/" + (await res.json()) });
         }}
-        isAdmin={isAdmin}
+        isAdmin={session?.user.isAdmin}
         isEdit={false}
       />
     </Layout>

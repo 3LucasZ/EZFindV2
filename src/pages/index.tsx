@@ -7,7 +7,6 @@ import prisma from "services/prisma";
 
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
-import { checkAdmin } from "services/checkAdmin";
 import { UserProps } from "components/Widget/UserWidget";
 import Header from "components/Header";
 
@@ -16,9 +15,8 @@ type PageProps = {
 };
 export default function Home({ admins }: PageProps) {
   const { data: session } = useSession();
-  const isAdmin = checkAdmin(session, admins);
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <SimpleGrid
         columns={[1, 2]}
         overflowY="auto"

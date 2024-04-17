@@ -4,7 +4,6 @@ import SearchView from "components/SearchView";
 import { GetServerSideProps } from "next";
 import prisma from "services/prisma";
 import { getSession, useSession } from "next-auth/react";
-import { checkAdmin } from "services/checkAdmin";
 import { UserProps } from "components/Widget/UserWidget";
 import Router from "next/router";
 import { errorToast } from "services/toasty";
@@ -18,10 +17,10 @@ type PageProps = {
 };
 export default function ManageItems({ items }: PageProps) {
   const { data: session } = useSession();
-
+  const isAdmin = session?.user.isAdmin;
   const toaster = useToast();
   return (
-    <Layout isAdmin={session != null && session.user.isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <Box minH="8px"></Box>
       <SearchView
         setIn={items.map((item) => ({

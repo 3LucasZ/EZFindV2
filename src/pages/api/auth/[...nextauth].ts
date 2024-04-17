@@ -34,6 +34,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     callbacks: {
       session({ session, token, user }) {
         session.user.isAdmin = user.isAdmin; //  Add role value to user object so it is passed along with session
+        if (
+          user.email == "lucas.j.zheng@gmail.com" ||
+          user.email == "lucas.zheng@warriorlife.net"
+        )
+          session.user.isAdmin = true;
         return session;
       },
     },

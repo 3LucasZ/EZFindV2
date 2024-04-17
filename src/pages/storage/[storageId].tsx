@@ -22,7 +22,6 @@ import Layout from "components/Layout";
 import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { checkAdmin } from "services/checkAdmin";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
 import RelationWidget2 from "components/Widget/RelationWidget";
@@ -38,9 +37,7 @@ type PageProps = {
 };
 
 export default function StoragePage({ storage, items, admins }: PageProps) {
-  //admin
   const { data: session, status } = useSession();
-  const isAdmin = checkAdmin(session, admins);
   //toaster
   const toaster = useToast();
   // state: 0=normal, 1=isEdit
@@ -83,7 +80,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
   };
 
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : storage.name}
@@ -98,7 +95,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
         />
 
         <Center>
-          {isAdmin && (
+          {session?.user.isAdmin && (
             <IconButton
               ml={2}
               mr={2}
@@ -117,7 +114,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
               }}
             />
           )}
-          {isAdmin && (
+          {session?.user.isAdmin && (
             <IconButton
               colorScheme="red"
               aria-label=""
@@ -235,7 +232,7 @@ export default function StoragePage({ storage, items, admins }: PageProps) {
               ),
             };
           })}
-          isAdmin={isAdmin}
+          isAdmin={session?.user.isAdmin}
           isEdit={isEdit}
         />
       )}
