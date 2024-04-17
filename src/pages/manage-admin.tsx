@@ -1,4 +1,12 @@
-import { Box, Flex, IconButton, Input, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Input,
+  useToast,
+  Text,
+} from "@chakra-ui/react";
 import Admin, { UserProps } from "components/Widget/UserWidget";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
@@ -11,51 +19,82 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 import Header from "components/Header";
 import { poster } from "services/poster";
+import UserWidget from "components/Widget/UserWidget";
 
 type PageProps = {
   users: UserProps[];
 };
 export default function ManageAdmin({ users }: PageProps) {
   const { data: session } = useSession();
-  const [email, setEmail] = useState("");
+
   const toaster = useToast();
 
-  const handleCreateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    const body = { email };
-    const res = await poster("/api/create-admin", body, toaster);
-    if (res.status == 200) Router.reload();
-  };
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Box minH="8px"></Box>
-      <Flex px={[2, "5vw", "10vw", "15vw"]}>
-        <Input
-          variant="filled"
-          placeholder="Admin email"
-          value={email}
-          onChange={handleCreateChange}
-        />
-        {session?.user.isAdmin && (
-          <IconButton
-            ml={"8px"}
-            colorScheme="teal"
-            aria-label=""
-            icon={<AddIcon />}
-            onClick={submitData}
-          />
-        )}
+      <Flex
+        px={[2, "5vw", "10vw", "15vw"]}
+        textAlign={"center"}
+        w="100%"
+        flexDir="column"
+      >
+        <Heading w="100%">Admins</Heading>
+        <Text>
+          Admins can perform any operation on the app. Only give admin
+          priveleges to trusted individuals. You can only see registered users.
+        </Text>
       </Flex>
       <Box minH={"8px"} />
       {session?.user.isAdmin && (
         <SearchView
-          setIn={users.map((user) => ({
-            name: user.email,
-            widget: <Admin user={user} key={user.id} />,
-          }))}
+          setIn={users
+            .filter((user) => user.isAdmin)
+            .map((user) => ({
+              name: user.email,
+              widget: (
+                <UserWidget
+                  user={user}
+                  key={user.id}
+                  mode={-1}
+                  handleRemove={async () => {
+                    const body = { email: user.email, isAdmin: false };
+                    const res = await poster(
+                      "/api/update-user-admin",
+                      body,
+                      toaster
+                    );
+                    if (res.status == 200) {
+                      Router.reload();
+                    }
+                  }}
+                  confirmModal={true}
+                />
+              ),
+            }))}
+          setOut={users
+            .filter((user) => !user.isAdmin)
+            .map((user) => ({
+              name: user.email,
+              widget: (
+                <UserWidget
+                  user={user}
+                  key={user.id}
+                  mode={1}
+                  handleAdd={async () => {
+                    const body = { email: user.email, isAdmin: true };
+                    const res = await poster(
+                      "/api/update-user-admin",
+                      body,
+                      toaster
+                    );
+                    if (res.status == 200) {
+                      Router.reload();
+                    }
+                  }}
+                  confirmModal={true}
+                />
+              ),
+            }))}
           isAdmin={session.user.isAdmin}
           isEdit={false}
         />
