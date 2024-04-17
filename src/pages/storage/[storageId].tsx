@@ -33,10 +33,9 @@ import { poster } from "services/poster";
 type PageProps = {
   storage: StorageProps;
   items: ItemProps[];
-  admins: UserProps[];
 };
 
-export default function StoragePage({ storage, items, admins }: PageProps) {
+export default function StoragePage({ storage, items }: PageProps) {
   const { data: session, status } = useSession();
   //toaster
   const toaster = useToast();
@@ -255,7 +254,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const items = await prisma.item.findMany({});
-  const admins = await prisma.admin.findMany();
   if (storage == null) {
     return {
       redirect: {
@@ -268,7 +266,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       storage,
       items,
-      admins,
     },
   };
 };

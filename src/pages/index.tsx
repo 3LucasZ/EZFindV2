@@ -10,10 +10,9 @@ import { FaBoxes } from "react-icons/fa";
 import { UserProps } from "components/Widget/UserWidget";
 import Header from "components/Header";
 
-type PageProps = {
-  admins: UserProps[];
-};
-export default function Home({ admins }: PageProps) {
+type PageProps = {};
+
+export default function Home({}: PageProps) {
   const { data: session } = useSession();
   return (
     <Layout isAdmin={session?.user.isAdmin}>
@@ -65,10 +64,7 @@ export default function Home({ admins }: PageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const admins = await prisma.admin.findMany();
   return {
-    props: {
-      admins: admins,
-    },
+    props: {},
   };
 };

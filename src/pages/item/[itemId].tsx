@@ -35,11 +35,9 @@ import ImageModal from "components/ImageModal";
 type PageProps = {
   item: ItemProps;
   storages: StorageProps[];
-  admins: UserProps[];
 };
 
-export default function ItemPage({ item, storages, admins }: PageProps) {
-  //admin
+export default function ItemPage({ item, storages }: PageProps) {
   const { data: session, status } = useSession();
   //toaster
   const toaster = useToast();
@@ -287,7 +285,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
   const storages = await prisma.storage.findMany({});
-  const admins = await prisma.admin.findMany();
   if (item == null) {
     return {
       redirect: {
@@ -300,7 +297,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       item,
       storages,
-      admins,
     },
   };
 };

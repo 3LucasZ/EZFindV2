@@ -1,23 +1,12 @@
 import Layout from "components/Layout";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
-import prisma from "services/prisma";
 
-import { UserProps } from "components/Widget/UserWidget";
-import Header from "components/Header";
-import {
-  Box,
-  Heading,
-  Link,
-  ListItem,
-  Text,
-  UnorderedList,
-} from "@chakra-ui/react";
+import { Box, Link, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 
-type PageProps = {
-  admins: UserProps[];
-};
-export default function Home({ admins }: PageProps) {
+type PageProps = {};
+
+export default function Home({}: PageProps) {
   const { data: session } = useSession();
   return (
     <Layout isAdmin={session?.user.isAdmin}>
@@ -94,12 +83,3 @@ export default function Home({ admins }: PageProps) {
     </Layout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const admins = await prisma.admin.findMany();
-  return {
-    props: {
-      admins: admins,
-    },
-  };
-};

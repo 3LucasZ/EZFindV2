@@ -27,7 +27,6 @@ type Props = {
   xml: string;
   id: number;
   name: string;
-  admins: UserProps[];
 };
 
 type LabelWriterPrinter = {
@@ -40,7 +39,6 @@ type LabelWriterPrinter = {
 };
 
 const StoragePage: React.FC<Props> = (props) => {
-  //admin
   const { data: session } = useSession();
   //rest
   const [img, setImg] = useState<string>("");
@@ -286,7 +284,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       relations: true,
     },
   });
-  const admins = await prisma.admin.findMany();
 
   const domain = context.req.headers.host;
   const path = "/storage/" + storage?.id;
@@ -306,7 +303,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       xml,
       id: storage?.id,
       name: storage?.name,
-      admins,
     },
   };
 };

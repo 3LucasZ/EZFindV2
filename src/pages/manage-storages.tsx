@@ -13,9 +13,8 @@ import { poster } from "services/poster";
 
 type PageProps = {
   storages: StorageProps[];
-  admins: UserProps[];
 };
-export default function ManageStorages({ storages, admins }: PageProps) {
+export default function ManageStorages({ storages }: PageProps) {
   const { data: session } = useSession();
   const toaster = useToast();
   return (
@@ -42,8 +41,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const storages = await prisma.storage.findMany({
     include: { relations: true },
   });
-  const admins = await prisma.admin.findMany();
   return {
-    props: { storages: storages, admins: admins },
+    props: { storages },
   };
 };

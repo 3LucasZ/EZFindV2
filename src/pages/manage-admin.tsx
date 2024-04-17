@@ -13,9 +13,9 @@ import Header from "components/Header";
 import { poster } from "services/poster";
 
 type PageProps = {
-  admins: UserProps[];
+  users: UserProps[];
 };
-export default function ManageAdmin({ admins }: PageProps) {
+export default function ManageAdmin({ users }: PageProps) {
   const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const toaster = useToast();
@@ -52,9 +52,9 @@ export default function ManageAdmin({ admins }: PageProps) {
       <Box minH={"8px"} />
       {session?.user.isAdmin && (
         <SearchView
-          setIn={admins.map((admin) => ({
-            name: admin.email,
-            widget: <Admin user={admin} key={admin.id} />,
+          setIn={users.map((user) => ({
+            name: user.email,
+            widget: <Admin user={user} key={user.id} />,
           }))}
           isAdmin={session.user.isAdmin}
           isEdit={false}
@@ -64,8 +64,8 @@ export default function ManageAdmin({ admins }: PageProps) {
   );
 }
 export const getServerSideProps: GetServerSideProps = async () => {
-  const admins = await prisma.admin.findMany();
+  const users = await prisma.user.findMany();
   return {
-    props: { admins: admins },
+    props: { users },
   };
 };
