@@ -16,7 +16,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
 import { StorageProps } from "components/Widget/StorageWidget";
-import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+import ConfirmActionModal from "components/ConfirmActionModal";
 import Router from "next/router";
 import Layout from "components/Layout";
 import SearchView from "components/SearchView";
@@ -162,11 +162,11 @@ export default function ItemPage({ item, storages }: PageProps) {
               }}
             />
           )}
-          <ConfirmDeleteModal
+          <ConfirmActionModal
             isOpen={isOpenTrash}
             onClose={onCloseTrash}
-            name={" the item: " + item.name}
-            handleDelete={handleDelete}
+            actionStr={" the item: " + item.name}
+            protectedAction={handleDelete}
           />
         </Center>
       </Flex>

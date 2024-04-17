@@ -12,17 +12,17 @@ import {
 type PageProps = {
   onClose: () => void;
   isOpen: boolean;
-  name: string;
-  handleDelete: () => Promise<void>;
+  actionStr: string;
+  protectedAction: () => Promise<void>;
 };
-export default function ConfirmDeleteModal(props: PageProps) {
+export default function ConfirmActionModal(props: PageProps) {
   return (
     <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Confirm Delete</ModalHeader>
+        <ModalHeader>Confirm Action</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>Are you sure you want to delete {props.name}?</ModalBody>
+        <ModalBody>Are you sure you want to {props.actionStr}?</ModalBody>
         <ModalFooter>
           <Button onClick={props.onClose} colorScheme="teal">
             No
@@ -30,7 +30,7 @@ export default function ConfirmDeleteModal(props: PageProps) {
           <Button
             onClick={() => {
               props.onClose();
-              props.handleDelete();
+              props.protectedAction();
             }}
             colorScheme="red"
             ml="2"

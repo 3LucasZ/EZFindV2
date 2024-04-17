@@ -16,7 +16,7 @@ import { SlPrinter } from "react-icons/sl";
 import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
 import { StorageProps } from "components/Widget/StorageWidget";
-import ConfirmDeleteModal from "components/ConfirmDeleteModal";
+import ConfirmActionModal from "components/ConfirmActionModal";
 import Router from "next/router";
 import Layout from "components/Layout";
 import SearchView from "components/SearchView";
@@ -139,11 +139,11 @@ export default function StoragePage({ storage, items }: PageProps) {
               })
             }
           />
-          <ConfirmDeleteModal
+          <ConfirmActionModal
             isOpen={isOpen}
             onClose={onClose}
-            name={" the storage: " + storage.name}
-            handleDelete={handleDelete}
+            actionStr={" the storage: " + storage.name}
+            protectedAction={handleDelete}
           />
         </Center>
       </Flex>
