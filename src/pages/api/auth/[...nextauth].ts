@@ -31,5 +31,11 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         clientSecret: GOOGLE_SECRET,
       }),
     ],
+    callbacks: {
+      session({ session, token, user }) {
+        session.user.isAdmin = user.isAdmin; //  Add role value to user object so it is passed along with session
+        return session;
+      },
+    },
   })(req, res);
 }
