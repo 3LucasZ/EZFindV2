@@ -3,7 +3,7 @@ import Layout from "components/Layout";
 import SearchView from "components/SearchView";
 import { GetServerSideProps } from "next";
 import prisma from "services/prisma";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { checkAdmin } from "services/checkAdmin";
 import { UserProps } from "components/Widget/UserWidget";
 import Router from "next/router";
@@ -11,18 +11,17 @@ import { errorToast } from "services/toasty";
 import { Box, useToast } from "@chakra-ui/react";
 import Header from "components/Header";
 import { poster } from "services/poster";
+import { Session } from "next-auth";
 
 type PageProps = {
   items: ItemProps[];
-  admins: UserProps[];
 };
-export default function ManageItems({ items, admins }: PageProps) {
+export default function ManageItems({ items }: PageProps) {
   const { data: session } = useSession();
 
-  const isAdmin = checkAdmin(session, admins);
   const toaster = useToast();
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session != null && session.user.isAdmin}>
       <Box minH="8px"></Box>
       <SearchView
         setIn={items.map((item) => ({
@@ -35,16 +34,18 @@ export default function ManageItems({ items, admins }: PageProps) {
           if (res.status == 200)
             await Router.push({ pathname: "/item/" + (await res.json()) });
         }}
-        isAdmin={isAdmin}
+        isAdmin={session != null && session.user.isAdmin}
         isEdit={false}
       />
     </Layout>
   );
 }
-export const getServerSideProps: GetServerSideProps = async () => {
-  const items = await prisma.item.findMany({ include: { relations: true } });
-  const admins = await prisma.admin.findMany();
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  var items = await prisma.item.findMany({ include: { relations: true } });
+  items.forEach((item) => (item.image = "")); //(experimental) remove image from items to reduce payload???
+  //const session = await getSession(ctx); //getSession in ServerSideProps takes over 10 seconds
+
   return {
-    props: { items: items, admins: admins },
+    props: { items },
   };
 };
