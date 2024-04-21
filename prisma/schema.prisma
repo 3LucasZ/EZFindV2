@@ -72,12 +72,13 @@ model VerificationToken {
   @@id([identifier, token])
 }
 //----DB----
-// model Group {
-//   id Int @id @default(autoincrement())
-//   name String @unique @db.VarChar(255)
-//   description String @db.VarChar(255)
-//   iamge Bytes @default("")
-// }
+
+model Group {
+  id Int @id @default(autoincrement())
+  name String @unique @db.VarChar(255)
+  description String @db.VarChar(255)
+  image Bytes @default("")
+}
 
 model Item {
   id Int @id @default(autoincrement())
