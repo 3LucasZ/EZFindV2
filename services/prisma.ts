@@ -2,6 +2,16 @@ import { PrismaClient } from "@prisma/client";
 
 let prisma = new PrismaClient().$extends({
   result: {
+    group: {
+      image: {
+        needs: {
+          image: true,
+        },
+        compute(group) {
+          return group.image.toString("base64");
+        },
+      },
+    },
     item: {
       image: {
         needs: {
