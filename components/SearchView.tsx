@@ -6,6 +6,8 @@ import {
   Flex,
   IconButton,
   Input,
+  SimpleGrid,
+  Stack,
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
 import { debugMode } from "services/constants";
@@ -17,6 +19,7 @@ type SearchViewProps = {
   onAdd?: Function;
   isAdmin: boolean | undefined;
   isEdit: boolean;
+  columns?: number;
 };
 type PairProps = {
   name: string;
@@ -101,22 +104,22 @@ export default function SearchView(props: SearchViewProps) {
         )}
       </Flex>
       <Box minH={"8px"}></Box>
-      <Flex
-        flexDir="column"
-        gap="8px"
+      <Stack
         overflowY="auto"
+        flexDir={"column"}
         px={[2, "5vw", "10vw", "15vw"]}
-        h="100%"
       >
-        {subset.length == 0 ? (
-          <Center>No data available to display.</Center>
-        ) : (
-          subset.map((pair) => {
-            return pair.widget;
-          })
-        )}
+        <SimpleGrid gap="8px" columns={props.columns ? props.columns : 1}>
+          {subset.length == 0 ? (
+            <Center>No data available to display.</Center>
+          ) : (
+            subset.map((pair) => {
+              return pair.widget;
+            })
+          )}
+        </SimpleGrid>
         <Box h={"8px"}></Box>
-      </Flex>
+      </Stack>
       <Box minH={"calc(50px + env(safe-area-inset-bottom))"}></Box>
     </>
   );
