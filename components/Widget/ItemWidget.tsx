@@ -13,7 +13,7 @@ type ItemWidgetProps = {
   item: ItemProps;
 };
 
-export default function ItemWidgetProps({ item }: ItemWidgetProps) {
+export default function ItemWidget({ item }: ItemWidgetProps) {
   var sum = 0;
   item.relations.forEach((relation) => (sum += relation.count));
   return (
