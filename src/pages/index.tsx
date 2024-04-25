@@ -48,7 +48,7 @@ export default function Home({ groups }: PageProps) {
           // if (res.status == 200)
           //   await Router.push({ pathname: "/group/" + (await res.json()) });
         }}
-        isAdmin={isAdmin}
+        isAdmin={false}
         isEdit={false}
         columns={4}
       />

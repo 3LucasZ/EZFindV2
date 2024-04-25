@@ -22,7 +22,7 @@ import Layout from "components/Layout";
 import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { UserProps } from "components/Widget/UserWidget";
+import UserWidget, { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
 import RelationWidget2 from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
@@ -35,10 +35,18 @@ import { GroupProps } from "components/Widget/GroupWidget";
 
 type PageProps = {
   group: GroupProps;
+  users: UserProps[];
 };
 
-export default function ItemPage({ group }: PageProps) {
+export default function ItemPage({ group, users }: PageProps) {
   const { data: session, status } = useSession();
+  const isAdmin = session?.user.isAdmin;
+  const userGroupRelation = group.userRelations.find(
+    (x) => x.userId == session?.user.id
+  );
+  const perm = userGroupRelation?.perm ? userGroupRelation.perm : 0;
+  console.log(perm);
+
   //toaster
   const toaster = useToast();
   // state: 0=normal, 1=isEdit
@@ -171,6 +179,58 @@ export default function ItemPage({ group }: PageProps) {
           sx={{ opacity: "1" }}
         />
       </Flex>
+      <SearchView
+        setIn={users
+          .filter((user) => user.isAdmin)
+          .map((user) => ({
+            name: user.email,
+            widget: (
+              <UserWidget
+                user={user}
+                key={user.id}
+                mode={-1}
+                handleRemove={async () => {
+                  const body = { email: user.email, isAdmin: false };
+                  const res = await poster(
+                    "/api/update-user-admin",
+                    body,
+                    toaster
+                  );
+                  if (res.status == 200) {
+                    Router.reload();
+                  }
+                }}
+                confirmModal={true}
+              />
+            ),
+          }))}
+        setOut={users
+          .filter((user) => !user.isAdmin)
+          .map((user) => ({
+            name: user.email,
+            widget: (
+              <UserWidget
+                user={user}
+                key={user.id}
+                mode={1}
+                handleAdd={async () => {
+                  const body = { email: user.email, isAdmin: true };
+                  const res = await poster(
+                    "/api/update-user-admin",
+                    body,
+                    toaster
+                  );
+                  if (res.status == 200) {
+                    Router.reload();
+                  }
+                }}
+                confirmModal={true}
+              />
+            ),
+          }))}
+        isAdmin={isAdmin}
+        isEdit={false}
+      />
     </Layout>
   );
 }
@@ -180,10 +240,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     where: {
       id: Number(context.params?.groupId),
     },
+    include: {
+      userRelations: true,
+    },
   });
+  const users = await prisma.user.findMany();
   return {
     props: {
       group,
+      users,
     },
   };
 };

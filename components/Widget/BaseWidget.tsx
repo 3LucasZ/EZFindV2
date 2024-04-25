@@ -38,7 +38,6 @@ export default function BaseWidget({
         px={4}
         //misc
         onClick={() => Router.push(href ? href : "")}
-        pointerEvents={href ? "auto" : "none"}
         style={{ textDecoration: "none" }}
         sx={{
           WebkitUserDrag: "none",

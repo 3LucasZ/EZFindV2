@@ -6,11 +6,15 @@ import {
   Link,
   useToast,
   Text,
+  Grid,
 } from "@chakra-ui/react";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { ItemProps } from "./ItemWidget";
 import { StorageProps } from "./StorageWidget";
 import Router from "next/router";
+import EditableCounter from "components/Minis/EditableCounter";
+import Round from "components/Minis/Round";
+import WidgetTitle from "components/Minis/WidgetTitle";
 
 export type RelationProps = {
   item: ItemProps;
@@ -39,36 +43,13 @@ export default function RelationWidget2({
   handleAdd,
   handleUpdate,
 }: RelationWidgetProps) {
-  //toaster
   const toaster = useToast();
-  //ret
   return (
-    <Box
-      //size
-      minH={8}
-      maxW="100%"
-      //color
-      bg={isItem ? "cyan.400" : "blue.400"}
-      _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
-      color="white"
-      //position
-      flexDir="row"
-      alignItems={"center"}
-      //misc
-      display="flex"
-      overflow="hidden"
-      rounded="md"
-    >
-      <Box
-        //size
-        w={
-          "calc(100%" +
-          (!isInvert ? " - 60px" : "") +
-          (isEdit ? " - 40px" : "") +
-          ")"
-        }
-        px={4}
-        //misc
+    //rounded widget
+    <Flex w="100%" overflow="hidden" rounded="md" flexDir="row">
+      <WidgetTitle
+        bg={isItem ? "cyan.400" : "blue.400"}
+        _hover={{ bg: isItem ? "cyan.500" : "blue.500" }}
         onClick={() =>
           Router.push(
             isItem
@@ -76,35 +57,17 @@ export default function RelationWidget2({
               : "/storage/" + relation.storageId
           )
         }
-        style={{ textDecoration: "none" }}
-        sx={{
-          WebkitUserDrag: "none",
-          pointerEvents: isEdit && "none",
-        }}
-      >
-        <Text noOfLines={1}>
-          {isItem ? relation.item.name : relation.storage.name}
-        </Text>
-      </Box>
+        title={isItem ? relation.item.name : relation.storage.name}
+      />
       {!isInvert && (
-        <Box bg="orange.200" w="60px">
-          <Input
-            value={relation.count}
-            onChange={(e) => {
-              const num = parseInt(e.target.value);
-              handleUpdate(Number.isNaN(num) ? 0 : parseInt(e.target.value));
-            }}
-            isDisabled={!isEdit}
-            type="tel"
-            color="white"
-            h={8}
-            textAlign={"center"}
-            _disabled={{ color: "white", border: "none" }}
-            sx={{ opacity: "1" }}
-            rounded="none"
-            maxLength={5} //9999
-          />
-        </Box>
+        <EditableCounter
+          count={relation.count}
+          onChange={(e) => {
+            const num = parseInt(e.target.value);
+            handleUpdate(Number.isNaN(num) ? 0 : parseInt(e.target.value));
+          }}
+          isDisabled={!isEdit}
+        />
       )}
       {isEdit && (
         <IconButton
@@ -119,6 +82,6 @@ export default function RelationWidget2({
           rounded="none"
         />
       )}
-    </Box>
+    </Flex>
   );
 }

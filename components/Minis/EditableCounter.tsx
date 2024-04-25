@@ -1,0 +1,34 @@
+import { Box, Input } from "@chakra-ui/react";
+import { ChangeEventHandler } from "react";
+
+type EditableCounterProps = {
+  count: number;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  isDisabled: boolean;
+};
+export default function EditableCounter({
+  count,
+  onChange,
+  isDisabled,
+  ...props
+}: EditableCounterProps) {
+  return (
+    <Box bg="orange.200" w="60px">
+      <Input
+        value={count}
+        onChange={onChange}
+        isDisabled={isDisabled}
+        type="tel"
+        color="white"
+        h={8}
+        textAlign={"center"}
+        _disabled={{ color: "white", border: "none" }}
+        sx={{ opacity: "1" }}
+        rounded="none"
+        maxLength={5} //9999
+        p={0}
+        {...props}
+      />
+    </Box>
+  );
+}

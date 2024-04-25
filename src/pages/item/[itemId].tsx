@@ -1,4 +1,5 @@
 import {
+  ButtonGroup,
   Center,
   Flex,
   IconButton,
@@ -31,6 +32,8 @@ import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
 import Header from "components/Header";
 import ImageModal from "components/ImageModal";
+import EditableTitle from "components/Minis/EditableTitle";
+import EditableSubtitle from "components/Minis/EditableSubtitle";
 
 type PageProps = {
   item: ItemProps;
@@ -100,78 +103,72 @@ export default function ItemPage({ item, storages }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
-        <AutoResizeTextarea
+        <EditableTitle
           value={isEdit ? newName : item.name}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setNewName(e.target.value)
+          }
           isDisabled={!isEdit}
-          maxLength={100}
-          fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}
-          display={"block"}
-          _disabled={{ color: "black", borderColor: "white" }}
-          textAlign={"center"}
-          sx={{ opacity: "1" }}
-          py={"5px"}
         />
 
         <Center>
-          <IconButton
-            ml="2"
-            colorScheme="blue"
-            aria-label=""
-            icon={<Icon as={IoImageOutline} boxSize={5} />}
-            onClick={() => {
-              onOpenViewer();
-            }}
-          />
-          <ImageModal
-            onClose={onCloseViewer}
-            isOpen={isOpenViewer}
-            onUpload={uploadImage}
-            imageStr={item.image}
-          />
-          {session?.user.isAdmin && (
+          <ButtonGroup spacing="2" pl="2">
             <IconButton
-              ml={2}
-              mr={2}
-              colorScheme="teal"
+              colorScheme="blue"
               aria-label=""
-              icon={isEdit ? <CheckIcon /> : <EditIcon />}
-              onClick={async () => {
-                if (isEdit) {
-                  handleUpdateItem();
-                } else {
-                  setNewName(item.name);
-                  setNewDescription(item.description);
-                  setNewRelations(item.relations);
-                  setIsEdit(true);
-                }
-              }}
-            />
-          )}
-          {session?.user.isAdmin && (
-            <IconButton
-              colorScheme="red"
-              aria-label=""
-              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+              icon={<Icon as={IoImageOutline} boxSize={5} />}
               onClick={() => {
-                if (isEdit) {
-                  setIsEdit(false);
-                } else {
-                  onOpenTrash();
-                }
+                onOpenViewer();
               }}
             />
-          )}
-          <ConfirmActionModal
-            isOpen={isOpenTrash}
-            onClose={onCloseTrash}
-            actionStr={"delete the item: " + item.name}
-            protectedAction={handleDelete}
-          />
+            <ImageModal
+              onClose={onCloseViewer}
+              isOpen={isOpenViewer}
+              onUpload={uploadImage}
+              imageStr={item.image}
+            />
+            {session?.user.isAdmin && (
+              <IconButton
+                colorScheme="teal"
+                aria-label=""
+                icon={isEdit ? <CheckIcon /> : <EditIcon />}
+                onClick={async () => {
+                  if (isEdit) {
+                    handleUpdateItem();
+                  } else {
+                    setNewName(item.name);
+                    setNewDescription(item.description);
+                    setNewRelations(item.relations);
+                    setIsEdit(true);
+                  }
+                }}
+              />
+            )}
+            {session?.user.isAdmin && (
+              <IconButton
+                colorScheme="red"
+                aria-label=""
+                icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+                onClick={() => {
+                  if (isEdit) {
+                    setIsEdit(false);
+                  } else {
+                    onOpenTrash();
+                  }
+                }}
+              />
+            )}
+            <ConfirmActionModal
+              isOpen={isOpenTrash}
+              onClose={onCloseTrash}
+              actionStr={"delete the item: " + item.name}
+              protectedAction={handleDelete}
+            />
+          </ButtonGroup>
         </Center>
       </Flex>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
-        <AutoResizeTextarea
+        <EditableSubtitle
           value={
             isEdit
               ? newDescription
@@ -179,12 +176,10 @@ export default function ItemPage({ item, storages }: PageProps) {
               ? item.description
               : "No description."
           }
-          onChange={(e) => setNewDescription(e.target.value)}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setNewDescription(e.target.value)
+          }
           isDisabled={!isEdit}
-          maxLength={250}
-          _disabled={{ color: "black", borderColor: "white" }}
-          fontSize={["xs", "xs", "sm", "md", "lg", "xl"]}
-          sx={{ opacity: "1" }}
         />
       </Flex>
 

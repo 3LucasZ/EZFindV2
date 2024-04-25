@@ -17,12 +17,14 @@ import BaseWidget from "./BaseWidget";
 import { RelationProps } from "./RelationWidget";
 import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
+import { UserGroupRelationProps } from "./UserGroupRelationWidget";
 
 export type GroupProps = {
   id: number;
   name: string;
   description: string;
   image: string;
+  userRelations: UserGroupRelationProps[];
 };
 type GroupWidgetProps = {
   group: GroupProps;
@@ -34,7 +36,7 @@ export default function GroupWidget({ group }: GroupWidgetProps) {
       variant={"outline"}
       onClick={() =>
         Router.push({
-          pathname: "/group/" + group.id,
+          pathname: "/group/" + group.id + "/explore",
         })
       }
     >
