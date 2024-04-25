@@ -84,7 +84,7 @@ model Group {
 
 model Item {
   id Int @id @default(autoincrement())
-  name String @unique @db.VarChar(255)
+  name String @unique @db.VarChar(255) //non-unique due to isolation of groups
   description String @db.VarChar(255)
   image Bytes @default("")
   relations Relation[]
@@ -92,7 +92,7 @@ model Item {
 
 model Storage {
   id Int @id @default(autoincrement())
-  name String @unique @db.VarChar(255)
+  name String @unique @db.VarChar(255) //non-unique due to isolation of groups
   description String @db.VarChar(255)
   image Bytes @default("")
   relations Relation[]
