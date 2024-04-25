@@ -31,6 +31,7 @@ model User {
 
   //custom
   isAdmin       Boolean @default(false)
+  groupRelations UserGroupRelation[]
 }
  
 model Account {
@@ -78,6 +79,7 @@ model Group {
   name String @unique @db.VarChar(255)
   description String @db.VarChar(255)
   image Bytes @default("")
+  userRelations UserGroupRelation[]
 }
 
 model Item {
@@ -96,6 +98,7 @@ model Storage {
   relations Relation[]
 }
 
+//----Relations----
 model Relation {
   item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId Int 
@@ -103,4 +106,13 @@ model Relation {
   storageId Int
   count Int
   @@id([itemId, storageId])
+}
+
+model UserGroupRelation {
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  group Group @relation (fields: [groupId], references: [id], onDelete: Cascade)
+  groupId Int
+  perm Int
+  @@id([userId, groupId])
 }
