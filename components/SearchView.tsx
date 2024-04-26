@@ -29,10 +29,10 @@ type PairProps = {
 export default function SearchView(props: SearchViewProps) {
   //sort setIn, setOut
   const setIn = props.setIn.sort(function (a, b) {
-    if (a.name < b.name) {
+    if (a.rank < b.rank) {
       return -1;
     }
-    if (a.name > b.name) {
+    if (a.rank > b.rank) {
       return 1;
     }
     return 0;
