@@ -53,7 +53,7 @@ export default function UserGroupRelationWidget({
       <Select
         rounded={"none"}
         // bg="gray.300"
-        bg={perm == 0 ? "pink.200" : perm == 1 ? "purple.300" : "purple.600"}
+        bg={perm == 0 ? "purple.200" : perm == 1 ? "purple.500" : "purple.800"}
         color="white"
         size={"sm"}
         onChange={(e) => {
@@ -63,7 +63,7 @@ export default function UserGroupRelationWidget({
         }}
         value={perm}
         pointerEvents={isEdit ? "auto" : "none"}
-        iconColor={isEdit ? "white" : "gray.300"}
+        iconSize={isEdit ? "md" : "0"}
         display={isInvert ? "none" : ""}
       >
         <option value="0">Viewer</option>
