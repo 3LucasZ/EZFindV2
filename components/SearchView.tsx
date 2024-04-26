@@ -17,8 +17,8 @@ type SearchViewProps = {
   setIn: PairProps[];
   setOut?: PairProps[];
   onAdd?: Function;
-  isAdmin: boolean | undefined;
-  isEdit: boolean;
+  isAdmin?: boolean | undefined;
+  isEdit?: boolean;
   columns?: number;
 };
 type PairProps = {
