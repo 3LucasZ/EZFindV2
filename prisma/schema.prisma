@@ -113,6 +113,6 @@ model UserGroupRelation {
   userId String
   group Group @relation (fields: [groupId], references: [id], onDelete: Cascade)
   groupId Int
-  perm Int
+  perm Int @default(0) //0: viewer, 1: editor, 2: manager
   @@id([userId, groupId])
 }
