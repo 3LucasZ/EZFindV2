@@ -81,7 +81,6 @@ export default function StoragePage({ storage, items }: PageProps) {
   //handle upload image
   const uploadImage = async (imageStr: string) => {
     const body = { id: storage.id, newImageStr: imageStr };
-    console.log(body);
     const res = await poster("/api/update-storage-image", body, toaster);
     if (res.status == 200) Router.reload();
   };
@@ -281,13 +280,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       relations: {
         include: {
-          item: true,
-          storage: true,
+          item: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     },
   });
-  const items = await prisma.item.findMany({});
+
+  const items = await prisma.item.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
   if (storage == null) {
     return {
       redirect: {

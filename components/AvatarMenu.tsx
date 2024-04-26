@@ -45,9 +45,7 @@ export default function AvatarMenu({ isAdmin }: AvatarMenuProps) {
         )}
         <MenuItem
           onClick={(e) => {
-            if (debugMode) console.log(e);
             e.preventDefault();
-
             session
               ? signOut({ callbackUrl: "/ezfind/" })
               : signIn("google", { callbackUrl: "/ezfind/" });

@@ -41,7 +41,6 @@ type PageProps = {
 };
 
 export default function ItemPage({ item, storages }: PageProps) {
-  console.log(storages);
   const { data: session, status } = useSession();
   //toaster
   const toaster = useToast();
@@ -85,7 +84,6 @@ export default function ItemPage({ item, storages }: PageProps) {
   //handle upload image
   const uploadImage = async (imageStr: string) => {
     const body = { id: item.id, newImageStr: imageStr };
-    console.log(body);
     const res = await poster("/api/update-item-image", body, toaster);
     if (res.status == 200) Router.reload();
   };
