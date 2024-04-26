@@ -274,14 +274,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       relations: {
         include: {
-          storage: true,
+          storage: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       },
     },
   });
-  item?.relations.forEach((relation) => (relation.storage.image = ""));
-  var storages = await prisma.storage.findMany({});
-  storages.forEach((storage) => (storage.image = ""));
+
+  var storages = await prisma.storage.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
 
   if (item == null) {
     return {
