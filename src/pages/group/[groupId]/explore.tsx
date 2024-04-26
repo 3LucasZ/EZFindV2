@@ -47,7 +47,12 @@ export default function GroupPage({ group, users }: PageProps) {
   const userGroupRelation = group.userRelations.find(
     (x) => x.userId == session?.user.id
   );
-  const perm = userGroupRelation?.perm ? userGroupRelation.perm : 0;
+  const perm = isAdmin
+    ? 2
+    : userGroupRelation?.perm
+    ? userGroupRelation.perm
+    : 0;
+
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -196,7 +201,7 @@ export default function GroupPage({ group, users }: PageProps) {
       <SearchView
         setIn={inRelations.map((relation) => ({
           name: relation.user.name,
-          rank: relation.perm + relation.user.name,
+          rank: 3 - relation.perm + relation.user.name,
           widget: (
             <UserGroupRelationWidget
               user={relation.user}
@@ -222,7 +227,7 @@ export default function GroupPage({ group, users }: PageProps) {
         }))}
         setOut={outRelations.map((relation) => ({
           name: relation.user.name,
-          rank: relation.perm + relation.user.name,
+          rank: 3 - relation.perm + relation.user.name,
           widget: (
             <UserGroupRelationWidget
               user={relation.user}
