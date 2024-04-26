@@ -25,8 +25,9 @@ export default function EditableCounter({
         _disabled={{ color: "white", border: "none" }}
         sx={{ opacity: "1" }}
         rounded="none"
-        maxLength={5} //9999
+        maxLength={5} //99999
         p={0}
+        w={"60px"}
         {...props}
       />
     </Box>

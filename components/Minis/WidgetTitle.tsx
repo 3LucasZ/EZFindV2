@@ -7,14 +7,14 @@ export default function WidgetTitle({ ...props }) {
     <Box
       //in
       px={4}
+      display={"flex"}
       //color
       color="white"
       _hover={props._hover}
       bg={props.bg}
       //size
       w={"100%"}
-      minH={8}
-      maxH={8}
+      h={"100%"}
       //misc
       onClick={props.onClick}
       sx={{
@@ -22,9 +22,6 @@ export default function WidgetTitle({ ...props }) {
       }}
       style={{ textDecoration: "none" }}
       alignItems={"center"}
-      verticalAlign={"center"}
-      alignContent={"center"}
-      alignSelf={"center"}
     >
       <Text noOfLines={1}>{props.title}</Text>
     </Box>

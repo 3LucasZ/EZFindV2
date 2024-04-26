@@ -15,6 +15,7 @@ import Router from "next/router";
 import EditableCounter from "components/Minis/EditableCounter";
 import Round from "components/Minis/Round";
 import WidgetTitle from "components/Minis/WidgetTitle";
+import AddRemoveButton from "components/Minis/AddRemoveButton";
 
 export type RelationProps = {
   item: ItemProps;
@@ -34,7 +35,7 @@ type RelationWidgetProps = {
   handleUpdate: Function;
 };
 
-export default function RelationWidget2({
+export default function RelationWidget({
   relation,
   isItem,
   isInvert,
@@ -69,19 +70,11 @@ export default function RelationWidget2({
           isDisabled={!isEdit}
         />
       )}
-      {isEdit && (
-        <IconButton
-          onClick={() => (isInvert ? handleAdd() : handleRemove())}
-          bg={isInvert ? "green.300" : "red.300"}
-          _hover={{ bg: isInvert ? "green.400" : "red.400" }}
-          color="white"
-          aria-label={isInvert ? "add" : "delete"}
-          icon={isInvert ? <SmallAddIcon /> : <SmallCloseIcon />}
-          h={8}
-          w={"40px"}
-          rounded="none"
-        />
-      )}
+
+      <AddRemoveButton
+        onClick={() => (isInvert ? handleAdd() : handleRemove())}
+        mode={isEdit ? (isInvert ? 1 : -1) : 0}
+      />
     </Flex>
   );
 }

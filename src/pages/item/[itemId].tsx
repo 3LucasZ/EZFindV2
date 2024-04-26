@@ -25,7 +25,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
-import RelationWidget2 from "components/Widget/RelationWidget";
+import RelationWidget from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
@@ -41,6 +41,7 @@ type PageProps = {
 };
 
 export default function ItemPage({ item, storages }: PageProps) {
+  console.log(storages);
   const { data: session, status } = useSession();
   //toaster
   const toaster = useToast();
@@ -189,7 +190,7 @@ export default function ItemPage({ item, storages }: PageProps) {
             return {
               name: relation.storage.name,
               widget: (
-                <RelationWidget2
+                <RelationWidget
                   relation={relation}
                   isItem={false}
                   isInvert={false}
@@ -225,7 +226,7 @@ export default function ItemPage({ item, storages }: PageProps) {
             return {
               name: relation.storage.name,
               widget: (
-                <RelationWidget2
+                <RelationWidget
                   relation={relation}
                   isItem={false}
                   isInvert={true}
@@ -266,20 +267,22 @@ export default function ItemPage({ item, storages }: PageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const item = await prisma.item.findUnique({
+  var item = await prisma.item.findUnique({
     where: {
       id: Number(context.params?.itemId),
     },
     include: {
       relations: {
         include: {
-          item: true,
           storage: true,
         },
       },
     },
   });
-  const storages = await prisma.storage.findMany({});
+  item?.relations.forEach((relation) => (relation.storage.image = ""));
+  var storages = await prisma.storage.findMany({});
+  storages.forEach((storage) => (storage.image = ""));
+
   if (item == null) {
     return {
       redirect: {

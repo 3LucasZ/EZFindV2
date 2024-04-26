@@ -24,7 +24,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import UserWidget, { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
-import RelationWidget2 from "components/Widget/RelationWidget";
+import RelationWidget from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";

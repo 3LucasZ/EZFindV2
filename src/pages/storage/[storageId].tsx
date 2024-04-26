@@ -24,7 +24,7 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
-import RelationWidget2 from "components/Widget/RelationWidget";
+import RelationWidget from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
@@ -205,7 +205,7 @@ export default function StoragePage({ storage, items }: PageProps) {
             return {
               name: relation.storage.name,
               widget: (
-                <RelationWidget2
+                <RelationWidget
                   relation={relation}
                   isItem={true}
                   isInvert={false}
@@ -237,7 +237,7 @@ export default function StoragePage({ storage, items }: PageProps) {
             return {
               name: relation.item.name,
               widget: (
-                <RelationWidget2
+                <RelationWidget
                   relation={relation}
                   isItem={true}
                   isInvert={true}
