@@ -80,6 +80,7 @@ model Group {
   description String @db.VarChar(255)
   image Bytes @default("")
   userRelations UserGroupRelation[]
+  minPerm Int @default(-1)
 }
 
 model Item {

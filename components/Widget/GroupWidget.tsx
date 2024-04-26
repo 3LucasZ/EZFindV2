@@ -25,6 +25,7 @@ export type GroupProps = {
   description: string;
   image: string;
   userRelations: UserGroupRelationProps[];
+  minPerm: number;
 };
 type GroupWidgetProps = {
   group: GroupProps;

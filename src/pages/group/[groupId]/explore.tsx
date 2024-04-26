@@ -49,9 +49,10 @@ export default function GroupPage({ group, users }: PageProps) {
   );
   const perm = isAdmin
     ? 2
-    : userGroupRelation?.perm
-    ? userGroupRelation.perm
-    : 0;
+    : Math.max(
+        group.minPerm,
+        userGroupRelation?.perm ? userGroupRelation.perm : 0
+      );
 
   const toaster = useToast();
   //--state--
@@ -141,7 +142,7 @@ export default function GroupPage({ group, users }: PageProps) {
             onUpload={uploadImage}
             imageStr={group.image}
           />
-          {session?.user.isAdmin && (
+          {perm >= 1 && (
             <IconButton
               ml={2}
               mr={2}
