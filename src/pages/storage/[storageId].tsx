@@ -202,7 +202,7 @@ export default function StoragePage({ storage, items }: PageProps) {
         <SearchView
           setIn={inRelations.map((relation) => {
             return {
-              name: relation.storage.name,
+              name: relation.item.name,
               widget: (
                 <RelationWidget
                   relation={relation}
