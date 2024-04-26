@@ -47,7 +47,7 @@ export default function RelationWidget({
   const toaster = useToast();
   return (
     //rounded widget
-    <Flex w="100%" overflow="hidden" rounded="md" flexDir="row">
+    <Flex w="100%" overflow="hidden" rounded="md" flexDir="row" h="8">
       <WidgetTitle
         bg={isItem ? "cyan.400" : "blue.400"}
         _hover={{ bg: isItem ? "cyan.500" : "blue.500" }}

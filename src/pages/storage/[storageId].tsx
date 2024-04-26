@@ -214,11 +214,6 @@ export default function StoragePage({ storage, items }: PageProps) {
                       newRelations.filter((t) => t.itemId != relation.itemId)
                     );
                   }}
-                  handleAdd={() => {
-                    const copy = [...newRelations];
-                    copy.push(relation);
-                    setNewRelations(copy);
-                  }}
                   handleUpdate={(e: number) => {
                     const copy = newRelations.map((a) => ({ ...a }));
                     const tar = copy.find((t) => t.itemId == relation.itemId);
@@ -241,11 +236,6 @@ export default function StoragePage({ storage, items }: PageProps) {
                   isItem={true}
                   isInvert={true}
                   isEdit={isEdit}
-                  handleRemove={() =>
-                    setNewRelations(
-                      newRelations.filter((t) => t.itemId != relation.itemId)
-                    )
-                  }
                   handleAdd={() => {
                     const copy = [...newRelations];
                     copy.push(relation);
