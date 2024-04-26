@@ -17,7 +17,6 @@ const { GOOGLE_ID = "", GOOGLE_SECRET = "" } = process.env;
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   const { host } = req.headers;
-  console.log(req.headers);
   if (!host) return res.status(400).json(`Bad Request, missing host header`);
   // else return res.status(400).json("Debug: " + host);
 
@@ -32,8 +31,12 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
       }),
     ],
     callbacks: {
+      //Add data to user object so it is passed along with session
       session({ session, token, user }) {
-        session.user.isAdmin = user.isAdmin; //  Add role value to user object so it is passed along with session
+        //id
+        session.user.id = user.id;
+        //isAdmin
+        session.user.isAdmin = user.isAdmin;
         if (
           user.email == "lucas.j.zheng@gmail.com" ||
           user.email == "lucas.zheng@warriorlife.net"
