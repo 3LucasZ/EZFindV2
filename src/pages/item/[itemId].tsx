@@ -231,13 +231,6 @@ export default function ItemPage({ item, storages }: PageProps) {
                   isItem={false}
                   isInvert={true}
                   isEdit={isEdit}
-                  handleRemove={() =>
-                    setNewRelations(
-                      newRelations.filter(
-                        (t) => t.storageId != relation.storageId
-                      )
-                    )
-                  }
                   handleAdd={() => {
                     const copy = [...newRelations];
                     copy.push(relation);

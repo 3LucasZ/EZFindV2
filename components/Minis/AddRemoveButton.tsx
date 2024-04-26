@@ -1,7 +1,7 @@
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 
-//mode, onClick
+//mode, handleAdd, handleRemove
 export default function AddRemoveButton({ ...props }) {
   return (
     <IconButton
@@ -18,7 +18,7 @@ export default function AddRemoveButton({ ...props }) {
       //misc
       borderRadius="md"
       roundedLeft="none"
-      onClick={props.onClick}
+      onClick={props.mode == 1 ? props.handleAdd : props.handleRemove}
     />
   );
 }

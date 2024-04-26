@@ -30,8 +30,8 @@ type RelationWidgetProps = {
   isItem: boolean;
   isInvert: boolean;
   isEdit: boolean;
-  handleRemove: Function;
-  handleAdd: Function;
+  handleRemove?: Function;
+  handleAdd?: Function;
   handleUpdate: Function;
 };
 
@@ -72,7 +72,8 @@ export default function RelationWidget({
       )}
 
       <AddRemoveButton
-        onClick={() => (isInvert ? handleAdd() : handleRemove())}
+        handleAdd={handleAdd}
+        handleRemove={handleRemove}
         mode={isEdit ? (isInvert ? 1 : -1) : 0}
       />
     </Flex>
