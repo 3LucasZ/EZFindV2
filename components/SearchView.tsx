@@ -23,6 +23,7 @@ type SearchViewProps = {
 };
 type PairProps = {
   name: string;
+  rank: string;
   widget: ReactNode;
 };
 export default function SearchView(props: SearchViewProps) {
@@ -38,10 +39,10 @@ export default function SearchView(props: SearchViewProps) {
   });
   const setOut = props.setOut
     ? props.setOut.sort(function (a, b) {
-        if (a.name < b.name) {
+        if (a.rank < b.rank) {
           return -1;
         }
-        if (a.name > b.name) {
+        if (a.rank > b.rank) {
           return 1;
         }
         return 0;

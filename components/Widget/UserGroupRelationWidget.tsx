@@ -6,6 +6,7 @@ import {
   Link,
   useToast,
   Text,
+  Select,
 } from "@chakra-ui/react";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { ItemProps } from "./ItemWidget";
@@ -13,6 +14,8 @@ import { StorageProps } from "./StorageWidget";
 import Router from "next/router";
 import { UserProps } from "./UserWidget";
 import { GroupProps } from "./GroupWidget";
+import WidgetTitle from "components/Minis/WidgetTitle";
+import AddRemoveButton from "components/Minis/AddRemoveButton";
 
 export type UserGroupRelationProps = {
   user: UserProps;
@@ -25,96 +28,53 @@ export type UserGroupRelationProps = {
 export type UserGroupRelationWidgetProps = {
   user: UserProps;
   perm: number;
+  isInvert: boolean;
+  isEdit: boolean;
+  handleRemove?: Function;
+  handleAdd?: Function;
+  handleUpdate?: Function;
 };
 
-export default function RelationWidget2({
-  relation,
-  isItem,
+export default function UserGroupRelationWidget({
+  user,
+  perm,
   isInvert,
   isEdit,
   handleRemove,
   handleAdd,
   handleUpdate,
-}: UserGroup) {
-  //toaster
+}: UserGroupRelationWidgetProps) {
   const toaster = useToast();
-  //ret
   return (
-    <Box
-      //size
-      minH={8}
-      maxW="100%"
-      //color
-      bg={isItem ? "cyan.400" : "blue.400"}
-      _hover={isEdit ? {} : { bg: isItem ? "cyan.500" : "blue.500" }}
-      color="white"
-      //position
-      flexDir="row"
-      alignItems={"center"}
-      //misc
-      display="flex"
-      overflow="hidden"
-      rounded="md"
-    >
-      <Box
-        //size
-        w={
-          "calc(100%" +
-          (!isInvert ? " - 60px" : "") +
-          (isEdit ? " - 40px" : "") +
-          ")"
-        }
-        px={4}
-        //misc
-        onClick={() =>
-          Router.push(
-            isItem
-              ? "/item/" + relation.itemId
-              : "/storage/" + relation.storageId
-          )
-        }
-        style={{ textDecoration: "none" }}
-        sx={{
-          WebkitUserDrag: "none",
+    //rounded widget
+    <Flex w="100%" overflow="hidden" rounded="md" flexDir="row" h="8">
+      <WidgetTitle bg="orange.300" title={user.name} />
+      <WidgetTitle bg="orange.200" title={user.email} />
+      <Select
+        rounded={"none"}
+        // bg="gray.300"
+        bg={perm == 0 ? "pink.200" : perm == 1 ? "purple.300" : "purple.600"}
+        color="white"
+        size={"sm"}
+        onChange={(e) => {
+          const num = parseInt(e.target.value);
+          handleUpdate &&
+            handleUpdate(Number.isNaN(num) ? 0 : parseInt(e.target.value));
         }}
+        value={perm}
+        pointerEvents={isEdit ? "auto" : "none"}
+        iconColor={isEdit ? "white" : "gray.300"}
+        display={isInvert ? "none" : ""}
       >
-        <Text noOfLines={1}>
-          {isItem ? relation.item.name : relation.storage.name}
-        </Text>
-      </Box>
-      {!isInvert && (
-        <Box bg="orange.200" w="60px">
-          <Input
-            value={relation.count}
-            onChange={(e) => {
-              const num = parseInt(e.target.value);
-              handleUpdate(Number.isNaN(num) ? 0 : parseInt(e.target.value));
-            }}
-            isDisabled={!isEdit}
-            type="tel"
-            color="white"
-            h={8}
-            textAlign={"center"}
-            _disabled={{ color: "white", border: "none" }}
-            sx={{ opacity: "1" }}
-            rounded="none"
-            maxLength={5} //9999
-          />
-        </Box>
-      )}
-      {isEdit && (
-        <IconButton
-          onClick={() => (isInvert ? handleAdd() : handleRemove())}
-          bg={isInvert ? "green.300" : "red.300"}
-          _hover={{ bg: isInvert ? "green.400" : "red.400" }}
-          color="white"
-          aria-label={isInvert ? "add" : "delete"}
-          icon={isInvert ? <SmallAddIcon /> : <SmallCloseIcon />}
-          h={8}
-          w={"40px"}
-          rounded="none"
-        />
-      )}
-    </Box>
+        <option value="0">Viewer</option>
+        <option value="1">Editor</option>
+        <option value="2">Manager</option>
+      </Select>
+      <AddRemoveButton
+        mode={isEdit ? (isInvert ? 1 : -1) : 0}
+        handleAdd={handleAdd}
+        handleRemove={handleRemove}
+      />
+    </Flex>
   );
 }

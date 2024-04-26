@@ -42,9 +42,8 @@ type PageProps = {
 
 export default function ItemPage({ item, storages }: PageProps) {
   const { data: session, status } = useSession();
-  //toaster
   const toaster = useToast();
-  // state: 0=normal, 1=isEdit
+  //--state--
   const [isEdit, setIsEdit] = useState(false);
   //newItem state
   const [newName, setNewName] = useState(item.name);
@@ -187,6 +186,7 @@ export default function ItemPage({ item, storages }: PageProps) {
           setIn={inRelations.map((relation) => {
             return {
               name: relation.storage.name,
+              rank: relation.storage.name,
               widget: (
                 <RelationWidget
                   relation={relation}
@@ -199,11 +199,6 @@ export default function ItemPage({ item, storages }: PageProps) {
                         (t) => t.storageId != relation.storageId
                       )
                     );
-                  }}
-                  handleAdd={() => {
-                    const copy = [...newRelations];
-                    copy.push(relation);
-                    setNewRelations(copy);
                   }}
                   handleUpdate={(e: number) => {
                     const copy = newRelations.map((a) => ({ ...a }));
@@ -223,6 +218,7 @@ export default function ItemPage({ item, storages }: PageProps) {
           setOut={outRelations.map((relation) => {
             return {
               name: relation.storage.name,
+              rank: relation.storage.name,
               widget: (
                 <RelationWidget
                   relation={relation}

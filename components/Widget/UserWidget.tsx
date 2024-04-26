@@ -14,8 +14,9 @@ import { poster } from "services/poster";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
 
 export type UserProps = {
-  id: number;
+  id: string;
   email: string;
+  name: string;
   isAdmin: boolean;
 };
 type UserWidgetProps = {

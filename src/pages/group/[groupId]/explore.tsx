@@ -23,7 +23,7 @@ import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import UserWidget, { UserProps } from "components/Widget/UserWidget";
-import { useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import RelationWidget from "components/Widget/RelationWidget";
 import { RelationProps } from "components/Widget/RelationWidget";
 import React from "react";
@@ -32,29 +32,43 @@ import { poster } from "services/poster";
 import Header from "components/Header";
 import ImageModal from "components/ImageModal";
 import { GroupProps } from "components/Widget/GroupWidget";
+import UserGroupRelationWidget, {
+  UserGroupRelationProps,
+} from "components/Widget/UserGroupRelationWidget";
 
 type PageProps = {
   group: GroupProps;
   users: UserProps[];
 };
 
-export default function ItemPage({ group, users }: PageProps) {
+export default function GroupPage({ group, users }: PageProps) {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.isAdmin;
   const userGroupRelation = group.userRelations.find(
     (x) => x.userId == session?.user.id
   );
   const perm = userGroupRelation?.perm ? userGroupRelation.perm : 0;
-  console.log(perm);
-
-  //toaster
   const toaster = useToast();
-  // state: 0=normal, 1=isEdit
+  //--state--
   const [isEdit, setIsEdit] = useState(false);
-  //newItem state
+  //change metadata
   const [newName, setNewName] = useState(group.name);
   const [newDescription, setNewDescription] = useState(group.description);
-  //   const [newRelations, setNewRelations] = useState(item.relations);
+  const [newUserRelations, setNewRelations] = useState(group.userRelations);
+  //track widgets
+  const inRelations = isEdit ? newUserRelations : group.userRelations;
+  const inIds = inRelations.map((relation) => relation.userId);
+  const outRelations: UserGroupRelationProps[] = users
+    .filter((user) => !inIds.includes(user.id))
+    .map((user) => {
+      return {
+        user: user,
+        userId: user.id,
+        group: group,
+        groupId: group.id,
+        perm: 0,
+      };
+    });
   // handle delete modal
   const {
     isOpen: isOpenTrash,
@@ -79,17 +93,17 @@ export default function ItemPage({ group, users }: PageProps) {
     const res = await poster("/api/update-group-image", body, toaster);
     if (res.status == 200) Router.reload();
   };
-  // handle update item
-  const handleUpdateItem = async () => {
+  // handle update
+  const handleUpdateGroup = async () => {
     const body = {
       id: group.id,
       newName,
       newDescription,
+      newUserRelations,
     };
     const res = await poster("/api/update-group-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
-
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -131,7 +145,7 @@ export default function ItemPage({ group, users }: PageProps) {
               icon={isEdit ? <CheckIcon /> : <EditIcon />}
               onClick={async () => {
                 if (isEdit) {
-                  handleUpdateItem();
+                  handleUpdateGroup();
                 } else {
                   setNewName(group.name);
                   setNewDescription(group.description);
@@ -180,56 +194,51 @@ export default function ItemPage({ group, users }: PageProps) {
         />
       </Flex>
       <SearchView
-        setIn={users
-          .filter((user) => user.isAdmin)
-          .map((user) => ({
-            name: user.email,
-            widget: (
-              <UserWidget
-                user={user}
-                key={user.id}
-                mode={-1}
-                handleRemove={async () => {
-                  const body = { email: user.email, isAdmin: false };
-                  const res = await poster(
-                    "/api/update-user-admin",
-                    body,
-                    toaster
-                  );
-                  if (res.status == 200) {
-                    Router.reload();
-                  }
-                }}
-                confirmModal={true}
-              />
-            ),
-          }))}
-        setOut={users
-          .filter((user) => !user.isAdmin)
-          .map((user) => ({
-            name: user.email,
-            widget: (
-              <UserWidget
-                user={user}
-                key={user.id}
-                mode={1}
-                handleAdd={async () => {
-                  const body = { email: user.email, isAdmin: true };
-                  const res = await poster(
-                    "/api/update-user-admin",
-                    body,
-                    toaster
-                  );
-                  if (res.status == 200) {
-                    Router.reload();
-                  }
-                }}
-                confirmModal={true}
-              />
-            ),
-          }))}
+        setIn={inRelations.map((relation) => ({
+          name: relation.user.name,
+          rank: relation.perm + relation.user.name,
+          widget: (
+            <UserGroupRelationWidget
+              user={relation.user}
+              perm={relation.perm}
+              isEdit={isEdit}
+              isInvert={false}
+              handleRemove={() => {
+                setNewRelations(
+                  newUserRelations.filter((t) => t.userId != relation.userId)
+                );
+              }}
+              handleUpdate={(newPerm: number) => {
+                const copy = newUserRelations.map((x) => ({ ...x }));
+                console.log(copy);
+                const tar = copy.find((x) => x.user.id == relation?.user.id);
+                if (tar != null) {
+                  tar.perm = newPerm;
+                  setNewRelations(copy);
+                }
+              }}
+            />
+          ),
+        }))}
+        setOut={outRelations.map((relation) => ({
+          name: relation.user.name,
+          rank: relation.perm + relation.user.name,
+          widget: (
+            <UserGroupRelationWidget
+              user={relation.user}
+              perm={relation.perm}
+              isEdit={isEdit}
+              isInvert={true}
+              handleAdd={() => {
+                const copy = [...newUserRelations];
+                copy.push(relation);
+                setNewRelations(copy);
+              }}
+            />
+          ),
+        }))}
         isAdmin={isAdmin}
-        isEdit={false}
+        isEdit={isEdit}
       />
     </Layout>
   );
@@ -241,7 +250,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.groupId),
     },
     include: {
-      userRelations: true,
+      userRelations: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
     },
   });
   const users = await prisma.user.findMany();
