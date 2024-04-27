@@ -5,7 +5,6 @@ import {
   useDisclosure,
   useToast,
   Text,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -13,7 +12,6 @@ import {
   DeleteIcon,
   EditIcon,
   Icon,
-  SettingsIcon,
 } from "@chakra-ui/icons";
 import { IoImageOutline } from "react-icons/io5";
 import { GetServerSideProps } from "next";
@@ -33,10 +31,6 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import UserGroupRelationWidget, {
   UserGroupRelationProps,
 } from "components/Widget/UserGroupRelationWidget";
-import EditableTitle from "components/Minis/EditableTitle";
-import { RouteButton } from "components/RouteButton";
-import { FaBoxes, FaTools } from "react-icons/fa";
-import { IoIosSettings } from "react-icons/io";
 
 type PageProps = {
   group: GroupProps;
@@ -111,12 +105,21 @@ export default function GroupPage({ group, users }: PageProps) {
     const res = await poster("/api/update-group-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
-  //prefix
-  const prefix = "/group/" + group.id + "/";
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
-        <EditableTitle value={group.name} isDisabled={true} />
+        <AutoResizeTextarea
+          value={isEdit ? newName : group.name}
+          onChange={(e) => setNewName(e.target.value)}
+          isDisabled={!isEdit}
+          maxLength={100}
+          fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}
+          display={"block"}
+          _disabled={{ color: "black", borderColor: "white" }}
+          textAlign={"center"}
+          sx={{ opacity: "1" }}
+          py={"5px"}
+        />
 
         <Center>
           <IconButton
@@ -133,6 +136,44 @@ export default function GroupPage({ group, users }: PageProps) {
             isOpen={isOpenViewer}
             onUpload={uploadImage}
             imageStr={group.image}
+          />
+          {perm >= 1 && (
+            <IconButton
+              ml={2}
+              mr={2}
+              colorScheme="teal"
+              aria-label=""
+              icon={isEdit ? <CheckIcon /> : <EditIcon />}
+              onClick={async () => {
+                if (isEdit) {
+                  handleUpdateGroup();
+                } else {
+                  setNewName(group.name);
+                  setNewDescription(group.description);
+                  setIsEdit(true);
+                }
+              }}
+            />
+          )}
+          {perm >= 1 && (
+            <IconButton
+              colorScheme="red"
+              aria-label=""
+              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+              onClick={() => {
+                if (isEdit) {
+                  setIsEdit(false);
+                } else {
+                  onOpenTrash();
+                }
+              }}
+            />
+          )}
+          <ConfirmActionModal
+            isOpen={isOpenTrash}
+            onClose={onCloseTrash}
+            actionStr={"delete the group: " + group.name}
+            protectedAction={handleDelete}
           />
         </Center>
       </Flex>
@@ -153,29 +194,58 @@ export default function GroupPage({ group, users }: PageProps) {
           sx={{ opacity: "1" }}
         />
       </Flex>
-      <SimpleGrid columns={[1, 2, 3]} spacing={10} pt="15">
-        <RouteButton
-          route={prefix + "manage-items"}
-          text={"Items"}
-          icon={FaTools}
-          color={"cyan.300"}
-          hoverColor={"cyan.100"}
-        ></RouteButton>
-        <RouteButton
-          route={prefix + "manage-storages"}
-          text={"Storages"}
-          icon={FaBoxes}
-          color={"blue.300"}
-          hoverColor={"blue.100"}
-        ></RouteButton>
-        <RouteButton
-          route={prefix + "settings"}
-          text={"Settings"}
-          icon={IoIosSettings}
-          color={"orange.400"}
-          hoverColor={"orange.100"}
-        ></RouteButton>
-      </SimpleGrid>
+      <Center>
+        <Text fontSize={["xl", "xl", "xl", "2xl", "2xl"]} pb="2">
+          Group Permissions
+        </Text>
+      </Center>
+      <SearchView
+        setIn={inRelations.map((relation) => ({
+          name: relation.user.name,
+          rank: 3 - relation.perm + relation.user.name,
+          widget: (
+            <UserGroupRelationWidget
+              user={relation.user}
+              perm={relation.perm}
+              isEdit={isEdit && perm >= 2}
+              isInvert={false}
+              handleRemove={() => {
+                setNewRelations(
+                  newUserRelations.filter((t) => t.userId != relation.userId)
+                );
+              }}
+              handleUpdate={(newPerm: number) => {
+                const copy = newUserRelations.map((x) => ({ ...x }));
+                console.log(copy);
+                const tar = copy.find((x) => x.user.id == relation?.user.id);
+                if (tar != null) {
+                  tar.perm = newPerm;
+                  setNewRelations(copy);
+                }
+              }}
+            />
+          ),
+        }))}
+        setOut={outRelations.map((relation) => ({
+          name: relation.user.name,
+          rank: 3 - relation.perm + relation.user.name,
+          widget: (
+            <UserGroupRelationWidget
+              user={relation.user}
+              perm={relation.perm}
+              isEdit={isEdit && perm >= 2}
+              isInvert={true}
+              handleAdd={() => {
+                const copy = [...newUserRelations];
+                copy.push(relation);
+                setNewRelations(copy);
+              }}
+            />
+          ),
+        }))}
+        isAdmin={isAdmin}
+        isEdit={isEdit}
+      />
     </Layout>
   );
 }
