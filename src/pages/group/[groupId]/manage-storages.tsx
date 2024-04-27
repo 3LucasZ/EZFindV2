@@ -23,7 +23,7 @@ export default function ManageStorages({ group }: PageProps) {
       <Box minH="8px"></Box>
       <Center>
         <Text fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}>
-          {group.name}: Items
+          {group.name}: Storages
         </Text>
       </Center>
       <Box minH="8px"></Box>
