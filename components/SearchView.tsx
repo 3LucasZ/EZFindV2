@@ -22,8 +22,8 @@ type SearchViewProps = {
   columns?: number;
 };
 type PairProps = {
-  name: string;
-  rank?: string;
+  name: string; //search matching
+  rank?: string; //sorting
   widget: ReactNode;
 };
 export default function SearchView(props: SearchViewProps) {
