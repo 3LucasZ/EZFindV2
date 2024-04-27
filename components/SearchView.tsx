@@ -114,15 +114,13 @@ export default function SearchView(props: SearchViewProps) {
         flexDir={"column"}
         px={[2, "5vw", "10vw", "15vw"]}
       >
-        <SimpleGrid gap="8px" columns={props.columns ? props.columns : 1}>
-          {subset.length == 0 ? (
-            <Center>No data available to display.</Center>
-          ) : (
-            subset.map((pair) => {
-              return pair.widget;
-            })
-          )}
-        </SimpleGrid>
+        {subset.length == 0 ? (
+          <Center>No data available to display.</Center>
+        ) : (
+          <SimpleGrid gap="8px" columns={props.columns ? props.columns : 1}>
+            {subset.map((pair) => pair.widget)}
+          </SimpleGrid>
+        )}
         <Box h={"8px"}></Box>
       </Stack>
       <Box minH={"calc(50px + env(safe-area-inset-bottom))"}></Box>
