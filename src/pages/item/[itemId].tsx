@@ -254,43 +254,50 @@ export default function ItemPage({ item, storages }: PageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  //grab queried item
   var item = await prisma.item.findUnique({
     where: {
       id: Number(context.params?.itemId),
     },
     include: {
+      group: {
+        include: {
+          storages: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
+      },
       storageRelations: {
         include: {
           storage: {
             select: {
               id: true,
               name: true,
+              description: true,
             },
           },
         },
       },
     },
   });
-
-  var storages = await prisma.storage.findMany({
-    select: {
-      id: true,
-      name: true,
-    },
-  });
-
+  //redirect to 404 if url itemId is invalid
   if (item == null) {
     return {
       redirect: {
         permanent: false,
-        destination: "/",
+        destination: "/404",
       },
     };
   }
+  //return props
   return {
     props: {
       item,
-      storages,
+      storages: item.group.storages,
     },
   };
 };
