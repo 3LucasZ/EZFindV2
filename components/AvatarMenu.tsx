@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Icon,
   Menu,
   MenuButton,
   MenuDivider,
@@ -11,6 +12,7 @@ import { signOut, signIn, useSession } from "next-auth/react";
 import Router from "next/router";
 import React from "react";
 import { debugMode } from "services/constants";
+import { FcGoogle } from "react-icons/fc";
 
 type AvatarMenuProps = {
   isAdmin: boolean | undefined;
@@ -51,6 +53,7 @@ export default function AvatarMenu({ isAdmin }: AvatarMenuProps) {
               : signIn("google", { callbackUrl: "/ezfind/" });
           }}
         >
+          <Icon as={FcGoogle} pr="2" boxSize={6} />
           {session ? "Sign out" : "Sign in"}
         </MenuItem>
       </MenuList>
