@@ -82,8 +82,8 @@ model Group {
   userRelations UserGroupRelation[]
   minPerm Int @default(-1)
   // //relations
-  // items Item[]
-  // storages Storage[]
+  items Item[]
+  storages Storage[]
 }
 
 model Item {
@@ -93,6 +93,8 @@ model Item {
   image Bytes @default("")
   //relations
   storageRelations ItemStorageRelation[]
+  group Group @relation(fields: [groupId], references: [id])
+  groupId Int
 }
 
 model Storage {
@@ -102,6 +104,8 @@ model Storage {
   image Bytes @default("")
   //relations
   itemRelations ItemStorageRelation[]
+  group Group @relation(fields: [groupId], references: [id])
+  groupId Int
 }
 
 //----Relations----
