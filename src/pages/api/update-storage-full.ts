@@ -28,7 +28,7 @@ export default async function handle(
       data: {
         name: newName,
         description: newDescription,
-        relations: {
+        itemRelations: {
           deleteMany: {},
           createMany: { data: relations },
         },
