@@ -1,24 +1,32 @@
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 
-//mode, handleAdd, handleRemove
-export default function AddRemoveButton({ ...props }) {
+type AddRemoveButtonProps = {
+  mode: number;
+  handleAdd: Function;
+  handleRemove: Function;
+};
+export default function AddRemoveButton({
+  mode,
+  handleAdd,
+  handleRemove,
+}: AddRemoveButtonProps) {
   return (
     <IconButton
       //color
-      bg={props.mode == 1 ? "green.300" : "red.300"}
-      _hover={{ bg: props.mode == 1 ? "green.400" : "red.400" }}
+      bg={mode == 1 ? "green.300" : "red.300"}
+      _hover={{ bg: mode == 1 ? "green.400" : "red.400" }}
       color="white"
-      aria-label={props.mode == 1 ? "add" : "delete"}
+      aria-label={mode == 1 ? "add" : "delete"}
       //display
-      icon={props.mode == 1 ? <SmallAddIcon /> : <SmallCloseIcon />}
+      icon={mode == 1 ? <SmallAddIcon /> : <SmallCloseIcon />}
       h={8}
       w={"40px"}
-      display={props.mode == 0 ? "none" : ""}
+      display={mode == 0 ? "none" : ""}
       //misc
       borderRadius="md"
       roundedLeft="none"
-      onClick={props.mode == 1 ? props.handleAdd : props.handleRemove}
+      onClick={mode == 1 ? handleAdd : handleRemove}
     />
   );
 }

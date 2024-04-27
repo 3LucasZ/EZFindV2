@@ -64,7 +64,11 @@ export default function UserWidget(props: UserWidgetProps) {
       {(props.mode == -1 || props.mode == 1) && (
         <AddRemoveButton
           mode={props.mode}
-          onClick={() => {
+          handleAdd={() => {
+            if (props.confirmModal) onOpen();
+            else action();
+          }}
+          handleRemove={() => {
             if (props.confirmModal) onOpen();
             else action();
           }}
