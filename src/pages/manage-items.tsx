@@ -40,7 +40,9 @@ export default function ManageItems({ items }: PageProps) {
   );
 }
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  var items = await prisma.item.findMany({ include: { relations: true } });
+  var items = await prisma.item.findMany({
+    include: { storageRelations: true },
+  });
   items.forEach((item) => (item.image = "")); //(experimental) remove image from items to reduce payload???
   //const session = await getSession(ctx); //getSession in ServerSideProps takes over 10 seconds
 

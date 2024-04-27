@@ -17,7 +17,7 @@ import Round from "components/Minis/Round";
 import WidgetTitle from "components/Minis/WidgetTitle";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
 
-export type RelationProps = {
+export type ItemStorageRelationProps = {
   item: ItemProps;
   itemId: number;
   storage: StorageProps;
@@ -26,7 +26,7 @@ export type RelationProps = {
 };
 
 type RelationWidgetProps = {
-  relation: RelationProps;
+  relation: ItemStorageRelationProps;
   isItem: boolean;
   isInvert: boolean;
   isEdit: boolean;

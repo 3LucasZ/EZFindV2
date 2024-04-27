@@ -1,4 +1,4 @@
-import { RelationProps } from "components/Widget/RelationWidget";
+import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
 import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
@@ -9,7 +9,7 @@ export default async function handle(
     id: number;
     newName: string;
     newDescription: string;
-    newRelations: RelationProps[];
+    newRelations: ItemStorageRelationProps[];
   }>,
   res: NextApiResponse
 ) {
@@ -27,7 +27,7 @@ export default async function handle(
       data: {
         name: newName,
         description: newDescription,
-        relations: {
+        storageRelations: {
           deleteMany: {},
           createMany: { data: relations },
         },

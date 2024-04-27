@@ -25,8 +25,8 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
-import RelationWidget from "components/Widget/RelationWidget";
-import { RelationProps } from "components/Widget/RelationWidget";
+import RelationWidget from "components/Widget/ItemStorageRelationWidget";
+import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
@@ -48,11 +48,11 @@ export default function ItemPage({ item, storages }: PageProps) {
   //newItem state
   const [newName, setNewName] = useState(item.name);
   const [newDescription, setNewDescription] = useState(item.description);
-  const [newRelations, setNewRelations] = useState(item.relations);
+  const [newRelations, setNewRelations] = useState(item.storageRelations);
   //track widgets
-  const inRelations = isEdit ? newRelations : item.relations;
+  const inRelations = isEdit ? newRelations : item.storageRelations;
   const inIds = inRelations.map((relation) => relation.storageId);
-  const outRelations: RelationProps[] = storages
+  const outRelations: ItemStorageRelationProps[] = storages
     .filter((storage) => !inIds.includes(storage.id))
     .map((storage) => {
       return {
@@ -136,7 +136,7 @@ export default function ItemPage({ item, storages }: PageProps) {
                   } else {
                     setNewName(item.name);
                     setNewDescription(item.description);
-                    setNewRelations(item.relations);
+                    setNewRelations(item.storageRelations);
                     setIsEdit(true);
                   }
                 }}
@@ -259,7 +259,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.itemId),
     },
     include: {
-      relations: {
+      storageRelations: {
         include: {
           storage: {
             select: {

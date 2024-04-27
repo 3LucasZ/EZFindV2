@@ -24,8 +24,8 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
-import RelationWidget from "components/Widget/RelationWidget";
-import { RelationProps } from "components/Widget/RelationWidget";
+import RelationWidget from "components/Widget/ItemStorageRelationWidget";
+import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
@@ -46,11 +46,11 @@ export default function StoragePage({ storage, items }: PageProps) {
   //newItem state
   const [newName, setNewName] = useState(storage.name);
   const [newDescription, setNewDescription] = useState(storage.description);
-  const [newRelations, setNewRelations] = useState(storage.relations);
+  const [newRelations, setNewRelations] = useState(storage.itemRelations);
   //track widgets
-  const inRelations = isEdit ? newRelations : storage.relations;
+  const inRelations = isEdit ? newRelations : storage.itemRelations;
   const inIds = inRelations.map((relation) => relation.itemId);
-  const outRelations: RelationProps[] = items
+  const outRelations: ItemStorageRelationProps[] = items
     .filter((item) => !inIds.includes(item.id))
     .map((item) => {
       return {
@@ -140,7 +140,7 @@ export default function StoragePage({ storage, items }: PageProps) {
                 } else {
                   setNewName(storage.name);
                   setNewDescription(storage.description);
-                  setNewRelations(storage.relations);
+                  setNewRelations(storage.itemRelations);
                   setIsEdit(true);
                 }
               }}
@@ -268,7 +268,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.storageId),
     },
     include: {
-      relations: {
+      itemRelations: {
         include: {
           item: {
             select: {

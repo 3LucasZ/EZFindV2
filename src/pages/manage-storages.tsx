@@ -39,7 +39,7 @@ export default function ManageStorages({ storages }: PageProps) {
 }
 export const getServerSideProps: GetServerSideProps = async () => {
   const storages = await prisma.storage.findMany({
-    include: { relations: true },
+    include: { itemRelations: true },
   });
   return {
     props: { storages },

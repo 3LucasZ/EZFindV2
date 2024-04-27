@@ -24,8 +24,8 @@ import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import UserWidget, { UserProps } from "components/Widget/UserWidget";
 import { ReactNode, useEffect, useState } from "react";
-import RelationWidget from "components/Widget/RelationWidget";
-import { RelationProps } from "components/Widget/RelationWidget";
+import RelationWidget from "components/Widget/ItemStorageRelationWidget";
+import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
@@ -53,7 +53,6 @@ export default function GroupPage({ group, users }: PageProps) {
         group.minPerm,
         userGroupRelation?.perm ? userGroupRelation.perm : 0
       );
-
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -160,7 +159,7 @@ export default function GroupPage({ group, users }: PageProps) {
               }}
             />
           )}
-          {session?.user.isAdmin && (
+          {perm >= 1 && (
             <IconButton
               colorScheme="red"
               aria-label=""
@@ -207,7 +206,7 @@ export default function GroupPage({ group, users }: PageProps) {
             <UserGroupRelationWidget
               user={relation.user}
               perm={relation.perm}
-              isEdit={isEdit}
+              isEdit={isEdit && perm >= 2}
               isInvert={false}
               handleRemove={() => {
                 setNewRelations(
@@ -233,7 +232,7 @@ export default function GroupPage({ group, users }: PageProps) {
             <UserGroupRelationWidget
               user={relation.user}
               perm={relation.perm}
-              isEdit={isEdit}
+              isEdit={isEdit && perm >= 2}
               isInvert={true}
               handleAdd={() => {
                 const copy = [...newUserRelations];

@@ -1,12 +1,12 @@
 import { Box, Grid } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
-import { RelationProps } from "./RelationWidget";
+import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
 
 export type ItemProps = {
   id: number;
   name: string;
   description: string;
-  relations: RelationProps[];
+  storageRelations: ItemStorageRelationProps[];
   image: string;
 };
 type ItemWidgetProps = {
@@ -15,7 +15,7 @@ type ItemWidgetProps = {
 
 export default function ItemWidget({ item }: ItemWidgetProps) {
   var sum = 0;
-  item.relations.forEach((relation) => (sum += relation.count));
+  item.storageRelations.forEach((relation) => (sum += relation.count));
   return (
     <Grid
       templateColumns={["repeat(6, 1fr)", "repeat(6, 1fr)", "repeat(12, 1fr)"]}

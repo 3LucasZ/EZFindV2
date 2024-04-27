@@ -281,7 +281,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.storageId),
     },
     include: {
-      relations: true,
+      itemRelations: true,
     },
   });
 

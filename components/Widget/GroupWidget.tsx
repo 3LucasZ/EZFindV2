@@ -14,7 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
-import { RelationProps } from "./RelationWidget";
+import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
 import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
 import { UserGroupRelationProps } from "./UserGroupRelationWidget";

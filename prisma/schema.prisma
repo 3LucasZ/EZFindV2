@@ -81,6 +81,9 @@ model Group {
   image Bytes @default("")
   userRelations UserGroupRelation[]
   minPerm Int @default(-1)
+  // //relations
+  // items Item[]
+  // storages Storage[]
 }
 
 model Item {
@@ -88,7 +91,8 @@ model Item {
   name String @unique @db.VarChar(255) //non-unique due to isolation of groups
   description String @db.VarChar(255)
   image Bytes @default("")
-  relations Relation[]
+  //relations
+  storageRelations ItemStorageRelation[]
 }
 
 model Storage {
@@ -96,11 +100,12 @@ model Storage {
   name String @unique @db.VarChar(255) //non-unique due to isolation of groups
   description String @db.VarChar(255)
   image Bytes @default("")
-  relations Relation[]
+  //relations
+  itemRelations ItemStorageRelation[]
 }
 
 //----Relations----
-model Relation {
+model ItemStorageRelation {
   item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
   itemId Int 
   storage Storage @relation (fields: [storageId], references: [id], onDelete: Cascade)
