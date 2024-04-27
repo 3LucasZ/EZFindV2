@@ -18,14 +18,20 @@ import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
 import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
 import { UserGroupRelationProps } from "./UserGroupRelationWidget";
+import { ItemProps } from "./ItemWidget";
+import { StorageProps } from "./StorageWidget";
 
 export type GroupProps = {
   id: number;
   name: string;
   description: string;
   image: string;
-  userRelations: UserGroupRelationProps[];
   minPerm: number;
+
+  //relations
+  userRelations: UserGroupRelationProps[];
+  items: ItemProps[];
+  storages: StorageProps[];
 };
 type GroupWidgetProps = {
   group: GroupProps;
