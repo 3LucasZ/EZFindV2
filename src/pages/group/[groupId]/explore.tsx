@@ -4,6 +4,7 @@ import {
   IconButton,
   useDisclosure,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -13,23 +14,18 @@ import {
   Icon,
 } from "@chakra-ui/icons";
 import { IoImageOutline } from "react-icons/io5";
-import { ItemProps } from "components/Widget/ItemWidget";
 import { GetServerSideProps } from "next";
-import { StorageProps } from "components/Widget/StorageWidget";
 import ConfirmActionModal from "components/ConfirmActionModal";
 import Router from "next/router";
 import Layout from "components/Layout";
 import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import UserWidget, { UserProps } from "components/Widget/UserWidget";
-import { ReactNode, useEffect, useState } from "react";
-import RelationWidget from "components/Widget/ItemStorageRelationWidget";
-import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
+import { UserProps } from "components/Widget/UserWidget";
+import { useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
-import Header from "components/Header";
 import ImageModal from "components/ImageModal";
 import { GroupProps } from "components/Widget/GroupWidget";
 import UserGroupRelationWidget, {
@@ -198,6 +194,11 @@ export default function GroupPage({ group, users }: PageProps) {
           sx={{ opacity: "1" }}
         />
       </Flex>
+      <Center>
+        <Text fontSize={["xl", "xl", "xl", "2xl", "2xl"]} pb="2">
+          Group Permissions
+        </Text>
+      </Center>
       <SearchView
         setIn={inRelations.map((relation) => ({
           name: relation.user.name,
