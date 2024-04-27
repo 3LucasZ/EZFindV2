@@ -19,6 +19,7 @@ import Header from "components/Header";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import SearchView from "components/SearchView";
 import { poster } from "services/poster";
+import Router from "next/router";
 
 type PageProps = {
   groups: GroupProps[];
@@ -45,10 +46,12 @@ export default function Home({ groups }: PageProps) {
         onAdd={async () => {
           const body = JSON.stringify("");
           const res = await poster("/api/create-group", body, toaster);
-          // if (res.status == 200)
-          //   await Router.push({ pathname: "/group/" + (await res.json()) });
+          if (res.status == 200)
+            await Router.push({
+              pathname: "/group/" + (await res.json()) + "/explore",
+            });
         }}
-        isAdmin={false}
+        isAdmin={isAdmin}
         isEdit={false}
         columns={4}
       />
