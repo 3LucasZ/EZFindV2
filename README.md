@@ -3,3 +3,18 @@
 - Latest Release: Version 2.4 (Alpha)
 - Build docker image: docker compose --env-file .env build
 - Create docker container: docker compose --env-file .env up -d
+
+# Libraries
+
+- next-pwa
+- next-auth
+- next-qrcode
+- react-icons
+- react-textarea-autosize
+- chakra-ui
+- chakra-react-select
+- prisma
+- prisma-adapter
+- prisma-client
+- browser-image-compression
+- dymojs
