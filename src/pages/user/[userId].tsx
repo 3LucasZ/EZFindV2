@@ -43,7 +43,7 @@ export default function UserPage({ user }: PageProps) {
   const { data: session, status } = useSession();
   const toaster = useToast();
 
-  return <Layout isAdmin={session?.user.isAdmin}>""</Layout>;
+  return <Layout isAdmin={session?.user.isAdmin}>Hi</Layout>;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

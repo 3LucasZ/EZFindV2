@@ -46,7 +46,7 @@ type PageProps = {
 export default function GroupPage({ group, users }: PageProps) {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations.find(
+  const userGroupRelation = group.userRelations?.find(
     (x) => x.userId == session?.user.id
   );
   const perm = isAdmin
@@ -64,9 +64,9 @@ export default function GroupPage({ group, users }: PageProps) {
   const [newUserRelations, setNewRelations] = useState(group.userRelations);
   //track widgets
   const inRelations = isEdit ? newUserRelations : group.userRelations;
-  const inIds = inRelations.map((relation) => relation.userId);
+  const inIds = inRelations?.map((relation) => relation.userId);
   const outRelations: UserGroupRelationProps[] = users
-    .filter((user) => !inIds.includes(user.id))
+    .filter((user) => !inIds?.includes(user.id))
     .map((user) => {
       return {
         user: user,

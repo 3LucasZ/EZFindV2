@@ -30,7 +30,7 @@ export default function ManageItems({ group }: PageProps) {
       </Center>
       <Box minH="8px"></Box>
       <SearchView
-        setIn={group.items.map((item) => ({
+        setIn={group.items!.map((item) => ({
           name: item.name,
           widget: <ItemWidget item={item} key={item.id} />,
         }))}

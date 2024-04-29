@@ -28,7 +28,7 @@ export default function ManageStorages({ group }: PageProps) {
       </Center>
       <Box minH="8px"></Box>
       <SearchView
-        setIn={group.storages.map((storage) => ({
+        setIn={group.storages!.map((storage) => ({
           name: storage.name,
           widget: <StorageWidget storage={storage} key={storage.id} />,
         }))}

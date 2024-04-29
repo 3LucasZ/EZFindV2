@@ -25,13 +25,13 @@ export type GroupProps = {
   id: number;
   name: string;
   description: string;
-  image: string;
+  image?: string;
   minPerm: number;
 
   //relations
-  userRelations: UserGroupRelationProps[];
-  items: ItemProps[];
-  storages: StorageProps[];
+  userRelations?: UserGroupRelationProps[];
+  items?: ItemProps[];
+  storages?: StorageProps[];
 };
 type GroupWidgetProps = {
   group: GroupProps;

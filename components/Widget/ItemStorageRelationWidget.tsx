@@ -16,6 +16,7 @@ import EditableCounter from "components/Minis/EditableCounter";
 import Round from "components/Minis/Round";
 import WidgetTitle from "components/Minis/WidgetTitle";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
+import { MouseEventHandler } from "react";
 
 export type ItemStorageRelationProps = {
   item: ItemProps;
@@ -30,8 +31,8 @@ type RelationWidgetProps = {
   isItem: boolean;
   isInvert: boolean;
   isEdit: boolean;
-  handleRemove?: Function;
-  handleAdd?: Function;
+  handleRemove?: MouseEventHandler<HTMLButtonElement>;
+  handleAdd?: MouseEventHandler<HTMLButtonElement>;
   handleUpdate: Function;
 };
 

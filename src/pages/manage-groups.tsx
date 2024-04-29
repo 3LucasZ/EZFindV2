@@ -11,10 +11,10 @@ import { Box, useToast } from "@chakra-ui/react";
 import Header from "components/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
-import GroupWidget from "components/Widget/GroupWidget";
+import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 
 type PageProps = {
-  groups: ItemProps[];
+  groups: GroupProps[];
 };
 export default function ManageGroups({ groups }: PageProps) {
   const { data: session } = useSession();

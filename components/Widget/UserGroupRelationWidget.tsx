@@ -16,6 +16,7 @@ import { UserProps } from "./UserWidget";
 import { GroupProps } from "./GroupWidget";
 import WidgetTitle from "components/Minis/WidgetTitle";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
+import { MouseEventHandler } from "react";
 
 export type UserGroupRelationProps = {
   user: UserProps;
@@ -30,8 +31,8 @@ export type UserGroupRelationWidgetProps = {
   perm: number;
   isInvert: boolean;
   isEdit: boolean;
-  handleRemove?: Function;
-  handleAdd?: Function;
+  handleRemove?: MouseEventHandler<HTMLButtonElement>;
+  handleAdd?: MouseEventHandler<HTMLButtonElement>;
   handleUpdate?: Function;
 };
 

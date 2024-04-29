@@ -1,10 +1,11 @@
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
+import { MouseEventHandler } from "react";
 
 type AddRemoveButtonProps = {
   mode: number;
-  handleAdd: Function;
-  handleRemove: Function;
+  handleAdd?: MouseEventHandler<HTMLButtonElement>;
+  handleRemove?: MouseEventHandler<HTMLButtonElement>;
 };
 export default function AddRemoveButton({
   mode,

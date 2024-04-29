@@ -40,7 +40,7 @@ type PageProps = {
 export default function GroupPage({ group, users }: PageProps) {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations.find(
+  const userGroupRelation = group.userRelations?.find(
     (x) => x.userId == session?.user.id
   );
   const perm = isAdmin
@@ -58,9 +58,9 @@ export default function GroupPage({ group, users }: PageProps) {
   const [newUserRelations, setNewRelations] = useState(group.userRelations);
   //track widgets
   const inRelations = isEdit ? newUserRelations : group.userRelations;
-  const inIds = inRelations.map((relation) => relation.userId);
+  const inIds = inRelations?.map((relation) => relation.userId);
   const outRelations: UserGroupRelationProps[] = users
-    .filter((user) => !inIds.includes(user.id))
+    .filter((user) => !inIds?.includes(user.id))
     .map((user) => {
       return {
         user: user,
@@ -200,7 +200,7 @@ export default function GroupPage({ group, users }: PageProps) {
         </Text>
       </Center>
       <SearchView
-        setIn={inRelations.map((relation) => ({
+        setIn={inRelations!.map((relation) => ({
           name: relation.user.name,
           rank: 3 - relation.perm + relation.user.name,
           widget: (
@@ -211,13 +211,13 @@ export default function GroupPage({ group, users }: PageProps) {
               isInvert={false}
               handleRemove={() => {
                 setNewRelations(
-                  newUserRelations.filter((t) => t.userId != relation.userId)
+                  newUserRelations?.filter((t) => t.userId != relation.userId)
                 );
               }}
               handleUpdate={(newPerm: number) => {
-                const copy = newUserRelations.map((x) => ({ ...x }));
+                const copy = newUserRelations?.map((x) => ({ ...x }));
                 console.log(copy);
-                const tar = copy.find((x) => x.user.id == relation?.user.id);
+                const tar = copy?.find((x) => x.user.id == relation?.user.id);
                 if (tar != null) {
                   tar.perm = newPerm;
                   setNewRelations(copy);
@@ -236,7 +236,7 @@ export default function GroupPage({ group, users }: PageProps) {
               isEdit={isEdit && perm >= 2}
               isInvert={true}
               handleAdd={() => {
-                const copy = [...newUserRelations];
+                const copy = [...newUserRelations!];
                 copy.push(relation);
                 setNewRelations(copy);
               }}
