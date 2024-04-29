@@ -20,7 +20,8 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   if (!host) return res.status(400).json(`Bad Request, missing host header`);
   // else return res.status(400).json("Debug: " + host);
 
-  process.env.NEXTAUTH_URL = "https://" + host + "/ezfind/api/auth";
+  // process.env.NEXTAUTH_URL = "https://" + host + "/ezfind/api/auth";
+  process.env.NEXTAUTH_URL = "https://" + host + "/api/auth";
 
   return NextAuth({
     adapter: PrismaAdapter(prisma) as Adapter,
