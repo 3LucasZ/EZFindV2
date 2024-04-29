@@ -49,8 +49,8 @@ export default function AvatarMenu({ isAdmin }: AvatarMenuProps) {
           onClick={(e) => {
             e.preventDefault();
             session
-              ? signOut({ callbackUrl: "/ezfind/" })
-              : signIn("google", { callbackUrl: "/ezfind/" });
+              ? signOut({ callbackUrl: "/" }) /*/ezfind/*/
+              : signIn("google", { callbackUrl: "/" }); /*/ezfind*/
           }}
         >
           <Icon as={FcGoogle} pr="2" boxSize={6} />
