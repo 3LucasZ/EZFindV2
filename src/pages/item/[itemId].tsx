@@ -3,6 +3,10 @@ import {
   Center,
   Flex,
   IconButton,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputRightAddon,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -34,6 +38,7 @@ import Header from "components/Header";
 import ImageModal from "components/ImageModal";
 import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
+import { TiShoppingCart } from "react-icons/ti";
 
 type PageProps = {
   item: ItemProps;
@@ -49,6 +54,7 @@ export default function ItemPage({ item, storages }: PageProps) {
   const [newName, setNewName] = useState(item.name);
   const [newDescription, setNewDescription] = useState(item.description);
   const [newRelations, setNewRelations] = useState(item.storageRelations);
+  const [newLink, setNewLink] = useState(item.link);
   //track widgets
   const inRelations = isEdit ? newRelations : item.storageRelations;
   const inIds = inRelations.map((relation) => relation.storageId);
@@ -63,6 +69,12 @@ export default function ItemPage({ item, storages }: PageProps) {
         count: 0,
       };
     });
+  //handle link modal
+  const {
+    isOpen: isOpenLink,
+    onOpen: onOpenLink,
+    onClose: onCloseLink,
+  } = useDisclosure();
   // handle delete modal
   const {
     isOpen: isOpenTrash,
@@ -92,12 +104,12 @@ export default function ItemPage({ item, storages }: PageProps) {
       id: item.id,
       newName,
       newDescription,
+      newLink,
       newRelations,
     };
     const res = await poster("/api/update-item-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
-
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -112,6 +124,21 @@ export default function ItemPage({ item, storages }: PageProps) {
         <Center>
           <ButtonGroup spacing="2" pl="2">
             <IconButton
+              colorScheme="purple"
+              aria-label=""
+              icon={<Icon as={TiShoppingCart} boxSize={5} />}
+              onClick={onOpenLink}
+              isDisabled={item.link == ""}
+            />
+            <ConfirmActionModal
+              isOpen={isOpenLink}
+              onClose={onCloseLink}
+              actionStr={"visit the website: " + item.link}
+              protectedAction={() => {
+                window.open(item.link, "_blank");
+              }}
+            />
+            <IconButton
               colorScheme="blue"
               aria-label=""
               icon={<Icon as={IoImageOutline} boxSize={5} />}
@@ -125,37 +152,32 @@ export default function ItemPage({ item, storages }: PageProps) {
               onUpload={uploadImage}
               imageStr={item.image}
             />
-            {session?.user.isAdmin && (
-              <IconButton
-                colorScheme="teal"
-                aria-label=""
-                icon={isEdit ? <CheckIcon /> : <EditIcon />}
-                onClick={async () => {
-                  if (isEdit) {
-                    handleUpdateItem();
-                  } else {
-                    setNewName(item.name);
-                    setNewDescription(item.description);
-                    setNewRelations(item.storageRelations);
-                    setIsEdit(true);
-                  }
-                }}
-              />
-            )}
-            {session?.user.isAdmin && (
-              <IconButton
-                colorScheme="red"
-                aria-label=""
-                icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
-                onClick={() => {
-                  if (isEdit) {
-                    setIsEdit(false);
-                  } else {
-                    onOpenTrash();
-                  }
-                }}
-              />
-            )}
+            <IconButton
+              colorScheme="teal"
+              aria-label=""
+              icon={isEdit ? <CheckIcon /> : <EditIcon />}
+              onClick={async () => {
+                if (isEdit) {
+                  handleUpdateItem();
+                } else {
+                  setNewName(item.name);
+                  setNewDescription(item.description);
+                  setNewRelations(item.storageRelations);
+                  setIsEdit(true);
+                }
+              }}
+              hidden={!session?.user.isAdmin}
+            />
+            <IconButton
+              colorScheme="red"
+              aria-label=""
+              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+              onClick={() => {
+                if (isEdit) setIsEdit(false);
+                else onOpenTrash();
+              }}
+              hidden={!session?.user.isAdmin}
+            />
             <ConfirmActionModal
               isOpen={isOpenTrash}
               onClose={onCloseTrash}
@@ -165,7 +187,7 @@ export default function ItemPage({ item, storages }: PageProps) {
           </ButtonGroup>
         </Center>
       </Flex>
-      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex px={[2, "5vw", "10vw", "15vw"]} flexDir="column">
         <EditableSubtitle
           value={
             isEdit
@@ -178,6 +200,15 @@ export default function ItemPage({ item, storages }: PageProps) {
             setNewDescription(e.target.value)
           }
           isDisabled={!isEdit}
+          placeholder="Description"
+        />
+        <EditableSubtitle
+          value={newLink}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setNewLink(e.target.value)
+          }
+          hidden={!isEdit}
+          placeholder="Purchase link"
         />
       </Flex>
 

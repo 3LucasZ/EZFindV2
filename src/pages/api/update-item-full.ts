@@ -9,11 +9,12 @@ export default async function handle(
     id: number;
     newName: string;
     newDescription: string;
+    newLink: string;
     newRelations: ItemStorageRelationProps[];
   }>,
   res: NextApiResponse
 ) {
-  const { id, newName, newDescription, newRelations } = req.body;
+  const { id, newName, newDescription, newLink, newRelations } = req.body;
   const relations = newRelations.map((relation) => ({
     count: relation.count,
     storageId: relation.storageId,
@@ -27,6 +28,7 @@ export default async function handle(
       data: {
         name: newName,
         description: newDescription,
+        link: newLink,
         storageRelations: {
           deleteMany: {},
           createMany: { data: relations },
