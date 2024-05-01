@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Item" ADD COLUMN     "link" VARCHAR(2048) NOT NULL DEFAULT '';
