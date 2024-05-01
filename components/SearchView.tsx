@@ -19,7 +19,7 @@ type SearchViewProps = {
   onAdd?: Function;
   isAdmin?: boolean | undefined;
   isEdit?: boolean;
-  columns?: number;
+  columns?: number | number[];
 };
 type PairProps = {
   name: string; //search matching

@@ -53,7 +53,7 @@ export default function Home({ groups }: PageProps) {
         }}
         isAdmin={isAdmin}
         isEdit={false}
-        columns={4}
+        columns={[2, 3, 4, 5]}
       />
     </Layout>
   );
