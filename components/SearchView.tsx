@@ -3,6 +3,7 @@ import {
   Box,
   Center,
   Checkbox,
+  Divider,
   Flex,
   IconButton,
   Input,
@@ -76,7 +77,7 @@ export default function SearchView(props: SearchViewProps) {
   //ret
   return (
     <>
-      <Flex gap={"8px"} px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex gap={"8px"} w={["95%", "90%", "80%", "70%"]} alignSelf={"center"}>
         <Input
           variant="filled"
           placeholder="Search"
@@ -85,12 +86,6 @@ export default function SearchView(props: SearchViewProps) {
           onChange={handleSearchQueryChange}
         />
         {props.onAdd && props.isAdmin && (
-          // <IconButton
-          //   colorScheme="teal"
-          //   aria-label="edit"
-          //   icon={<AddIcon />}
-          //   onClick={() => props.onAdd && props.onAdd()}
-          // />
           <FAB onClick={() => props.onAdd && props.onAdd()} />
         )}
         {props.setOut && (
@@ -112,7 +107,8 @@ export default function SearchView(props: SearchViewProps) {
       <Stack
         overflowY="auto"
         flexDir={"column"}
-        px={[2, "5vw", "10vw", "15vw"]}
+        w={["95%", "90%", "80%", "70%"]}
+        alignSelf={"center"}
       >
         {subset.length == 0 ? (
           <Center>No data available to display.</Center>

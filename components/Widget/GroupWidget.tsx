@@ -10,6 +10,7 @@ import {
   Grid,
   Heading,
   Image,
+  Show,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -63,9 +64,11 @@ export default function GroupWidget({ group }: GroupWidgetProps) {
           <Heading size="md" textAlign={"center"}>
             {group.name}
           </Heading>
-          <Text textAlign={"left"}>
-            {group.description ? group.description : "No description."}
-          </Text>
+          <Show above="lg">
+            <Text textAlign={"left"}>
+              {group.description ? group.description : "No description."}
+            </Text>
+          </Show>
         </Stack>
       </CardBody>
     </Card>

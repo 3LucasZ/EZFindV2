@@ -31,12 +31,14 @@ export default function Home({ groups }: PageProps) {
   const toaster = useToast();
   return (
     <Layout isAdmin={session?.user.isAdmin}>
-      <Center>
-        <Heading py="15">Welcome to EZFind!</Heading>
-      </Center>
-      <Center>
-        <Text>Get started by selecting a group to find/add items in. </Text>
-      </Center>
+      <Heading py="15" px="2" textAlign={"center"}>
+        Welcome to EZFind!
+      </Heading>
+
+      <Text textAlign={"center"}>
+        Get started by selecting a group to find/add items in.{" "}
+      </Text>
+
       <Box minH="8px"></Box>
       <SearchView
         setIn={groups.map((group) => ({
@@ -53,7 +55,7 @@ export default function Home({ groups }: PageProps) {
         }}
         isAdmin={isAdmin}
         isEdit={false}
-        columns={[2, 3, 4, 5]}
+        columns={[2, 3, 3, 4]}
       />
     </Layout>
   );

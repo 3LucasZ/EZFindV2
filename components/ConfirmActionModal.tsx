@@ -13,7 +13,7 @@ type PageProps = {
   onClose: () => void;
   isOpen: boolean;
   actionStr: string;
-  protectedAction: () => Promise<void>;
+  protectedAction: () => Promise<void> | void;
 };
 export default function ConfirmActionModal(props: PageProps) {
   return (

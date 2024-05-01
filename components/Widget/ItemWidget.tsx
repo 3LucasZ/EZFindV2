@@ -8,6 +8,7 @@ export type ItemProps = {
   description: string;
   storageRelations: ItemStorageRelationProps[];
   image: string;
+  link: string;
 };
 type ItemWidgetProps = {
   item: ItemProps;
