@@ -4,14 +4,22 @@ import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import AppBar from "./AppBar";
 import Header from "./Header";
+import Custom404 from "archive/old_404";
+import RedirectPage from "./RedirectPage";
 
 type LayoutProps = {
   isAdmin: boolean | undefined;
+  authorized?: boolean;
+  loading?: boolean;
   children: ReactNode;
 };
 
-export default function Layout({ isAdmin, children }: LayoutProps) {
-  const { data: session, status } = useSession();
+export default function Layout({
+  isAdmin,
+  authorized,
+  loading,
+  children,
+}: LayoutProps) {
   useEffect(() => {
     const html = document.querySelector("html") || new HTMLBodyElement();
     const body = document.querySelector("body") || new HTMLBodyElement();
@@ -19,9 +27,30 @@ export default function Layout({ isAdmin, children }: LayoutProps) {
     html.style.touchAction = "none";
     body.style.touchAction = "none";
   });
-  // if (status === "loading") {
-  //   return <></>;
-  // }
+
+  // -1: unauthorized, 0: loading, 1: authorized
+  var content;
+  if (loading == true) {
+    content = (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    );
+  } else if (authorized == false) {
+    content = (
+      <RedirectPage
+        errorCode="401"
+        msg1="Unauthorized"
+        msg2="You do not have permissions to view this page"
+      />
+    );
+  } else {
+    content = children;
+  }
 
   return (
     <>
@@ -56,7 +85,7 @@ export default function Layout({ isAdmin, children }: LayoutProps) {
           }}
         >
           <Header isAdmin={isAdmin} />
-          {children}
+          {content}
           <AppBar />
         </Flex>
       </main>
