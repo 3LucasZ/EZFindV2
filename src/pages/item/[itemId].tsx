@@ -39,14 +39,27 @@ import ImageModal from "components/ImageModal";
 import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { TiShoppingCart } from "react-icons/ti";
+import { GroupProps } from "components/Widget/GroupWidget";
 
 type PageProps = {
   item: ItemProps;
   storages: StorageProps[];
+  group: GroupProps;
 };
 
-export default function ItemPage({ item, storages }: PageProps) {
+export default function ItemPage({ item, storages, group }: PageProps) {
   const { data: session, status } = useSession();
+  const isAdmin = session?.user.isAdmin;
+  const userGroupRelation = group.userRelations?.find(
+    (x) => x.userId == session?.user.id
+  );
+  const perm = isAdmin
+    ? 2
+    : Math.max(
+        group.minPerm,
+        userGroupRelation?.perm ? userGroupRelation.perm : -1
+      );
+  console.log(perm);
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -110,6 +123,7 @@ export default function ItemPage({ item, storages }: PageProps) {
     const res = await poster("/api/update-item-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
+
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -120,7 +134,6 @@ export default function ItemPage({ item, storages }: PageProps) {
           }
           isDisabled={!isEdit}
         />
-
         <Center>
           <ButtonGroup spacing="2" pl="2">
             <IconButton
@@ -166,7 +179,7 @@ export default function ItemPage({ item, storages }: PageProps) {
                   setIsEdit(true);
                 }
               }}
-              hidden={!session?.user.isAdmin}
+              hidden={perm < 1}
             />
             <IconButton
               colorScheme="red"
@@ -176,7 +189,7 @@ export default function ItemPage({ item, storages }: PageProps) {
                 if (isEdit) setIsEdit(false);
                 else onOpenTrash();
               }}
-              hidden={!session?.user.isAdmin}
+              hidden={perm < 1}
             />
             <ConfirmActionModal
               isOpen={isOpenTrash}
@@ -276,7 +289,7 @@ export default function ItemPage({ item, storages }: PageProps) {
               ),
             };
           })}
-          isAdmin={session?.user.isAdmin}
+          isAdmin={perm < 1}
           isEdit={isEdit}
         />
       )}
@@ -298,6 +311,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
               id: true,
               name: true,
               description: true,
+            },
+          },
+          userRelations: {
+            select: {
+              perm: true,
+              userId: true,
             },
           },
         },
@@ -329,6 +348,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       item,
       storages: item.group.storages,
+      group: item.group,
     },
   };
 };

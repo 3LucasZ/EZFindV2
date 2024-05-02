@@ -47,7 +47,7 @@ export default function GroupPage({ group, users }: PageProps) {
     ? 2
     : Math.max(
         group.minPerm,
-        userGroupRelation?.perm ? userGroupRelation.perm : 0
+        userGroupRelation?.perm ? userGroupRelation.perm : -1
       );
   const toaster = useToast();
   //--state--
@@ -67,7 +67,7 @@ export default function GroupPage({ group, users }: PageProps) {
         userId: user.id,
         group: group,
         groupId: group.id,
-        perm: 0,
+        perm: 0, //new users added to a group auto start at perm: 0
       };
     });
   // handle delete modal

@@ -44,17 +44,18 @@ type PageProps = {
 };
 
 export default function GroupPage({ group, users }: PageProps) {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const isAdmin = session?.user.isAdmin;
   const userGroupRelation = group.userRelations?.find(
     (x) => x.userId == session?.user.id
   );
-  const perm = isAdmin
-    ? 2
-    : Math.max(
-        group.minPerm,
-        userGroupRelation?.perm ? userGroupRelation.perm : 0
-      );
+  const perm =
+    isAdmin == true
+      ? 2
+      : Math.max(
+          group.minPerm,
+          userGroupRelation?.perm != undefined ? userGroupRelation.perm : -1
+        );
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -62,20 +63,6 @@ export default function GroupPage({ group, users }: PageProps) {
   const [newName, setNewName] = useState(group.name);
   const [newDescription, setNewDescription] = useState(group.description);
   const [newUserRelations, setNewRelations] = useState(group.userRelations);
-  //track widgets
-  const inRelations = isEdit ? newUserRelations : group.userRelations;
-  const inIds = inRelations?.map((relation) => relation.userId);
-  const outRelations: UserGroupRelationProps[] = users
-    .filter((user) => !inIds?.includes(user.id))
-    .map((user) => {
-      return {
-        user: user,
-        userId: user.id,
-        group: group,
-        groupId: group.id,
-        perm: 0,
-      };
-    });
   // handle delete modal
   const {
     isOpen: isOpenTrash,
@@ -113,8 +100,13 @@ export default function GroupPage({ group, users }: PageProps) {
   };
   //prefix
   const prefix = "/group/" + group.id + "/";
+  console.log(group.userRelations, userGroupRelation?.perm, perm);
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout
+      isAdmin={session?.user.isAdmin}
+      loading={status === "loading"}
+      authorized={perm > -1}
+    >
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <EditableTitle value={group.name} isDisabled={true} />
 

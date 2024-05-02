@@ -1,4 +1,5 @@
 import {
+  ButtonGroup,
   Center,
   Flex,
   IconButton,
@@ -31,6 +32,8 @@ import AutoResizeTextarea from "components/AutoResizeTextarea";
 import { poster } from "services/poster";
 import { IoImageOutline } from "react-icons/io5";
 import ImageModal from "components/ImageModal";
+import EditableTitle from "components/Minis/EditableTitle";
+import EditableSubtitle from "components/Minis/EditableSubtitle";
 
 type PageProps = {
   storage: StorageProps;
@@ -38,7 +41,7 @@ type PageProps = {
 };
 
 export default function StoragePage({ storage, items }: PageProps) {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   //toaster
   const toaster = useToast();
   // state: 0=normal, 1=isEdit
@@ -99,89 +102,81 @@ export default function StoragePage({ storage, items }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
-        <AutoResizeTextarea
+        <EditableTitle
           value={isEdit ? newName : storage.name}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setNewName(e.target.value)
+          }
           isDisabled={!isEdit}
-          maxLength={50}
-          fontSize={["xl", "xl", "2xl", "3xl", "4xl"]}
-          display={"block"}
-          _disabled={{ color: "black", borderColor: "white" }}
-          textAlign={"center"}
-          sx={{ opacity: "1" }}
         />
-
         <Center>
-          <IconButton
-            ml="2"
-            colorScheme="blue"
-            aria-label=""
-            icon={<Icon as={IoImageOutline} boxSize={5} />}
-            onClick={() => {
-              onOpenViewer();
-            }}
-          />
-          <ImageModal
-            onClose={onCloseViewer}
-            isOpen={isOpenViewer}
-            onUpload={uploadImage}
-            imageStr={storage.image}
-          />
-          {session?.user.isAdmin && (
+          <ButtonGroup spacing="2" pl="2">
             <IconButton
-              ml={2}
-              mr={2}
-              colorScheme="teal"
+              colorScheme="purple"
               aria-label=""
-              icon={isEdit ? <CheckIcon /> : <EditIcon />}
-              onClick={async () => {
-                if (isEdit) {
-                  handleUpdateStorage();
-                } else {
-                  setNewName(storage.name);
-                  setNewDescription(storage.description);
-                  setNewRelations(storage.itemRelations);
-                  setIsEdit(true);
-                }
-              }}
+              icon={<Icon as={SlPrinter} />}
+              onClick={() =>
+                Router.push({
+                  pathname: "/print/" + storage.id,
+                })
+              }
             />
-          )}
-          {session?.user.isAdmin && (
             <IconButton
-              colorScheme="red"
+              colorScheme="blue"
               aria-label=""
-              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+              icon={<Icon as={IoImageOutline} boxSize={5} />}
               onClick={() => {
-                if (isEdit) {
-                  setIsEdit(false);
-                } else {
-                  onOpenTrash();
-                }
+                onOpenViewer();
               }}
             />
-          )}
-          <IconButton
-            ml={2}
-            mr={2}
-            colorScheme="blue"
-            aria-label="edit"
-            icon={<Icon as={SlPrinter} />}
-            onClick={() =>
-              Router.push({
-                pathname: "/print/" + storage.id,
-              })
-            }
-          />
-          <ConfirmActionModal
-            isOpen={isOpenTrash}
-            onClose={onCloseTrash}
-            actionStr={"delete the storage: " + storage.name}
-            protectedAction={handleDelete}
-          />
+            <ImageModal
+              onClose={onCloseViewer}
+              isOpen={isOpenViewer}
+              onUpload={uploadImage}
+              imageStr={storage.image}
+            />
+            {session?.user.isAdmin && (
+              <IconButton
+                colorScheme="teal"
+                aria-label=""
+                icon={isEdit ? <CheckIcon /> : <EditIcon />}
+                onClick={async () => {
+                  if (isEdit) {
+                    handleUpdateStorage();
+                  } else {
+                    setNewName(storage.name);
+                    setNewDescription(storage.description);
+                    setNewRelations(storage.itemRelations);
+                    setIsEdit(true);
+                  }
+                }}
+              />
+            )}
+            {session?.user.isAdmin && (
+              <IconButton
+                colorScheme="red"
+                aria-label=""
+                icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+                onClick={() => {
+                  if (isEdit) {
+                    setIsEdit(false);
+                  } else {
+                    onOpenTrash();
+                  }
+                }}
+              />
+            )}
+            <ConfirmActionModal
+              isOpen={isOpenTrash}
+              onClose={onCloseTrash}
+              actionStr={"delete the storage: " + storage.name}
+              protectedAction={handleDelete}
+            />
+          </ButtonGroup>
         </Center>
       </Flex>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
-        <AutoResizeTextarea
+        <EditableSubtitle
           value={
             isEdit
               ? newDescription
@@ -189,12 +184,11 @@ export default function StoragePage({ storage, items }: PageProps) {
               ? storage.description
               : "No description."
           }
-          onChange={(e) => setNewDescription(e.target.value)}
+          onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
+            setNewDescription(e.target.value)
+          }
           isDisabled={!isEdit}
-          maxLength={250}
-          _disabled={{ color: "black", borderColor: "white" }}
-          fontSize={["xs", "xs", "sm", "md", "lg", "xl"]}
-          sx={{ opacity: "1" }}
+          placeholder="Description"
         />
       </Flex>
 
