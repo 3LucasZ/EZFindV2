@@ -92,7 +92,7 @@ export default function GroupPage({ group, users }: PageProps) {
   const uploadImage = async (newImage: string) => {
     //delete old image
     var body, res;
-    body = { id: group.id, image: group.image };
+    body = { image: group.image };
     res = await poster("/api/delete-image", body, toaster, false, true);
     if (res.status == 200) {
       //upload new image
