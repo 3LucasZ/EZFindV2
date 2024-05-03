@@ -87,21 +87,27 @@ export default function GroupPage({ group, users }: PageProps) {
     onOpen: onOpenViewer,
     onClose: onCloseViewer,
   } = useDisclosure();
+
   //handle upload image
-  const attachImage = async (image: string) => {
-    const body = { id: group.id, image: image };
-    console.log(body);
-    const res = await poster("/api/update-group-image", body, toaster);
-    if (res.status == 200) Router.reload();
-  };
-  //handle upload image
-  const uploadImage = async (image: string) => {
-    const body = { image };
-    const res = await poster("/api/upload-image", body, toaster);
+  const uploadImage = async (newImage: string) => {
+    //delete old image
+    var body, res;
+    body = { id: group.id, image: group.image };
+    res = await poster("/api/delete-image", body, toaster, false, true);
     if (res.status == 200) {
-      const fileUrl = await res.json();
-      console.log("upload-image-client fileUrl:", fileUrl);
-      await attachImage(fileUrl);
+      //upload new image
+      body = { image: newImage };
+      res = await poster("/api/upload-image", body, toaster, false, true);
+      const imageUrl = await res.json();
+      console.log("upload-image-client fileUrl:", imageUrl);
+      if (res.status == 200) {
+        //attach new image to group
+        const body = { id: group.id, image: imageUrl };
+        const res = await poster("/api/update-group-image", body, toaster);
+        if (res.status == 200) {
+          Router.reload();
+        }
+      }
     }
   };
   // handle update
