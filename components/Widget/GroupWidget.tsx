@@ -39,6 +39,7 @@ type GroupWidgetProps = {
 };
 
 export default function GroupWidget({ group }: GroupWidgetProps) {
+  console.log(group.image);
   return (
     <Card
       variant={"outline"}
@@ -51,11 +52,7 @@ export default function GroupWidget({ group }: GroupWidgetProps) {
       <CardBody>
         <AspectRatio ratio={1}>
           <Image
-            src={
-              !group.image
-                ? imagePlaceholder.src
-                : "data:image/jpeg;base64," + group.image
-            }
+            src={group.image ? `/api/${group.image}` : imagePlaceholder.src}
             alt={group.description}
             borderRadius="md"
           />
