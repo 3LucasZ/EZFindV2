@@ -80,7 +80,7 @@ model Group {
   description String @db.VarChar(255)
   image String @default("")
   userRelations UserGroupRelation[]
-  minPerm Int @default(-1)
+  minPerm Int @default(-1) //users are restricted by default from interacting with new groups
   // //relations
   items Item[]
   storages Storage[]
@@ -124,6 +124,6 @@ model UserGroupRelation {
   userId String
   group Group @relation (fields: [groupId], references: [id], onDelete: Cascade)
   groupId Int
-  perm Int @default(0) //0: viewer, 1: editor, 2: manager
+  perm Int @default(0) //-1: restricted, 0: viewer, 1: editor, 2: manager
   @@id([userId, groupId])
 }
