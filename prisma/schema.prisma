@@ -91,7 +91,7 @@ model Item {
   name String @unique @db.VarChar(255) //non-unique due to isolation of groups
   description String @db.VarChar(255)
   link String @db.VarChar(2048) @default("") //max length of an allowed URL
-  image Bytes @default("")
+  image String @default("")
   //relations
   storageRelations ItemStorageRelation[]
   group Group @relation(fields: [groupId], references: [id])
@@ -102,7 +102,7 @@ model Storage {
   id Int @id @default(autoincrement())
   name String @unique @db.VarChar(255) //non-unique due to isolation of groups
   description String @db.VarChar(255)
-  image Bytes @default("")
+  image String @default("")
   //relations
   itemRelations ItemStorageRelation[]
   group Group @relation(fields: [groupId], references: [id])
