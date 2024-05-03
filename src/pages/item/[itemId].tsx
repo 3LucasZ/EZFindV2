@@ -106,10 +106,26 @@ export default function ItemPage({ item, storages, group }: PageProps) {
     onClose: onCloseViewer,
   } = useDisclosure();
   //handle upload image
-  const uploadImage = async (imageStr: string) => {
-    const body = { id: item.id, newImageStr: imageStr };
-    const res = await poster("/api/update-item-image", body, toaster);
-    if (res.status == 200) Router.reload();
+  const uploadImage = async (newImage: string) => {
+    //delete old image
+    var body, res;
+    body = { image: item.image };
+    res = await poster("/api/delete-image", body, toaster, false, true);
+    if (res.status == 200) {
+      //upload new image
+      body = { image: newImage };
+      res = await poster("/api/upload-image", body, toaster, false, true);
+      const imageUrl = await res.json();
+      console.log("upload-image-client fileUrl:", imageUrl);
+      if (res.status == 200) {
+        //attach new image to item
+        const body = { id: item.id, image: imageUrl };
+        const res = await poster("/api/update-item-image", body, toaster);
+        if (res.status == 200) {
+          Router.reload();
+        }
+      }
+    }
   };
   // handle update item
   const handleUpdateItem = async () => {
