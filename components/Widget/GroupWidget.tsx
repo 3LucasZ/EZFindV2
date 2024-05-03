@@ -39,7 +39,6 @@ type GroupWidgetProps = {
 };
 
 export default function GroupWidget({ group }: GroupWidgetProps) {
-  console.log(group.image);
   return (
     <Card
       variant={"outline"}
