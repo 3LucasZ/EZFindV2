@@ -110,7 +110,7 @@ export default function GroupPage({ group, users }: PageProps) {
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <EditableTitle value={group.name} isDisabled={true} />
 
-        <Center>
+        {/* <Center>
           <IconButton
             ml="2"
             colorScheme="blue"
@@ -126,7 +126,7 @@ export default function GroupPage({ group, users }: PageProps) {
             onUpload={uploadImage}
             imageStr={group.image}
           />
-        </Center>
+        </Center> */}
       </Flex>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
