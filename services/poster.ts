@@ -5,7 +5,8 @@ export async function poster(
   path: string,
   body: any,
   toaster: any,
-  external?: boolean
+  external?: boolean, //external route/API
+  suppressSuccess?: boolean //toaster doesn't show if its a success
 ): Promise<Response> {
   try {
     const res = await fetch(external ? path : Router.basePath + path, {
@@ -16,7 +17,7 @@ export async function poster(
     if (res.status != 200) {
       errorToast(toaster, "" + (await res.json()));
     } else {
-      successToast(toaster, "Success!");
+      if (!suppressSuccess) successToast(toaster, "Success!");
     }
     return res;
   } catch (error) {
