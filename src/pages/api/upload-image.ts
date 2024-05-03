@@ -20,7 +20,7 @@ export default async function handle(
   const relativeUploadDir = `/uploads/${new Date(
     Date.now()
   ).getMonth()}-${new Date(Date.now()).getFullYear()}`;
-  const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+  const uploadDir = join(process.cwd(), relativeUploadDir);
   //--create uploadDir
   try {
     await stat(uploadDir);

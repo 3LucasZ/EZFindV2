@@ -17,7 +17,7 @@ export default async function handle(
   //--image
   const { image } = req.body;
   //--imagePath
-  const imagePath = join(process.cwd(), "public", image);
+  const imagePath = join(process.cwd(), image);
   //--delete file
   try {
     await unlink(imagePath);
