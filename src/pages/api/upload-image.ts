@@ -10,13 +10,12 @@ import { NextApiResponse } from "next";
 
 export default async function handle(
   req: TypedRequestBody<{
-    image: File;
+    image: string;
   }>,
   res: NextApiResponse
 ) {
-  //--image buffer
+  //--image
   const { image } = req.body;
-  const buffer = Buffer.from(await image.arrayBuffer());
   //--uploadDir
   const relativeUploadDir = `/uploads/${new Date(
     Date.now()
@@ -42,9 +41,14 @@ export default async function handle(
   }
   //--create file
   try {
-    const filename = `${Date.now()}.${mime.getExtension(image.type)}`;
-    await writeFile(`${uploadDir}/${filename}`, buffer);
+    const filename = `${Date.now()}.${image.split(";")[0].split("/")[1]}`;
+    // await writeFile(`${uploadDir}/${filename}`, Buffer.from(image, "base64"));
+    await writeFile(
+      `${uploadDir}/${filename}`,
+      Uint8Array.from(atob(image.split("base64,")[1]), (c) => c.charCodeAt(0))
+    );
     const fileUrl = `${relativeUploadDir}/${filename}`;
+    console.log("upload-image-server fileUrl:", fileUrl);
     return res.status(200).json(fileUrl);
   } catch (e) {
     console.error("Error while trying to upload a file:" + e);

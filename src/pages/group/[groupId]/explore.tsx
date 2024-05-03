@@ -83,7 +83,7 @@ export default function GroupPage({ group, users }: PageProps) {
   //handle upload image
   const uploadImage = async (imageStr: string) => {
     const body = { id: group.id, newImageStr: imageStr };
-    console.log(body);
+    // console.log(body);
     const res = await poster("/api/update-group-image", body, toaster);
     if (res.status == 200) Router.reload();
   };

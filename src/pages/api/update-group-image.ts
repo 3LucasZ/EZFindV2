@@ -12,6 +12,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   const { id, image } = req.body;
+  console.log("update-group-image-server", image);
   try {
     const op = await prisma.group.update({
       where: {

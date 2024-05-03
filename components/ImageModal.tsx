@@ -18,19 +18,19 @@ import imagePlaceholder from "public/images/image-placeholder.png";
 type PageProps = {
   onClose: () => void;
   isOpen: boolean;
-  onUpload: (imageStr: string) => Promise<void>;
+  onUpload: (image: string) => Promise<void>;
   imageStr?: string;
 };
 export default function ImageModal(props: PageProps) {
   //state
-  const [previewImage, setPreviewImage] = useState("");
+  const [newImage, setNewImage] = useState("");
   //functions
   async function loadImage(input: ChangeEvent<HTMLInputElement>) {
     if (input.target.files && input.target.files[0]) {
       const reader = new FileReader();
       reader.onload = function () {
         if (typeof reader.result == "string") {
-          setPreviewImage(reader.result.split("base64,")[1]);
+          setNewImage(reader.result);
         }
       };
       const imageFile = input.target.files[0];
@@ -56,7 +56,7 @@ export default function ImageModal(props: PageProps) {
   return (
     <Modal
       onClose={() => {
-        setPreviewImage("");
+        setNewImage("");
         props.onClose();
       }}
       isOpen={props.isOpen}
@@ -82,21 +82,23 @@ export default function ImageModal(props: PageProps) {
             w="100%"
             aspectRatio={1}
             backgroundImage={
-              !previewImage && !props.imageStr
-                ? `url(${imagePlaceholder.src})`
-                : "data:image/jpeg;base64," +
-                  (previewImage ? previewImage : props.imageStr)
+              newImage
+                ? newImage
+                : props.imageStr
+                ? `url(/api/${props.imageStr})`
+                : `url(${imagePlaceholder.src})`
             }
+            // backgroundImage={render}
             backgroundRepeat={"no-repeat"}
             backgroundSize={"contain"}
             backgroundPosition={"center"}
             rounded="lg"
             borderColor="gray.300"
-            borderStyle={!previewImage && !props.imageStr ? "dashed" : "solid"}
+            borderStyle={!newImage && !props.imageStr ? "dashed" : "solid"}
             borderWidth={"2px"}
             textAlign={"center"}
           >
-            {!previewImage && !props.imageStr && (
+            {!newImage && !props.imageStr && (
               <Text
                 fontSize={["sm", "lg"]}
                 color="gray.700"
@@ -115,9 +117,9 @@ export default function ImageModal(props: PageProps) {
           aria-label={""}
           colorScheme="green"
           icon={<CheckIcon />}
-          isDisabled={!previewImage}
-          display={previewImage ? "block" : "none"}
-          onClick={async (e) => props.onUpload(previewImage)}
+          isDisabled={!newImage}
+          display={newImage ? "block" : "none"}
+          onClick={async (e) => newImage && props.onUpload(newImage)}
         />
       </ModalContent>
     </Modal>
