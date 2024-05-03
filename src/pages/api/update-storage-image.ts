@@ -7,18 +7,18 @@ import { TypedRequestBody } from "services/types";
 export default async function handle(
   req: TypedRequestBody<{
     id: number;
-    newImageStr: string;
+    image: string;
   }>,
   res: NextApiResponse
 ) {
-  const { id, newImageStr } = req.body;
+  const { id, image } = req.body;
   try {
     const op = await prisma.storage.update({
       where: {
         id,
       },
       data: {
-        image: Buffer.from(newImageStr, "base64"),
+        image,
       },
     });
     return res.status(200).json(op);
