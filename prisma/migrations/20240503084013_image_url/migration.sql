@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Group" ALTER COLUMN "image" SET DEFAULT '',
+ALTER COLUMN "image" SET DATA TYPE TEXT;
