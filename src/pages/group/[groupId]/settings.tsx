@@ -63,6 +63,7 @@ export default function GroupPage({ group, users }: PageProps) {
   const [newName, setNewName] = useState(group.name);
   const [newDescription, setNewDescription] = useState(group.description);
   const [newUserRelations, setNewRelations] = useState(group.userRelations);
+  const [newMinPerm, setNewMinPerm] = useState("" + group.minPerm);
   //track widgets
   const inRelations = isEdit ? newUserRelations : group.userRelations;
   const inIds = inRelations?.map((relation) => relation.userId);
@@ -120,8 +121,12 @@ export default function GroupPage({ group, users }: PageProps) {
   //handle radio group
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "framework",
-    defaultValue: "" + group.minPerm,
-    onChange: console.log,
+    value: isEdit ? newMinPerm : "" + group.minPerm,
+    onChange: (e) => {
+      if (isEdit) {
+        setNewMinPerm(e);
+      }
+    },
   });
   const rootProps = getRootProps();
   const options = [
@@ -151,6 +156,7 @@ export default function GroupPage({ group, users }: PageProps) {
       newName,
       newDescription,
       newUserRelations,
+      newMinPerm,
     };
     const res = await poster("/api/update-group-full", body, toaster);
     if (res.status == 200) Router.reload();
@@ -200,6 +206,7 @@ export default function GroupPage({ group, users }: PageProps) {
                 } else {
                   setNewName(group.name);
                   setNewDescription(group.description);
+                  setNewMinPerm("" + group.minPerm);
                   setIsEdit(true);
                 }
               }}

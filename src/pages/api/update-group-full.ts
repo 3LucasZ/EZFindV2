@@ -11,10 +11,12 @@ export default async function handle(
     newName: string;
     newDescription: string;
     newUserRelations: UserGroupRelationProps[];
+    newMinPerm: boolean;
   }>,
   res: NextApiResponse
 ) {
-  const { id, newName, newDescription, newUserRelations } = req.body;
+  const { id, newName, newDescription, newUserRelations, newMinPerm } =
+    req.body;
   const _newUserRelations = newUserRelations.map((relation) => ({
     perm: relation.perm,
     userId: relation.userId,
@@ -29,6 +31,7 @@ export default async function handle(
       data: {
         name: newName,
         description: newDescription,
+        minPerm: Number(newMinPerm),
         userRelations: {
           deleteMany: {},
           createMany: { data: _newUserRelations },
