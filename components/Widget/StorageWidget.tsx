@@ -1,6 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
 import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
+import { GroupProps } from "./GroupWidget";
 
 export type StorageProps = {
   id: number;
@@ -8,6 +9,7 @@ export type StorageProps = {
   description: string;
   itemRelations: ItemStorageRelationProps[];
   image: string;
+  group: GroupProps;
 };
 type StorageWidgetProps = {
   storage: StorageProps;
