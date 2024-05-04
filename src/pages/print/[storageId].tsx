@@ -19,7 +19,7 @@ import Layout from "components/Layout/MainLayout";
 import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
-import Header from "components/Header";
+import Header from "components/Layout/Header";
 import { UserProps } from "components/Widget/UserWidget";
 
 type Props = {

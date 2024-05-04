@@ -14,9 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import AppBar from "./AppBar";
-import Header from "../Header";
+import Header from "./Header";
 import Custom404 from "archive/old_404";
-import RedirectPage from "../RedirectPage";
+import RedirectPage from "../Main/RedirectPage";
 import React from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 

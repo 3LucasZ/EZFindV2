@@ -1,4 +1,4 @@
-import AutoResizeTextarea from "components/AutoResizeTextarea";
+import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
 
 //value, onchanged, disabled
 export default function EditableTitle({ ...props }) {

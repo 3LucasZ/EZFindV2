@@ -1,6 +1,6 @@
 import ItemWidget, { ItemProps } from "components/Widget/ItemWidget";
 import Layout from "components/Layout/MainLayout";
-import SearchView from "components/SearchView";
+import SearchView from "components/Main/SearchView";
 import { GetServerSideProps } from "next";
 import prisma from "services/prisma";
 import { getSession, useSession } from "next-auth/react";
@@ -8,7 +8,7 @@ import { UserProps } from "components/Widget/UserWidget";
 import Router from "next/router";
 import { errorToast } from "services/toasty";
 import { Box, useToast } from "@chakra-ui/react";
-import Header from "components/Header";
+import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";

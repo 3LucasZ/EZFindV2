@@ -1,14 +1,14 @@
 import StorageWidget, { StorageProps } from "components/Widget/StorageWidget";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
-import SearchView from "components/SearchView";
+import SearchView from "components/Main/SearchView";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useSession } from "next-auth/react";
 import { errorToast } from "services/toasty";
 import Router from "next/router";
 import { Box, Center, useToast, Text } from "@chakra-ui/react";
-import Header from "components/Header";
+import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { GroupProps } from "components/Widget/GroupWidget";
 

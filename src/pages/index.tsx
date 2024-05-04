@@ -6,7 +6,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { RouteButton } from "components/RouteButton";
+import { RouteButton } from "components/Main/RouteButton";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
@@ -15,9 +15,9 @@ import prisma from "services/prisma";
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import { UserProps } from "components/Widget/UserWidget";
-import Header from "components/Header";
+import Header from "components/Layout/Header";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
-import SearchView from "components/SearchView";
+import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
 import Router from "next/router";
 

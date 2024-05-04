@@ -12,12 +12,12 @@ import { GetServerSideProps } from "next";
 import { useState } from "react";
 import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
-import SearchView from "components/SearchView";
+import SearchView from "components/Main/SearchView";
 import { errorToast, successToast } from "services/toasty";
 import prisma from "services/prisma";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
-import Header from "components/Header";
+import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import UserWidget from "components/Widget/UserWidget";
 

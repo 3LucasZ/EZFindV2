@@ -1,5 +1,5 @@
 import { SimpleGrid } from "@chakra-ui/react";
-import { RouteButton } from "components/RouteButton";
+import { RouteButton } from "components/Main/RouteButton";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
@@ -8,7 +8,7 @@ import prisma from "services/prisma";
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import { UserProps } from "components/Widget/UserWidget";
-import Header from "components/Header";
+import Header from "components/Layout/Header";
 
 type PageProps = {};
 

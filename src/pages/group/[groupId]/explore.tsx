@@ -17,24 +17,24 @@ import {
 } from "@chakra-ui/icons";
 import { IoImageOutline } from "react-icons/io5";
 import { GetServerSideProps } from "next";
-import ConfirmActionModal from "components/ConfirmActionModal";
+import ConfirmActionModal from "components/Main/ConfirmActionModal";
 import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
-import SearchView from "components/SearchView";
+import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
 import React from "react";
-import AutoResizeTextarea from "components/AutoResizeTextarea";
+import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
 import { poster } from "services/poster";
-import ImageModal from "components/ImageModal";
+import ImageModal from "components/Main/ImageModal";
 import { GroupProps } from "components/Widget/GroupWidget";
 import UserGroupRelationWidget, {
   UserGroupRelationProps,
 } from "components/Widget/UserGroupRelationWidget";
 import EditableTitle from "components/Minis/EditableTitle";
-import { RouteButton } from "components/RouteButton";
+import { RouteButton } from "components/Main/RouteButton";
 import { FaBoxes, FaTools } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 
