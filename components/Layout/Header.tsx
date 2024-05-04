@@ -1,6 +1,7 @@
 import { Divider, Heading, HStack, Link, Stack } from "@chakra-ui/react";
 import React from "react";
 import AvatarMenu from "./AvatarMenu";
+import NavDrawer from "./NavDrawer";
 
 type HeaderProps = {
   isAdmin: boolean | undefined;

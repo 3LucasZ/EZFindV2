@@ -19,6 +19,7 @@ import Custom404 from "archive/old_404";
 import RedirectPage from "../Main/RedirectPage";
 import React from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import SimpleSidebar from "./SimpleSidebar";
 
 type LayoutProps = {
   isAdmin: boolean | undefined;
@@ -41,9 +42,6 @@ export default function Layout({
     html.style.touchAction = "none";
     body.style.touchAction = "none";
   });
-
-  //drawer properties
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // set content based on: loading, authorized
   var content;
@@ -107,26 +105,7 @@ export default function Layout({
           <AppBar />
         </Flex>
       </main>
-      <HamburgerIcon
-        onClick={onOpen}
-        position={"fixed"}
-        top={0}
-        left={0}
-        boxSize={[10, 10, 10]}
-      >
-        Open
-      </HamburgerIcon>
-      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
-          <DrawerBody>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <SimpleSidebar />
     </>
   );
 }
