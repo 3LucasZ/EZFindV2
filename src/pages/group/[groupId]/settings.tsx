@@ -5,6 +5,9 @@ import {
   useDisclosure,
   useToast,
   Text,
+  HStack,
+  useRadioGroup,
+  Box,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -31,6 +34,10 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import UserGroupRelationWidget, {
   UserGroupRelationProps,
 } from "components/Widget/UserGroupRelationWidget";
+import RadioCard from "components/Main/RadioCard";
+import { IoIosLock } from "react-icons/io";
+import { BsFillPeopleFill } from "react-icons/bs";
+import { FaEye } from "react-icons/fa";
 
 type PageProps = {
   group: GroupProps;
@@ -110,6 +117,33 @@ export default function GroupPage({ group, users }: PageProps) {
       }
     }
   };
+  //handle radio group
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "framework",
+    defaultValue: "" + group.minPerm,
+    onChange: console.log,
+  });
+  const rootProps = getRootProps();
+  const options = [
+    {
+      value: "-1",
+      name: "Private",
+      desc: "Restricted access",
+      icon: IoIosLock,
+    },
+    {
+      value: "0",
+      name: "Public",
+      desc: "Anyone can view",
+      icon: FaEye,
+    },
+    {
+      value: "1",
+      name: "Open",
+      desc: "Anyone can view or edit",
+      icon: BsFillPeopleFill,
+    },
+  ];
   // handle update
   const handleUpdateGroup = async () => {
     const body = {
@@ -215,6 +249,27 @@ export default function GroupPage({ group, users }: PageProps) {
           Group Permissions
         </Text>
       </Center>
+      <HStack
+        px={[2, "5vw", "10vw", "15vw"]}
+        {...rootProps}
+        alignContent={"center"}
+        w="100%"
+        flexDir={"row"}
+      >
+        {options.map((option) => {
+          const radio = getRadioProps({ value: option.value });
+          return (
+            <RadioCard
+              key={option.value}
+              radioProps={radio}
+              name={option.name}
+              description={option.desc}
+              icon={option.icon}
+            />
+          );
+        })}
+      </HStack>
+      <Box h="8px"></Box>
       <SearchView
         setIn={inRelations!.map((relation) => ({
           name: relation.user.name,
