@@ -22,7 +22,7 @@ export default function AvatarMenu({ isAdmin }: AvatarMenuProps) {
   const { data: session } = useSession();
   return (
     <Menu>
-      <MenuButton pos="relative" float="right" right="2">
+      <MenuButton pos="absolute" float="right" right="2">
         <Avatar
           name={session?.user?.name ? session.user.name : ""}
           src={session?.user?.image ? session.user.image : ""}

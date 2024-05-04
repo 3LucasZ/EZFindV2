@@ -1,4 +1,4 @@
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, SettingsIcon } from "@chakra-ui/icons";
 import {
   Drawer,
   DrawerOverlay,
@@ -13,11 +13,16 @@ import {
   Box,
   Flex,
   Icon,
+  VStack,
 } from "@chakra-ui/react";
 import Router from "next/router";
 import imagePlaceholder from "public/images/image-placeholder.png";
 import { IconType } from "react-icons";
+import { BsBoxes } from "react-icons/bs";
 import { FaBoxes, FaHome, FaTools } from "react-icons/fa";
+import { CiSettings } from "react-icons/ci";
+import { FiHome, FiPackage, FiSettings, FiTool } from "react-icons/fi";
+import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 
 type NavDrawerProps = {
   image?: string;
@@ -31,7 +36,7 @@ export default function NavDrawer(props: NavDrawerProps) {
     <>
       <HamburgerIcon
         onClick={onOpen}
-        pos="relative"
+        pos="absolute"
         float="left"
         left="4"
         boxSize="8"
@@ -41,38 +46,38 @@ export default function NavDrawer(props: NavDrawerProps) {
         <DrawerOverlay />
         <DrawerContent maxW={[60, 80]} borderRightWidth={"1px"}>
           <DrawerHeader borderBottomWidth="1px" p="2">
-            <HStack>
-              <AspectRatio ratio={1} minW={"50px"}>
+            <VStack>
+              <AspectRatio ratio={1} w="100%">
                 <Image
                   src={
                     props.image ? `/api/${props.image}` : imagePlaceholder.src
                   }
-                  borderRadius="md"
+                  borderRadius="lg"
                 />
               </AspectRatio>
-              <Text fontSize={"xl"} noOfLines={2}>
+              <Text textAlign={"center"} fontWeight={"normal"}>
                 {props.title}
               </Text>
-            </HStack>
+            </VStack>
           </DrawerHeader>
-          <DrawerBody>
+          <DrawerBody px="2">
             <NavItem
-              icon={FaHome}
+              icon={FiHome}
               name="Home"
               url={`/group/${props.id}/explore`}
             />
             <NavItem
-              icon={FaTools}
+              icon={FiTool}
               name="Items"
               url={`/group/${props.id}/manage-items`}
             />
             <NavItem
-              icon={FaBoxes}
+              icon={FiPackage}
               name="Storages"
               url={`/group/${props.id}/manage-storages`}
             />
             <NavItem
-              icon={FaHome}
+              icon={FiSettings}
               name="Settings"
               url={`/group/${props.id}/settings`}
             />
@@ -97,35 +102,40 @@ const NavItem = ({ icon, name, url }: NavItemProps) => {
       <Flex
         align="center"
         p="4"
-        mx="4"
         borderRadius="lg"
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "blue.400",
           color: "white",
         }}
       >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
-        )}
-        {name}
+        {icon && <Icon mr="4" as={icon} boxSize={6} />}
+        <Text fontSize={"xl"}>{name}</Text>
       </Flex>
     </Box>
   );
 };
 {
   /* <AspectRatio ratio={1}>
-              <Image
-                src={props.image ? `/api/${props.image}` : imagePlaceholder.src}
-                borderRadius="md"
-              />
-            </AspectRatio> */
+  <Image
+    src={props.image ? `/api/${props.image}` : imagePlaceholder.src}
+    borderRadius="md"
+  />
+</AspectRatio> */
+}
+{
+  /* <HStack>
+  <AspectRatio ratio={1} minW={"50px"}>
+    <Image
+      src={
+        props.image ? `/api/${props.image}` : imagePlaceholder.src
+      }
+      borderRadius="md"
+    />
+  </AspectRatio>
+  <Text fontSize={"xl"} noOfLines={2}>
+    {props.title}
+  </Text>
+</HStack> */
 }

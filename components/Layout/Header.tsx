@@ -16,7 +16,7 @@ export default function Header({ left, right }: HeaderProps) {
         display={"flex"}
         flexDir="row"
         textAlign={"center"}
-        py="1"
+        py="2"
       >
         {left}
         <Heading size={["xl", "2xl", "3xl"]} color="teal.500" w="100%">
