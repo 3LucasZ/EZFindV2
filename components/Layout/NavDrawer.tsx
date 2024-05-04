@@ -14,6 +14,7 @@ import {
   Flex,
   Icon,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Router from "next/router";
 import imagePlaceholder from "public/images/image-placeholder.png";
@@ -43,7 +44,7 @@ export default function NavDrawer(props: NavDrawerProps) {
         color="gray"
       />
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
+        <DrawerOverlay bg={""} />
         <DrawerContent maxW={[60, 80]} borderRightWidth={"1px"}>
           <DrawerHeader borderBottomWidth="1px" p="2">
             <VStack>
