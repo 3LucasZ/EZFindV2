@@ -19,12 +19,16 @@ import Custom404 from "archive/old_404";
 import RedirectPage from "../Main/RedirectPage";
 import React from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import SimpleSidebar from "./SimpleSidebar";
+import SimpleSidebar from "./ExampleDrawer";
+import AvatarMenu from "./AvatarMenu";
+import NavDrawer from "./NavDrawer";
+import { GroupProps } from "components/Widget/GroupWidget";
 
 type LayoutProps = {
   isAdmin: boolean | undefined;
   authorized?: boolean;
   loading?: boolean;
+  group?: GroupProps;
   children: ReactNode;
 };
 
@@ -32,6 +36,7 @@ export default function Layout({
   isAdmin,
   authorized,
   loading,
+  group,
   children,
 }: LayoutProps) {
   //set properties
@@ -99,13 +104,24 @@ export default function Layout({
             WebkitTapHighlightColor: "rgba(0,0,0,0)",
           }}
         >
-          <Header isAdmin={isAdmin} />
+          <Header
+            left={
+              group && (
+                <NavDrawer
+                  image={group.image}
+                  title={group.name}
+                  id={group.id}
+                />
+              )
+            }
+            right={<AvatarMenu isAdmin={isAdmin} />}
+          />
 
           {content}
           <AppBar />
         </Flex>
       </main>
-      <SimpleSidebar />
+      {/* <SimpleSidebar /> */}
     </>
   );
 }
