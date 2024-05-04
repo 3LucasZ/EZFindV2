@@ -1,5 +1,5 @@
 import ItemWidget, { ItemProps } from "components/Widget/ItemWidget";
-import Layout from "components/Layout/Layout";
+import Layout from "components/Layout/MainLayout";
 import SearchView from "components/SearchView";
 import { GetServerSideProps } from "next";
 import prisma from "services/prisma";

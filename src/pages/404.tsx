@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
-import Layout from "components/Layout/Layout";
+import Layout from "components/Layout/MainLayout";
 import RedirectPage from "components/RedirectPage";
 import { useSession } from "next-auth/react";
 

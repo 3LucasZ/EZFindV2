@@ -11,7 +11,7 @@ import Admin, { UserProps } from "components/Widget/UserWidget";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import Router from "next/router";
-import Layout from "components/Layout/Layout";
+import Layout from "components/Layout/MainLayout";
 import SearchView from "components/SearchView";
 import { errorToast, successToast } from "services/toasty";
 import prisma from "services/prisma";
