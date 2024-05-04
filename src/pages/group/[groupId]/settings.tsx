@@ -20,7 +20,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { GetServerSideProps } from "next";
 import ConfirmActionModal from "components/ConfirmActionModal";
 import Router from "next/router";
-import Layout from "components/Layout";
+import Layout from "components/Layout/Layout";
 import SearchView from "components/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";

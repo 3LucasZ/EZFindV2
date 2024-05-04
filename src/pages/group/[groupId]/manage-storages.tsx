@@ -1,5 +1,5 @@
 import StorageWidget, { StorageProps } from "components/Widget/StorageWidget";
-import Layout from "components/Layout";
+import Layout from "components/Layout/Layout";
 import { GetServerSideProps } from "next";
 import SearchView from "components/SearchView";
 import prisma from "services/prisma";

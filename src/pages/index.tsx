@@ -7,7 +7,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { RouteButton } from "components/RouteButton";
-import Layout from "components/Layout";
+import Layout from "components/Layout/Layout";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";

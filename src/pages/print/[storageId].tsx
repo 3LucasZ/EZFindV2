@@ -15,7 +15,7 @@ import { useQRCode } from "next-qrcode";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Select } from "chakra-react-select";
-import Layout from "components/Layout";
+import Layout from "components/Layout/Layout";
 import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";

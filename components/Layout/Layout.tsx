@@ -1,11 +1,24 @@
 import Head from "next/head";
-import { useEffect, type ReactNode } from "react";
-import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { useEffect, useState, type ReactNode } from "react";
+import {
+  Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Spinner,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import AppBar from "./AppBar";
-import Header from "./Header";
+import Header from "../Header";
 import Custom404 from "archive/old_404";
-import RedirectPage from "./RedirectPage";
+import RedirectPage from "../RedirectPage";
+import React from "react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 type LayoutProps = {
   isAdmin: boolean | undefined;
@@ -20,6 +33,7 @@ export default function Layout({
   loading,
   children,
 }: LayoutProps) {
+  //set properties
   useEffect(() => {
     const html = document.querySelector("html") || new HTMLBodyElement();
     const body = document.querySelector("body") || new HTMLBodyElement();
@@ -28,7 +42,10 @@ export default function Layout({
     body.style.touchAction = "none";
   });
 
-  // -1: unauthorized, 0: loading, 1: authorized
+  //drawer properties
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // set content based on: loading, authorized
   var content;
   if (loading == true) {
     content = (
@@ -85,10 +102,31 @@ export default function Layout({
           }}
         >
           <Header isAdmin={isAdmin} />
+
           {content}
           <AppBar />
         </Flex>
       </main>
+      <HamburgerIcon
+        onClick={onOpen}
+        position={"fixed"}
+        top={0}
+        left={0}
+        boxSize={[10, 10, 10]}
+      >
+        Open
+      </HamburgerIcon>
+      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
+          <DrawerBody>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+            <p>Some contents...</p>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }

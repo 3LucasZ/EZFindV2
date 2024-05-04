@@ -1,6 +1,6 @@
 import { Divider, Heading, HStack, Link, Stack } from "@chakra-ui/react";
 import React from "react";
-import AvatarMenu from "./AvatarMenu";
+import AvatarMenu from "./Layout/AvatarMenu";
 
 type HeaderProps = {
   isAdmin: boolean | undefined;
