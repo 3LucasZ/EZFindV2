@@ -145,7 +145,13 @@ export default function GroupPage({ group, users }: PageProps) {
           sx={{ opacity: "1" }}
         />
       </Flex>
-      <SimpleGrid columns={[1, 2, 3]} spacing={10} pt="15">
+      <SimpleGrid
+        columns={[1, 2, 3]}
+        spacing={10}
+        pt="15"
+        overflowY="auto"
+        flexDir={"column"}
+      >
         <RouteButton
           route={prefix + "manage-items"}
           text={"Items"}
