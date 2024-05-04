@@ -106,6 +106,7 @@ export default function GroupPage({ group, users }: PageProps) {
       isAdmin={session?.user.isAdmin}
       loading={status === "loading"}
       authorized={perm > -1}
+      group={group}
     >
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <EditableTitle value={group.name} isDisabled={true} />

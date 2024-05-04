@@ -116,7 +116,7 @@ export default function StoragePage({ storage, items }: PageProps) {
   };
 
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin} group={storage.group}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <EditableTitle
           value={isEdit ? newName : storage.name}

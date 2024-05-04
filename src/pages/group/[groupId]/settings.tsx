@@ -162,7 +162,7 @@ export default function GroupPage({ group, users }: PageProps) {
     if (res.status == 200) Router.reload();
   };
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : group.name}

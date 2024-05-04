@@ -19,7 +19,7 @@ export default function ManageStorages({ group }: PageProps) {
   const { data: session } = useSession();
   const toaster = useToast();
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Box minH="8px"></Box>
       <Center>
         <Text fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}>
