@@ -55,9 +55,9 @@ export default function NavDrawer(props: NavDrawerProps) {
                   borderRadius="lg"
                 />
               </AspectRatio>
-              <Text textAlign={"center"} fontWeight={"normal"}>
+              {/* <Text textAlign={"center"} fontWeight={"normal"}>
                 {props.title}
-              </Text>
+              </Text> */}
             </VStack>
           </DrawerHeader>
           <DrawerBody px="2">
