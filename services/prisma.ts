@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
-let prisma = new PrismaClient().$extends({
+const prismaExtension = Prisma.defineExtension({
   result: {
     user: {
       createdAt: {
@@ -23,4 +23,16 @@ let prisma = new PrismaClient().$extends({
   },
 });
 
+const prismaClientSingleton = () => {
+  return new PrismaClient().$extends(prismaExtension);
+};
+
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
+
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+
 export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
