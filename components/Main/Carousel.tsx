@@ -115,10 +115,16 @@ function CarouselCard(props: CarouselCardProps) {
             src={props.image ? "/api" + props.image : ""}
             hidden={props.image.length < 5}
             maxH="100%"
+            maxW="100%"
           />
         </Box>
         <HStack h="25%" px="3" w="100%">
-          <Text noOfLines={1} w="100%">
+          <Text
+            noOfLines={1}
+            w="100%"
+            // bgGradient={genGradient(props.title)}
+            // bgClip="text"
+          >
             {props.title}
           </Text>
           <Icon

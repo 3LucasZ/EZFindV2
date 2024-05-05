@@ -54,16 +54,19 @@ export default function GroupPage({ group, users }: PageProps) {
       group={group}
     >
       <Box overflow={"auto"}>
-        <Flex px={[2, "5vw", "10vw", "15vw"]}>
+        <Flex px={[2, "5vw", "10vw", "15vw"]} flexDir="column">
           <EditableTitle value={group.name} isDisabled={true} />
-        </Flex>
-        <Flex px={[2, "5vw", "10vw", "15vw"]}>
           <EditableSubtitle
             value={group.description ? group.description : "No description."}
             disabled
           />
         </Flex>
-        <SimpleGrid columns={3} gap={[2, 4, 6]} px={2} py={[4, 6, 8]}>
+        <SimpleGrid
+          columns={3}
+          gap={[2, 4, 6]}
+          px={[2, "5vw", "10vw", "15vw"]}
+          py={[4, 6, 8]}
+        >
           <CustomStat
             label={"Items"}
             value={"" + group.items?.length}
