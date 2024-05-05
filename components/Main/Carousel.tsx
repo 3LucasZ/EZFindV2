@@ -7,32 +7,33 @@ import {
   Icon,
   useBreakpointValue,
   AspectRatio,
+  VStack,
+  HStack,
 } from "@chakra-ui/react";
 
 import { MouseEventHandler, useState } from "react";
 import { IconType } from "react-icons";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiEye } from "react-icons/fi";
+import { genGradient } from "services/gradientGenerator";
 
-export default function Carousel() {
-  const slides = [
-    "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    "https://images.pexels.com/photos/2714581/pexels-photo-2714581.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    "https://images.pexels.com/photos/2878019/pexels-photo-2878019.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-    "https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    "https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  ];
+type CarouselProps = {
+  cards: {
+    image: string;
+    title: string;
+  }[];
+};
+export default function Carousel({ cards }: CarouselProps) {
   const [cur, setCur] = useState(0);
-  const cnt = slides.length;
+  const cnt = cards.length;
 
   const prev = () => {
     setCur((s) => (s === 0 ? cnt - 1 : s - 1));
   };
-
   const next = () => {
     setCur((s) => (s === cnt - 1 ? 0 : s + 1));
   };
 
-  const variant =
+  const cols =
     useBreakpointValue(
       {
         base: 1,
@@ -44,26 +45,20 @@ export default function Carousel() {
 
   const carouselStyle = {
     transition: "all .5s",
-    ml: `-${cur * (100 / variant)}%`,
+    ml: `-${cur * (100 / cols)}%`,
   };
 
   return (
     <Flex px={"2"} alignItems="center" justifyContent="center">
       <Flex w="full" overflow="hidden" pos="relative">
-        <Flex h="200px" w="full" {...carouselStyle}>
-          {slides.map((slide, sid) => (
-            <Box
-              key={`slide-${sid}`}
-              minH="100%"
-              minW={`${100 / variant}%`}
-              p="3"
-            >
-              <Box borderRadius={"md"} h="100%" alignContent={"center"}>
-                <AspectRatio ratio={1}>
-                  <Image src={slide} />
-                </AspectRatio>
-              </Box>
-            </Box>
+        <Flex h="250px" py="4" w="full" {...carouselStyle}>
+          {cards.map((card, id) => (
+            <CarouselCard
+              image={card.image}
+              title={card.title}
+              id={id}
+              cols={cols}
+            />
           ))}
         </Flex>
         <CarouselControl
@@ -82,6 +77,59 @@ export default function Carousel() {
     </Flex>
   );
 }
+
+type CarouselCardProps = {
+  image: string;
+  title: string;
+  id: number;
+  cols: number;
+};
+function CarouselCard(props: CarouselCardProps) {
+  return (
+    <Box
+      key={`slide-${props.id}`}
+      minH="100%"
+      minW={`${100 / props.cols}%`}
+      px="3"
+    >
+      <Box
+        borderRadius={"lg"}
+        // borderWidth={"1px"}
+        boxShadow={"md"}
+        h="100%"
+        alignContent={"center"}
+        overflow={"clip"}
+      >
+        <Box
+          minH="75%"
+          maxH="75%"
+          w="100%"
+          bgGradient={genGradient(props.title)}
+        >
+          <Image
+            src={props.image ? "/api" + props.image : ""}
+            hidden={props.image.length < 5}
+            maxH="100%"
+          />
+        </Box>
+        <HStack h="25%" px="3" w="100%">
+          <Text noOfLines={1} w="100%">
+            {props.title}
+          </Text>
+          <Icon
+            as={FiEye}
+            borderRadius={"full"}
+            bg="gray.200"
+            _hover={{ bg: "gray.300" }}
+            p={2}
+            boxSize={"8"}
+          />
+        </HStack>
+      </Box>
+    </Box>
+  );
+}
+
 type CarouselControlProps = {
   onClick: MouseEventHandler;
   left?: number | string;
@@ -110,6 +158,15 @@ function CarouselControl(props: CarouselControlProps) {
       opacity={0.3}
       bg={"black"}
       borderRadius={"full"}
+      p="1.5"
     />
   );
 }
+
+// const slides = [
+//   "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+//   "https://images.pexels.com/photos/2714581/pexels-photo-2714581.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+//   "https://images.pexels.com/photos/2878019/pexels-photo-2878019.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+//   "https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+//   "https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+// ];
