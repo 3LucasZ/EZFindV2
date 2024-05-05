@@ -42,9 +42,11 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
       aria-label={""}
       // bg="teal.300"
       // _hover={{ bg: "teal.400" }}
-      bgGradient="linear(to-b, teal.300, teal.200)"
-      _hover={{ bgGradient: "linear(to-b, teal.400, teal.300)" }}
+      // bgGradient="linear(to-b, teal.300, teal.200)"
+      // _hover={{ bgGradient: "linear(to-b, teal.400, teal.300)" }}
+      bgGradient="linear(to-b, teal.200, blue.200)"
       color="white"
+      _hover={{ color: "blue.300" }}
       pt="13px"
       onClick={() => Router.push(href)}
       style={{ textDecoration: "none" }}

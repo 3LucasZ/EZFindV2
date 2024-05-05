@@ -20,10 +20,11 @@ export default function Header({ left, right }: HeaderProps) {
       >
         {left}
         <Heading
-          size={["xl", "2xl", "3xl"]}
+          size={["xl"]}
+          // size={["xl", "2xl", "3xl"]}
           // color="teal.500"
           w="100%"
-          bgGradient={"linear(to-b, teal.600, teal.100)"}
+          bgGradient={"linear(to-b, teal.300, blue.400)"}
           bgClip={"text"}
         >
           EZFind
