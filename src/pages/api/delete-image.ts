@@ -1,9 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-
-import mime from "mime";
 import { join } from "path";
-import { stat, mkdir, writeFile, unlink } from "fs/promises";
-import { NextRequest, NextResponse } from "next/server";
+import { unlink } from "fs/promises";
 import _ from "lodash";
 import { TypedRequestBody } from "services/types";
 import { NextApiResponse } from "next";
