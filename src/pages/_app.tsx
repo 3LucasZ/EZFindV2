@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
+import theme from "theme";
 
 export default function App({
   Component,
@@ -10,7 +11,7 @@ export default function App({
   return (
     <SessionProvider session={session} basePath="/api/auth">
       {/*/ezfind/api/auth */}
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
     </SessionProvider>
