@@ -26,7 +26,7 @@ import EditableTitle from "components/Minis/EditableTitle";
 import Carousel from "components/Main/Carousel";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { CustomStat } from "components/Main/CustomStat";
-import { FiCompass } from "react-icons/fi";
+import { FiCompass, FiPackage, FiTool, FiUsers } from "react-icons/fi";
 
 type PageProps = {
   group: GroupProps;
@@ -46,12 +46,6 @@ export default function GroupPage({ group, users }: PageProps) {
           group.minPerm,
           userGroupRelation?.perm != undefined ? userGroupRelation.perm : -1
         );
-  const stats = [
-    { label: "Items", value: group.items?.length },
-    { label: "Storages", value: group.storages?.length },
-    { label: "Members", value: group.userRelations?.length },
-  ];
-  console.log(group.userRelations, userGroupRelation?.perm, perm);
   return (
     <Layout
       isAdmin={session?.user.isAdmin}
@@ -69,25 +63,38 @@ export default function GroupPage({ group, users }: PageProps) {
             disabled
           />
         </Flex>
-        <Box as="section" py={{ base: "4", md: "8" }}>
-          <Container>
-            <SimpleGrid
-              columns={{ base: 3, md: 3 }}
-              gap={{ base: "5", md: "6" }}
-            >
-              {stats.map(({ label, value }) => (
-                <CustomStat key={label} label={label} value={"" + value} />
-              ))}
-            </SimpleGrid>
-          </Container>
-        </Box>
-
+        <SimpleGrid columns={3} gap={[2, 4, 6]} px={2} py={[4, 6, 8]}>
+          <CustomStat
+            label={"Items"}
+            value={"" + group.items?.length}
+            icon={FiTool}
+            dark="cyan.400"
+            med="cyan.200"
+            light="cyan.100"
+          />
+          <CustomStat
+            label={"Storages"}
+            value={"" + group.storages?.length}
+            icon={FiPackage}
+            dark="blue.400"
+            med="blue.200"
+            light="blue.100"
+          />
+          <CustomStat
+            label={"Members"}
+            value={"" + group.userRelations?.length}
+            icon={FiUsers}
+            dark="orange.400"
+            med="orange.200"
+            light="orange.100"
+          />
+        </SimpleGrid>
         <Box px={[2, "5vw", "10vw", "15vw"]}>
-          <Box position="relative" padding="10">
+          <Box position="relative" py={8} px={2}>
             <Divider />
             <AbsoluteCenter bg="white">
-              <HStack color="teal">
-                <Icon as={FiCompass} />
+              <HStack color="blue.400" px="3">
+                <Icon as={FiCompass} boxSize={6} />
                 <Text fontSize="xl">Explore</Text>
               </HStack>
             </AbsoluteCenter>
@@ -96,12 +103,14 @@ export default function GroupPage({ group, users }: PageProps) {
             cards={group.items!.map((item) => ({
               image: item.image,
               title: item.name,
+              url: "/item/" + item.id,
             }))}
           />
           <Carousel
             cards={group.storages!.map((storage) => ({
               image: storage.image,
               title: storage.name,
+              url: "/storage/" + storage.id,
             }))}
           />
         </Box>

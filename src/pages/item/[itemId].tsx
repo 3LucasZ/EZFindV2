@@ -141,7 +141,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   };
 
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <EditableTitle
           value={isEdit ? newName : item.name}

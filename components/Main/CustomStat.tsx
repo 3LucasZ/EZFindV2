@@ -1,26 +1,79 @@
-import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  HStack,
+  Heading,
+  Icon,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { IconType } from "react-icons";
+import { FiTool } from "react-icons/fi";
 
 interface Props {
+  //Text
   label: string;
   value: string;
+  //Icon
+  icon: IconType;
+  //Color
+  dark: string;
+  med: string;
+  light: string;
 }
 export const CustomStat = (props: Props) => {
-  const { label, value, ...boxProps } = props;
   return (
     <Box
-      px={{ base: "4", md: "6" }}
-      py={{ base: "5", md: "6" }}
-      bg="bg.surface"
+      px={{ base: "2", md: "6" }}
+      py={{ base: "2", md: "6" }}
       borderRadius="lg"
       boxShadow="md"
-      {...boxProps}
+      // bgGradient={props.bgGradient}
+      bg={props.light}
     >
-      <Stack>
-        <Text textStyle="sm" color="fg.muted">
-          {label}
-        </Text>
-        <Heading size={{ base: "sm", md: "md" }}>{value}</Heading>
-      </Stack>
+      <HStack direction={"row"} p="0" m="0" gap="1">
+        <Icon
+          as={props.icon}
+          bgGradient={`linear(to-br, ${props.dark}, ${props.med})`}
+          color={props.light}
+          boxSize="8"
+          borderRadius={"full"}
+          p="1.5"
+        />
+        <Box w="100%" color={props.dark}>
+          <Heading noOfLines={1} size={["lg", "lg", "xl"]} textAlign={"center"}>
+            {props.value}
+          </Heading>
+          <Text
+            noOfLines={1}
+            fontSize={["sm", "md", "lg"]}
+            textAlign={"center"}
+          >
+            {props.label}
+          </Text>
+        </Box>
+      </HStack>
     </Box>
   );
 };
+
+{
+  /* <Stack>
+        <HStack>
+          <Icon
+            as={FiTool}
+            bgGradient="linear(to-br, blue.400, blue.200)"
+            color="blue.100"
+            boxSize="8"
+            borderRadius={"full"}
+            p="1.5"
+          />
+          <Heading noOfLines={1} size={["md", "lg", "xl"]}>
+            {value}
+          </Heading>
+        </HStack>
+        <Text noOfLines={1} fontSize={["md", "md", "lg"]}>
+          {label}
+        </Text>
+      </Stack> */
+}

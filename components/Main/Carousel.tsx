@@ -10,6 +10,7 @@ import {
   VStack,
   HStack,
 } from "@chakra-ui/react";
+import Router from "next/router";
 
 import { MouseEventHandler, useState } from "react";
 import { IconType } from "react-icons";
@@ -20,6 +21,7 @@ type CarouselProps = {
   cards: {
     image: string;
     title: string;
+    url: string;
   }[];
 };
 export default function Carousel({ cards }: CarouselProps) {
@@ -56,6 +58,7 @@ export default function Carousel({ cards }: CarouselProps) {
             <CarouselCard
               image={card.image}
               title={card.title}
+              url={card.url}
               id={id}
               cols={cols}
             />
@@ -81,6 +84,7 @@ export default function Carousel({ cards }: CarouselProps) {
 type CarouselCardProps = {
   image: string;
   title: string;
+  url: string;
   id: number;
   cols: number;
 };
@@ -105,6 +109,7 @@ function CarouselCard(props: CarouselCardProps) {
           maxH="75%"
           w="100%"
           bgGradient={genGradient(props.title)}
+          alignContent={"center"}
         >
           <Image
             src={props.image ? "/api" + props.image : ""}
@@ -123,6 +128,7 @@ function CarouselCard(props: CarouselCardProps) {
             _hover={{ bg: "gray.300" }}
             p={2}
             boxSize={"8"}
+            onClick={() => Router.push(props.url)}
           />
         </HStack>
       </Box>
