@@ -1,10 +1,15 @@
 import {
+  AbsoluteCenter,
   Box,
   Container,
+  Divider,
   Flex,
+  HStack,
+  Icon,
   SimpleGrid,
   VStack,
   useToast,
+  Text,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
@@ -21,6 +26,7 @@ import EditableTitle from "components/Minis/EditableTitle";
 import Carousel from "components/Main/Carousel";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { CustomStat } from "components/Main/CustomStat";
+import { FiCompass } from "react-icons/fi";
 
 type PageProps = {
   group: GroupProps;
@@ -41,9 +47,9 @@ export default function GroupPage({ group, users }: PageProps) {
           userGroupRelation?.perm != undefined ? userGroupRelation.perm : -1
         );
   const stats = [
-    { label: "Items", value: "73" },
-    { label: "Storages", value: "56" },
-    { label: "Users", value: "12" },
+    { label: "Items", value: group.items?.length },
+    { label: "Storages", value: group.storages?.length },
+    { label: "Members", value: group.userRelations?.length },
   ];
   console.log(group.userRelations, userGroupRelation?.perm, perm);
   return (
@@ -70,13 +76,28 @@ export default function GroupPage({ group, users }: PageProps) {
               gap={{ base: "5", md: "6" }}
             >
               {stats.map(({ label, value }) => (
-                <CustomStat key={label} label={label} value={value} />
+                <CustomStat key={label} label={label} value={"" + value} />
               ))}
             </SimpleGrid>
           </Container>
         </Box>
+        <Box position="relative" padding="10">
+          <Divider />
+          <AbsoluteCenter bg="white" px="4">
+            <HStack>
+              <Icon as={FiCompass} />
+              <Text>Explore</Text>
+            </HStack>
+          </AbsoluteCenter>
+        </Box>
+
         <Box px={[2, "5vw", "10vw", "15vw"]}>
-          <Carousel />
+          <Carousel
+            cards={group.items!.map((item) => ({
+              image: item.image,
+              title: item.name,
+            }))}
+          />
         </Box>
 
         <Box h="60px" />
@@ -102,6 +123,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           },
         },
       },
+      items: true,
+      storages: true,
     },
   });
   const users = await prisma.user.findMany();
