@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "services/prisma";
 
-const prisma = new PrismaClient();
 async function main() {
   // if (false) {
   //   for (let i = 0; i < 50; i++) {
