@@ -28,16 +28,6 @@ type CarouselProps = {
   }[];
 };
 export default function Carousel({ cards }: CarouselProps) {
-  const [cur, setCur] = useState(0);
-  const cnt = cards.length;
-
-  const prev = () => {
-    setCur((s) => (s === 0 ? cnt - 1 : s - 1));
-  };
-  const next = () => {
-    setCur((s) => (s === cnt - 1 ? 0 : s + 1));
-  };
-
   const cols =
     useBreakpointValue(
       {
@@ -47,6 +37,24 @@ export default function Carousel({ cards }: CarouselProps) {
       },
       { fallback: "md", ssr: false }
     ) || 3;
+  const [cur, setCur] = useState(0);
+  const cnt = cards.length;
+
+  //absorbing
+  const prev = () => {
+    setCur((s) => Math.max(s - 1, 0));
+  };
+  const next = () => {
+    setCur((s) => Math.min(s + 1, cnt - 1));
+  };
+
+  //cyclic
+  // const prev = () => {
+  //   setCur(cur === 0 ? cnt - 1 : cur - 1);
+  // };
+  // const next = () => {
+  //   setCur(cur === cnt - 1 ? 0 : cur + 1);
+  // };
 
   const carouselStyle = {
     transition: "all .5s",
@@ -97,6 +105,7 @@ function CarouselCard(props: CarouselCardProps) {
       key={`slide-${props.id}`}
       minH="100%"
       minW={`${100 / props.cols}%`}
+      maxW={`${100 / props.cols}%`}
       px="3"
     >
       <Box
