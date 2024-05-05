@@ -41,9 +41,9 @@ export default function GroupPage({ group, users }: PageProps) {
           userGroupRelation?.perm != undefined ? userGroupRelation.perm : -1
         );
   const stats = [
-    { label: "Total Subscribers", value: "71,887" },
-    { label: "Avg. Open Rate", value: "56.87%" },
-    { label: "Avg. Click Rate", value: "12.87%" },
+    { label: "Items", value: "73" },
+    { label: "Storages", value: "56" },
+    { label: "Users", value: "12" },
   ];
   console.log(group.userRelations, userGroupRelation?.perm, perm);
   return (
@@ -53,7 +53,7 @@ export default function GroupPage({ group, users }: PageProps) {
       authorized={perm > -1}
       group={group}
     >
-      <VStack>
+      <Box overflow={"auto"}>
         <Flex px={[2, "5vw", "10vw", "15vw"]}>
           <EditableTitle value={group.name} isDisabled={true} />
         </Flex>
@@ -66,7 +66,7 @@ export default function GroupPage({ group, users }: PageProps) {
         <Box as="section" py={{ base: "4", md: "8" }}>
           <Container>
             <SimpleGrid
-              columns={{ base: 1, md: 3 }}
+              columns={{ base: 3, md: 3 }}
               gap={{ base: "5", md: "6" }}
             >
               {stats.map(({ label, value }) => (
@@ -75,8 +75,12 @@ export default function GroupPage({ group, users }: PageProps) {
             </SimpleGrid>
           </Container>
         </Box>
-        <Carousel />
-      </VStack>
+        <Box px={[2, "5vw", "10vw", "15vw"]}>
+          <Carousel />
+        </Box>
+
+        <Box h="60px" />
+      </Box>
     </Layout>
   );
 }
