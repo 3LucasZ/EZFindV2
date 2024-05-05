@@ -70,6 +70,7 @@ export default function GroupPage({ group, users }: PageProps) {
           <CustomStat
             label={"Items"}
             value={"" + group.items?.length}
+            link={`/group/${group.id}/manage-items`}
             icon={FiTool}
             dark="cyan.400"
             med="cyan.200"
@@ -78,6 +79,7 @@ export default function GroupPage({ group, users }: PageProps) {
           <CustomStat
             label={"Storages"}
             value={"" + group.storages?.length}
+            link={`/group/${group.id}/manage-storages`}
             icon={FiPackage}
             dark="blue.400"
             med="blue.200"
@@ -86,37 +88,40 @@ export default function GroupPage({ group, users }: PageProps) {
           <CustomStat
             label={"Members"}
             value={"" + group.userRelations?.length}
+            link={`/group/${group.id}/settings`}
             icon={FiUsers}
             dark="orange.400"
             med="orange.200"
             light="orange.100"
           />
         </SimpleGrid>
-        <Box px={[2, "5vw", "10vw", "15vw"]}>
-          <Box position="relative" py={8} px={2}>
-            <Divider />
-            <AbsoluteCenter bg="white">
-              <HStack color="blue.400" px="3">
-                <Icon as={FiCompass} boxSize={6} />
-                <Text fontSize="xl">Explore</Text>
-              </HStack>
-            </AbsoluteCenter>
+        {group.items!.length > 0 && group.storages!.length > 0 && (
+          <Box px={[2, "5vw", "10vw", "15vw"]}>
+            <Box position="relative" py={8} px={2}>
+              <Divider />
+              <AbsoluteCenter bg="white">
+                <HStack color="blue.400" px="3">
+                  <Icon as={FiCompass} boxSize={6} />
+                  <Text fontSize="xl">Explore</Text>
+                </HStack>
+              </AbsoluteCenter>
+            </Box>
+            <Carousel
+              cards={group.items!.map((item) => ({
+                image: item.image,
+                title: item.name,
+                url: "/item/" + item.id,
+              }))}
+            />
+            <Carousel
+              cards={group.storages!.map((storage) => ({
+                image: storage.image,
+                title: storage.name,
+                url: "/storage/" + storage.id,
+              }))}
+            />
           </Box>
-          <Carousel
-            cards={group.items!.map((item) => ({
-              image: item.image,
-              title: item.name,
-              url: "/item/" + item.id,
-            }))}
-          />
-          <Carousel
-            cards={group.storages!.map((storage) => ({
-              image: storage.image,
-              title: storage.name,
-              url: "/storage/" + storage.id,
-            }))}
-          />
-        </Box>
+        )}
 
         <Box h="60px" />
       </Box>

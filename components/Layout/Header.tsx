@@ -19,7 +19,13 @@ export default function Header({ left, right }: HeaderProps) {
         py="2"
       >
         {left}
-        <Heading size={["xl", "2xl", "3xl"]} color="teal.500" w="100%">
+        <Heading
+          size={["xl", "2xl", "3xl"]}
+          // color="teal.500"
+          w="100%"
+          bgGradient={"linear(to-b, teal.600, teal.100)"}
+          bgClip={"text"}
+        >
           EZFind
         </Heading>
         {right}

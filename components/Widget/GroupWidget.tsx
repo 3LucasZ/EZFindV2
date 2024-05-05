@@ -21,6 +21,7 @@ import Router from "next/router";
 import { UserGroupRelationProps } from "./UserGroupRelationWidget";
 import { ItemProps } from "./ItemWidget";
 import { StorageProps } from "./StorageWidget";
+import { genGradient } from "services/gradientGenerator";
 
 export type GroupProps = {
   id: number;
@@ -41,30 +42,32 @@ type GroupWidgetProps = {
 export default function GroupWidget({ group }: GroupWidgetProps) {
   return (
     <Card
-      variant={"outline"}
       onClick={() =>
         Router.push({
           pathname: "/group/" + group.id + "/explore",
         })
       }
+      overflow={"clip"}
+      mx={1}
+      boxShadow={"md"}
     >
-      <CardBody>
-        <AspectRatio ratio={1}>
+      <CardBody p={0}>
+        <AspectRatio ratio={1} bgGradient={genGradient(group.name)}>
           <Image
-            src={group.image ? `/api/${group.image}` : imagePlaceholder.src}
+            src={`/api/${group.image}`}
             alt={group.description}
-            borderRadius="md"
+            hidden={group.image!.length < 5}
           />
         </AspectRatio>
-        <Stack mt="6" spacing="3">
-          <Heading size="md" textAlign={"center"}>
+        <Stack spacing="3" py="1" px="1">
+          <Text fontSize="md" textAlign={"center"} noOfLines={2}>
             {group.name}
-          </Heading>
-          <Show above="lg">
-            <Text textAlign={"left"}>
+          </Text>
+          {/* <Show above="lg">
+            <Text fontSize="xs" textAlign={"left"}>
               {group.description ? group.description : "No description."}
             </Text>
-          </Show>
+          </Show> */}
         </Stack>
       </CardBody>
     </Card>

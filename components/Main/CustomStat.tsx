@@ -7,6 +7,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import Router from "next/router";
 import { IconType } from "react-icons";
 import { FiTool } from "react-icons/fi";
 
@@ -14,6 +15,7 @@ interface Props {
   //Text
   label: string;
   value: string;
+  link: string;
   //Icon
   icon: IconType;
   //Color
@@ -30,6 +32,8 @@ export const CustomStat = (props: Props) => {
       boxShadow="md"
       // bgGradient={props.bgGradient}
       bg={props.light}
+      _hover={{ bg: props.med }}
+      onClick={() => Router.push(props.link)}
     >
       <HStack direction={"row"} p="0" m="0" gap="1">
         <Icon

@@ -31,13 +31,14 @@ export default function Home({ groups }: PageProps) {
   const toaster = useToast();
   return (
     <Layout isAdmin={session?.user.isAdmin}>
-      <Heading py="15" px="2" textAlign={"center"}>
-        Welcome to EZFind!
-      </Heading>
-
-      <Text textAlign={"center"}>
-        Get started by selecting a group to find/add items in.{" "}
-      </Text>
+      <Box px={[2, "5vw", "10vw", "15vw"]}>
+        <Heading py="1" textAlign={"center"}>
+          Welcome!
+        </Heading>
+        <Text textAlign={"center"}>
+          Get started by selecting a group to view.
+        </Text>
+      </Box>
 
       <Box minH="8px"></Box>
       <SearchView

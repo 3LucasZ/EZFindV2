@@ -47,7 +47,7 @@ export default function RadioCard(props: RadioCardProps) {
         h="100%"
       >
         <HStack>
-          <Icon as={props.icon} boxSize={5} />
+          <Icon as={props.icon} boxSize={4} />
           <Text w="100%" noOfLines={1}>
             {props.name}
           </Text>

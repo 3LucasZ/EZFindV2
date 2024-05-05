@@ -23,12 +23,12 @@ export default function ManageItems({ group }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Box minH="8px"></Box>
-      <Center>
+      {/* <Center>
         <Text fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}>
           {group.name}: Items
         </Text>
-      </Center>
-      <Box minH="8px"></Box>
+      </Center> */}
+      {/* <Box minH="8px"></Box> */}
       <SearchView
         setIn={group.items!.map((item) => ({
           name: item.name,

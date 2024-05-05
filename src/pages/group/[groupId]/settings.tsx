@@ -38,6 +38,7 @@ import RadioCard from "components/Main/RadioCard";
 import { IoIosLock } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
+import { FiEye, FiLock, FiUsers } from "react-icons/fi";
 
 type PageProps = {
   group: GroupProps;
@@ -134,19 +135,19 @@ export default function GroupPage({ group, users }: PageProps) {
       value: "-1",
       name: "Private",
       desc: "Restricted access",
-      icon: IoIosLock,
+      icon: FiLock,
     },
     {
       value: "0",
       name: "Public",
       desc: "Anyone can view",
-      icon: FaEye,
+      icon: FiEye,
     },
     {
       value: "1",
       name: "Open",
       desc: "Anyone can view or edit",
-      icon: BsFillPeopleFill,
+      icon: FiUsers,
     },
   ];
   // handle update
