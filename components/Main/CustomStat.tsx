@@ -12,7 +12,7 @@ export const CustomStat = (props: Props) => {
       py={{ base: "5", md: "6" }}
       bg="bg.surface"
       borderRadius="lg"
-      boxShadow="sm"
+      boxShadow="md"
       {...boxProps}
     >
       <Stack>

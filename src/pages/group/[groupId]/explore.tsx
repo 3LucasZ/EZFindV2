@@ -81,21 +81,27 @@ export default function GroupPage({ group, users }: PageProps) {
             </SimpleGrid>
           </Container>
         </Box>
-        <Box position="relative" padding="10">
-          <Divider />
-          <AbsoluteCenter bg="white" px="4">
-            <HStack>
-              <Icon as={FiCompass} />
-              <Text>Explore</Text>
-            </HStack>
-          </AbsoluteCenter>
-        </Box>
 
         <Box px={[2, "5vw", "10vw", "15vw"]}>
+          <Box position="relative" padding="10">
+            <Divider />
+            <AbsoluteCenter bg="white">
+              <HStack color="teal">
+                <Icon as={FiCompass} />
+                <Text fontSize="xl">Explore</Text>
+              </HStack>
+            </AbsoluteCenter>
+          </Box>
           <Carousel
             cards={group.items!.map((item) => ({
               image: item.image,
               title: item.name,
+            }))}
+          />
+          <Carousel
+            cards={group.storages!.map((storage) => ({
+              image: storage.image,
+              title: storage.name,
             }))}
           />
         </Box>

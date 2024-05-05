@@ -158,7 +158,7 @@ function CarouselControl(props: CarouselControlProps) {
       opacity={0.3}
       bg={"black"}
       borderRadius={"full"}
-      p="1.5"
+      py="1.5"
     />
   );
 }
