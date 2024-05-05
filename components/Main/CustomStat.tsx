@@ -24,8 +24,8 @@ interface Props {
 export const CustomStat = (props: Props) => {
   return (
     <Box
-      px={{ base: "2", md: "6" }}
-      py={{ base: "2", md: "6" }}
+      px={[2, 4, 6]}
+      py={[2, 4, 6]}
       borderRadius="lg"
       boxShadow="md"
       // bgGradient={props.bgGradient}
@@ -36,9 +36,9 @@ export const CustomStat = (props: Props) => {
           as={props.icon}
           bgGradient={`linear(to-br, ${props.dark}, ${props.med})`}
           color={props.light}
-          boxSize="8"
+          boxSize={[8, 10, 12]}
           borderRadius={"full"}
-          p="1.5"
+          p={[1.5, 2, 2.5]}
         />
         <Box w="100%" color={props.dark}>
           <Heading noOfLines={1} size={["lg", "lg", "xl"]} textAlign={"center"}>
