@@ -12,10 +12,13 @@ import {
 } from "@chakra-ui/react";
 import Router from "next/router";
 
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { FiChevronLeft, FiChevronRight, FiEye } from "react-icons/fi";
 import { genGradient } from "services/gradientGenerator";
+
+import { throttle } from "lodash";
+import _ from "lodash";
 
 type CarouselProps = {
   cards: {
@@ -151,6 +154,7 @@ type CarouselControlProps = {
   icon: IconType;
 };
 function CarouselControl(props: CarouselControlProps) {
+  const throttledOnClick = useRef(throttle(props.onClick, 500));
   return (
     <Icon
       as={props.icon}
@@ -161,7 +165,7 @@ function CarouselControl(props: CarouselControlProps) {
       right={props.right}
       top={props.top}
       mt="-22px"
-      onClick={props.onClick}
+      onClick={throttledOnClick.current}
       _hover={{
         opacity: 0.6,
         bg: "black",
