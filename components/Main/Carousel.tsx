@@ -75,6 +75,10 @@ export default function Carousel({ cards }: CarouselProps) {
             />
           ))}
         </Flex>
+        {/* carousel side whitespace cover ups */}
+        <Box left="0" h="100%" w="9px" bg="white" pos={"absolute"} />
+        <Box right="0" h="100%" w="9px" bg="white" pos={"absolute"} />
+        {/* control buttons */}
         <CarouselControl
           onClick={prev}
           left="0"
