@@ -54,8 +54,8 @@ export default function Home({}: PageProps) {
                 fontWeight={"black"}
                 color="blue.300"
                 m="0"
-                h={titleSz.map((sz) => sz * titleHR + "px")}
                 alignContent={"center"}
+                lineHeight={titleSz.map((sz) => sz * titleHR + "px")} //Height does NOT work on safari but on chrome. Line height works on both.
               >
                 FAQ
               </Heading>
