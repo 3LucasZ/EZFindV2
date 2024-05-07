@@ -48,7 +48,8 @@ export default function GroupWidget({ group }: GroupWidgetProps) {
         })
       }
       overflow={"clip"}
-      mx={1}
+      mx={1} //necessary so card shadow is not clipped
+      mb={2} //ensure consistent spacing, due to added mx above
       boxShadow={"md"}
     >
       <CardBody p={0}>
