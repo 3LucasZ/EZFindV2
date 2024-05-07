@@ -2,36 +2,119 @@ import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 
-import { Box, Link, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Center,
+  HStack,
+  Heading,
+  Icon,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
+  VStack,
+} from "@chakra-ui/react";
+import { IconType } from "react-icons";
+import { FiAtSign, FiMapPin, FiPhone, FiSun } from "react-icons/fi";
 
 type PageProps = {};
 
 export default function Home({}: PageProps) {
   const { data: session } = useSession();
+
+  const titleHR = 5 / 6; //(title height / title fontSize) ratio
+  const subtitleR = 1 / 6; //(subtitle fontSize / title fontSize) ratio
+  const titleSz = [100, 120, 200, 300];
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Box px="5" overflowY="auto">
-        <Text fontSize="4xl">Version</Text>
-        <Text fontSize="xl">2.4 (Alpha)</Text>
-        <Text fontSize="4xl">Q&A</Text>
+        {/* <Text fontSize="4xl">Version</Text>
+        <Text fontSize="xl">2.4 (Alpha)</Text> */}
+        <Box
+          bg="blue.200"
+          // bgGradient={"linear(to-br, blue.300, teal.300)"}
+          borderRadius="3xl"
+          p="6"
+          mt="5"
+        >
+          <HStack minW="100%">
+            <VStack gap="0" h="100%">
+              <Heading
+                fontSize={titleSz.map((sz) => sz + "px")}
+                fontWeight={"black"}
+                color="blue.300"
+                m="0"
+                h={titleSz.map((sz) => sz * titleHR + "px")}
+                alignContent={"center"}
+              >
+                FAQ
+              </Heading>
+              <Heading
+                fontSize={titleSz.map((sz) => sz * subtitleR + "px")}
+                fontWeight="bold"
+                color="white"
+                textAlign={"center"}
+              >
+                Frequently Asked Questions
+              </Heading>
+            </VStack>
+            <Card
+              boxShadow={"lg"}
+              borderRadius={"3xl"}
+              w="350px"
+              ml="auto"
+              // bgGradient="linear(to-br, blue.50, teal.50)"
+            >
+              <CardBody gap={4}>
+                <Text fontWeight={"medium"} fontSize={"xl"}>
+                  Contact us
+                </Text>
+                <Box h="4" />
+                <VStack align={"start"}>
+                  <ContactItem
+                    title="Email"
+                    subtitle="sahuber@vcs.net"
+                    icon={FiAtSign}
+                  />
+                  <ContactItem
+                    title="Phone"
+                    subtitle="+1 (408) 123 4567"
+                    icon={FiPhone}
+                  />
+                  <ContactItem
+                    title="Address"
+                    subtitle="Valley Christian Schools"
+                    icon={FiMapPin}
+                  />
+                  <ContactItem
+                    title="Working hours"
+                    subtitle="8 a.m. - 3 p.m."
+                    icon={FiSun}
+                  />
+                </VStack>
+              </CardBody>
+            </Card>
+          </HStack>
+        </Box>
+        <Center>
+          <Text fontSize="4xl">Frequently Asked Questions</Text>
+        </Center>
+        <Accordion allowToggle px={[2, "5vw", "10vw", "15vw"]}>
+          <FAQItem
+            Q="What does the invert checkbox do?"
+            A="When invert mode is on, the display will tell you what items a
+          storage does not contain or what storages an item can not be found in."
+          />
+        </Accordion>
 
-        <Text fontSize="xl">Q: What does the invert checkbox do?</Text>
-        <Text fontSize="xl">
-          A: When invert mode is on, the display will tell you what items a
-          storage does not contain or what storages an item can not be found in.
-        </Text>
-        <Text fontSize="xl">
-          Q: What are the numbers displayed in the widgets?
-        </Text>
-        <Text fontSize="xl">
-          A: In the manage items page, the number shown is the total stock of
-          the item. In the manage storages page, the number shown is the total
-          number of items contained in that storage. When viewing a specific
-          item, the number shown next to each storage is the amount of that item
-          the storage contains. When viewing a specific storage, the number
-          shown next to each item is the amount of that item the storage
-          contains.
-        </Text>
         <Text fontSize="4xl">Dymo Instructions</Text>
         <Text fontSize="xl">In order to have dymo printing functionality:</Text>
         <UnorderedList fontSize="xl">
@@ -83,3 +166,70 @@ export default function Home({}: PageProps) {
     </Layout>
   );
 }
+
+type FAQItemProps = {
+  Q: string;
+  A: string;
+};
+function FAQItem(props: FAQItemProps) {
+  return (
+    <AccordionItem>
+      <h2>
+        <AccordionButton>
+          <Box as="span" flex="1" textAlign="left">
+            {props.Q}
+          </Box>
+          <AccordionIcon />
+        </AccordionButton>
+      </h2>
+      <AccordionPanel pb={4}>{props.A}</AccordionPanel>
+    </AccordionItem>
+  );
+}
+type ContactItemProps = {
+  title: string;
+  subtitle: string;
+  icon: IconType;
+};
+function ContactItem(props: ContactItemProps) {
+  return (
+    <HStack gap={2}>
+      <Icon
+        as={props.icon}
+        boxSize={10}
+        // bg="blue.200"
+        bgGradient={"linear(to-br, blue.200, teal.200)"}
+        p={2}
+        color="white"
+        borderRadius="xl"
+      />
+      <VStack align={"start"} gap={0}>
+        <Text
+          color="grey"
+          fontWeight={"light"}
+          fontSize={"sm"}
+          noOfLines={1}
+          textOverflow={"ellipsis"}
+        >
+          {props.title}
+        </Text>
+        <Text fontSize={"lg"} noOfLines={1}>
+          {props.subtitle}
+        </Text>
+      </VStack>
+    </HStack>
+  );
+}
+
+/*
+<FAQItem
+            Q="What are the numbers displayed in the widgets?"
+            A="In the manage items page, the number shown is the total stock of
+          the item. In the manage storages page, the number shown is the total
+          number of items contained in that storage. When viewing a specific
+          item, the number shown next to each storage is the amount of that item
+          the storage contains. When viewing a specific storage, the number
+          shown next to each item is the amount of that item the storage
+          contains."
+          />
+*/
