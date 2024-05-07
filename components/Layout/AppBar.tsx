@@ -37,7 +37,7 @@ type AppBarBtnProps = {
 function AppBarBtn({ icon, href }: AppBarBtnProps) {
   return (
     <Box
-      w={"33%"}
+      w={"100%"}
       h={"100%"}
       aria-label={""}
       // bg="teal.300"
