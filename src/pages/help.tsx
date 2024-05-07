@@ -47,14 +47,12 @@ export default function Home({}: PageProps) {
           p="6"
           mt="5"
         >
-          <Stack minW="100%" direction={["column", "row"]}>
-            <VStack gap="0" h="100%">
+          <Stack minW="100%" direction={["column", "column", "row"]}>
+            <VStack gap="0" h="100%" w="100%" alignSelf={"center"}>
               <Heading
-                fontSize={titleSz.map((sz) => sz + "px")}
                 fontWeight={"black"}
                 color="blue.300"
-                m="0"
-                alignContent={"center"}
+                fontSize={titleSz.map((sz) => sz + "px")}
                 lineHeight={titleSz.map((sz) => sz * titleHR + "px")} //Height does NOT work on safari but on chrome. Line height works on both.
               >
                 FAQ
@@ -71,8 +69,12 @@ export default function Home({}: PageProps) {
             <Card
               boxShadow={"lg"}
               borderRadius={"3xl"}
-              maxW="350px"
-              ml={["", "auto"]}
+              w="380px"
+              maxW="100%"
+              ml={"auto"}
+              mr={["auto", "auto", "0"]}
+              // ml={"auto"}
+              // mr={["auto", "auto", "auto"]}
               // bgGradient="linear(to-br, blue.50, teal.50)"
             >
               <CardBody gap={4}>
@@ -93,7 +95,7 @@ export default function Home({}: PageProps) {
                   />
                   <ContactItem
                     title="Address"
-                    subtitle="Valley Christian Schools"
+                    subtitle="100 Skyway Dr. #130"
                     icon={FiMapPin}
                   />
                   <ContactItem
