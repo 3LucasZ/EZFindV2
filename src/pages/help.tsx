@@ -18,6 +18,7 @@ import {
   Icon,
   Link,
   ListItem,
+  Stack,
   Text,
   UnorderedList,
   VStack,
@@ -30,9 +31,10 @@ type PageProps = {};
 export default function Home({}: PageProps) {
   const { data: session } = useSession();
 
+  const titleSz = [130, 130, 200, 300];
   const titleHR = 5 / 6; //(title height / title fontSize) ratio
   const subtitleR = 1 / 6; //(subtitle fontSize / title fontSize) ratio
-  const titleSz = [100, 120, 200, 300];
+
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Box px="5" overflowY="auto">
@@ -45,7 +47,7 @@ export default function Home({}: PageProps) {
           p="6"
           mt="5"
         >
-          <HStack minW="100%">
+          <Stack minW="100%" direction={["column", "row"]}>
             <VStack gap="0" h="100%">
               <Heading
                 fontSize={titleSz.map((sz) => sz + "px")}
@@ -69,8 +71,8 @@ export default function Home({}: PageProps) {
             <Card
               boxShadow={"lg"}
               borderRadius={"3xl"}
-              w="350px"
-              ml="auto"
+              maxW="350px"
+              ml={["", "auto"]}
               // bgGradient="linear(to-br, blue.50, teal.50)"
             >
               <CardBody gap={4}>
@@ -102,11 +104,9 @@ export default function Home({}: PageProps) {
                 </VStack>
               </CardBody>
             </Card>
-          </HStack>
+          </Stack>
         </Box>
-        <Center>
-          <Text fontSize="4xl">Frequently Asked Questions</Text>
-        </Center>
+
         <Accordion allowToggle px={[2, "5vw", "10vw", "15vw"]}>
           <FAQItem
             Q="What does the invert checkbox do?"
