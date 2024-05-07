@@ -104,12 +104,14 @@ export default function SearchView(props: SearchViewProps) {
         )}
       </Flex>
       <Box minH={"8px"}></Box>
+      <Divider></Divider>
       <Stack
         overflowY="auto"
         flexDir={"column"}
         w={["95%", "90%", "80%", "70%"]}
         alignSelf={"center"}
       >
+        <Box maxH={"8px"}></Box>
         {subset.length == 0 ? (
           <Center>No data available to display.</Center>
         ) : (
