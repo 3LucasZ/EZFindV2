@@ -1,20 +1,25 @@
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, PhoneIcon } from "@chakra-ui/icons";
 import {
   Box,
   Center,
   Checkbox,
   Divider,
   Flex,
+  Icon,
   IconButton,
   Input,
+  InputGroup,
+  InputLeftElement,
   SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
 import { debugMode } from "services/constants";
 import { FAB } from "../Layout/FAB";
+import { FiSearch } from "react-icons/fi";
 
 type SearchViewProps = {
+  prompt?: string;
   setIn: PairProps[];
   setOut?: PairProps[];
   onAdd?: Function;
@@ -78,13 +83,18 @@ export default function SearchView(props: SearchViewProps) {
   return (
     <>
       <Flex gap={"8px"} w={["95%", "90%", "80%", "70%"]} alignSelf={"center"}>
-        <Input
-          variant="filled"
-          placeholder="Search"
-          type="search"
-          value={query}
-          onChange={handleSearchQueryChange}
-        />
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={FiSearch} color="gray.300" />
+          </InputLeftElement>
+          <Input
+            variant="filled"
+            placeholder={props.prompt ? props.prompt : "Search"}
+            type="search"
+            value={query}
+            onChange={handleSearchQueryChange}
+          />
+        </InputGroup>
         {props.onAdd && props.isAdmin && (
           <FAB onClick={() => props.onAdd && props.onAdd()} />
         )}
