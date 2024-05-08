@@ -17,15 +17,25 @@ export default function Header({ left, right }: HeaderProps) {
         flexDir="row"
         textAlign={"center"}
         py="2"
+        //---basic outline---
+        // bg="white"
+        // color="blue.300"
+        //---basic filled---
+        // bg="teal.200"
+        // color="white"
+        //---gradient outline---
+        // bgGradient={"linear(to-b, teal.300, blue.400)"} //dark
+        bgGradient={"linear(to-b, teal.200, blue.300)"} //light
+        bgClip={"text"}
+        //---gradient filled---
+        // bgGradient={"linear(to-b, teal.200, blue.200)"}
+        // color="white"
       >
         {left}
         <Heading
           size={["xl"]}
           // size={["xl", "2xl", "3xl"]}
-          // color="teal.500"
           w="100%"
-          bgGradient={"linear(to-b, teal.300, blue.400)"}
-          bgClip={"text"}
         >
           EZFind
         </Heading>

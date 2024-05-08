@@ -100,7 +100,7 @@ export default function GroupPage({ group, users }: PageProps) {
             <Box position="relative" py={8} px={2}>
               <Divider />
               <AbsoluteCenter bg="white">
-                <HStack color="blue.400" px="3">
+                <HStack color="blue.300" px="3">
                   <Icon as={FiCompass} boxSize={6} />
                   <Text fontSize="xl">Explore</Text>
                 </HStack>
