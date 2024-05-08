@@ -40,19 +40,26 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
       w={"100%"}
       h={"100%"}
       aria-label={""}
-      // bg="teal.300"
-      // _hover={{ bg: "teal.400" }}
-      // bgGradient="linear(to-b, teal.300, teal.200)"
-      // _hover={{ bgGradient: "linear(to-b, teal.400, teal.300)" }}
-      bgGradient="linear(to-b, teal.200, blue.200)"
-      color="white"
-      _hover={{ color: "blue.300" }}
       pt="13px"
       onClick={() => Router.push(href)}
       style={{ textDecoration: "none" }}
       sx={{
         WebkitUserDrag: "none",
       }}
+      //---basic outline---
+      // bg="white"
+      // color="teal.200"
+      //---basic filled---
+      // bg="teal.200"
+      // color="white"
+      // _hover={{ color: "teal.400" }}
+      //---gradient outline
+      bg="white"
+      borderWidth="0.5px"
+      borderColor="grey"
+      //---gradient---
+      // bgGradient="linear(to-b, teal.200, blue.200)"
+      // _hover={{ color: "blue.300" }}
     >
       {
         <Center>
