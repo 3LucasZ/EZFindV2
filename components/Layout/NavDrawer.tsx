@@ -46,14 +46,14 @@ export default function NavDrawer(props: NavDrawerProps) {
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay bg={""} />
         <DrawerContent maxW={[60, 80]} borderRightWidth={"1px"}>
-          <DrawerHeader borderBottomWidth="1px" p="2">
+          <DrawerHeader borderBottomWidth="1px" p="0">
             <VStack>
               <AspectRatio ratio={1} w="100%">
                 <Image
                   src={
                     props.image ? `/api/${props.image}` : imagePlaceholder.src
                   }
-                  borderRadius="lg"
+                  // borderRadius="lg"
                 />
               </AspectRatio>
               {/* <Text textAlign={"center"} fontWeight={"normal"}>
