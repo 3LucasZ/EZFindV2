@@ -28,7 +28,7 @@ export default function AvatarMenu({ isAdmin }: AvatarMenuProps) {
           src={session?.user?.image ? session.user.image : ""}
         />
       </MenuButton>
-      <MenuList textAlign="left">
+      <MenuList textAlign="left" color="black">
         <Text px={3} py={1.5}>
           {session ? session.user!.name : "Guest"}
         </Text>
