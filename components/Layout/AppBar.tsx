@@ -56,7 +56,25 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
     >
       {
         <Center>
-          <Icon as={icon} boxSize="23" />
+          <Icon
+            as={icon}
+            boxSize="23"
+            //gradient-outline
+            stroke="url(#blue-gradient)"
+            // fill="url(#blue-gradient)"
+          />
+          <svg width="0" height="0">
+            <linearGradient
+              id="blue-gradient"
+              x1="100%"
+              y1="100%"
+              x2="0%"
+              y2="0%"
+            >
+              <stop stopColor="var(--chakra-colors-teal-200" offset="0%" />
+              <stop stopColor="var(--chakra-colors-blue-200" offset="100%" />
+            </linearGradient>
+          </svg>
         </Center>
       }
     </Box>
