@@ -73,9 +73,8 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
       // _hover={{ color: "teal.400" }}
       //---gradient outline
       bg="white"
-      borderWidth="0.5px"
-      borderColor="grey"
-      //---gradient---
+      role="group" // allows hover style propagation
+      //---gradient filled---
       // bgGradient="linear(to-b, teal.200, blue.200)"
       // _hover={{ color: "blue.300" }}
     >
@@ -84,9 +83,12 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
           <Icon
             as={icon}
             boxSize="23"
-            //gradient-outline
+            //---gradient outline---
             stroke="url(#blue-gradient)"
-            // fill="url(#blue-gradient)"
+            _groupHover={{
+              // app bar btn hover
+              stroke: "url(#red-gradient)",
+            }}
           />
           <svg width="0" height="0">
             <linearGradient
