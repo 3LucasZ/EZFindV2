@@ -1,11 +1,30 @@
-import { Box, Center, HStack, Icon, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Divider,
+  HStack,
+  Icon,
+  IconButton,
+} from "@chakra-ui/react";
 import { FaHome } from "react-icons/fa";
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import { FaCircleInfo } from "react-icons/fa6";
 import Router from "next/router";
 import { IconType } from "react-icons";
-import { FiCompass, FiHome, FiInfo } from "react-icons/fi";
+import {
+  FiAlertOctagon,
+  FiBook,
+  FiBookOpen,
+  FiCompass,
+  FiHelpCircle,
+  FiHome,
+  FiInfo,
+} from "react-icons/fi";
+import { IoMdHelp, IoMdInformation } from "react-icons/io";
+import { LuHelpCircle, LuInfo } from "react-icons/lu";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { LiaQuestionCircle } from "react-icons/lia";
 
 export default function AppBar() {
   return (
