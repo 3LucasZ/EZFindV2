@@ -82,6 +82,18 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
               <stop stopColor="var(--chakra-colors-blue-200" offset="100%" />
             </linearGradient>
           </svg>
+          <svg width="0" height="0">
+            <linearGradient
+              id="red-gradient"
+              x1="100%"
+              y1="100%"
+              x2="0%"
+              y2="0%"
+            >
+              <stop stopColor="var(--chakra-colors-orange-300" offset="0%" />
+              <stop stopColor="var(--chakra-colors-red-300" offset="100%" />
+            </linearGradient>
+          </svg>
         </Center>
       }
     </Box>
