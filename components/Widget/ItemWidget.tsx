@@ -20,11 +20,12 @@ export default function ItemWidget({ item }: ItemWidgetProps) {
   var sum = 0;
   item.storageRelations.forEach((relation) => (sum += relation.count));
   return (
-    <Grid
-      templateColumns={["repeat(6, 1fr)", "repeat(6, 1fr)", "repeat(12, 1fr)"]}
+    <Box
+      // templateColumns={["repeat(6, 1fr)", "repeat(6, 1fr)", "repeat(12, 1fr)"]}
       w="100%"
       overflow="hidden"
       rounded="md"
+      boxShadow={"md"}
     >
       <BaseWidget
         href={"/item/" + item.id}
@@ -39,6 +40,6 @@ export default function ItemWidget({ item }: ItemWidgetProps) {
         colSpan={6}
         cnt={sum ? sum : -1}
       />
-    </Grid>
+    </Box>
   );
 }

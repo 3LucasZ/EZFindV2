@@ -113,7 +113,7 @@ function CarouselCard(props: CarouselCardProps) {
       px="3"
     >
       <Box
-        borderRadius={"lg"}
+        rounded={"lg"}
         // borderWidth={"1px"}
         boxShadow={"md"}
         h="100%"
@@ -145,7 +145,7 @@ function CarouselCard(props: CarouselCardProps) {
           </Text>
           <Icon
             as={FiEye}
-            borderRadius={"full"}
+            rounded={"full"}
             bg="gray.200"
             _hover={{ bg: "gray.300" }}
             p={2}
@@ -186,7 +186,7 @@ function CarouselControl(props: CarouselControlProps) {
       }}
       opacity={0.3}
       bg={"black"}
-      borderRadius={"full"}
+      rounded={"full"}
       py="1.5"
     />
   );

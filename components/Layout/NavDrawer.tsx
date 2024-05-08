@@ -53,7 +53,7 @@ export default function NavDrawer(props: NavDrawerProps) {
                   src={
                     props.image ? `/api/${props.image}` : imagePlaceholder.src
                   }
-                  // borderRadius="lg"
+                  // rounded="lg"
                 />
               </AspectRatio>
               {/* <Text textAlign={"center"} fontWeight={"normal"}>
@@ -103,7 +103,7 @@ const NavItem = ({ icon, name, url }: NavItemProps) => {
       <Flex
         align="center"
         p="4"
-        borderRadius="lg"
+        rounded="lg"
         role="group"
         cursor="pointer"
         _hover={{
@@ -121,7 +121,7 @@ const NavItem = ({ icon, name, url }: NavItemProps) => {
   /* <AspectRatio ratio={1}>
   <Image
     src={props.image ? `/api/${props.image}` : imagePlaceholder.src}
-    borderRadius="md"
+    rounded="md"
   />
 </AspectRatio> */
 }
@@ -132,7 +132,7 @@ const NavItem = ({ icon, name, url }: NavItemProps) => {
       src={
         props.image ? `/api/${props.image}` : imagePlaceholder.src
       }
-      borderRadius="md"
+      rounded="md"
     />
   </AspectRatio>
   <Text fontSize={"xl"} noOfLines={2}>

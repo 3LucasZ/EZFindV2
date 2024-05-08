@@ -166,7 +166,7 @@ const StoragePage: React.FC<Props> = (props) => {
                   <ChImage
                     padding="4"
                     bgColor="teal.100"
-                    borderRadius="3vmin"
+                    rounded="3vmin"
                     src={"data:image/png;base64, " + img}
                     alt="label"
                   />
@@ -199,7 +199,7 @@ const StoragePage: React.FC<Props> = (props) => {
                   <Box
                     bg={status ? "green.400" : "tomato"}
                     color="white"
-                    borderRadius="md"
+                    rounded="md"
                     p={2}
                     textAlign={"center"}
                   >
@@ -215,7 +215,7 @@ const StoragePage: React.FC<Props> = (props) => {
                     }
                     p={2}
                     color="white"
-                    borderRadius="md"
+                    rounded="md"
                     textAlign={"center"}
                   >
                     {value != null && printers[value.value].isConnected

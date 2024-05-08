@@ -41,7 +41,7 @@ export default function UserWidget(props: UserWidgetProps) {
   return (
     <Flex width="100%">
       <Box
-        borderRadius="md"
+        rounded="md"
         bg="orange.200"
         color="white"
         px={4}

@@ -43,7 +43,7 @@ export default function Home({}: PageProps) {
         <Box
           bg="blue.200"
           // bgGradient={"linear(to-br, blue.300, teal.300)"}
-          borderRadius="3xl"
+          rounded="3xl"
           p="6"
           mt="5"
         >
@@ -67,8 +67,8 @@ export default function Home({}: PageProps) {
               </Heading>
             </VStack>
             <Card
-              boxShadow={"lg"}
-              borderRadius={"3xl"}
+              boxShadow={"md"}
+              rounded={"3xl"}
               w="380px"
               maxW="100%"
               ml={"auto"}
@@ -203,7 +203,7 @@ function ContactItem(props: ContactItemProps) {
         bgGradient={"linear(to-br, blue.200, teal.200)"}
         p={2}
         color="white"
-        borderRadius="xl"
+        rounded="xl"
       />
       <VStack align={"start"} gap={0}>
         <Text

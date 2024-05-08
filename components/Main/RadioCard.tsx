@@ -30,7 +30,7 @@ export default function RadioCard(props: RadioCardProps) {
         {...checkbox}
         cursor="pointer"
         borderWidth="2px"
-        borderRadius="md"
+        rounded="md"
         // boxShadow="md"
         _checked={{
           //   bg: "teal.400",

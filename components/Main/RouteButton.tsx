@@ -42,7 +42,7 @@ export const RouteButton = ({
         <Card
           border="1px"
           borderColor={color}
-          borderRadius="20px"
+          rounded="20px"
           _hover={hoverState}
         >
           <CardBody>

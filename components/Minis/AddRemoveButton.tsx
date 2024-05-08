@@ -25,7 +25,7 @@ export default function AddRemoveButton({
       w={"40px"}
       display={mode == 0 ? "none" : ""}
       //misc
-      borderRadius="md"
+      rounded="md"
       roundedLeft="none"
       onClick={mode == 1 ? handleAdd : handleRemove}
     />

@@ -28,7 +28,7 @@ export const CustomStat = (props: Props) => {
     <Box
       px={[2, 4, 6]}
       py={[2, 4, 6]}
-      borderRadius="lg"
+      rounded="lg"
       boxShadow="md"
       // bgGradient={props.bgGradient}
       bg={props.light}
@@ -41,7 +41,7 @@ export const CustomStat = (props: Props) => {
           bgGradient={`linear(to-br, ${props.dark}, ${props.med})`}
           color={props.light}
           boxSize={[8, 10, 12]}
-          borderRadius={"full"}
+          rounded={"full"}
           p={[1.5, 2, 2.5]}
         />
         <Box w="100%" color={props.dark}>
@@ -69,7 +69,7 @@ export const CustomStat = (props: Props) => {
             bgGradient="linear(to-br, blue.400, blue.200)"
             color="blue.100"
             boxSize="8"
-            borderRadius={"full"}
+            rounded={"full"}
             p="1.5"
           />
           <Heading noOfLines={1} size={["md", "lg", "xl"]}>
