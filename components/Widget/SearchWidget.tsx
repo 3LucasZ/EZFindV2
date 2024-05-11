@@ -16,6 +16,7 @@ import Router from "next/router";
 import { genGradient } from "services/gradientGenerator";
 import { count } from "console";
 import EditableCounter from "components/Minis/EditableCounter";
+import AddRemoveButton from "components/Minis/AddRemoveButton";
 
 type SearchWidgetProps = {
   name: string;
@@ -28,16 +29,17 @@ type SearchWidgetProps = {
 export default function SearchWidget(props: SearchWidgetProps) {
   return (
     <Box
-      // templateColumns={["repeat(6, 1fr)", "repeat(6, 1fr)", "repeat(12, 1fr)"]}
-      overflow="hidden"
+      overflow={"hidden"}
       rounded="md"
       boxShadow={"md"}
       mx={1} //so we can see the side shadows
       onClick={() => Router.push(props.url)}
+      pr="2"
+      _hover={{ bg: "gray.100" }}
     >
-      <HStack w="100%">
+      <HStack>
         <AspectRatio
-          width="50px"
+          width="70px"
           ratio={1}
           bgGradient={genGradient(props.name)}
         >
@@ -46,27 +48,22 @@ export default function SearchWidget(props: SearchWidgetProps) {
             hidden={props.image.length < 5}
           ></Image>
         </AspectRatio>
-        <Stack direction="row" w="100%">
-          <Stack
-            direction="row"
-            w="100%"
-            align={"center"} // vertically align name, description
+        <HStack w="100%">
+          <Text
+            w={["100%", "40%"]}
+            noOfLines={1} //do not render more than one line
+            wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
           >
-            <Text
-              w={["100%", "40%"]}
-              noOfLines={1} //do not render more than one line
-              wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
-            >
-              {props.name}
+            {props.name}
+          </Text>
+          <Show above="sm">
+            <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
+              {props.description ? props.description : "No description."}
             </Text>
-            <Show above="sm">
-              <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
-                {props.description ? props.description : "No description."}
-              </Text>
-            </Show>
-          </Stack>
-          <EditableCounter count={props.count} isDisabled={true} />
-        </Stack>
+          </Show>
+        </HStack>
+        <EditableCounter count={props.count} isDisabled={true} />
+        <AddRemoveButton mode={1} />
       </HStack>
     </Box>
   );
