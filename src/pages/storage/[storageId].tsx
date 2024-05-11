@@ -6,13 +6,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {
-  CheckIcon,
-  CloseIcon,
-  DeleteIcon,
-  EditIcon,
-  Icon,
-} from "@chakra-ui/icons";
+import { DeleteIcon, Icon } from "@chakra-ui/icons";
 import { SlPrinter } from "react-icons/sl";
 import { ItemProps } from "types/db";
 import { GetServerSideProps } from "next";
@@ -23,12 +17,9 @@ import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
-import RelationWidget from "components/Widget/ItemStorageRelationWidget";
 import { ItemStorageRelationProps } from "types/db";
 import React from "react";
-import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
 import { poster } from "services/poster";
 import { IoImageOutline } from "react-icons/io5";
 import ImageModal from "components/Main/ImageModal";
@@ -36,8 +27,6 @@ import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
-import { FAB } from "components/Layout/FAB/FAB";
-import { FiCheck, FiEdit2 } from "react-icons/fi";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 
 type PageProps = {
