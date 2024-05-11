@@ -53,7 +53,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
   const userGroupRelation = group.userRelations?.find(
     (x) => x.userId == session?.user.id
   );
-  const perm = isAdmin
+  const pagePerm = isAdmin
     ? 2
     : Math.max(
         group.minPerm,
@@ -210,20 +210,14 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               imageStr={storage.image}
             />
 
-            {session?.user.isAdmin && (
-              <IconButton
-                colorScheme="red"
-                aria-label=""
-                icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
-                onClick={() => {
-                  if (isEdit) {
-                    setIsEdit(false);
-                  } else {
-                    onOpenTrash();
-                  }
-                }}
-              />
-            )}
+            <IconButton
+              colorScheme="red"
+              aria-label=""
+              icon={<DeleteIcon />}
+              onClick={onOpenTrash}
+              hidden={pagePerm < 1}
+            />
+
             <ConfirmActionModal
               isOpen={isOpenTrash}
               onClose={onCloseTrash}
@@ -264,7 +258,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
           isEdit={isEdit}
         />
       )}
-      {perm >= 1 && (
+      {pagePerm >= 1 && (
         <EditFAB
           isEdit={isEdit}
           onEdit={() => {
