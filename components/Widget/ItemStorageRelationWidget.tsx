@@ -9,23 +9,13 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
-import { ItemProps } from "types/db";
-import { StorageProps } from "types/db";
 import Router from "next/router";
 import EditableCounter from "components/Minis/EditableCounter";
 import Round from "components/Minis/Round";
 import WidgetTitle from "components/Minis/WidgetTitle";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
 import { MouseEventHandler } from "react";
-
-export type ItemStorageRelationProps = {
-  item: ItemProps;
-  itemId: number;
-  storage: StorageProps;
-  storageId: number;
-  count: number;
-  inverted?: boolean;
-};
+import { ItemStorageRelationProps } from "types/db";
 
 type RelationWidgetProps = {
   relation: ItemStorageRelationProps;

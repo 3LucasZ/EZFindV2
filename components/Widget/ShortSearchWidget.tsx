@@ -10,7 +10,7 @@ import {
   Show,
 } from "@chakra-ui/react";
 
-import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
+import { ItemStorageRelationProps } from "types/db";
 import { GroupProps } from "./GroupWidget";
 import Router from "next/router";
 import { genGradient } from "services/gradientGenerator";

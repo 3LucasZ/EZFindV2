@@ -26,7 +26,7 @@ import prisma from "services/prisma";
 import { UserProps } from "components/Widget/UserWidget";
 import { useState } from "react";
 import RelationWidget from "components/Widget/ItemStorageRelationWidget";
-import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
+import { ItemStorageRelationProps } from "types/db";
 import React from "react";
 import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
 import { poster } from "services/poster";

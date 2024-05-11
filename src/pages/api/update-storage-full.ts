@@ -1,4 +1,4 @@
-import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
+import { ItemStorageRelationProps } from "types/db";
 import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";

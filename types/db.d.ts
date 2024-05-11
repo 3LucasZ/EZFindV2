@@ -1,6 +1,6 @@
 import { GroupProps } from "components/Widget/GroupWidget";
-import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
 import { UserProps } from "components/Widget/UserWidget";
+import { ItemProps, StorageProps } from "./db";
 
 export type ItemProps = {
   id: number;
@@ -25,4 +25,12 @@ export type UserGroupRelationProps = {
   group: GroupProps;
   groupId: number;
   perm: number;
+};
+export type ItemStorageRelationProps = {
+  item: ItemProps;
+  itemId: number;
+  storage: StorageProps;
+  storageId: number;
+  count: number;
+  inverted?: boolean;
 };
