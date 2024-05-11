@@ -63,7 +63,7 @@ export default function Home({ groups }: PageProps) {
               pathname: "/group/" + (await res.json()) + "/explore",
             });
         }}
-        hidden={perm}
+        hidden={!isAdmin}
       />
     </Layout>
   );
