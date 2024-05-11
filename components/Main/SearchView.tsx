@@ -20,20 +20,20 @@ import { FiSearch } from "react-icons/fi";
 
 type SearchViewProps = {
   prompt?: string;
-  setIn: PairProps[];
-  setOut?: PairProps[];
-  isAdmin?: boolean | undefined;
+  set: SearchElementProps[];
   isEdit?: boolean;
+  invertible?: boolean;
   columns?: number | number[];
 };
-type PairProps = {
+type SearchElementProps = {
   name: string; //search matching
-  rank?: string; //sorting
+  rank?: string; //custom sorting (not just based on name)
+  invert?: boolean;
   widget: ReactNode;
 };
 export default function SearchView(props: SearchViewProps) {
-  //sort setIn, setOut
-  const setIn = props.setIn.sort(function (a, b) {
+  //sort the set
+  const set = props.set.sort(function (a, b) {
     if (a.rank == undefined) a.rank = a.name;
     if (b.rank == undefined) b.rank = b.name;
     if (a.rank < b.rank) {
@@ -44,40 +44,40 @@ export default function SearchView(props: SearchViewProps) {
     }
     return 0;
   });
-  const setOut = props.setOut
-    ? props.setOut.sort(function (a, b) {
-        if (a.rank == undefined) a.rank = a.name;
-        if (b.rank == undefined) b.rank = b.name;
-        if (a.rank < b.rank) {
-          return -1;
-        }
-        if (a.rank > b.rank) {
-          return 1;
-        }
-        return 0;
-      })
-    : [];
+
   //state
   const [checked, setChecked] = useState(false);
   const [query, setQuery] = useState("");
-  const [subset, setSubset] = useState(checked ? setOut : setIn);
+  const [subset, setSubset] = useState(filtered(set, query, false));
+
+  // reactive
+  useEffect(() => {
+    setSubset(filtered(set, query, false));
+  }, [props.isEdit, props.set]);
+
   //functions
-  function filtered(pairset: PairProps[], q: string) {
-    return pairset.filter((pair) => {
-      return q === "" || pair.name.toLowerCase().includes(q.toLowerCase());
+  function filtered(
+    set: SearchElementProps[],
+    query: string,
+    inverted: boolean
+  ) {
+    return set.filter((pair) => {
+      return (
+        ((inverted && pair.invert) || (!inverted && !pair.invert)) &&
+        (query === "" || pair.name.toLowerCase().includes(query.toLowerCase()))
+      );
     });
   }
+
   //handlers
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-    checked
-      ? setSubset(filtered(setOut, e.target.value))
-      : setSubset(filtered(setIn, e.target.value));
+    setSubset(filtered(set, e.target.value, checked));
   };
-  //reactive
-  useEffect(() => {
-    setSubset(checked ? setOut : setIn);
-  }, [props.isEdit, props.setIn, props.setOut]);
+
+  console.log("subset", subset);
+  console.log("checked", checked);
+
   //ret
   return (
     <>
@@ -94,15 +94,14 @@ export default function SearchView(props: SearchViewProps) {
             onChange={handleSearchQueryChange}
           />
         </InputGroup>
-        {props.setOut && (
+
+        {props.invertible && (
           <Checkbox
             colorScheme="red"
             isChecked={checked}
             onChange={(e) => {
               setChecked(e.target.checked);
-              e.target.checked
-                ? setSubset(filtered(setOut, query))
-                : setSubset(filtered(setIn, query));
+              setSubset(filtered(set, query, e.target.checked));
             }}
           >
             Invert
@@ -123,7 +122,9 @@ export default function SearchView(props: SearchViewProps) {
           <Center>No data available to display.</Center>
         ) : (
           <SimpleGrid gap="8px" columns={props.columns ? props.columns : 1}>
-            {subset.map((pair) => pair.widget)}
+            {subset.map((pair) => {
+              return pair.widget;
+            })}
           </SimpleGrid>
         )}
         <Box h={"8px"}></Box>

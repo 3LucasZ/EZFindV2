@@ -32,7 +32,7 @@ export default function ManageStorages({ group }: PageProps) {
       </Center>
       <Box minH="8px"></Box>
       <SearchView
-        setIn={group.storages!.map((storage) => ({
+        set={group.storages!.map((storage) => ({
           name: storage.name,
           widget: (
             <SearchWidget
@@ -47,7 +47,6 @@ export default function ManageStorages({ group }: PageProps) {
             />
           ),
         }))}
-        isAdmin={session?.user.isAdmin}
         isEdit={false}
       />
       <FAB

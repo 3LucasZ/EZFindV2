@@ -19,11 +19,21 @@ import EditableCounter from "components/Minis/EditableCounter";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
 
 type SearchWidgetProps = {
+  //data
   name: string;
   description: string;
   image: string;
   count: number;
   url: string;
+
+  //behavior
+  mode?: number; //-1 (remove), 0 (neutral), 1 (add)
+
+  //functions
+  onInvert?: Function;
+  handleAdd?: Function;
+  handleRemove?: Function;
+  handleUpdate?: Function;
 };
 
 export default function SearchWidget(props: SearchWidgetProps) {
@@ -60,7 +70,7 @@ export default function SearchWidget(props: SearchWidgetProps) {
           </Show>
         </HStack>
         <EditableCounter count={props.count} isDisabled={true} />
-        <AddRemoveButton mode={-1} />
+        <AddRemoveButton mode={props.mode ? props.mode : 0} />
       </HStack>
     </Box>
   );

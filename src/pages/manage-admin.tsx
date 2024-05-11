@@ -47,7 +47,7 @@ export default function ManageAdmin({ users }: PageProps) {
       <Box minH={"8px"} />
       {session?.user.isAdmin && (
         <SearchView
-          setIn={users
+          set={users
             .filter((user) => user.isAdmin)
             .map((user) => ({
               name: user.email,

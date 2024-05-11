@@ -34,19 +34,33 @@ import { IoImageOutline } from "react-icons/io5";
 import ImageModal from "components/Main/ImageModal";
 import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
+import { GroupProps } from "components/Widget/GroupWidget";
+import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 
 type PageProps = {
   storage: StorageProps;
   items: ItemProps[];
+  group: GroupProps;
 };
 
-export default function StoragePage({ storage, items }: PageProps) {
-  const { data: session, status, update } = useSession();
-  //toaster
+export default function StoragePage({ storage, items, group }: PageProps) {
+  //--copy paste on every page--
+  const { data: session, status } = useSession();
+  const isAdmin = session?.user.isAdmin;
+  const userGroupRelation = group.userRelations?.find(
+    (x) => x.userId == session?.user.id
+  );
+  const perm = isAdmin
+    ? 2
+    : Math.max(
+        group.minPerm,
+        userGroupRelation?.perm ? userGroupRelation.perm : -1
+      );
   const toaster = useToast();
-  // state: 0=normal, 1=isEdit
+  //--state--
+  const [isInvert, setIsInvert] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  //newItem state
+  //new state
   const [newName, setNewName] = useState(storage.name);
   const [newDescription, setNewDescription] = useState(storage.description);
   const [newRelations, setNewRelations] = useState(storage.itemRelations);
@@ -114,6 +128,48 @@ export default function StoragePage({ storage, items }: PageProps) {
     const res = await poster("/api/update-storage-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
+
+  //widget generator
+  function genWidget(
+    relation: ItemStorageRelationProps,
+    invert: boolean,
+    isEdit: boolean
+  ) {
+    return {
+      name: relation.item.name,
+      rank: relation.item.name,
+      invert: invert,
+      widget: (
+        <ShortSearchWidget
+          name={relation.item.name}
+          description={relation.item.description}
+          image={relation.item.image}
+          count={relation.count}
+          url={`/item/${relation.item.id}`}
+          mode={isEdit ? (invert ? 1 : -1) : 0}
+          handleAdd={() => {
+            const copy = [...newRelations];
+            copy.push(relation);
+            setNewRelations(copy);
+          }}
+          handleRemove={() => {
+            setNewRelations(
+              newRelations.filter((t) => t.itemId != relation.itemId)
+            );
+          }}
+          handleUpdate={(e: number) => {
+            const copy = newRelations.map((a) => ({ ...a }));
+            const tar = copy.find((t) => t.itemId == relation.itemId);
+            if (tar != null) {
+              tar.count = e;
+              setNewRelations(copy);
+            }
+          }}
+          key={relation.itemId}
+        />
+      ),
+    };
+  }
 
   return (
     <Layout isAdmin={session?.user.isAdmin} group={storage.group}>
@@ -210,61 +266,15 @@ export default function StoragePage({ storage, items }: PageProps) {
 
       {status != "loading" && (
         <SearchView
-          setIn={inRelations.map((relation) => {
-            return {
-              name: relation.item.name,
-              widget: (
-                <RelationWidget
-                  relation={relation}
-                  isItem={true}
-                  isInvert={false}
-                  isEdit={isEdit}
-                  handleRemove={() => {
-                    setNewRelations(
-                      newRelations.filter((t) => t.itemId != relation.itemId)
-                    );
-                  }}
-                  handleUpdate={(e: number) => {
-                    const copy = newRelations.map((a) => ({ ...a }));
-                    const tar = copy.find((t) => t.itemId == relation.itemId);
-                    if (tar != null) {
-                      tar.count = e;
-                      setNewRelations(copy);
-                    }
-                  }}
-                  key={relation.itemId}
-                />
-              ),
-            };
-          })}
-          setOut={outRelations.map((relation) => {
-            return {
-              name: relation.item.name,
-              widget: (
-                <RelationWidget
-                  relation={relation}
-                  isItem={true}
-                  isInvert={true}
-                  isEdit={isEdit}
-                  handleAdd={() => {
-                    const copy = [...newRelations];
-                    copy.push(relation);
-                    setNewRelations(copy);
-                  }}
-                  handleUpdate={(e: number) => {
-                    const copy = [...newRelations];
-                    const tar = copy.find((t) => t.itemId == relation.itemId);
-                    if (tar != null) {
-                      tar.count = e;
-                      setNewRelations(copy);
-                    }
-                  }}
-                  key={relation.itemId}
-                />
-              ),
-            };
-          })}
-          isAdmin={session?.user.isAdmin}
+          set={[
+            ...inRelations.map((relation) =>
+              genWidget(relation, false, isEdit)
+            ),
+            ...outRelations.map((relation) =>
+              genWidget(relation, true, isEdit)
+            ),
+          ]}
+          invertible={true}
           isEdit={isEdit}
         />
       )}
@@ -281,28 +291,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       group: {
         include: {
-          items: {
-            select: {
-              id: true,
-              name: true,
-              description: true,
-            },
-          },
+          items: true,
+          userRelations: true,
         },
       },
       itemRelations: {
         include: {
-          item: {
-            select: {
-              id: true,
-              name: true,
-              description: true,
-            },
-          },
+          item: true,
         },
       },
     },
   });
+
   //redirect if invalid storageId
   if (storage == null) {
     return {
@@ -312,11 +312,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
   //return props
   return {
     props: {
       storage,
       items: storage.group.items,
+      group: storage.group,
     },
   };
 };

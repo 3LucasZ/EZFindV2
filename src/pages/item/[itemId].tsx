@@ -40,6 +40,7 @@ import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { TiShoppingCart } from "react-icons/ti";
 import { GroupProps } from "components/Widget/GroupWidget";
+import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 
 type PageProps = {
   item: ItemProps;
@@ -62,8 +63,9 @@ export default function ItemPage({ item, storages, group }: PageProps) {
       );
   const toaster = useToast();
   //--state--
+  const [isInvert, setIsInvert] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  //newItem state
+  //new state
   const [newName, setNewName] = useState(item.name);
   const [newDescription, setNewDescription] = useState(item.description);
   const [newRelations, setNewRelations] = useState(item.storageRelations);
@@ -140,6 +142,47 @@ export default function ItemPage({ item, storages, group }: PageProps) {
     if (res.status == 200) Router.reload();
   };
 
+  //widget generator
+  function genWidget(
+    relation: ItemStorageRelationProps,
+    invert: boolean,
+    isEdit: boolean
+  ) {
+    return {
+      name: relation.storage.name,
+      rank: relation.storage.name,
+      invert: invert,
+      widget: (
+        <ShortSearchWidget
+          name={relation.storage.name}
+          description={relation.storage.description}
+          image={relation.storage.image}
+          count={relation.count}
+          url={`/storage/${relation.storage.id}`}
+          mode={isEdit ? (invert ? 1 : -1) : 0}
+          handleAdd={() => {
+            const copy = [...newRelations];
+            copy.push(relation);
+            setNewRelations(copy);
+          }}
+          handleRemove={() => {
+            setNewRelations(
+              newRelations.filter((t) => t.storageId != relation.storageId)
+            );
+          }}
+          handleUpdate={(e: number) => {
+            const copy = newRelations.map((a) => ({ ...a }));
+            const tar = copy.find((t) => t.storageId == relation.storageId);
+            if (tar != null) {
+              tar.count = e;
+              setNewRelations(copy);
+            }
+          }}
+          key={relation.storageId}
+        />
+      ),
+    };
+  }
   return (
     <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -243,69 +286,15 @@ export default function ItemPage({ item, storages, group }: PageProps) {
 
       {status != "loading" && (
         <SearchView
-          setIn={inRelations.map((relation) => {
-            return {
-              name: relation.storage.name,
-              rank: relation.storage.name,
-              widget: (
-                <RelationWidget
-                  relation={relation}
-                  isItem={false}
-                  isInvert={false}
-                  isEdit={isEdit}
-                  handleRemove={() => {
-                    setNewRelations(
-                      newRelations.filter(
-                        (t) => t.storageId != relation.storageId
-                      )
-                    );
-                  }}
-                  handleUpdate={(e: number) => {
-                    const copy = newRelations.map((a) => ({ ...a }));
-                    const tar = copy.find(
-                      (t) => t.storageId == relation.storageId
-                    );
-                    if (tar != null) {
-                      tar.count = e;
-                      setNewRelations(copy);
-                    }
-                  }}
-                  key={relation.storageId}
-                />
-              ),
-            };
-          })}
-          setOut={outRelations.map((relation) => {
-            return {
-              name: relation.storage.name,
-              rank: relation.storage.name,
-              widget: (
-                <RelationWidget
-                  relation={relation}
-                  isItem={false}
-                  isInvert={true}
-                  isEdit={isEdit}
-                  handleAdd={() => {
-                    const copy = [...newRelations];
-                    copy.push(relation);
-                    setNewRelations(copy);
-                  }}
-                  handleUpdate={(e: number) => {
-                    const copy = [...newRelations];
-                    const tar = copy.find(
-                      (t) => t.storageId == relation.storageId
-                    );
-                    if (tar != null) {
-                      tar.count = e;
-                      setNewRelations(copy);
-                    }
-                  }}
-                  key={relation.storageId}
-                />
-              ),
-            };
-          })}
-          isAdmin={perm < 1}
+          set={[
+            ...inRelations.map((relation) =>
+              genWidget(relation, false, isEdit)
+            ),
+            ...outRelations.map((relation) =>
+              genWidget(relation, true, isEdit)
+            ),
+          ]}
+          invertible={true}
           isEdit={isEdit}
         />
       )}
@@ -322,34 +311,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       group: {
         include: {
-          storages: {
-            select: {
-              id: true,
-              name: true,
-              description: true,
-            },
-          },
-          userRelations: {
-            select: {
-              perm: true,
-              userId: true,
-            },
-          },
+          storages: true,
+          userRelations: true,
         },
       },
       storageRelations: {
         include: {
-          storage: {
-            select: {
-              id: true,
-              name: true,
-              description: true,
-            },
-          },
+          storage: true,
         },
       },
     },
   });
+
   //redirect to 404 if url itemId is invalid
   if (item == null) {
     return {
@@ -359,6 +332,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
+
   //return props
   return {
     props: {

@@ -44,11 +44,10 @@ export default function Home({ groups }: PageProps) {
 
       <Box minH="8px"></Box>
       <SearchView
-        setIn={groups.map((group) => ({
+        set={groups.map((group) => ({
           name: group.name,
           widget: <GroupWidget group={group} key={group.id} />,
         }))}
-        isAdmin={isAdmin}
         isEdit={false}
         columns={[2, 3, 3, 4]}
       />

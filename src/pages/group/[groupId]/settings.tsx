@@ -278,7 +278,7 @@ export default function GroupPage({ group, users }: PageProps) {
       </HStack>
       <Box h="8px"></Box>
       <SearchView
-        setIn={inRelations!.map((relation) => ({
+        set={inRelations!.map((relation) => ({
           name: relation.user.name,
           rank: 3 - relation.perm + relation.user.name,
           widget: (

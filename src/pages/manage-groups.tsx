@@ -25,7 +25,7 @@ export default function ManageGroups({ groups }: PageProps) {
     <Layout isAdmin={isAdmin}>
       <Box minH="8px"></Box>
       <SearchView
-        setIn={groups.map((group) => ({
+        set={groups.map((group) => ({
           name: group.name,
           widget: <GroupWidget group={group} key={group.id} />,
         }))}

@@ -45,7 +45,7 @@ export default function ManageItems({ group }: PageProps) {
       </Center> */}
       {/* <Box minH="8px"></Box> */}
       <SearchView
-        setIn={group.items!.map((item) => ({
+        set={group.items!.map((item) => ({
           name: item.name,
           widget: (
             <SearchWidget
@@ -60,7 +60,6 @@ export default function ManageItems({ group }: PageProps) {
             />
           ),
         }))}
-        isAdmin={session != null && session.user.isAdmin}
         isEdit={false}
       />
       {pagePerm >= 1 && (
