@@ -26,14 +26,14 @@ type SearchWidgetProps = {
   count: number;
   url: string;
 
-  //behavior
-  mode?: number; //-1 (remove), 0 (neutral), 1 (add)
+  //state
+  inverted?: boolean;
+  isEdit?: boolean;
 
   //functions
-  onInvert?: Function;
   handleAdd?: Function;
   handleRemove?: Function;
-  handleUpdate?: Function;
+  handleNewCount?: Function;
 };
 
 export default function SearchWidget(props: SearchWidgetProps) {
@@ -69,10 +69,12 @@ export default function SearchWidget(props: SearchWidgetProps) {
             </Text>
           </Show>
         </HStack>
-        <EditableCounter count={props.count} isDisabled={true} />
+        {!props.inverted && (
+          <EditableCounter count={props.count} isDisabled={!props.isEdit} />
+        )}
         <AddRemoveButton
-          mode={props.mode ? props.mode : 1}
-          invisible={props.mode == 0 || !props.mode ? true : false}
+          mode={props.inverted ? 1 : -1}
+          invisible={!props.isEdit}
           handleAdd={() => props.handleAdd && props.handleAdd()}
           handleRemove={() => props.handleRemove && props.handleRemove()}
         />

@@ -225,7 +225,8 @@ export default function ItemPage({ item, storages, group }: PageProps) {
                 image={relation.storage.image}
                 count={relation.count}
                 url={`/storage/${relation.storage.id}`}
-                mode={isEdit ? (relation.inverted ? 1 : -1) : 0}
+                inverted={relation.inverted}
+                isEdit={isEdit}
                 handleAdd={() => {
                   const copy = [...newRelations];
                   copy.push(relation);
@@ -238,7 +239,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
                     )
                   );
                 }}
-                handleUpdate={(e: number) => {
+                handleNewCount={(e: number) => {
                   const copy = newRelations.map((a) => ({ ...a }));
                   const tar = copy.find(
                     (t) => t.storageId == relation.storageId
