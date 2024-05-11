@@ -80,8 +80,8 @@ export default function SearchWidget(props: SearchWidgetProps) {
         <AddRemoveButton
           mode={props.inverted ? 1 : -1}
           invisible={!props.isEdit}
-          handleAdd={() => props.handleAdd && props.handleAdd()}
-          handleRemove={() => props.handleRemove && props.handleRemove()}
+          handleAdd={props.handleAdd!}
+          handleRemove={props.handleRemove!}
         />
       </HStack>
     </Box>

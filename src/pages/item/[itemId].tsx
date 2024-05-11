@@ -28,6 +28,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
+import { clone } from "services/clone";
 
 type PageProps = {
   item: ItemProps;
@@ -228,8 +229,10 @@ export default function ItemPage({ item, storages, group }: PageProps) {
                 inverted={relation.inverted}
                 isEdit={isEdit}
                 handleAdd={() => {
+                  const relationCpy = clone(relation);
+                  relationCpy.inverted = false;
                   const copy = [...newRelations];
-                  copy.push(relation);
+                  copy.push(relationCpy);
                   setNewRelations(copy);
                 }}
                 handleRemove={() => {
