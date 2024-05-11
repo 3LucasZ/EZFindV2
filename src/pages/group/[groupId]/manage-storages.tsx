@@ -1,4 +1,4 @@
-import StorageWidget from "components/Widget/SearchWidget";
+import StorageWidget from "components/Widget/ShortSearchWidget";
 import { StorageProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
@@ -12,7 +12,7 @@ import { Box, Center, useToast, Text } from "@chakra-ui/react";
 import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { GroupProps } from "components/Widget/GroupWidget";
-import SearchWidget from "components/Widget/SearchWidget";
+import SearchWidget from "components/Widget/ShortSearchWidget";
 
 type PageProps = {
   group: GroupProps;

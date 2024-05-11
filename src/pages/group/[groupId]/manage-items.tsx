@@ -1,4 +1,4 @@
-import ItemWidget from "components/Widget/SearchWidget";
+import ItemWidget from "components/Widget/ShortSearchWidget";
 import { ItemProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
@@ -13,7 +13,7 @@ import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
 import { GroupProps } from "components/Widget/GroupWidget";
-import SearchWidget from "components/Widget/SearchWidget";
+import SearchWidget from "components/Widget/ShortSearchWidget";
 
 type PageProps = {
   group: GroupProps;
