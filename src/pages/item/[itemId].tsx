@@ -41,7 +41,7 @@ import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { TiShoppingCart } from "react-icons/ti";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
-import { FAB } from "components/Layout/FAB";
+import { FAB } from "components/Layout/FAB/FAB";
 import { FiCheck, FiEdit, FiEdit2 } from "react-icons/fi";
 
 type PageProps = {

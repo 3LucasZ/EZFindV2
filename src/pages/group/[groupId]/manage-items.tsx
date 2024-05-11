@@ -14,7 +14,7 @@ import { poster } from "services/poster";
 import { Session } from "next-auth";
 import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ShortSearchWidget";
-import { FAB } from "components/Layout/FAB";
+import { FAB } from "components/Layout/FAB/FAB";
 import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 

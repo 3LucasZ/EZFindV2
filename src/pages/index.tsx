@@ -20,7 +20,7 @@ import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
 import Router from "next/router";
-import { FAB } from "components/Layout/FAB";
+import { FAB } from "components/Layout/FAB/FAB";
 import { FiEdit2, FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 

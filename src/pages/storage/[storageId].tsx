@@ -36,8 +36,9 @@ import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
-import { FAB } from "components/Layout/FAB";
+import { FAB } from "components/Layout/FAB/FAB";
 import { FiCheck, FiEdit2 } from "react-icons/fi";
+import { EditFAB } from "components/Layout/FAB/EditFAB";
 
 type PageProps = {
   storage: StorageProps;
@@ -208,21 +209,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               onUpload={uploadImage}
               imageStr={storage.image}
             />
-            {session?.user.isAdmin && (
-              <FAB
-                icon={isEdit ? FiCheck : FiEdit2}
-                onClick={async () => {
-                  if (isEdit) {
-                    handleUpdateStorage();
-                  } else {
-                    setNewName(storage.name);
-                    setNewDescription(storage.description);
-                    setNewRelations(storage.itemRelations);
-                    setIsEdit(true);
-                  }
-                }}
-              />
-            )}
+
             {session?.user.isAdmin && (
               <IconButton
                 colorScheme="red"
@@ -275,6 +262,19 @@ export default function StoragePage({ storage, items, group }: PageProps) {
           ]}
           invertible={true}
           isEdit={isEdit}
+        />
+      )}
+      {perm >= 1 && (
+        <EditFAB
+          isEdit={isEdit}
+          onEdit={() => {
+            setNewName(storage.name);
+            setNewDescription(storage.description);
+            setNewRelations(storage.itemRelations);
+            setIsEdit(true);
+          }}
+          onSave={handleUpdateStorage}
+          onCancel={() => setIsEdit(false)}
         />
       )}
     </Layout>
