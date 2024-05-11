@@ -72,7 +72,7 @@ export default function SearchWidget(props: SearchWidgetProps) {
         <EditableCounter count={props.count} isDisabled={true} />
         <AddRemoveButton
           mode={props.mode ? props.mode : 1}
-          invisible={props.mode == 0 ? true : false}
+          invisible={props.mode == 0 || !props.mode ? true : false}
           handleAdd={() => props.handleAdd && props.handleAdd()}
           handleRemove={() => props.handleRemove && props.handleRemove()}
         />
