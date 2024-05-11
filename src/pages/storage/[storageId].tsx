@@ -58,7 +58,6 @@ export default function StoragePage({ storage, items, group }: PageProps) {
       );
   const toaster = useToast();
   //--state--
-  const [isInvert, setIsInvert] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   //new state
   const [newName, setNewName] = useState(storage.name);

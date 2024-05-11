@@ -63,7 +63,6 @@ export default function ItemPage({ item, storages, group }: PageProps) {
       );
   const toaster = useToast();
   //--state--
-  const [isInvert, setIsInvert] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   //new state
   const [newName, setNewName] = useState(item.name);
