@@ -41,6 +41,8 @@ import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { TiShoppingCart } from "react-icons/ti";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
+import { FAB } from "components/Layout/FAB";
+import { FiCheck, FiEdit, FiEdit2 } from "react-icons/fi";
 
 type PageProps = {
   item: ItemProps;
@@ -183,22 +185,21 @@ export default function ItemPage({ item, storages, group }: PageProps) {
               onUpload={uploadImage}
               imageStr={item.image}
             />
-            <IconButton
-              colorScheme="teal"
-              aria-label=""
-              icon={isEdit ? <CheckIcon /> : <EditIcon />}
-              onClick={async () => {
-                if (isEdit) {
-                  handleUpdateItem();
-                } else {
-                  setNewName(item.name);
-                  setNewDescription(item.description);
-                  setNewRelations(item.storageRelations);
-                  setIsEdit(true);
-                }
-              }}
-              hidden={perm < 1}
-            />
+            {perm >= 1 && (
+              <FAB
+                icon={isEdit ? FiCheck : FiEdit2}
+                onClick={async () => {
+                  if (isEdit) {
+                    handleUpdateItem();
+                  } else {
+                    setNewName(item.name);
+                    setNewDescription(item.description);
+                    setNewRelations(item.storageRelations);
+                    setIsEdit(true);
+                  }
+                }}
+              />
+            )}
             <IconButton
               colorScheme="red"
               aria-label=""
