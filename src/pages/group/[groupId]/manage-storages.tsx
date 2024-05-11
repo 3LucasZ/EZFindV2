@@ -15,6 +15,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ShortSearchWidget";
 import { FAB } from "components/Layout/FAB";
 import { FiPlus } from "react-icons/fi";
+import { AddIcon } from "@chakra-ui/icons";
 
 type PageProps = {
   group: GroupProps;
@@ -25,12 +26,12 @@ export default function ManageStorages({ group }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Box minH="8px"></Box>
-      <Center>
+      {/* <Center>
         <Text fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}>
           {group.name}: Storages
         </Text>
       </Center>
-      <Box minH="8px"></Box>
+      <Box minH="8px"></Box> */}
       <SearchView
         set={group.storages!.map((storage) => ({
           name: storage.name,
@@ -50,7 +51,7 @@ export default function ManageStorages({ group }: PageProps) {
         isEdit={false}
       />
       <FAB
-        icon={FiPlus}
+        icon={AddIcon}
         onClick={async () => {
           const body = {
             groupId: group.id,
