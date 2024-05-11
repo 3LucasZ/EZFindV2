@@ -23,9 +23,8 @@ export default function EditableCounter({
       // color="white"
       color="black"
       bg="white"
-      // _disabled={{ color: "white", border: "none" }}
-      _disabled={{ color: "black", border: "none" }}
-      sx={{ opacity: "1" }}
+      _disabled={{ border: "none", bg: "none" }}
+      sx={{ opacity: "1" }} //override default opacity
       //---size and spacing
       maxLength={5} //99999
       p={0}
