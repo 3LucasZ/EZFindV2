@@ -8,31 +8,47 @@ import {
   Icon,
   Button,
   IconButton,
+  Text,
+  Box,
+  HStack,
+  ComponentWithAs,
+  IconProps,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 
 type FABProps = {
   onClick: Function;
-  icon: IconType;
+  icon: IconType | ComponentWithAs<"svg", IconProps>;
+  name?: string;
 };
 
-export const FAB = ({ icon, onClick }: FABProps) => {
+export const FAB = ({ icon, onClick, name }: FABProps) => {
   return (
-    <Button
-      aria-label={""}
+    <HStack
+      //---position
       position="fixed"
       right="8px"
       bottom="calc(58px + env(safe-area-inset-bottom))"
-      rounded="full"
-      h="16"
-      w="16"
-      onClick={(e) => onClick()}
-      zIndex={100}
+      //---sizing + spacing
+      minH="16"
+      minW="16"
+      maxW={name ? "" : "16"}
+      py={name ? "3" : "auto"}
+      px={name ? "6" : "auto"}
+      //---looks
       bg="teal.300"
       _hover={{ bg: "teal.400" }}
       color="white"
+      rounded="full"
+      // boxShadow={"2xl"}
+      //---misc
+      onClick={(e) => onClick()}
+      zIndex={100}
     >
-      <Icon as={icon} boxSize="10" p="0" m="0" strokeWidth={1.5} />
-    </Button>
+      <Icon as={icon} boxSize="6" p="0" m="0" w="100%" />
+      <Text fontSize={"2xl"} hidden={name ? false : true}>
+        {name}
+      </Text>
+    </HStack>
   );
 };
