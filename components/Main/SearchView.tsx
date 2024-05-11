@@ -127,7 +127,8 @@ export default function SearchView(props: SearchViewProps) {
             })}
           </SimpleGrid>
         )}
-        <Box h={"8px"}></Box>
+        <Box minH={"8px"}></Box>
+        <Box minH={"60px"}></Box>
       </Stack>
       <Box minH={"calc(50px + env(safe-area-inset-bottom))"}></Box>
     </>
