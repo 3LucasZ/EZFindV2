@@ -9,7 +9,7 @@ import {
   Stack,
   Show,
 } from "@chakra-ui/react";
-import BaseWidget from "./BaseWidget";
+
 import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
 import { GroupProps } from "./GroupWidget";
 import Router from "next/router";
@@ -36,13 +36,10 @@ export default function SearchWidget(props: SearchWidgetProps) {
       onClick={() => Router.push(props.url)}
       pr="2"
       _hover={{ bg: "gray.100" }}
+      minH="60px"
     >
       <HStack>
-        <AspectRatio
-          width="70px"
-          ratio={1}
-          bgGradient={genGradient(props.name)}
-        >
+        <AspectRatio minW="60px" ratio={1} bgGradient={genGradient(props.name)}>
           <Image
             src={`/api/${props.image}`}
             hidden={props.image.length < 5}
@@ -63,7 +60,7 @@ export default function SearchWidget(props: SearchWidgetProps) {
           </Show>
         </HStack>
         <EditableCounter count={props.count} isDisabled={true} />
-        <AddRemoveButton mode={1} />
+        <AddRemoveButton mode={-1} />
       </HStack>
     </Box>
   );
