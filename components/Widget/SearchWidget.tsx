@@ -18,7 +18,6 @@ import { count } from "console";
 import EditableCounter from "components/Minis/EditableCounter";
 
 type SearchWidgetProps = {
-  id: string;
   name: string;
   description: string;
   image: string;
@@ -26,7 +25,7 @@ type SearchWidgetProps = {
   url: string;
 };
 
-export default function SearchWidget(item: SearchWidgetProps) {
+export default function SearchWidget(props: SearchWidgetProps) {
   return (
     <Box
       // templateColumns={["repeat(6, 1fr)", "repeat(6, 1fr)", "repeat(12, 1fr)"]}
@@ -34,13 +33,17 @@ export default function SearchWidget(item: SearchWidgetProps) {
       rounded="md"
       boxShadow={"md"}
       mx={1} //so we can see the side shadows
-      onClick={() => Router.push("/item/" + item.id)}
+      onClick={() => Router.push(props.url)}
     >
       <HStack w="100%">
-        <AspectRatio width="50px" ratio={1} bgGradient={genGradient(item.name)}>
+        <AspectRatio
+          width="50px"
+          ratio={1}
+          bgGradient={genGradient(props.name)}
+        >
           <Image
-            src={`/api/${item.image}`}
-            hidden={item.image.length < 5}
+            src={`/api/${props.image}`}
+            hidden={props.image.length < 5}
           ></Image>
         </AspectRatio>
         <Stack direction="row" w="100%">
@@ -54,15 +57,15 @@ export default function SearchWidget(item: SearchWidgetProps) {
               noOfLines={1} //do not render more than one line
               wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
             >
-              {item.name}
+              {props.name}
             </Text>
             <Show above="sm">
               <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
-                {item.description ? item.description : "No description."}
+                {props.description ? props.description : "No description."}
               </Text>
             </Show>
           </Stack>
-          <EditableCounter count={item.count} isDisabled={true} />
+          <EditableCounter count={props.count} isDisabled={true} />
         </Stack>
       </HStack>
     </Box>
