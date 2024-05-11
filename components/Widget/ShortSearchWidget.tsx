@@ -70,7 +70,11 @@ export default function SearchWidget(props: SearchWidgetProps) {
           </Show>
         </HStack>
         <EditableCounter count={props.count} isDisabled={true} />
-        <AddRemoveButton mode={props.mode ? props.mode : 0} />
+        <AddRemoveButton
+          mode={props.mode ? props.mode : 0}
+          handleAdd={() => props.handleAdd && props.handleAdd()}
+          handleRemove={() => props.handleRemove && props.handleRemove()}
+        />
       </HStack>
     </Box>
   );
