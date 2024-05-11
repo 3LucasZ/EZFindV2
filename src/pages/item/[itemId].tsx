@@ -48,6 +48,7 @@ type PageProps = {
 };
 
 export default function ItemPage({ item, storages, group }: PageProps) {
+  //--copy paste on every page--
   const { data: session, status } = useSession();
   const isAdmin = session?.user.isAdmin;
   const userGroupRelation = group.userRelations?.find(
@@ -59,7 +60,6 @@ export default function ItemPage({ item, storages, group }: PageProps) {
         group.minPerm,
         userGroupRelation?.perm ? userGroupRelation.perm : -1
       );
-  console.log(perm);
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
