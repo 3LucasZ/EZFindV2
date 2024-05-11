@@ -29,7 +29,7 @@ export default function AddRemoveButton({
       //---display
       as={mode == 1 ? FiPlus : FiX}
       display={mode == 0 ? "none" : ""}
-      opacity={invisible ? 1 : 0}
+      opacity={invisible ? 0 : 1}
       boxSize={"10"}
       p="2.5"
       //---misc
