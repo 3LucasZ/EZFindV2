@@ -81,6 +81,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
         storage: storage,
         storageId: storage.id,
         count: 0,
+        inverted: true,
       };
     });
   //handle link modal
@@ -141,47 +142,6 @@ export default function ItemPage({ item, storages, group }: PageProps) {
     if (res.status == 200) Router.reload();
   };
 
-  //widget generator
-  function genWidget(
-    relation: ItemStorageRelationProps,
-    inverted: boolean,
-    isEdit: boolean
-  ) {
-    return {
-      name: relation.storage.name,
-      rank: relation.storage.name,
-      inverted: inverted,
-      widget: (
-        <ShortSearchWidget
-          name={relation.storage.name}
-          description={relation.storage.description}
-          image={relation.storage.image}
-          count={relation.count}
-          url={`/storage/${relation.storage.id}`}
-          mode={isEdit ? (inverted ? 1 : -1) : 0}
-          handleAdd={() => {
-            const copy = [...newRelations];
-            copy.push(relation);
-            setNewRelations(copy);
-          }}
-          handleRemove={() => {
-            setNewRelations(
-              newRelations.filter((t) => t.storageId != relation.storageId)
-            );
-          }}
-          handleUpdate={(e: number) => {
-            const copy = newRelations.map((a) => ({ ...a }));
-            const tar = copy.find((t) => t.storageId == relation.storageId);
-            if (tar != null) {
-              tar.count = e;
-              setNewRelations(copy);
-            }
-          }}
-          key={relation.storageId}
-        />
-      ),
-    };
-  }
   return (
     <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -285,14 +245,44 @@ export default function ItemPage({ item, storages, group }: PageProps) {
 
       {status != "loading" && (
         <SearchView
-          set={[
-            ...inRelations.map((relation) =>
-              genWidget(relation, false, isEdit)
+          set={[...inRelations, ...outRelations].map((relation) => ({
+            name: relation.storage.name,
+            rank: relation.storage.name,
+            inverted: relation.inverted,
+            widget: (
+              <ShortSearchWidget
+                name={relation.storage.name}
+                description={relation.storage.description}
+                image={relation.storage.image}
+                count={relation.count}
+                url={`/storage/${relation.storage.id}`}
+                mode={isEdit ? (relation.inverted ? 1 : -1) : 0}
+                handleAdd={() => {
+                  const copy = [...newRelations];
+                  copy.push(relation);
+                  setNewRelations(copy);
+                }}
+                handleRemove={() => {
+                  setNewRelations(
+                    newRelations.filter(
+                      (t) => t.storageId != relation.storageId
+                    )
+                  );
+                }}
+                handleUpdate={(e: number) => {
+                  const copy = newRelations.map((a) => ({ ...a }));
+                  const tar = copy.find(
+                    (t) => t.storageId == relation.storageId
+                  );
+                  if (tar != null) {
+                    tar.count = e;
+                    setNewRelations(copy);
+                  }
+                }}
+                key={relation.storageId}
+              />
             ),
-            ...outRelations.map((relation) =>
-              genWidget(relation, true, isEdit)
-            ),
-          ]}
+          }))}
           invertible={true}
           isEdit={isEdit}
         />

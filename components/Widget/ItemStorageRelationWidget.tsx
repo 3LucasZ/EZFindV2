@@ -24,6 +24,7 @@ export type ItemStorageRelationProps = {
   storage: StorageProps;
   storageId: number;
   count: number;
+  inverted?: boolean;
 };
 
 type RelationWidgetProps = {
