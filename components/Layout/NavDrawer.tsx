@@ -22,7 +22,7 @@ import { IconType } from "react-icons";
 import { BsBoxes } from "react-icons/bs";
 import { FaBoxes, FaHome, FaTools } from "react-icons/fa";
 import { CiSettings } from "react-icons/ci";
-import { FiHome, FiPackage, FiSettings, FiTool } from "react-icons/fi";
+import { FiHome, FiMenu, FiPackage, FiSettings, FiTool } from "react-icons/fi";
 import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 
 type NavDrawerProps = {
@@ -35,13 +35,14 @@ export default function NavDrawer(props: NavDrawerProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <HamburgerIcon
+      <Icon
+        as={FiMenu}
         onClick={onOpen}
         pos="absolute"
         float="left"
         left="4"
         boxSize="8"
-        color="gray"
+        color="black"
       />
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay bg={""} />
