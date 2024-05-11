@@ -156,7 +156,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
           isDisabled={!isEdit}
         />
         <Center>
-          <ButtonGroup spacing="2" pl="2">
+          <ButtonGroup spacing="2" pl="2" isAttached>
             <IconButton
               colorScheme="purple"
               aria-label=""
