@@ -43,7 +43,7 @@ export default function SearchView(props: SearchViewProps) {
   });
 
   //state
-  const [checked, setInverted] = useState(false);
+  const [inverted, setInverted] = useState(false);
   const [query, setQuery] = useState("");
   const [subset, setSubset] = useState(filtered(set, query, false));
 
@@ -69,11 +69,11 @@ export default function SearchView(props: SearchViewProps) {
   //handlers
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-    setSubset(filtered(set, e.target.value, checked));
+    setSubset(filtered(set, e.target.value, inverted));
   };
 
   console.log("subset", subset);
-  console.log("checked", checked);
+  console.log("checked", inverted);
 
   //ret
   return (
@@ -95,7 +95,7 @@ export default function SearchView(props: SearchViewProps) {
         {props.invertible && (
           <Checkbox
             colorScheme="red"
-            isChecked={checked}
+            isChecked={inverted}
             onChange={(e) => {
               setInverted(e.target.checked);
               setSubset(filtered(set, query, e.target.checked));
