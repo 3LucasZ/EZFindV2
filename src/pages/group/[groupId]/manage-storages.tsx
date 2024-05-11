@@ -1,4 +1,4 @@
-import StorageWidget from "components/Widget/StorageWidget";
+import StorageWidget from "components/Widget/SearchWidget";
 import { StorageProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
@@ -12,6 +12,7 @@ import { Box, Center, useToast, Text } from "@chakra-ui/react";
 import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { GroupProps } from "components/Widget/GroupWidget";
+import SearchWidget from "components/Widget/SearchWidget";
 
 type PageProps = {
   group: GroupProps;
@@ -31,7 +32,18 @@ export default function ManageStorages({ group }: PageProps) {
       <SearchView
         setIn={group.storages!.map((storage) => ({
           name: storage.name,
-          widget: <StorageWidget storage={storage} key={storage.id} />,
+          widget: (
+            <SearchWidget
+              name={storage.name}
+              description={storage.description}
+              image={storage.image}
+              url={`/storage/${storage.id}`}
+              count={storage.itemRelations
+                .map((x) => x.count)
+                .reduce((sum, a) => sum + a, 0)}
+              key={storage.id}
+            />
+          ),
         }))}
         onAdd={async () => {
           const body = {
@@ -59,6 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           id: true,
           name: true,
           description: true,
+          image: true,
           itemRelations: {
             select: {
               count: true,
