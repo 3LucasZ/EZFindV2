@@ -43,6 +43,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { FiCheck, FiEdit, FiEdit2 } from "react-icons/fi";
+import { EditFAB } from "components/Layout/FAB/EditFAB";
 
 type PageProps = {
   item: ItemProps;
@@ -57,7 +58,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   const userGroupRelation = group.userRelations?.find(
     (x) => x.userId == session?.user.id
   );
-  const perm = isAdmin
+  const pagePerm = isAdmin
     ? 2
     : Math.max(
         group.minPerm,
@@ -185,30 +186,13 @@ export default function ItemPage({ item, storages, group }: PageProps) {
               onUpload={uploadImage}
               imageStr={item.image}
             />
-            {perm >= 1 && (
-              <FAB
-                icon={isEdit ? FiCheck : FiEdit2}
-                onClick={async () => {
-                  if (isEdit) {
-                    handleUpdateItem();
-                  } else {
-                    setNewName(item.name);
-                    setNewDescription(item.description);
-                    setNewRelations(item.storageRelations);
-                    setIsEdit(true);
-                  }
-                }}
-              />
-            )}
+
             <IconButton
               colorScheme="red"
               aria-label=""
-              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
-              onClick={() => {
-                if (isEdit) setIsEdit(false);
-                else onOpenTrash();
-              }}
-              hidden={perm < 1}
+              icon={<DeleteIcon />}
+              onClick={onOpenTrash}
+              hidden={pagePerm < 1}
             />
             <ConfirmActionModal
               isOpen={isOpenTrash}
@@ -286,6 +270,20 @@ export default function ItemPage({ item, storages, group }: PageProps) {
           }))}
           invertible={true}
           isEdit={isEdit}
+        />
+      )}
+      {pagePerm >= 1 && (
+        <EditFAB
+          isEdit={isEdit}
+          onEdit={() => {
+            setNewName(item.name);
+            setNewDescription(item.description);
+            setNewLink(item.link);
+            setNewRelations(item.storageRelations);
+            setIsEdit(true);
+          }}
+          onSave={handleUpdateItem}
+          onCancel={() => setIsEdit(false)}
         />
       )}
     </Layout>
