@@ -1,7 +1,7 @@
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { AspectRatio, Icon, IconButton } from "@chakra-ui/react";
 import { MouseEventHandler } from "react";
-import { FiHome, FiMinus, FiPlus } from "react-icons/fi";
+import { FiHome, FiMinus, FiPlus, FiX } from "react-icons/fi";
 
 type AddRemoveButtonProps = {
   mode: number;
@@ -25,7 +25,7 @@ export default function AddRemoveButton({
       borderColor={"grey.200"}
       borderWidth={"1px"}
       //---display
-      as={mode == 1 ? FiPlus : FiMinus}
+      as={mode == 1 ? FiPlus : FiX}
       display={mode == 0 ? "none" : ""}
       boxSize={"10"}
       p="2.5"
