@@ -38,6 +38,7 @@ import { IoIosLock } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { FiEye, FiLock, FiUsers } from "react-icons/fi";
+import { getPerms } from "services/utils";
 
 type PageProps = {
   group: GroupProps;
@@ -46,16 +47,7 @@ type PageProps = {
 
 export default function GroupPage({ group, users }: PageProps) {
   const { data: session, status } = useSession();
-  const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations?.find(
-    (x) => x.userId == session?.user.id
-  );
-  const perm = isAdmin
-    ? 2
-    : Math.max(
-        group.minPerm,
-        userGroupRelation?.perm ? userGroupRelation.perm : -1
-      );
+  const { isAdmin, pagePerm } = getPerms(session?.user, group);
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -162,7 +154,7 @@ export default function GroupPage({ group, users }: PageProps) {
     if (res.status == 200) Router.reload();
   };
   return (
-    <Layout isAdmin={session?.user.isAdmin} group={group}>
+    <Layout isAdmin={isAdmin} group={group} loading={status === "loading"}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={isEdit ? newName : group.name}
@@ -191,9 +183,10 @@ export default function GroupPage({ group, users }: PageProps) {
             onClose={onCloseViewer}
             isOpen={isOpenViewer}
             onUpload={uploadImage}
+            canUpload={pagePerm >= 1} //PROTECTED
             imageStr={group.image}
           />
-          {perm >= 1 && (
+          {pagePerm >= 1 && ( //PROTECTED
             <IconButton
               ml={2}
               mr={2}
@@ -212,7 +205,7 @@ export default function GroupPage({ group, users }: PageProps) {
               }}
             />
           )}
-          {perm >= 1 && (
+          {pagePerm >= 1 && ( //PROTECTED
             <IconButton
               colorScheme="red"
               aria-label=""
@@ -285,7 +278,7 @@ export default function GroupPage({ group, users }: PageProps) {
             <UserGroupRelationWidget
               user={relation.user}
               perm={relation.perm}
-              isEdit={isEdit && perm >= 2}
+              isEdit={isEdit && pagePerm >= 2} //PROTECTED
               isInvert={false}
               handleRemove={() => {
                 setNewRelations(
@@ -321,7 +314,6 @@ export default function GroupPage({ group, users }: PageProps) {
             />
           ),
         }))}
-        isAdmin={isAdmin}
         isEdit={isEdit}
       />
     </Layout>
