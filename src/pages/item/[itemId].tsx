@@ -20,7 +20,7 @@ import {
 import { IoImageOutline } from "react-icons/io5";
 import { ItemProps } from "types/db";
 import { GetServerSideProps } from "next";
-import { StorageProps } from "components/Widget/StorageWidget";
+import { StorageProps } from "types/db";
 import ConfirmActionModal from "components/Main/ConfirmActionModal";
 import Router from "next/router";
 import Layout from "components/Layout/MainLayout";

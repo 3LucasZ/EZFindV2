@@ -10,3 +10,11 @@ export type ItemProps = {
   link: string;
   group: GroupProps;
 };
+export type StorageProps = {
+  id: number;
+  name: string;
+  description: string;
+  itemRelations: ItemStorageRelationProps[];
+  image: string;
+  group: GroupProps;
+};

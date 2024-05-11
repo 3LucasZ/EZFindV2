@@ -20,7 +20,7 @@ import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
 import { UserGroupRelationProps } from "./UserGroupRelationWidget";
 import { ItemProps } from "types/db";
-import { StorageProps } from "./StorageWidget";
+import { StorageProps } from "types/db";
 import { genGradient } from "services/gradientGenerator";
 
 export type GroupProps = {

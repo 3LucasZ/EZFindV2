@@ -1,4 +1,5 @@
-import StorageWidget, { StorageProps } from "components/Widget/StorageWidget";
+import StorageWidget from "components/Widget/StorageWidget";
+import { StorageProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import SearchView from "components/Main/SearchView";

@@ -1,16 +1,7 @@
 import { Box, Grid } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
-import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
-import { GroupProps } from "./GroupWidget";
+import { StorageProps } from "types/db";
 
-export type StorageProps = {
-  id: number;
-  name: string;
-  description: string;
-  itemRelations: ItemStorageRelationProps[];
-  image: string;
-  group: GroupProps;
-};
 type StorageWidgetProps = {
   storage: StorageProps;
 };
