@@ -1,4 +1,4 @@
-import ItemWidget from "components/Widget/ItemWidget";
+import ItemWidget from "components/Widget/SearchWidget";
 import { ItemProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
@@ -13,6 +13,7 @@ import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
 import { GroupProps } from "components/Widget/GroupWidget";
+import SearchWidget from "components/Widget/SearchWidget";
 
 type PageProps = {
   group: GroupProps;
@@ -33,7 +34,18 @@ export default function ManageItems({ group }: PageProps) {
       <SearchView
         setIn={group.items!.map((item) => ({
           name: item.name,
-          widget: <ItemWidget item={item} key={item.id} />,
+          widget: (
+            <SearchWidget
+              name={item.name}
+              description={item.description}
+              image={item.image}
+              url={`/item/${item.id}`}
+              count={item.storageRelations
+                .map((x) => x.count)
+                .reduce((sum, a) => sum + a, 0)}
+              key={item.id}
+            />
+          ),
         }))}
         onAdd={async () => {
           const body = {
