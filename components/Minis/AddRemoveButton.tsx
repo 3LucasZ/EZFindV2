@@ -5,10 +5,12 @@ import { FiHome, FiMinus, FiPlus, FiX } from "react-icons/fi";
 
 type AddRemoveButtonProps = {
   mode: number;
+  invisible?: boolean;
   handleAdd?: Function;
   handleRemove?: Function;
 };
 export default function AddRemoveButton({
+  invisible,
   mode,
   handleAdd,
   handleRemove,
@@ -27,6 +29,7 @@ export default function AddRemoveButton({
       //---display
       as={mode == 1 ? FiPlus : FiX}
       display={mode == 0 ? "none" : ""}
+      opacity={invisible ? 1 : 0}
       boxSize={"10"}
       p="2.5"
       //---misc
