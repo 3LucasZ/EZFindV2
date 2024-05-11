@@ -17,6 +17,7 @@ import SearchWidget from "components/Widget/ShortSearchWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
+import { getPerms } from "services/utils";
 
 type PageProps = {
   group: GroupProps;
@@ -24,27 +25,12 @@ type PageProps = {
 export default function ManageItems({ group }: PageProps) {
   //--copy paste on every page--
   const { data: session, status } = useSession();
-  const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations?.find(
-    (x) => x.userId == session?.user.id
-  );
-  const pagePerm = isAdmin
-    ? 2
-    : Math.max(
-        group.minPerm,
-        userGroupRelation?.perm ? userGroupRelation.perm : -1
-      );
+  const { isAdmin, pagePerm } = getPerms(session?.user, group);
   const toaster = useToast();
   //--ret
   return (
-    <Layout isAdmin={session?.user.isAdmin} group={group}>
+    <Layout isAdmin={isAdmin} group={group}>
       <Box minH="8px"></Box>
-      {/* <Center>
-        <Text fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}>
-          {group.name}: Items
-        </Text>
-      </Center> */}
-      {/* <Box minH="8px"></Box> */}
       <SearchView
         set={group.items!.map((item) => ({
           name: item.name,

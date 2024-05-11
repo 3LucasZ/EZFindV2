@@ -20,6 +20,7 @@ type PageProps = {
   isOpen: boolean;
   onUpload: (image: string) => Promise<void>;
   imageStr?: string;
+  canUpload: boolean;
 };
 export default function ImageModal(props: PageProps) {
   //state
@@ -77,6 +78,7 @@ export default function ImageModal(props: PageProps) {
             aria-hidden="true"
             accept="image/*"
             onChange={(e) => loadImage(e)}
+            hidden={!props.canUpload} //PROTECTED
           />
           <Box
             w="100%"
@@ -107,6 +109,7 @@ export default function ImageModal(props: PageProps) {
                 bottom="20%"
                 left="0"
                 right="0"
+                hidden={!props.canUpload} //PROTECTED
               >
                 Click to upload an image
               </Text>

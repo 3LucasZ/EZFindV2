@@ -29,6 +29,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { clone } from "services/clone";
+import { getPerms } from "services/utils";
 
 type PageProps = {
   storage: StorageProps;
@@ -39,16 +40,7 @@ type PageProps = {
 export default function StoragePage({ storage, items, group }: PageProps) {
   //--copy paste on every page--
   const { data: session, status } = useSession();
-  const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations?.find(
-    (x) => x.userId == session?.user.id
-  );
-  const pagePerm = isAdmin
-    ? 2
-    : Math.max(
-        group.minPerm,
-        userGroupRelation?.perm ? userGroupRelation.perm : -1
-      );
+  const { isAdmin, pagePerm } = getPerms(session?.user, group);
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -98,7 +90,6 @@ export default function StoragePage({ storage, items, group }: PageProps) {
       body = { image: newImage };
       res = await poster("/api/upload-image", body, toaster, false, true);
       const imageUrl = await res.json();
-      console.log("upload-image-client fileUrl:", imageUrl);
       if (res.status == 200) {
         //attach new image to item
         const body = { id: storage.id, image: imageUrl };
@@ -204,16 +195,18 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               onClose={onCloseViewer}
               isOpen={isOpenViewer}
               onUpload={uploadImage}
+              canUpload={pagePerm >= 1} //PROTECTED
               imageStr={storage.image}
             />
-
-            <IconButton
-              colorScheme="red"
-              aria-label=""
-              icon={<DeleteIcon />}
-              onClick={onOpenTrash}
-              hidden={pagePerm < 1}
-            />
+            {pagePerm >= 1 && (
+              <IconButton
+                colorScheme="red"
+                aria-label=""
+                icon={<DeleteIcon />}
+                onClick={onOpenTrash}
+                hidden={pagePerm < 1}
+              />
+            )}
 
             <ConfirmActionModal
               isOpen={isOpenTrash}

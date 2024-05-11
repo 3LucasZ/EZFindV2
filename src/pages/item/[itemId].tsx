@@ -29,6 +29,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { clone } from "services/clone";
+import { getPerms } from "services/utils";
 
 type PageProps = {
   item: ItemProps;
@@ -39,16 +40,7 @@ type PageProps = {
 export default function ItemPage({ item, storages, group }: PageProps) {
   //--copy paste on every page--
   const { data: session, status } = useSession();
-  const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations?.find(
-    (x) => x.userId == session?.user.id
-  );
-  const pagePerm = isAdmin
-    ? 2
-    : Math.max(
-        group.minPerm,
-        userGroupRelation?.perm ? userGroupRelation.perm : -1
-      );
+  const { isAdmin, pagePerm } = getPerms(session?.user, group);
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
@@ -131,7 +123,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   };
 
   return (
-    <Layout isAdmin={session?.user.isAdmin} group={group}>
+    <Layout isAdmin={isAdmin} group={group}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <EditableTitle
           value={isEdit ? newName : item.name}
@@ -169,16 +161,17 @@ export default function ItemPage({ item, storages, group }: PageProps) {
               onClose={onCloseViewer}
               isOpen={isOpenViewer}
               onUpload={uploadImage}
+              canUpload={pagePerm >= 1} //PROTECTED
               imageStr={item.image}
             />
-
-            <IconButton
-              colorScheme="red"
-              aria-label=""
-              icon={<DeleteIcon />}
-              onClick={onOpenTrash}
-              hidden={pagePerm < 1}
-            />
+            {pagePerm >= 1 && ( //PROTECTED
+              <IconButton
+                colorScheme="red"
+                aria-label=""
+                icon={<DeleteIcon />}
+                onClick={onOpenTrash}
+              />
+            )}
             <ConfirmActionModal
               isOpen={isOpenTrash}
               onClose={onCloseTrash}
