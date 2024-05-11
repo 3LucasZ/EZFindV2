@@ -1,4 +1,3 @@
-import { AddIcon, PhoneIcon } from "@chakra-ui/icons";
 import {
   Box,
   Center,
@@ -6,7 +5,6 @@ import {
   Divider,
   Flex,
   Icon,
-  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -14,7 +12,6 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
-import { debugMode } from "services/constants";
 
 import { FiSearch } from "react-icons/fi";
 
