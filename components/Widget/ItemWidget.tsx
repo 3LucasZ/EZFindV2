@@ -7,6 +7,7 @@ import {
   Text,
   AspectRatio,
   Stack,
+  Show,
 } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
 import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
@@ -49,18 +50,23 @@ export default function ItemWidget({ item }: ItemWidgetProps) {
           ></Image>
         </AspectRatio>
         <Stack direction="row" w="100%">
-          <Stack direction="row" w="100%">
+          <Stack
+            direction="row"
+            w="100%"
+            align={"center"} // vertically align name, description
+          >
             <Text
-              w="40%"
-              noOfLines={1}
-              wordBreak={"break-all"}
-              verticalAlign={"center"}
+              w={["100%", "40%"]}
+              noOfLines={1} //do not render more than one line
+              wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
             >
               {item.name}
             </Text>
-            <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
-              {item.description ? item.description : "No description."}
-            </Text>
+            <Show above="sm">
+              <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
+                {item.description ? item.description : "No description."}
+              </Text>
+            </Show>
           </Stack>
           <EditableCounter count={sum} isDisabled={true} />
         </Stack>
