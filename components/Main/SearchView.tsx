@@ -28,6 +28,7 @@ type SearchElementProps = {
   inverted?: boolean;
   widget: ReactNode;
 };
+
 export default function SearchView(props: SearchViewProps) {
   //sort the set
   const set = props.set.sort(function (a, b) {
@@ -45,11 +46,11 @@ export default function SearchView(props: SearchViewProps) {
   //state
   const [inverted, setInverted] = useState(false);
   const [query, setQuery] = useState("");
-  const [subset, setSubset] = useState(filtered(set, query, false));
+  const [subset, setSubset] = useState(filtered(set, query, inverted));
 
   // reactive
   useEffect(() => {
-    setSubset(filtered(set, query, false));
+    setSubset(filtered(set, query, inverted));
   }, [props.isEdit, props.set]);
 
   //functions
@@ -58,6 +59,8 @@ export default function SearchView(props: SearchViewProps) {
     query: string,
     inverted: boolean
   ) {
+    console.log("filter");
+    console.log("inverted", inverted);
     return set.filter((pair) => {
       return (
         ((inverted && pair.inverted) || (!inverted && !pair.inverted)) &&
@@ -72,8 +75,8 @@ export default function SearchView(props: SearchViewProps) {
     setSubset(filtered(set, e.target.value, inverted));
   };
 
-  console.log("subset", subset);
-  console.log("checked", inverted);
+  // console.log("subset", subset);
+  // console.log("checked", inverted);
 
   //ret
   return (
