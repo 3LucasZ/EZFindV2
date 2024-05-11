@@ -30,11 +30,11 @@ type SearchElementProps = {
 };
 
 export default function SearchView(props: SearchViewProps) {
-  //state
+  //--state--
   const [inverted, setInverted] = useState(false);
   const [query, setQuery] = useState("");
 
-  //sort the set by rank
+  //--sort the set by rank--
   const set = props.set.sort(function (a, b) {
     if (a.rank == undefined) a.rank = a.name;
     if (b.rank == undefined) b.rank = b.name;
@@ -48,20 +48,12 @@ export default function SearchView(props: SearchViewProps) {
   });
   const subset = filtered(set, query, inverted);
 
-  // const [subset, setSubset] = useState(filtered(set, query, inverted));
-  // // reactive
-  // useEffect(() => {
-  //   setSubset(filtered(set, query, inverted));
-  // }, [props.isEdit, props.set]);
-
-  //functions
+  //--functions--
   function filtered(
     set: SearchElementProps[],
     query: string,
     inverted: boolean
   ) {
-    console.log("filter");
-    console.log("inverted", inverted);
     return set.filter((pair) => {
       return (
         ((inverted && pair.inverted) || (!inverted && !pair.inverted)) &&
@@ -69,18 +61,13 @@ export default function SearchView(props: SearchViewProps) {
       );
     });
   }
-  console.log(subset);
 
-  //handlers
+  //--handlers--
   const handleSearchQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-    // setSubset(filtered(set, e.target.value, inverted));
   };
 
-  // console.log("subset", subset);
-  // console.log("checked", inverted);
-
-  //ret
+  //--ret--
   return (
     <>
       <Flex gap={"8px"} w={["95%", "90%", "80%", "70%"]} alignSelf={"center"}>
