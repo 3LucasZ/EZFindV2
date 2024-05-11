@@ -117,6 +117,7 @@ export default function SearchView(props: SearchViewProps) {
       <Divider></Divider>
       <Stack
         overflowY="auto"
+        sx={{ "::-webkit-scrollbar": { display: "none" } }} //remove annoying scrollbar
         flexDir={"column"}
         w={["95%", "90%", "80%", "70%"]}
         alignSelf={"center"}
