@@ -60,6 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           id: true,
           name: true,
           description: true,
+          image: true,
           storageRelations: {
             select: {
               count: true,
