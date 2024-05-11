@@ -16,6 +16,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ShortSearchWidget";
 import { FAB } from "components/Layout/FAB";
 import { FiPlus } from "react-icons/fi";
+import { AddIcon } from "@chakra-ui/icons";
 
 type PageProps = {
   group: GroupProps;
@@ -64,7 +65,7 @@ export default function ManageItems({ group }: PageProps) {
       />
       {pagePerm >= 1 && (
         <FAB
-          icon={FiPlus}
+          icon={AddIcon}
           onClick={async () => {
             const body = {
               groupId: group.id,
