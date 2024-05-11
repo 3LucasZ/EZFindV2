@@ -13,9 +13,10 @@ import { IconType } from "react-icons";
 
 type FABProps = {
   onClick: Function;
+  icon: IconType;
 };
 
-export const FAB = ({ onClick }: FABProps) => {
+export const FAB = ({ icon, onClick }: FABProps) => {
   return (
     <Button
       aria-label={""}
@@ -31,7 +32,7 @@ export const FAB = ({ onClick }: FABProps) => {
       _hover={{ bg: "teal.400" }}
       color="white"
     >
-      <AddIcon boxSize="6" />
+      <Icon as={icon} boxSize="10" p="0" m="0" strokeWidth={1.5} />
     </Button>
   );
 };

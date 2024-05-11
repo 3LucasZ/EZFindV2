@@ -15,14 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
 import { debugMode } from "services/constants";
-import { FAB } from "../Layout/FAB";
+
 import { FiSearch } from "react-icons/fi";
 
 type SearchViewProps = {
   prompt?: string;
   setIn: PairProps[];
   setOut?: PairProps[];
-  onAdd?: Function;
   isAdmin?: boolean | undefined;
   isEdit?: boolean;
   columns?: number | number[];
@@ -95,9 +94,6 @@ export default function SearchView(props: SearchViewProps) {
             onChange={handleSearchQueryChange}
           />
         </InputGroup>
-        {props.onAdd && props.isAdmin && (
-          <FAB onClick={() => props.onAdd && props.onAdd()} />
-        )}
         {props.setOut && (
           <Checkbox
             colorScheme="red"

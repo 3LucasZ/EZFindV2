@@ -20,6 +20,8 @@ import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
 import Router from "next/router";
+import { FAB } from "components/Layout/FAB";
+import { FiPlus } from "react-icons/fi";
 
 type PageProps = {
   groups: GroupProps[];
@@ -46,7 +48,13 @@ export default function Home({ groups }: PageProps) {
           name: group.name,
           widget: <GroupWidget group={group} key={group.id} />,
         }))}
-        onAdd={async () => {
+        isAdmin={isAdmin}
+        isEdit={false}
+        columns={[2, 3, 3, 4]}
+      />
+      <FAB
+        icon={FiPlus}
+        onClick={async () => {
           const body = JSON.stringify("");
           const res = await poster("/api/create-group", body, toaster);
           if (res.status == 200)
@@ -54,9 +62,6 @@ export default function Home({ groups }: PageProps) {
               pathname: "/group/" + (await res.json()) + "/explore",
             });
         }}
-        isAdmin={isAdmin}
-        isEdit={false}
-        columns={[2, 3, 3, 4]}
       />
     </Layout>
   );

@@ -14,14 +14,27 @@ import { poster } from "services/poster";
 import { Session } from "next-auth";
 import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ShortSearchWidget";
+import { FAB } from "components/Layout/FAB";
+import { FiPlus } from "react-icons/fi";
 
 type PageProps = {
   group: GroupProps;
 };
 export default function ManageItems({ group }: PageProps) {
-  const { data: session } = useSession();
+  //--copy paste on every page--
+  const { data: session, status } = useSession();
   const isAdmin = session?.user.isAdmin;
+  const userGroupRelation = group.userRelations?.find(
+    (x) => x.userId == session?.user.id
+  );
+  const pagePerm = isAdmin
+    ? 2
+    : Math.max(
+        group.minPerm,
+        userGroupRelation?.perm ? userGroupRelation.perm : -1
+      );
   const toaster = useToast();
+  //--ret
   return (
     <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Box minH="8px"></Box>
@@ -47,17 +60,22 @@ export default function ManageItems({ group }: PageProps) {
             />
           ),
         }))}
-        onAdd={async () => {
-          const body = {
-            groupId: group.id,
-          };
-          const res = await poster("/api/create-item", body, toaster);
-          if (res.status == 200)
-            await Router.push({ pathname: "/item/" + (await res.json()) });
-        }}
         isAdmin={session != null && session.user.isAdmin}
         isEdit={false}
       />
+      {pagePerm >= 1 && (
+        <FAB
+          icon={FiPlus}
+          onClick={async () => {
+            const body = {
+              groupId: group.id,
+            };
+            const res = await poster("/api/create-item", body, toaster);
+            if (res.status == 200)
+              await Router.push({ pathname: "/item/" + (await res.json()) });
+          }}
+        />
+      )}
     </Layout>
   );
 }

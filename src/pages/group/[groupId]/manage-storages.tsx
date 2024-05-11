@@ -13,6 +13,8 @@ import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ShortSearchWidget";
+import { FAB } from "components/Layout/FAB";
+import { FiPlus } from "react-icons/fi";
 
 type PageProps = {
   group: GroupProps;
@@ -45,7 +47,12 @@ export default function ManageStorages({ group }: PageProps) {
             />
           ),
         }))}
-        onAdd={async () => {
+        isAdmin={session?.user.isAdmin}
+        isEdit={false}
+      />
+      <FAB
+        icon={FiPlus}
+        onClick={async () => {
           const body = {
             groupId: group.id,
           };
@@ -53,8 +60,6 @@ export default function ManageStorages({ group }: PageProps) {
           if (res.status == 200)
             await Router.push({ pathname: "/storage/" + (await res.json()) });
         }}
-        isAdmin={session?.user.isAdmin}
-        isEdit={false}
       />
     </Layout>
   );
