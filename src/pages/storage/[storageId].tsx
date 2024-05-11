@@ -132,13 +132,13 @@ export default function StoragePage({ storage, items, group }: PageProps) {
   //widget generator
   function genWidget(
     relation: ItemStorageRelationProps,
-    invert: boolean,
+    inverted: boolean,
     isEdit: boolean
   ) {
     return {
       name: relation.item.name,
       rank: relation.item.name,
-      invert: invert,
+      inverted: inverted,
       widget: (
         <ShortSearchWidget
           name={relation.item.name}
@@ -146,7 +146,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
           image={relation.item.image}
           count={relation.count}
           url={`/item/${relation.item.id}`}
-          mode={isEdit ? (invert ? 1 : -1) : 0}
+          mode={isEdit ? (inverted ? 1 : -1) : 0}
           handleAdd={() => {
             const copy = [...newRelations];
             copy.push(relation);

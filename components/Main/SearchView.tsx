@@ -25,7 +25,7 @@ type SearchViewProps = {
 type SearchElementProps = {
   name: string; //search matching
   rank?: string; //custom sorting (not just based on name)
-  invert?: boolean;
+  inverted?: boolean;
   widget: ReactNode;
 };
 export default function SearchView(props: SearchViewProps) {
@@ -43,7 +43,7 @@ export default function SearchView(props: SearchViewProps) {
   });
 
   //state
-  const [checked, setChecked] = useState(false);
+  const [checked, setInverted] = useState(false);
   const [query, setQuery] = useState("");
   const [subset, setSubset] = useState(filtered(set, query, false));
 
@@ -60,7 +60,7 @@ export default function SearchView(props: SearchViewProps) {
   ) {
     return set.filter((pair) => {
       return (
-        ((inverted && pair.invert) || (!inverted && !pair.invert)) &&
+        ((inverted && pair.inverted) || (!inverted && !pair.inverted)) &&
         (query === "" || pair.name.toLowerCase().includes(query.toLowerCase()))
       );
     });
@@ -97,7 +97,7 @@ export default function SearchView(props: SearchViewProps) {
             colorScheme="red"
             isChecked={checked}
             onChange={(e) => {
-              setChecked(e.target.checked);
+              setInverted(e.target.checked);
               setSubset(filtered(set, query, e.target.checked));
             }}
           >
