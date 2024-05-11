@@ -240,14 +240,12 @@ export default function ItemPage({ item, storages, group }: PageProps) {
                   );
                 }}
                 handleNewCount={(e) => {
-                  const count = e.target.value;
-                  console.log(count);
                   const copy = newRelations.map((a) => ({ ...a }));
                   const tar = copy.find(
                     (t) => t.storageId == relation.storageId
                   );
                   if (tar != null) {
-                    tar.count = Number(count);
+                    tar.count = Number(e.target.value);
                     setNewRelations(copy);
                   }
                 }}

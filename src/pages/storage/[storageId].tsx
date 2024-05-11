@@ -149,11 +149,11 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               newRelations.filter((t) => t.itemId != relation.itemId)
             );
           }}
-          handleNewCount={(e: number) => {
+          handleNewCount={(e) => {
             const copy = newRelations.map((a) => ({ ...a }));
             const tar = copy.find((t) => t.itemId == relation.itemId);
             if (tar != null) {
-              tar.count = e;
+              tar.count = Number(e.target.value);
               setNewRelations(copy);
             }
           }}
