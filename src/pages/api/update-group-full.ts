@@ -1,5 +1,5 @@
 import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
-import { UserGroupRelationProps } from "components/Widget/UserGroupRelationWidget";
+import { UserGroupRelationProps } from "types/db";
 import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";

@@ -13,18 +13,9 @@ import { ItemProps } from "types/db";
 import { StorageProps } from "types/db";
 import Router from "next/router";
 import { UserProps } from "./UserWidget";
-import { GroupProps } from "./GroupWidget";
 import WidgetTitle from "components/Minis/WidgetTitle";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
 import { MouseEventHandler } from "react";
-
-export type UserGroupRelationProps = {
-  user: UserProps;
-  userId: string;
-  group: GroupProps;
-  groupId: number;
-  perm: number;
-};
 
 export type UserGroupRelationWidgetProps = {
   user: UserProps;

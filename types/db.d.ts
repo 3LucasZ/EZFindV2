@@ -1,5 +1,6 @@
 import { GroupProps } from "components/Widget/GroupWidget";
 import { ItemStorageRelationProps } from "components/Widget/ItemStorageRelationWidget";
+import { UserProps } from "components/Widget/UserWidget";
 
 export type ItemProps = {
   id: number;
@@ -17,4 +18,11 @@ export type StorageProps = {
   itemRelations: ItemStorageRelationProps[];
   image: string;
   group: GroupProps;
+};
+export type UserGroupRelationProps = {
+  user: UserProps;
+  userId: string;
+  group: GroupProps;
+  groupId: number;
+  perm: number;
 };

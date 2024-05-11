@@ -31,9 +31,8 @@ import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
 import { poster } from "services/poster";
 import ImageModal from "components/Main/ImageModal";
 import { GroupProps } from "components/Widget/GroupWidget";
-import UserGroupRelationWidget, {
-  UserGroupRelationProps,
-} from "components/Widget/UserGroupRelationWidget";
+import UserGroupRelationWidget from "components/Widget/UserGroupRelationWidget";
+import { UserGroupRelationProps } from "types/db";
 import RadioCard from "components/Main/RadioCard";
 import { IoIosLock } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";

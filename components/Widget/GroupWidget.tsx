@@ -18,7 +18,7 @@ import BaseWidget from "./BaseWidget";
 import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
 import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
-import { UserGroupRelationProps } from "./UserGroupRelationWidget";
+import { UserGroupRelationProps } from "types/db";
 import { ItemProps } from "types/db";
 import { StorageProps } from "types/db";
 import { genGradient } from "services/gradientGenerator";
