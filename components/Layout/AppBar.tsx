@@ -34,7 +34,7 @@ export default function AppBar() {
         <Divider />
         <HStack
           gap={0}
-          h={"calc(50px + env(safe-area-inset-bottom)/4)"}
+          h={"calc(50px + env(safe-area-inset-bottom))"}
           // ---rounded---
           // borderTopLeftRadius={"20"}
           // borderTopRightRadius={"20"}
