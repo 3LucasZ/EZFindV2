@@ -21,7 +21,8 @@ import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
 import Router from "next/router";
 import { FAB } from "components/Layout/FAB";
-import { FiPlus } from "react-icons/fi";
+import { FiEdit2, FiPlus } from "react-icons/fi";
+import { AddIcon } from "@chakra-ui/icons";
 
 type PageProps = {
   groups: GroupProps[];
@@ -52,7 +53,8 @@ export default function Home({ groups }: PageProps) {
         columns={[2, 3, 3, 4]}
       />
       <FAB
-        icon={FiPlus}
+        // name="Create"
+        icon={AddIcon}
         onClick={async () => {
           const body = JSON.stringify("");
           const res = await poster("/api/create-group", body, toaster);
