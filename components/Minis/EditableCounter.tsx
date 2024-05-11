@@ -13,16 +13,21 @@ export default function EditableCounter({
   ...props
 }: EditableCounterProps) {
   return (
-    <Box bg="orange.200" w="60px">
+    <Box
+      // bg="orange.200"
+      w="60px"
+    >
       <Input
         value={count}
         onChange={onChange}
         isDisabled={isDisabled}
         type="tel"
-        color="white"
-        h={8}
+        // color="white"
+        color="black"
+        // h={8}
         textAlign={"center"}
-        _disabled={{ color: "white", border: "none" }}
+        // _disabled={{ color: "white", border: "none" }}
+        _disabled={{ color: "black", border: "none" }}
         sx={{ opacity: "1" }}
         rounded="none"
         maxLength={5} //99999
