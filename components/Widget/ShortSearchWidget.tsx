@@ -17,6 +17,7 @@ import { genGradient } from "services/gradientGenerator";
 import { count } from "console";
 import EditableCounter from "components/Minis/EditableCounter";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
+import { ChangeEventHandler } from "react";
 
 type SearchWidgetProps = {
   //data
@@ -33,7 +34,7 @@ type SearchWidgetProps = {
   //functions
   handleAdd?: Function;
   handleRemove?: Function;
-  handleNewCount?: Function;
+  handleNewCount?: ChangeEventHandler<HTMLInputElement>;
 };
 
 export default function SearchWidget(props: SearchWidgetProps) {
@@ -70,7 +71,11 @@ export default function SearchWidget(props: SearchWidgetProps) {
           </Show>
         </HStack>
         {!props.inverted && (
-          <EditableCounter count={props.count} isDisabled={!props.isEdit} />
+          <EditableCounter
+            count={props.count}
+            isDisabled={!props.isEdit}
+            onChange={props.handleNewCount}
+          />
         )}
         <AddRemoveButton
           mode={props.inverted ? 1 : -1}

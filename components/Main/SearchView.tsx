@@ -25,7 +25,7 @@ type SearchViewProps = {
 type SearchElementProps = {
   name: string; //search matching
   rank?: string; //custom sorting (not just based on name)
-  inverted?: boolean;
+  inverted?: boolean; //whether to show or not during invert
   widget: ReactNode;
 };
 

@@ -51,15 +51,15 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);
-  //new state
+  //--new state--
   const [newName, setNewName] = useState(item.name);
   const [newDescription, setNewDescription] = useState(item.description);
   const [newRelations, setNewRelations] = useState(item.storageRelations);
   const [newLink, setNewLink] = useState(item.link);
-  //track widgets
+  //--in and out relations--
   const inRelations = isEdit ? newRelations : item.storageRelations;
   const inIds = inRelations.map((relation) => relation.storageId);
-  const outRelations: ItemStorageRelationProps[] = storages
+  const outRelations = storages
     .filter((storage) => !inIds.includes(storage.id))
     .map((storage) => {
       return {
@@ -71,13 +71,13 @@ export default function ItemPage({ item, storages, group }: PageProps) {
         inverted: true,
       };
     });
-  //handle link modal
+  //--handle link modal--
   const {
     isOpen: isOpenLink,
     onOpen: onOpenLink,
     onClose: onCloseLink,
   } = useDisclosure();
-  // handle delete modal
+  //--handle delete modal--
   const {
     isOpen: isOpenTrash,
     onOpen: onOpenTrash,
@@ -88,13 +88,13 @@ export default function ItemPage({ item, storages, group }: PageProps) {
     const res = await poster("/api/delete-item", body, toaster);
     if (res.status == 200) await Router.push({ pathname: "/manage-items" });
   };
-  // handle view modal
+  //--handle view modal--
   const {
     isOpen: isOpenViewer,
     onOpen: onOpenViewer,
     onClose: onCloseViewer,
   } = useDisclosure();
-  //handle upload image
+  //--handle upload image--
   const uploadImage = async (newImage: string) => {
     //delete old image
     var body, res;
@@ -116,7 +116,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
       }
     }
   };
-  // handle update item
+  //--handle update item--
   const handleUpdateItem = async () => {
     const body = {
       id: item.id,
@@ -239,13 +239,15 @@ export default function ItemPage({ item, storages, group }: PageProps) {
                     )
                   );
                 }}
-                handleNewCount={(e: number) => {
+                handleNewCount={(e) => {
+                  const count = e.target.value;
+                  console.log(count);
                   const copy = newRelations.map((a) => ({ ...a }));
                   const tar = copy.find(
                     (t) => t.storageId == relation.storageId
                   );
                   if (tar != null) {
-                    tar.count = e;
+                    tar.count = Number(count);
                     setNewRelations(copy);
                   }
                 }}
