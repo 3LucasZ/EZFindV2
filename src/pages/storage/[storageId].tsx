@@ -36,6 +36,8 @@ import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
+import { FAB } from "components/Layout/FAB";
+import { FiCheck, FiEdit2 } from "react-icons/fi";
 
 type PageProps = {
   storage: StorageProps;
@@ -207,10 +209,8 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               imageStr={storage.image}
             />
             {session?.user.isAdmin && (
-              <IconButton
-                colorScheme="teal"
-                aria-label=""
-                icon={isEdit ? <CheckIcon /> : <EditIcon />}
+              <FAB
+                icon={isEdit ? FiCheck : FiEdit2}
                 onClick={async () => {
                   if (isEdit) {
                     handleUpdateStorage();
