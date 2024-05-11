@@ -29,11 +29,11 @@ type PageProps = {
 };
 
 export default function Home({ groups }: PageProps) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const isAdmin = session?.user.isAdmin;
   const toaster = useToast();
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
       <Box px={[2, "5vw", "10vw", "15vw"]}>
         <Heading py="1" textAlign={"center"}>
           Welcome!
@@ -63,6 +63,7 @@ export default function Home({ groups }: PageProps) {
               pathname: "/group/" + (await res.json()) + "/explore",
             });
         }}
+        hidden={perm}
       />
     </Layout>
   );

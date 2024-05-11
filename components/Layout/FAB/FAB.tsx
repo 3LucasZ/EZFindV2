@@ -23,6 +23,7 @@ type FABProps = {
   bg?: string;
   hoverBg?: string;
   bottomOffset?: number;
+  hidden?: boolean;
 };
 
 export const FAB = ({
@@ -32,6 +33,7 @@ export const FAB = ({
   bg,
   hoverBg,
   bottomOffset,
+  hidden,
 }: FABProps) => {
   !bottomOffset && (bottomOffset = 0);
   return (
@@ -56,6 +58,7 @@ export const FAB = ({
       onClick={(e) => onClick()}
       zIndex={100}
       transition={"bottom 0.3s"}
+      hidden={hidden}
     >
       <Icon as={icon} boxSize="6" p="0" m="0" w="100%" />
       <Text fontSize={"2xl"} hidden={name ? false : true}>

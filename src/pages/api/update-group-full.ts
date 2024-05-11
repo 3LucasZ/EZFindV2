@@ -3,7 +3,7 @@ import { UserGroupRelationProps } from "types/db";
 import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
-import { TypedRequestBody } from "services/types";
+import { TypedRequestBody } from "types/types";
 
 export default async function handle(
   req: TypedRequestBody<{
