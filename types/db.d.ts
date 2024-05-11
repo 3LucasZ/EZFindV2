@@ -32,5 +32,5 @@ export type ItemStorageRelationProps = {
   storage: StorageProps;
   storageId: number;
   count: number;
-  inverted?: boolean;
+  inverted?: boolean = false;
 };
