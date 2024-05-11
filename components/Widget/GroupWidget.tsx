@@ -19,7 +19,7 @@ import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
 import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
 import { UserGroupRelationProps } from "./UserGroupRelationWidget";
-import { ItemProps } from "./ItemWidget";
+import { ItemProps } from "types/db";
 import { StorageProps } from "./StorageWidget";
 import { genGradient } from "services/gradientGenerator";
 

@@ -14,7 +14,7 @@ import {
   Icon,
 } from "@chakra-ui/icons";
 import { IoImageOutline } from "react-icons/io5";
-import { ItemProps } from "components/Widget/ItemWidget";
+import { ItemProps } from "types/db";
 import { GetServerSideProps } from "next";
 import { StorageProps } from "components/Widget/StorageWidget";
 import ConfirmActionModal from "components/Main/ConfirmActionModal";

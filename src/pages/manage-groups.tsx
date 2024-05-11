@@ -1,4 +1,5 @@
-import ItemWidget, { ItemProps } from "components/Widget/ItemWidget";
+import ItemWidget from "components/Widget/ItemWidget";
+import { ItemProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { GetServerSideProps } from "next";

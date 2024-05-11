@@ -9,7 +9,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
-import { ItemProps } from "./ItemWidget";
+import { ItemProps } from "types/db";
 import { StorageProps } from "./StorageWidget";
 import Router from "next/router";
 import { UserProps } from "./UserWidget";

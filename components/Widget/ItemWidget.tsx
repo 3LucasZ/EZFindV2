@@ -10,22 +10,12 @@ import {
   Show,
 } from "@chakra-ui/react";
 import BaseWidget from "./BaseWidget";
-import { ItemStorageRelationProps } from "./ItemStorageRelationWidget";
-import { GroupProps } from "./GroupWidget";
 import Router from "next/router";
 import { genGradient } from "services/gradientGenerator";
 import { count } from "console";
 import EditableCounter from "components/Minis/EditableCounter";
+import { ItemProps } from "types/db";
 
-export type ItemProps = {
-  id: number;
-  name: string;
-  description: string;
-  storageRelations: ItemStorageRelationProps[];
-  image: string;
-  link: string;
-  group: GroupProps;
-};
 type ItemWidgetProps = {
   item: ItemProps;
 };
