@@ -1,0 +1,127 @@
+import {
+  Box,
+  Grid,
+  HStack,
+  Image,
+  VStack,
+  Text,
+  AspectRatio,
+  Stack,
+  Show,
+  Select,
+} from "@chakra-ui/react";
+
+import { ItemStorageRelationProps } from "types/db";
+import { GroupProps } from "./GroupWidget";
+import Router from "next/router";
+import { genGradient } from "services/gradientGenerator";
+import { count } from "console";
+import EditableCounter from "components/Minis/EditableCounter";
+import AddRemoveButton from "components/Minis/AddRemoveButton";
+import { ChangeEventHandler } from "react";
+
+type UserWidget = {
+  //data
+  name: string;
+  email: string;
+  image: string;
+  perm: number;
+  url: string;
+
+  //state
+  inverted?: boolean;
+  isEdit?: boolean;
+
+  //functions
+  handleAdd?: Function;
+  handleRemove?: Function;
+  handleNewPerm?: Function;
+};
+
+export default function UserWidget(props: UserWidget) {
+  return (
+    <Box
+      overflow={"hidden"}
+      rounded="md"
+      boxShadow={"md"}
+      mx={1} //so we can see the side shadows
+      onClick={() => Router.push(props.url)}
+      pr="2"
+      _hover={{ bg: "gray.100" }}
+      minH="60px"
+    >
+      <HStack>
+        <AspectRatio minW="60px" ratio={1} bgGradient={genGradient(props.name)}>
+          <Image
+            src={props.image} //pfp stored on google servers, will NOT use our API
+            hidden={props.image.length < 5}
+          ></Image>
+        </AspectRatio>
+        <HStack w="100%">
+          <Text
+            w={["100%", "40%"]}
+            noOfLines={1} //do not render more than one line
+            wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
+          >
+            {props.name}
+          </Text>
+          <Show above="sm">
+            <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
+              {props.email}
+            </Text>
+          </Show>
+        </HStack>
+        {!props.inverted && (
+          <Select
+            rounded={"none"}
+            // bg="gray.300"
+            bg={
+              props.perm == 0
+                ? "purple.200"
+                : props.perm == 1
+                ? "purple.500"
+                : "purple.800"
+            }
+            color="white"
+            size={"sm"}
+            onChange={(e) => {
+              const num = parseInt(e.target.value);
+              props.handleNewPerm!(
+                Number.isNaN(num) ? 0 : parseInt(e.target.value)
+              );
+            }}
+            value={props.perm}
+            pointerEvents={props.isEdit ? "auto" : "none"}
+            iconSize={props.isEdit ? "md" : "0"}
+            display={props.inverted ? "none" : ""}
+          >
+            <option value="0">Viewer</option>
+            <option value="1">Editor</option>
+            <option value="2">Manager</option>
+          </Select>
+        )}
+        <AddRemoveButton
+          mode={props.inverted ? 1 : -1}
+          invisible={!props.isEdit}
+          handleAdd={props.handleAdd!}
+          handleRemove={props.handleRemove!}
+        />
+      </HStack>
+    </Box>
+  );
+}
+/*
+  <BaseWidget
+          href={"/item/" + item.id}
+          title={item.name}
+          bg={"cyan.400"}
+          bgHover={"cyan.500"}
+          colSpan={6}
+        />
+        <BaseWidget
+          title={item.description}
+          bg={"cyan.300"}
+          colSpan={6}
+          cnt={sum ? sum : -1}
+        />
+        */
