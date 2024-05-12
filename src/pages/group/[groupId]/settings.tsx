@@ -8,6 +8,7 @@ import {
   HStack,
   useRadioGroup,
   Box,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -39,6 +40,8 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { FiEye, FiLock, FiUsers } from "react-icons/fi";
 import { getPerms } from "services/utils";
+import { cloneUserGroupRelationProps } from "services/clone";
+import { EditFAB } from "components/Layout/FAB/EditFAB";
 
 type PageProps = {
   group: GroupProps;
@@ -57,11 +60,11 @@ export default function GroupPage({ group, users }: PageProps) {
   //--new state--
   const [newName, setNewName] = useState(group.name);
   const [newDescription, setNewDescription] = useState(group.description);
-  const [newUserRelations, setNewRelations] = useState(group.userRelations);
+  const [newRelations, setNewRelations] = useState(group.userRelations);
   const [newMinPerm, setNewMinPerm] = useState("" + group.minPerm);
 
   //--relations--
-  const inRelations = isEdit ? newUserRelations : group.userRelations;
+  const inRelations = isEdit ? newRelations : group.userRelations;
   const inIds = inRelations?.map((relation) => relation.userId);
   const outRelations: UserGroupRelationProps[] = users
     .filter((user) => !inIds?.includes(user.id))
@@ -72,6 +75,7 @@ export default function GroupPage({ group, users }: PageProps) {
         group: group,
         groupId: group.id,
         perm: 0, //new users added to a group auto start at perm: 0
+        inverted: true,
       };
     });
 
@@ -122,7 +126,8 @@ export default function GroupPage({ group, users }: PageProps) {
     name: "framework",
     value: isEdit ? newMinPerm : "" + group.minPerm,
     onChange: (e) => {
-      if (isEdit) {
+      //PROTECTED
+      if (isEdit && pagePerm >= 2) {
         setNewMinPerm(e);
       }
     },
@@ -155,13 +160,12 @@ export default function GroupPage({ group, users }: PageProps) {
       id: group.id,
       newName,
       newDescription,
-      newUserRelations,
+      newUserRelations: newRelations,
       newMinPerm,
     };
     const res = await poster("/api/update-group-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
-
   //--ret--
   return (
     <Layout isAdmin={isAdmin} group={group} loading={status === "loading"}>
@@ -180,61 +184,39 @@ export default function GroupPage({ group, users }: PageProps) {
         />
 
         <Center>
-          <IconButton
-            ml="2"
-            colorScheme="blue"
-            aria-label=""
-            icon={<Icon as={IoImageOutline} boxSize={5} />}
-            onClick={() => {
-              onOpenViewer();
-            }}
-          />
-          <ImageModal
-            onClose={onCloseViewer}
-            isOpen={isOpenViewer}
-            onUpload={uploadImage}
-            canUpload={pagePerm >= 1} //PROTECTED
-            imageStr={group.image}
-          />
-          {pagePerm >= 1 && ( //PROTECTED
+          <ButtonGroup spacing="2" pl="2" isAttached>
             <IconButton
-              ml={2}
-              mr={2}
-              colorScheme="teal"
+              ml="2"
+              colorScheme="blue"
               aria-label=""
-              icon={isEdit ? <CheckIcon /> : <EditIcon />}
-              onClick={async () => {
-                if (isEdit) {
-                  handleUpdateGroup();
-                } else {
-                  setNewName(group.name);
-                  setNewDescription(group.description);
-                  setNewMinPerm("" + group.minPerm);
-                  setIsEdit(true);
-                }
-              }}
-            />
-          )}
-          {pagePerm >= 1 && ( //PROTECTED
-            <IconButton
-              colorScheme="red"
-              aria-label=""
-              icon={isEdit ? <CloseIcon /> : <DeleteIcon />}
+              icon={<Icon as={IoImageOutline} boxSize={5} />}
               onClick={() => {
-                if (isEdit) {
-                  setIsEdit(false);
-                } else {
-                  onOpenTrash();
-                }
+                onOpenViewer();
               }}
             />
-          )}
-          <ConfirmActionModal
-            isOpen={isOpenTrash}
-            onClose={onCloseTrash}
-            actionStr={"delete the group: " + group.name}
-            protectedAction={handleDelete}
-          />
+            <ImageModal
+              onClose={onCloseViewer}
+              isOpen={isOpenViewer}
+              onUpload={uploadImage}
+              canUpload={pagePerm >= 1} //PROTECTED
+              imageStr={group.image}
+            />
+
+            {pagePerm >= 2 && ( //PROTECTED
+              <IconButton
+                colorScheme="red"
+                aria-label=""
+                icon={<DeleteIcon />}
+                onClick={onOpenTrash}
+              />
+            )}
+            <ConfirmActionModal
+              isOpen={isOpenTrash}
+              onClose={onCloseTrash}
+              actionStr={"delete the group: " + group.name}
+              protectedAction={handleDelete}
+            />
+          </ButtonGroup>
         </Center>
       </Flex>
       <Box h="2px"></Box>
@@ -277,30 +259,35 @@ export default function GroupPage({ group, users }: PageProps) {
               name={option.name}
               description={option.desc}
               icon={option.icon}
-              disabled={!isEdit}
+              disabled={!(isEdit && pagePerm >= 2)}
             />
           );
         })}
       </HStack>
       <Box h="8px"></Box>
       <SearchView
-        set={inRelations!.map((relation) => ({
+        set={[...inRelations!, ...outRelations].map((relation) => ({
           name: relation.user.name,
           rank: 3 - relation.perm + relation.user.name,
+          inverted: relation.inverted,
           widget: (
             <UserGroupRelationWidget
               user={relation.user}
               perm={relation.perm}
               isEdit={isEdit && pagePerm >= 2} //PROTECTED
-              isInvert={false}
+              isInvert={relation.inverted!}
+              handleAdd={() => {
+                const relationCpy = cloneUserGroupRelationProps(relation);
+                relationCpy.inverted = false;
+                setNewRelations([...newRelations!, relationCpy]);
+              }}
               handleRemove={() => {
                 setNewRelations(
-                  newUserRelations?.filter((t) => t.userId != relation.userId)
+                  newRelations?.filter((t) => t.userId != relation.userId)
                 );
               }}
               handleUpdate={(newPerm: number) => {
-                const copy = newUserRelations?.map((x) => ({ ...x }));
-                console.log(copy);
+                const copy = newRelations?.map((x) => ({ ...x }));
                 const tar = copy?.find((x) => x.user.id == relation?.user.id);
                 if (tar != null) {
                   tar.perm = newPerm;
@@ -310,25 +297,23 @@ export default function GroupPage({ group, users }: PageProps) {
             />
           ),
         }))}
-        setOut={outRelations.map((relation) => ({
-          name: relation.user.name,
-          rank: 3 - relation.perm + relation.user.name,
-          widget: (
-            <UserGroupRelationWidget
-              user={relation.user}
-              perm={relation.perm}
-              isEdit={isEdit && pagePerm >= 2}
-              isInvert={true}
-              handleAdd={() => {
-                const copy = [...newUserRelations!];
-                copy.push(relation);
-                setNewRelations(copy);
-              }}
-            />
-          ),
-        }))}
+        invertible={true}
         isEdit={isEdit}
       />
+      {pagePerm >= 1 && ( //PROTECTED
+        <EditFAB
+          isEdit={isEdit}
+          onEdit={() => {
+            setNewName(group.name);
+            setNewDescription(group.description);
+            setNewMinPerm("" + group.minPerm);
+            setNewRelations(group.userRelations);
+            setIsEdit(true);
+          }}
+          onCancel={() => setIsEdit(false)}
+          onSave={handleUpdateGroup}
+        />
+      )}
     </Layout>
   );
 }

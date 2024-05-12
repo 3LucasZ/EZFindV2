@@ -25,6 +25,7 @@ export type UserGroupRelationProps = {
   group: GroupProps;
   groupId: number;
   perm: number;
+  inverted?: boolean = false;
 };
 export type ItemStorageRelationProps = {
   item: ItemProps;

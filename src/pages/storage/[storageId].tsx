@@ -28,7 +28,7 @@ import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ShortSearchWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
-import { clone } from "services/clone";
+import { cloneItemStorageRelationProps } from "services/clone";
 import { getPerms } from "services/utils";
 
 type PageProps = {
@@ -132,7 +132,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
           inverted={inverted}
           isEdit={isEdit}
           handleAdd={() => {
-            const relationCpy = clone(relation);
+            const relationCpy = cloneItemStorageRelationProps(relation);
             relationCpy.inverted = false;
             const copy = [...newRelations];
             copy.push(relationCpy);
