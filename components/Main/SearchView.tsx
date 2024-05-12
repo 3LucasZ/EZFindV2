@@ -18,7 +18,6 @@ import { FiSearch } from "react-icons/fi";
 type SearchViewProps = {
   prompt?: string;
   set: SearchElementProps[];
-  isEdit?: boolean;
   invertible?: boolean;
   columns?: number | number[];
 };
