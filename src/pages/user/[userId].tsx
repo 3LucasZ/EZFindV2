@@ -28,12 +28,12 @@ import { useState } from "react";
 import RelationWidget from "components/Widget/ItemStorageRelationWidget";
 import { ItemStorageRelationProps } from "types/db";
 import React from "react";
-import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
+import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { poster } from "services/poster";
 import Header from "components/Layout/Header";
 import ImageModal from "components/Main/ImageModal";
-import EditableTitle from "components/Minis/EditableTitle";
-import EditableSubtitle from "components/Minis/EditableSubtitle";
+import EditableTitle from "components/Composable/EditableTitle";
+import EditableSubtitle from "components/Composable/EditableSubtitle";
 
 type PageProps = {
   user: UserProps;

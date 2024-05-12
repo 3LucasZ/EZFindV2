@@ -28,7 +28,7 @@ import prisma from "services/prisma";
 import { UserProps } from "types/db";
 import { useState } from "react";
 import React from "react";
-import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
+import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { poster } from "services/poster";
 import ImageModal from "components/Main/ImageModal";
 import { GroupProps } from "components/Widget/GroupWidget";

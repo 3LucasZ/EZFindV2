@@ -15,8 +15,8 @@ import { GroupProps } from "./GroupWidget";
 import Router from "next/router";
 import { genGradient } from "services/gradientGenerator";
 import { count } from "console";
-import EditableCounter from "components/Minis/EditableCounter";
-import AddRemoveButton from "components/Minis/AddRemoveButton";
+import EditableCounter from "components/Composable/EditableCounter";
+import AddRemoveButton from "components/Composable/AddRemoveButton";
 import { ChangeEventHandler } from "react";
 
 type SearchWidgetProps = {

@@ -12,8 +12,8 @@ import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
 import { ItemProps, UserProps } from "types/db";
 import { StorageProps } from "types/db";
 import Router from "next/router";
-import WidgetTitle from "components/Minis/WidgetTitle";
-import AddRemoveButton from "components/Minis/AddRemoveButton";
+import WidgetTitle from "archive/old_WidgetTitle";
+import AddRemoveButton from "components/Composable/AddRemoveButton";
 import { MouseEventHandler } from "react";
 
 export type UserGroupRelationWidgetProps = {

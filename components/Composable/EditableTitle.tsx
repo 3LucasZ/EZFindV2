@@ -1,4 +1,4 @@
-import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
+import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { responsiveHeaderFontSize } from "services/constants";
 
 //value, onchanged, disabled

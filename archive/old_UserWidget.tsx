@@ -11,7 +11,7 @@ import Router from "next/router";
 import ConfirmActionModal from "../components/Main/ConfirmActionModal";
 import { debugMode } from "services/constants";
 import { poster } from "services/poster";
-import AddRemoveButton from "components/Minis/AddRemoveButton";
+import AddRemoveButton from "components/Composable/AddRemoveButton";
 import { UserProps } from "types/db";
 
 type UserWidgetProps = {

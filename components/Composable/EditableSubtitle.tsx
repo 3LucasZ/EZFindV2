@@ -1,4 +1,4 @@
-import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
+import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 
 //value, onChange, isDisabled, placeholder
 export default function EditableSubtitle({ ...props }) {
