@@ -1,6 +1,7 @@
 import { GroupProps } from "components/Widget/GroupWidget";
 import { UserProps } from "components/Widget/UserWidget";
 import { ItemProps, StorageProps } from "./db";
+import { MouseEventHandler } from "react";
 
 export type ItemProps = {
   id: number;
@@ -34,4 +35,13 @@ export type ItemStorageRelationProps = {
   storageId: number;
   count: number;
   inverted?: boolean = false;
+};
+export type UserGroupRelationWidgetProps = {
+  user: UserProps;
+  perm: number;
+  isInvert: boolean;
+  isEdit: boolean;
+  handleRemove?: MouseEventHandler<HTMLButtonElement>;
+  handleAdd?: MouseEventHandler<HTMLButtonElement>;
+  handleUpdate?: Function;
 };
