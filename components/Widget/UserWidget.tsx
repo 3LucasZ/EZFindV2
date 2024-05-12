@@ -93,7 +93,7 @@ export default function UserWidget(props: UserWidgetProps) {
               {props.email}
             </Text>
           </Stack>
-          {!props.inverted && (
+          {!props.inverted && props.perm && (
             <Select
               //--looks--
               rounded={"lg"}
