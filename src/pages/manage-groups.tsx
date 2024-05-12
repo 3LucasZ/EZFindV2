@@ -7,7 +7,7 @@ import { getSession, useSession } from "next-auth/react";
 import { UserProps } from "types/db";
 import Router from "next/router";
 import { errorToast } from "services/toasty";
-import { Box, useToast } from "@chakra-ui/react";
+import { Box, Center, Heading, useToast, Text } from "@chakra-ui/react";
 import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
@@ -24,6 +24,9 @@ export default function ManageGroups({ groups }: PageProps) {
   const toaster = useToast();
   return (
     <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
+      <Center>
+        <Text fontSize={"4xl"}>Groups</Text>
+      </Center>
       <Box minH="8px"></Box>
       <SearchView
         set={groups.map((group) => ({
