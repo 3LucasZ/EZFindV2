@@ -1,4 +1,4 @@
-import ItemWidget from "components/Widget/ShortSearchWidget";
+import ItemWidget from "components/Widget/ItemStorageWidget";
 import { ItemProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
@@ -13,7 +13,7 @@ import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
 import { GroupProps } from "components/Widget/GroupWidget";
-import SearchWidget from "components/Widget/ShortSearchWidget";
+import SearchWidget from "components/Widget/ItemStorageWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";

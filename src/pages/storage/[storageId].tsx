@@ -26,7 +26,7 @@ import ImageModal from "components/Main/ImageModal";
 import EditableTitle from "components/Minis/EditableTitle";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { GroupProps } from "components/Widget/GroupWidget";
-import ShortSearchWidget from "components/Widget/ShortSearchWidget";
+import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";
 import { getPerms } from "services/utils";
