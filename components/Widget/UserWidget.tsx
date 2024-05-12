@@ -27,7 +27,7 @@ type UserWidgetProps = {
   name: string;
   email: string;
   image: string;
-  perm: number;
+  perm?: number;
   isAdmin: boolean;
 
   //state
@@ -35,6 +35,7 @@ type UserWidgetProps = {
   isEdit?: boolean;
 
   //functions
+  askConfirmation?: boolean;
   handleAdd?: Function;
   handleRemove?: Function;
   handleNewPerm?: Function;
@@ -123,6 +124,13 @@ export default function UserWidget(props: UserWidgetProps) {
             invisible={!props.isEdit}
             handleAdd={props.handleAdd!}
             handleRemove={props.handleRemove!}
+            askConfirmation={props.askConfirmation}
+            actionStr={
+              (!props.inverted
+                ? "revoke admin priveleges from "
+                : "grant admin priveleges to ") +
+              `${props.name} (${props.email})`
+            }
           />
         </HStack>
       </Box>

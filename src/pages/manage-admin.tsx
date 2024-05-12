@@ -6,6 +6,7 @@ import {
   Input,
   useToast,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import Admin from "archive/old_UserWidget";
 import { UserProps } from "types/db";
@@ -20,80 +21,78 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 import Header from "components/Layout/Header";
 import { poster } from "services/poster";
-import UserWidget from "archive/old_UserWidget";
-import { responsivePx } from "services/constants";
+
+import { responsiveHeaderFontSize, responsivePx } from "services/constants";
+import UserWidget from "components/Widget/UserWidget";
 
 type PageProps = {
   users: UserProps[];
 };
 export default function ManageAdmin({ users }: PageProps) {
+  //---template---
   const { data: session } = useSession();
-
+  const isAdmin = session?.user.isAdmin;
   const toaster = useToast();
-
+  //---protect-action-modal---
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout isAdmin={isAdmin}>
       <Box minH="8px"></Box>
       <Flex px={responsivePx} textAlign={"center"} w="100%" flexDir="column">
-        <Heading w="100%">Admins</Heading>
-        <Text>
-          Admins can perform any operation on the app. Only give admin
-          priveleges to trusted individuals. You can only see registered users.
+        <Text w="100%" fontSize={responsiveHeaderFontSize}>
+          Admins
+        </Text>
+        <Text color="grey" textAlign={"start"}>
+          Admins can perform any operation on the app. Be cautious to only give
+          admin priveleges to trusted individuals. You can only grant admin
+          access to pre-registered users.
         </Text>
       </Flex>
       <Box minH={"8px"} />
       {session?.user.isAdmin && (
         <SearchView
-          set={users
-            .filter((user) => user.isAdmin)
-            .map((user) => ({
-              name: user.email,
-              widget: (
-                <UserWidget
-                  user={user}
-                  key={user.id}
-                  mode={-1}
-                  handleRemove={async () => {
-                    const body = { email: user.email, isAdmin: false };
-                    const res = await poster(
-                      "/api/update-user-admin",
-                      body,
-                      toaster
-                    );
-                    if (res.status == 200) {
-                      Router.reload();
-                    }
-                  }}
-                  confirmModal={true}
-                />
-              ),
-            }))}
-          setOut={users
-            .filter((user) => !user.isAdmin)
-            .map((user) => ({
-              name: user.email,
-              widget: (
-                <UserWidget
-                  user={user}
-                  key={user.id}
-                  mode={1}
-                  handleAdd={async () => {
-                    const body = { email: user.email, isAdmin: true };
-                    const res = await poster(
-                      "/api/update-user-admin",
-                      body,
-                      toaster
-                    );
-                    if (res.status == 200) {
-                      Router.reload();
-                    }
-                  }}
-                  confirmModal={true}
-                />
-              ),
-            }))}
-          isAdmin={session.user.isAdmin}
-          isEdit={false}
+          set={users.map((user) => ({
+            name: user.email,
+            inverted: !user.isAdmin,
+            widget: (
+              <UserWidget
+                //data
+                name={user.name}
+                email={user.email}
+                image={user.image}
+                isAdmin={user.isAdmin}
+                key={user.id}
+                //state
+                inverted={!user.isAdmin}
+                isEdit={true}
+                //functions
+                askConfirmation={true}
+                handleAdd={async () => {
+                  const body = { email: user.email, isAdmin: true };
+                  const res = await poster(
+                    "/api/update-user-admin",
+                    body,
+                    toaster
+                  );
+                  if (res.status == 200) {
+                    Router.reload();
+                  }
+                }}
+                handleRemove={async () => {
+                  const body = { email: user.email, isAdmin: false };
+                  const res = await poster(
+                    "/api/update-user-admin",
+                    body,
+                    toaster
+                  );
+                  if (res.status == 200) {
+                    Router.reload();
+                  }
+                }}
+              />
+            ),
+          }))}
+          invertible={true}
         />
       )}
     </Layout>
