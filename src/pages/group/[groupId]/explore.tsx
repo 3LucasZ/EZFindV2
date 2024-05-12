@@ -27,6 +27,7 @@ import Carousel from "components/Main/Carousel";
 import EditableSubtitle from "components/Minis/EditableSubtitle";
 import { CustomStat } from "components/Main/CustomStat";
 import { FiCompass, FiPackage, FiTool, FiUsers } from "react-icons/fi";
+import { responsivePx } from "services/constants";
 
 type PageProps = {
   group: GroupProps;
@@ -54,7 +55,7 @@ export default function GroupPage({ group, users }: PageProps) {
       group={group}
     >
       <Box overflow={"auto"}>
-        <Flex px={[2, "5vw", "10vw", "15vw"]} flexDir="column">
+        <Flex px={responsivePx} flexDir="column">
           <EditableTitle value={group.name} isDisabled={true} />
           <EditableSubtitle
             value={group.description ? group.description : "No description."}
@@ -64,7 +65,7 @@ export default function GroupPage({ group, users }: PageProps) {
         <SimpleGrid
           columns={3}
           gap={[2, 4, 6]}
-          px={[2, "5vw", "10vw", "15vw"]}
+          px={responsivePx}
           py={[4, 6, 8]}
         >
           <CustomStat
@@ -96,7 +97,7 @@ export default function GroupPage({ group, users }: PageProps) {
           />
         </SimpleGrid>
         {group.items!.length > 0 && group.storages!.length > 0 && (
-          <Box px={[2, "5vw", "10vw", "15vw"]}>
+          <Box px={responsivePx}>
             <Box position="relative" py={8} px={2}>
               <Divider />
               <AbsoluteCenter bg="white">

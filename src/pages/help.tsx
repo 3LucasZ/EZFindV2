@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { FiAtSign, FiMapPin, FiPhone, FiSun } from "react-icons/fi";
+import { responsivePx } from "services/constants";
 
 type PageProps = {};
 
@@ -109,7 +110,7 @@ export default function Home({}: PageProps) {
           </Stack>
         </Box>
 
-        <Accordion allowToggle px={[2, "5vw", "10vw", "15vw"]}>
+        <Accordion allowToggle px={responsivePx}>
           <FAQItem
             Q="What does the invert checkbox do?"
             A="When invert mode is on, the display will tell you what items a

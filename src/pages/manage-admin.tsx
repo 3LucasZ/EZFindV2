@@ -21,6 +21,7 @@ import { useSession } from "next-auth/react";
 import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import UserWidget from "archive/old_UserWidget";
+import { responsivePx } from "services/constants";
 
 type PageProps = {
   users: UserProps[];
@@ -33,12 +34,7 @@ export default function ManageAdmin({ users }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin}>
       <Box minH="8px"></Box>
-      <Flex
-        px={[2, "5vw", "10vw", "15vw"]}
-        textAlign={"center"}
-        w="100%"
-        flexDir="column"
-      >
+      <Flex px={responsivePx} textAlign={"center"} w="100%" flexDir="column">
         <Heading w="100%">Admins</Heading>
         <Text>
           Admins can perform any operation on the app. Only give admin

@@ -23,6 +23,7 @@ import Router from "next/router";
 import { FAB } from "components/Layout/FAB/FAB";
 import { FiEdit2, FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
+import { responsivePx } from "services/constants";
 
 type PageProps = {
   groups: GroupProps[];
@@ -34,7 +35,7 @@ export default function Home({ groups }: PageProps) {
   const toaster = useToast();
   return (
     <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
-      <Box px={[2, "5vw", "10vw", "15vw"]}>
+      <Box px={responsivePx}>
         <Heading py="1" textAlign={"center"}>
           Welcome!
         </Heading>

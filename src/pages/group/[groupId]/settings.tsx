@@ -43,6 +43,7 @@ import { getPerms } from "services/utils";
 import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import UserWidget from "components/Widget/UserWidget";
+import { responsivePx } from "services/constants";
 
 type PageProps = {
   group: GroupProps;
@@ -172,7 +173,7 @@ export default function GroupPage({ group, users }: PageProps) {
   //--ret--
   return (
     <Layout isAdmin={isAdmin} group={group} loading={status === "loading"}>
-      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex px={responsivePx}>
         <AutoResizeTextarea
           value={isEdit ? newName : group.name}
           onChange={(e) => setNewName(e.target.value)}
@@ -223,7 +224,7 @@ export default function GroupPage({ group, users }: PageProps) {
         </Center>
       </Flex>
       <Box h="2px"></Box>
-      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex px={responsivePx}>
         <AutoResizeTextarea
           value={
             isEdit
@@ -247,7 +248,7 @@ export default function GroupPage({ group, users }: PageProps) {
       </Center> */}
       <Box h="2px"></Box>
       <HStack
-        px={[2, "5vw", "10vw", "15vw"]}
+        px={responsivePx}
         {...rootProps}
         alignContent={"center"}
         w="100%"

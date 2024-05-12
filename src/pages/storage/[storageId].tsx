@@ -30,6 +30,7 @@ import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";
 import { getPerms } from "services/utils";
+import { responsivePx } from "services/constants";
 
 type PageProps = {
   storage: StorageProps;
@@ -163,7 +164,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
       loading={status === "loading"}
       group={storage.group}
     >
-      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex px={responsivePx}>
         <EditableTitle
           value={isEdit ? newName : storage.name}
           onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
@@ -217,7 +218,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
           </ButtonGroup>
         </Center>
       </Flex>
-      <Flex px={[2, "5vw", "10vw", "15vw"]}>
+      <Flex px={responsivePx}>
         <EditableSubtitle
           value={
             isEdit
