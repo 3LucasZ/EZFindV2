@@ -18,6 +18,7 @@ type RadioCardProps = {
   icon: IconType;
   children?: JSX.Element;
   radioProps: UseRadioProps;
+  disabled?: boolean;
 };
 export default function RadioCard(props: RadioCardProps) {
   const { getInputProps, getRadioProps } = useRadio(props.radioProps);
@@ -28,23 +29,27 @@ export default function RadioCard(props: RadioCardProps) {
       <input {...input} />
       <Box
         {...checkbox}
-        cursor="pointer"
+        //--border--
         borderWidth="2px"
         rounded="md"
         // boxShadow="md"
-        _checked={{
-          //   bg: "teal.400",
-          //   borderColor: "teal.400",
-          borderColor: "blue.400",
-          //   color: "white",
-        }}
         // _focus={{
         //   boxShadow: "outline",
         // }}
+        //--size and spacing--
         px={3}
         py={1}
         flexDir="row"
         h="100%"
+        //--checked--
+        _checked={{
+          borderColor: "blue.400",
+          opacity: 1,
+        }}
+        //--not checked--
+        opacity={props.disabled ? 0.3 : 1}
+        //--misc--
+        cursor="pointer"
       >
         <HStack>
           <Icon as={props.icon} boxSize={4} />
@@ -52,7 +57,7 @@ export default function RadioCard(props: RadioCardProps) {
             {props.name}
           </Text>
           <Show above="sm">
-            <Radio isChecked={input.checked} />
+            <Radio isChecked={input.checked} hidden={props.disabled} />
           </Show>
         </HStack>
         <Text noOfLines={2} fontSize={"xs"} color="gray">

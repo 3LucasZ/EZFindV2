@@ -46,17 +46,21 @@ type PageProps = {
 };
 
 export default function GroupPage({ group, users }: PageProps) {
+  //--default--
   const { data: session, status } = useSession();
   const { isAdmin, pagePerm } = getPerms(session?.user, group);
   const toaster = useToast();
+
   //--state--
   const [isEdit, setIsEdit] = useState(false);
-  //change metadata
+
+  //--new state--
   const [newName, setNewName] = useState(group.name);
   const [newDescription, setNewDescription] = useState(group.description);
   const [newUserRelations, setNewRelations] = useState(group.userRelations);
   const [newMinPerm, setNewMinPerm] = useState("" + group.minPerm);
-  //track widgets
+
+  //--relations--
   const inRelations = isEdit ? newUserRelations : group.userRelations;
   const inIds = inRelations?.map((relation) => relation.userId);
   const outRelations: UserGroupRelationProps[] = users
@@ -70,7 +74,8 @@ export default function GroupPage({ group, users }: PageProps) {
         perm: 0, //new users added to a group auto start at perm: 0
       };
     });
-  // handle delete modal
+
+  //--handle delete modal--
   const {
     isOpen: isOpenTrash,
     onOpen: onOpenTrash,
@@ -81,14 +86,15 @@ export default function GroupPage({ group, users }: PageProps) {
     const res = await poster("/api/delete-group", body, toaster);
     if (res.status == 200) await Router.push({ pathname: "/manage-groups" });
   };
-  // handle view modal
+
+  //--handle view modal--
   const {
     isOpen: isOpenViewer,
     onOpen: onOpenViewer,
     onClose: onCloseViewer,
   } = useDisclosure();
 
-  //handle upload image
+  //--handle upload image--
   const uploadImage = async (newImage: string) => {
     //delete old image
     var body, res;
@@ -110,7 +116,8 @@ export default function GroupPage({ group, users }: PageProps) {
       }
     }
   };
-  //handle radio group
+
+  //--handle radio group--
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: "framework",
     value: isEdit ? newMinPerm : "" + group.minPerm,
@@ -141,7 +148,8 @@ export default function GroupPage({ group, users }: PageProps) {
       icon: FiUsers,
     },
   ];
-  // handle update
+
+  //--handle update--
   const handleUpdateGroup = async () => {
     const body = {
       id: group.id,
@@ -153,6 +161,8 @@ export default function GroupPage({ group, users }: PageProps) {
     const res = await poster("/api/update-group-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
+
+  //--ret--
   return (
     <Layout isAdmin={isAdmin} group={group} loading={status === "loading"}>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
@@ -227,6 +237,7 @@ export default function GroupPage({ group, users }: PageProps) {
           />
         </Center>
       </Flex>
+      <Box h="2px"></Box>
       <Flex px={[2, "5vw", "10vw", "15vw"]}>
         <AutoResizeTextarea
           value={
@@ -244,11 +255,12 @@ export default function GroupPage({ group, users }: PageProps) {
           sx={{ opacity: "1" }}
         />
       </Flex>
-      <Center>
+      {/* <Center>
         <Text fontSize={["xl", "xl", "xl", "2xl", "2xl"]} pb="2">
           Group Permissions
         </Text>
-      </Center>
+      </Center> */}
+      <Box h="2px"></Box>
       <HStack
         px={[2, "5vw", "10vw", "15vw"]}
         {...rootProps}
@@ -265,6 +277,7 @@ export default function GroupPage({ group, users }: PageProps) {
               name={option.name}
               description={option.desc}
               icon={option.icon}
+              disabled={!isEdit}
             />
           );
         })}
@@ -304,7 +317,7 @@ export default function GroupPage({ group, users }: PageProps) {
             <UserGroupRelationWidget
               user={relation.user}
               perm={relation.perm}
-              isEdit={isEdit && perm >= 2}
+              isEdit={isEdit && pagePerm >= 2}
               isInvert={true}
               handleAdd={() => {
                 const copy = [...newUserRelations!];
