@@ -83,7 +83,7 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
         <Center>
           <Icon
             as={icon}
-            boxSize="23"
+            boxSize={6}
             //---gradient outline---
             // stroke="url(#blue-gradient)"
             // _groupHover={{
