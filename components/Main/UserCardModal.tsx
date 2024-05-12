@@ -61,7 +61,7 @@ export function UserCardModal(props: UserCardModalProps) {
             rounded="lg"
             colorScheme={props.isAdmin ? "purple" : "blue"}
           >
-            {props.isAdmin ? "Administrator" : "User"}
+            {props.isAdmin ? "Admin" : "User"}
           </Badge>
           <Box h="8" />
         </VStack>

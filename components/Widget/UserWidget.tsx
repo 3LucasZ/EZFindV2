@@ -130,7 +130,7 @@ export default function UserWidget(props: UserWidgetProps) {
         name={props.name}
         email={props.email}
         image={props.image}
-        isAdmin={false}
+        isAdmin={props.isAdmin}
         groups={0}
         isOpen={isOpen}
         onClose={onClose}
