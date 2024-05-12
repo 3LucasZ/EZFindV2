@@ -76,6 +76,7 @@ export default function GroupPage({ group, users }: PageProps) {
             dark="cyan.400"
             med="cyan.200"
             light="cyan.100"
+            xlight="cyan.50"
           />
           <CustomStat
             label={"Storages"}
@@ -85,6 +86,7 @@ export default function GroupPage({ group, users }: PageProps) {
             dark="blue.400"
             med="blue.200"
             light="blue.100"
+            xlight="blue.50"
           />
           <CustomStat
             label={"Members"}
@@ -94,6 +96,7 @@ export default function GroupPage({ group, users }: PageProps) {
             dark="orange.400"
             med="orange.200"
             light="orange.100"
+            xlight="orange.50"
           />
         </SimpleGrid>
         {group.items!.length > 0 && group.storages!.length > 0 && (

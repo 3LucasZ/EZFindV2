@@ -22,6 +22,7 @@ interface Props {
   dark: string;
   med: string;
   light: string;
+  xlight: string;
 }
 export const CustomStat = (props: Props) => {
   return (
@@ -31,8 +32,8 @@ export const CustomStat = (props: Props) => {
       rounded="lg"
       boxShadow="md"
       // bgGradient={props.bgGradient}
-      bg={props.light}
-      _hover={{ bg: props.med }}
+      bg={props.xlight}
+      _hover={{ bg: props.light }}
       onClick={() => Router.push(props.link)}
     >
       <HStack direction={"row"} p="0" m="0" gap="1">
