@@ -275,11 +275,13 @@ export default function GroupPage({ group, users }: PageProps) {
           inverted: relation.inverted,
           widget: (
             <UserWidget
+              //data
               name={relation.user.name}
               email={relation.user.email}
               image={relation.user.image}
-              url={`/users/${relation.user.id}`}
               perm={relation.perm}
+              isAdmin={relation.user.isAdmin}
+              //state
               isEdit={isEdit && pagePerm >= 2} //PROTECTED
               inverted={relation.inverted!}
               handleAdd={() => {
