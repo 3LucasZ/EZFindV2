@@ -12,13 +12,8 @@ import ConfirmActionModal from "../Main/ConfirmActionModal";
 import { debugMode } from "services/constants";
 import { poster } from "services/poster";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
+import { UserProps } from "types/db";
 
-export type UserProps = {
-  id: string;
-  email: string;
-  name: string;
-  isAdmin: boolean;
-};
 type UserWidgetProps = {
   user: UserProps;
   mode: number; //-1: remove, 0: still, 1: add

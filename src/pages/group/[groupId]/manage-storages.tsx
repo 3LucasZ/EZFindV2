@@ -4,7 +4,7 @@ import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import SearchView from "components/Main/SearchView";
 import prisma from "services/prisma";
-import { UserProps } from "components/Widget/UserWidget";
+import { UserProps } from "types/db";
 import { useSession } from "next-auth/react";
 import { errorToast } from "services/toasty";
 import Router from "next/router";

@@ -14,7 +14,7 @@ import prisma from "services/prisma";
 
 import { FaTools } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
-import { UserProps } from "components/Widget/UserWidget";
+import { UserProps } from "types/db";
 import Header from "components/Layout/Header";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import SearchView from "components/Main/SearchView";

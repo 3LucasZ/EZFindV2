@@ -16,7 +16,7 @@ import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { UserProps } from "components/Widget/UserWidget";
+import { UserProps } from "types/db";
 import { useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";

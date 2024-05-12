@@ -23,7 +23,7 @@ import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { UserProps } from "components/Widget/UserWidget";
+import { UserProps } from "types/db";
 import { useState } from "react";
 import RelationWidget from "components/Widget/ItemStorageRelationWidget";
 import { ItemStorageRelationProps } from "types/db";

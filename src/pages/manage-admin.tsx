@@ -7,7 +7,8 @@ import {
   useToast,
   Text,
 } from "@chakra-ui/react";
-import Admin, { UserProps } from "components/Widget/UserWidget";
+import Admin from "components/Widget/UserWidget";
+import { UserProps } from "types/db";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import Router from "next/router";

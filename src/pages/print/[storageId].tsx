@@ -20,7 +20,7 @@ import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
 import Header from "components/Layout/Header";
-import { UserProps } from "components/Widget/UserWidget";
+import { UserProps } from "types/db";
 
 type Props = {
   url: string;

@@ -1,5 +1,4 @@
 import { GroupProps } from "components/Widget/GroupWidget";
-import { UserProps } from "components/Widget/UserWidget";
 import { ItemProps, StorageProps } from "./db";
 import { MouseEventHandler } from "react";
 
@@ -44,4 +43,10 @@ export type UserGroupRelationWidgetProps = {
   handleRemove?: MouseEventHandler<HTMLButtonElement>;
   handleAdd?: MouseEventHandler<HTMLButtonElement>;
   handleUpdate?: Function;
+};
+export type UserProps = {
+  id: string;
+  email: string;
+  name: string;
+  isAdmin: boolean;
 };
