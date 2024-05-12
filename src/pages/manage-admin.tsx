@@ -7,7 +7,7 @@ import {
   useToast,
   Text,
 } from "@chakra-ui/react";
-import Admin from "components/Widget/UserWidget";
+import Admin from "archive/old_UserWidget";
 import { UserProps } from "types/db";
 import { GetServerSideProps } from "next";
 import { useState } from "react";
@@ -20,7 +20,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { useSession } from "next-auth/react";
 import Header from "components/Layout/Header";
 import { poster } from "services/poster";
-import UserWidget from "components/Widget/UserWidget";
+import UserWidget from "archive/old_UserWidget";
 
 type PageProps = {
   users: UserProps[];
