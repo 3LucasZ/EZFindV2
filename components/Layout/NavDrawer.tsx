@@ -42,7 +42,8 @@ export default function NavDrawer(props: NavDrawerProps) {
         float="left"
         left="4"
         boxSize="8"
-        color="black"
+        // color="black"
+        color="blue.300"
       />
       <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay bg={""} />
@@ -67,21 +68,25 @@ export default function NavDrawer(props: NavDrawerProps) {
               icon={FiHome}
               name="Home"
               url={`/group/${props.id}/explore`}
+              hoverBg="teal.300"
             />
             <NavItem
               icon={FiTool}
               name="Items"
               url={`/group/${props.id}/manage-items`}
+              hoverBg="cyan.300"
             />
             <NavItem
               icon={FiPackage}
               name="Storages"
               url={`/group/${props.id}/manage-storages`}
+              hoverBg="blue.300"
             />
             <NavItem
               icon={FiSettings}
               name="Settings"
               url={`/group/${props.id}/settings`}
+              hoverBg="orange.300"
             />
           </DrawerBody>
         </DrawerContent>
@@ -93,8 +98,9 @@ type NavItemProps = {
   icon: IconType;
   name: string;
   url: string;
+  hoverBg: string;
 };
-const NavItem = ({ icon, name, url }: NavItemProps) => {
+const NavItem = ({ icon, name, url, hoverBg }: NavItemProps) => {
   return (
     <Box
       onClick={() => Router.push(url)}
@@ -108,7 +114,7 @@ const NavItem = ({ icon, name, url }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "blue.400",
+          bg: hoverBg,
           color: "white",
         }}
       >
