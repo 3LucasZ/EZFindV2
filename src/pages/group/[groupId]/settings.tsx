@@ -43,7 +43,7 @@ import { getPerms } from "services/utils";
 import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import UserWidget from "components/Widget/UserWidget";
-import { responsivePx } from "services/constants";
+import { responsiveHeaderFontSize, responsivePx } from "services/constants";
 
 type PageProps = {
   group: GroupProps;
@@ -179,7 +179,7 @@ export default function GroupPage({ group, users }: PageProps) {
           onChange={(e) => setNewName(e.target.value)}
           isDisabled={!isEdit}
           maxLength={100}
-          fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}
+          fontSize={responsiveHeaderFontSize}
           display={"block"}
           _disabled={{ color: "black", borderColor: "white" }}
           textAlign={"center"}

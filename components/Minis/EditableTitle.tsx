@@ -1,11 +1,12 @@
 import AutoResizeTextarea from "components/Minis/AutoResizeTextarea";
+import { responsiveHeaderFontSize } from "services/constants";
 
 //value, onchanged, disabled
 export default function EditableTitle({ ...props }) {
   return (
     <AutoResizeTextarea
       maxLength={100}
-      fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}
+      fontSize={responsiveHeaderFontSize}
       display={"block"}
       _disabled={{ color: "black", borderColor: "white" }}
       textAlign={"center"}

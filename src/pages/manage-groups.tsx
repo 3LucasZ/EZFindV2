@@ -14,6 +14,7 @@ import { Session } from "next-auth";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { AddIcon } from "@chakra-ui/icons";
+import { responsiveHeaderFontSize } from "services/constants";
 
 type PageProps = {
   groups: GroupProps[];
@@ -25,7 +26,7 @@ export default function ManageGroups({ groups }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
       <Center>
-        <Text fontSize={"4xl"}>Groups</Text>
+        <Text fontSize={responsiveHeaderFontSize}>Groups</Text>
       </Center>
       <Box minH="8px"></Box>
       <SearchView

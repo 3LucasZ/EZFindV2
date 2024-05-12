@@ -26,12 +26,6 @@ export default function ManageStorages({ group }: PageProps) {
   return (
     <Layout isAdmin={session?.user.isAdmin} group={group}>
       <Box minH="8px"></Box>
-      {/* <Center>
-        <Text fontSize={["2xl", "2xl", "2xl", "3xl", "4xl"]}>
-          {group.name}: Storages
-        </Text>
-      </Center>
-      <Box minH="8px"></Box> */}
       <SearchView
         set={group.storages!.map((storage) => ({
           name: storage.name,
