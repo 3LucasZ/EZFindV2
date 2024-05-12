@@ -65,39 +65,40 @@ export default function UserWidget(props: UserWidgetProps) {
             borderRadius="full"
           ></Image>
         </AspectRatio>
-        <HStack w="100%">
+        <Box w="2"></Box>
+        <Stack
+          w="100%"
+          direction={["column", "column", "row"]}
+          gap={["0", "0", "2"]}
+          spacing={0}
+        >
           <Text
-            w={["100%", "40%"]}
+            w={["100%", "100%", "40%"]}
             noOfLines={1} //do not render more than one line
             wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
           >
             {props.name}
           </Text>
-          <Show above="sm">
-            <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
-              {props.email}
-            </Text>
-          </Show>
-        </HStack>
+          <Text
+            w={["100%", "100%", "60%"]}
+            fontSize={["sm", "sm", "md"]}
+            color={["grey", "grey", "black"]}
+            noOfLines={1}
+            wordBreak={"break-all"}
+          >
+            {props.email}
+          </Text>
+        </Stack>
         {!props.inverted && (
           <Select
-            //--color--
-            // bg="gray.300"
-            // bg={
-            //   props.perm == 0
-            //     ? "purple.200"
-            //     : props.perm == 1
-            //     ? "purple.500"
-            //     : "purple.800"
-            // }
-            // color="white"
             //--looks--
-            rounded={"none"}
+            rounded={"lg"}
+            border="none"
             size={"sm"}
             pointerEvents={props.isEdit ? "auto" : "none"}
             iconSize={props.isEdit ? "md" : "0"}
-            minW="200px"
-            maxW="200px"
+            minW="80px"
+            maxW="20%"
             //---behavior---
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => {
