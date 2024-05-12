@@ -42,6 +42,7 @@ import { FiEye, FiLock, FiUsers } from "react-icons/fi";
 import { getPerms } from "services/utils";
 import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
+import UserWidget from "components/Widget/UserWidget";
 
 type PageProps = {
   group: GroupProps;
@@ -166,6 +167,8 @@ export default function GroupPage({ group, users }: PageProps) {
     const res = await poster("/api/update-group-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
+  console.log(users);
+
   //--ret--
   return (
     <Layout isAdmin={isAdmin} group={group} loading={status === "loading"}>
@@ -271,11 +274,14 @@ export default function GroupPage({ group, users }: PageProps) {
           rank: 3 - relation.perm + relation.user.name,
           inverted: relation.inverted,
           widget: (
-            <UserGroupRelationWidget
-              user={relation.user}
+            <UserWidget
+              name={relation.user.name}
+              email={relation.user.email}
+              image={relation.user.image}
+              url={`/users/${relation.user.id}`}
               perm={relation.perm}
               isEdit={isEdit && pagePerm >= 2} //PROTECTED
-              isInvert={relation.inverted!}
+              inverted={relation.inverted!}
               handleAdd={() => {
                 const relationCpy = cloneUserGroupRelationProps(relation);
                 relationCpy.inverted = false;
@@ -286,7 +292,7 @@ export default function GroupPage({ group, users }: PageProps) {
                   newRelations?.filter((t) => t.userId != relation.userId)
                 );
               }}
-              handleUpdate={(newPerm: number) => {
+              handleNewPerm={(newPerm: number) => {
                 const copy = newRelations?.map((x) => ({ ...x }));
                 const tar = copy?.find((x) => x.user.id == relation?.user.id);
                 if (tar != null) {
@@ -326,13 +332,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       userRelations: {
         include: {
-          user: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            },
-          },
+          user: true,
         },
       },
     },

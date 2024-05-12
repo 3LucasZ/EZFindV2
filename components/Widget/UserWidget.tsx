@@ -39,6 +39,7 @@ type UserWidgetProps = {
 };
 
 export default function UserWidget(props: UserWidgetProps) {
+  console.log(props.image);
   return (
     <Box
       overflow={"hidden"}
@@ -54,7 +55,8 @@ export default function UserWidget(props: UserWidgetProps) {
         <AspectRatio minW="60px" ratio={1} bgGradient={genGradient(props.name)}>
           <Image
             src={props.image} //pfp stored on google servers, will NOT use our API
-            hidden={props.image.length < 5}
+            // fallbackSrc="https://via.placeholder.com/150"
+            hidden={props.image?.length < 5}
           ></Image>
         </AspectRatio>
         <HStack w="100%">
@@ -73,7 +75,7 @@ export default function UserWidget(props: UserWidgetProps) {
         </HStack>
         {!props.inverted && (
           <Select
-            rounded={"none"}
+            //--color--
             // bg="gray.300"
             bg={
               props.perm == 0
@@ -83,7 +85,13 @@ export default function UserWidget(props: UserWidgetProps) {
                 : "purple.800"
             }
             color="white"
+            //--looks--
+            rounded={"none"}
             size={"sm"}
+            pointerEvents={props.isEdit ? "auto" : "none"}
+            iconSize={props.isEdit ? "md" : "0"}
+            //---behavior---
+            onClick={(e) => e.stopPropagation()}
             onChange={(e) => {
               const num = parseInt(e.target.value);
               props.handleNewPerm!(
@@ -91,8 +99,6 @@ export default function UserWidget(props: UserWidgetProps) {
               );
             }}
             value={props.perm}
-            pointerEvents={props.isEdit ? "auto" : "none"}
-            iconSize={props.isEdit ? "md" : "0"}
             display={props.inverted ? "none" : ""}
           >
             <option value="0">Viewer</option>
