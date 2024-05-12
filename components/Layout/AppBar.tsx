@@ -40,7 +40,7 @@ export default function AppBar() {
           // borderTopRightRadius={"20"}
         >
           <AppBarBtn icon={FiHome} href="/" />
-          <AppBarBtn icon={FiCompass} href="/help" />
+          <AppBarBtn icon={FiCompass} href="/manage-groups" />
           <AppBarBtn icon={FiBookOpen} href="/help" />
         </HStack>
       </Box>

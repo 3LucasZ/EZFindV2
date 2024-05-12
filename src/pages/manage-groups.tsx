@@ -1,4 +1,3 @@
-import ItemWidget from "components/Widget/ItemWidget";
 import { ItemProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
@@ -13,6 +12,8 @@ import Header from "components/Layout/Header";
 import { poster } from "services/poster";
 import { Session } from "next-auth";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
+import { FAB } from "components/Layout/FAB/FAB";
+import { AddIcon } from "@chakra-ui/icons";
 
 type PageProps = {
   groups: GroupProps[];
@@ -22,22 +23,28 @@ export default function ManageGroups({ groups }: PageProps) {
   const isAdmin = session?.user.isAdmin;
   const toaster = useToast();
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
       <Box minH="8px"></Box>
       <SearchView
         set={groups.map((group) => ({
           name: group.name,
           widget: <GroupWidget group={group} key={group.id} />,
         }))}
-        onAdd={async () => {
+        isEdit={false}
+        columns={[2, 3, 3, 4]}
+      />
+      <FAB
+        // name="Create"
+        icon={AddIcon}
+        onClick={async () => {
           const body = JSON.stringify("");
           const res = await poster("/api/create-group", body, toaster);
-          // if (res.status == 200)
-          //   await Router.push({ pathname: "/group/" + (await res.json()) });
+          if (res.status == 200)
+            await Router.push({
+              pathname: "/group/" + (await res.json()) + "/explore",
+            });
         }}
-        isAdmin={isAdmin}
-        isEdit={false}
-        columns={4}
+        hidden={!isAdmin}
       />
     </Layout>
   );
