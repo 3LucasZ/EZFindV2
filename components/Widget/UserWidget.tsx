@@ -47,16 +47,22 @@ export default function UserWidget(props: UserWidgetProps) {
       boxShadow={"md"}
       mx={1} //so we can see the side shadows
       onClick={() => Router.push(props.url)}
-      pr="2"
+      px="2"
       _hover={{ bg: "gray.100" }}
       minH="60px"
     >
-      <HStack>
-        <AspectRatio minW="60px" ratio={1} bgGradient={genGradient(props.name)}>
+      <HStack h="100%">
+        <AspectRatio
+          minW="45px"
+          maxW="45px"
+          ratio={1}
+          // bgGradient={genGradient(props.name)}
+        >
           <Image
             src={props.image} //pfp stored on google servers, will NOT use our API
             // fallbackSrc="https://via.placeholder.com/150"
             hidden={props.image?.length < 5}
+            borderRadius="full"
           ></Image>
         </AspectRatio>
         <HStack w="100%">
@@ -77,19 +83,21 @@ export default function UserWidget(props: UserWidgetProps) {
           <Select
             //--color--
             // bg="gray.300"
-            bg={
-              props.perm == 0
-                ? "purple.200"
-                : props.perm == 1
-                ? "purple.500"
-                : "purple.800"
-            }
-            color="white"
+            // bg={
+            //   props.perm == 0
+            //     ? "purple.200"
+            //     : props.perm == 1
+            //     ? "purple.500"
+            //     : "purple.800"
+            // }
+            // color="white"
             //--looks--
             rounded={"none"}
             size={"sm"}
             pointerEvents={props.isEdit ? "auto" : "none"}
             iconSize={props.isEdit ? "md" : "0"}
+            minW="200px"
+            maxW="200px"
             //---behavior---
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => {
