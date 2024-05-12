@@ -19,6 +19,14 @@ export type StorageProps = {
   image: string;
   group: GroupProps;
 };
+export type UserProps = {
+  id: string;
+  email: string;
+  name: string;
+  isAdmin: boolean;
+  image: string;
+};
+
 export type UserGroupRelationProps = {
   user: UserProps;
   userId: string;
@@ -34,19 +42,4 @@ export type ItemStorageRelationProps = {
   storageId: number;
   count: number;
   inverted?: boolean = false;
-};
-export type UserGroupRelationWidgetProps = {
-  user: UserProps;
-  perm: number;
-  isInvert: boolean;
-  isEdit: boolean;
-  handleRemove?: MouseEventHandler<HTMLButtonElement>;
-  handleAdd?: MouseEventHandler<HTMLButtonElement>;
-  handleUpdate?: Function;
-};
-export type UserProps = {
-  id: string;
-  email: string;
-  name: string;
-  isAdmin: boolean;
 };
