@@ -20,7 +20,7 @@ import EditableCounter from "components/Minis/EditableCounter";
 import AddRemoveButton from "components/Minis/AddRemoveButton";
 import { ChangeEventHandler } from "react";
 
-type UserWidget = {
+type UserWidgetProps = {
   //data
   name: string;
   email: string;
@@ -38,7 +38,7 @@ type UserWidget = {
   handleNewPerm?: Function;
 };
 
-export default function UserWidget(props: UserWidget) {
+export default function UserWidget(props: UserWidgetProps) {
   return (
     <Box
       overflow={"hidden"}
