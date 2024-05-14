@@ -14,12 +14,12 @@ export default function Document() {
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
 
-        <meta name="theme-color" content="#000000" />
+        {/* <meta name="theme-color" content="#000000" /> */}
         {/* ICON */}
-        <link rel="apple-touch-icon" href="/icons/icon.png" />
-        <link rel="icon" type="image/x-icon" href="/icons/icon.png" />
+        {/* <link rel="apple-touch-icon" href="/icons/icon.png" />
+        <link rel="icon" type="image/x-icon" href="/icons/icon.png" /> */}
         {/* MANIFEST */}
-        <link rel="manifest" href="/manifest.json" />
+        {/* <link rel="manifest" href="/manifest.json" /> */}
       </Head>
       <body>
         <Main />

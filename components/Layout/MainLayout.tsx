@@ -77,13 +77,27 @@ export default function Layout({
       <Head>
         <title>EZFind</title>
         <meta name="description" content="Machine shop management system" />
-        <link rel="icon" href="/favicon.ico" />
+        {/* ICON */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
         {/*PWA UI-->*/}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
-        <meta name="theme-color" content="#fffffe" />
+        <meta name="theme-color" content="#ffffff" />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <main>
         <Flex
