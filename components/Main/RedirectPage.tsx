@@ -16,19 +16,20 @@ export default function RedirectPage({ errorCode, msg1, msg2 }: PageProps) {
           as="h1"
           size="4xl"
           // bgGradient="linear(to-r, teal.400, teal.600)"
-          bg="teal.400"
+          bgGradient="linear(to-br,teal.300, blue.300)"
+          // bg="cyan.400"
           backgroundClip="text"
         >
           {errorCode ? errorCode : 404}
         </Heading>
-        <Text fontSize="18px" mt={3} mb={2}>
+        <Text fontSize="3xl" mt={3} mb={2}>
           {msg1 ? msg1 : "Page Not Found"}
         </Text>
-        <Text color={"gray.500"} mb={6}>
+        <Text fontSize="xl" color={"gray.500"} mb={6}>
           {msg2 ? msg2 : "The page you are looking for does not seem to exist"}
         </Text>
 
-        <Button
+        {/* <Button
           colorScheme="teal"
           // bgGradient="linear(to-r, teal.400, teal.500, teal.600)"
           color="white"
@@ -38,7 +39,7 @@ export default function RedirectPage({ errorCode, msg1, msg2 }: PageProps) {
           }}
         >
           Go to Home
-        </Button>
+        </Button> */}
       </Box>
     </>
   );
