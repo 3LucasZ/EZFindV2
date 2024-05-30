@@ -1,25 +1,10 @@
 import Head from "next/head";
-import { useEffect, useState, type ReactNode } from "react";
-import {
-  Box,
-  Button,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Flex,
-  Spinner,
-  useDisclosure,
-} from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
+import { useEffect, type ReactNode } from "react";
+import { Flex, Spinner } from "@chakra-ui/react";
 import AppBar from "./AppBar";
 import Header from "./Header";
-import Custom404 from "archive/old_404";
 import RedirectPage from "../Main/RedirectPage";
 import React from "react";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import SimpleSidebar from "./ExampleDrawer";
 import AvatarMenu from "./AvatarMenu";
 import NavDrawer from "./NavDrawer";
 import { GroupProps } from "components/Widget/GroupWidget";
@@ -91,7 +76,7 @@ export default function Layout({
           type="image/<generated>"
           sizes="<generated>"
         />
-        {/*PWA UI-->*/}
+        {/*PWA UI*/}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
