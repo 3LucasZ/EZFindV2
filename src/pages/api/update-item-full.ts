@@ -30,7 +30,7 @@ export default async function handle(
         description: newDescription,
         link: newLink,
         storageRelations: {
-          deleteMany: {},
+          deleteMany: {}, //extremely important, this denotes that you want to delete relations too
           createMany: { data: relations },
         },
       },
