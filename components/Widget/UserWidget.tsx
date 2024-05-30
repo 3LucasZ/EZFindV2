@@ -1,25 +1,15 @@
 import {
   Box,
-  Grid,
   HStack,
   Image,
-  VStack,
   Text,
   AspectRatio,
   Stack,
-  Show,
   Select,
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { ItemStorageRelationProps } from "types/db";
-import { GroupProps } from "./GroupWidget";
-import Router from "next/router";
-import { genGradient } from "services/gradientGenerator";
-import { count } from "console";
-import EditableCounter from "components/Composable/EditableCounter";
 import AddRemoveButton from "components/Composable/AddRemoveButton";
-import { ChangeEventHandler } from "react";
 import { UserCardModal } from "components/Main/UserCardModal";
 
 type UserWidgetProps = {
@@ -146,18 +136,3 @@ export default function UserWidget(props: UserWidgetProps) {
     </>
   );
 }
-/*
-  <BaseWidget
-          href={"/item/" + item.id}
-          title={item.name}
-          bg={"cyan.400"}
-          bgHover={"cyan.500"}
-          colSpan={6}
-        />
-        <BaseWidget
-          title={item.description}
-          bg={"cyan.300"}
-          colSpan={6}
-          cnt={sum ? sum : -1}
-        />
-        */
