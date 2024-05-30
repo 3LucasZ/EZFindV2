@@ -28,23 +28,21 @@ import { LiaQuestionCircle } from "react-icons/lia";
 
 export default function AppBar() {
   return (
-    <>
-      <Box position="fixed" bottom="0" w="100%">
-        {/* ---basic-outline--- */}
-        <Divider />
-        <HStack
-          gap={0}
-          h={"calc(50px + env(safe-area-inset-bottom))"}
-          // ---rounded---
-          // borderTopLeftRadius={"20"}
-          // borderTopRightRadius={"20"}
-        >
-          <AppBarBtn icon={FiHome} href="/" />
-          <AppBarBtn icon={FiCompass} href="/manage-groups" />
-          <AppBarBtn icon={FiBookOpen} href="/help" />
-        </HStack>
-      </Box>
-    </>
+    <Box position="fixed" bottom="0" w="100%">
+      {/* ---basic-outline--- */}
+      {/* <Divider /> */}
+      <HStack
+        gap={0}
+        h={"calc(50px + env(safe-area-inset-bottom))"}
+        // ---rounded---
+        // borderTopLeftRadius={"20"}
+        // borderTopRightRadius={"20"}
+      >
+        <AppBarBtn icon={FiHome} href="/" />
+        <AppBarBtn icon={FiCompass} href="/manage-groups" />
+        <AppBarBtn icon={FiBookOpen} href="/help" />
+      </HStack>
+    </Box>
   );
 }
 
