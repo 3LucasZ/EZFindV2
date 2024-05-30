@@ -1,21 +1,3 @@
-import { AddIcon } from "@chakra-ui/icons";
-import {
-  Card,
-  CardBody,
-  Heading,
-  Center,
-  Link,
-  Icon,
-  Button,
-  IconButton,
-  Text,
-  Box,
-  HStack,
-  ComponentWithAs,
-  IconProps,
-  VStack,
-} from "@chakra-ui/react";
-import { IconType } from "react-icons";
 import { FAB } from "./FAB";
 import { FiCheck, FiEdit2, FiX } from "react-icons/fi";
 
