@@ -12,7 +12,8 @@ const nextConfig = {
 // Configuration object tells the next-pwa plugin
 const withPWA = require("next-pwa")({
   dest: "public", // Destination directory for the PWA files
-  disable: process.env.NODE_ENV === "development", // Disable PWA in development mode
+  // disable: process.env.NODE_ENV === "development", // Disable PWA in development mode
+  disable: true, //it breaks the website deployment cache, so just disable it lol
   register: true, // Register the PWA service worker
   skipWaiting: true, // Skip waiting for service worker activation
 });
