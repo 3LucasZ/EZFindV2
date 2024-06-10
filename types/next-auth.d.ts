@@ -6,12 +6,24 @@ declare module "next-auth" {
    */
   interface Session {
     user: {
+      //basic
       id: string;
+      name: string;
+      email: string;
+      image: string;
+      //custom
       isAdmin: boolean;
+      groupRelations: UserGroupRelation[];
     } & DefaultSession["user"];
   }
   interface User {
+    //basic
     id: string;
+    name: string;
+    email: string;
+    image: string;
+    //custom
     isAdmin: boolean;
+    groupRelations: UserGroupRelation[];
   }
 }

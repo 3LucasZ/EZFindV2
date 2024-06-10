@@ -17,7 +17,7 @@ import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemStorageRelationProps } from "types/db";
 import React from "react";
 import { poster } from "services/poster";
@@ -29,7 +29,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";
-import { getPerms } from "services/utils";
+import { getGroupPerm } from "services/utils";
 import { responsivePx } from "services/constants";
 
 type PageProps = {
@@ -40,10 +40,14 @@ type PageProps = {
 
 export default function ItemPage({ item, storages, group }: PageProps) {
   //--copy paste on every page--
-  const { data: session, status } = useSession();
-  const { isAdmin, pagePerm } = getPerms(session?.user, group);
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
   //--state--
+  const groupPerm = getGroupPerm(session?.user, group);
   const [isEdit, setIsEdit] = useState(false);
   //--new state--
   const [newName, setNewName] = useState(item.name);
@@ -122,9 +126,9 @@ export default function ItemPage({ item, storages, group }: PageProps) {
     const res = await poster("/api/update-item-full", body, toaster);
     if (res.status == 200) Router.reload();
   };
-
+  //--ret--
   return (
-    <Layout isAdmin={isAdmin} group={group}>
+    <Layout me={me} loaded={status !== "loading"} authorized={me != undefined}>
       <Flex px={responsivePx}>
         <EditableTitle
           value={isEdit ? newName : item.name}

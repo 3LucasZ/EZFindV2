@@ -15,16 +15,22 @@ import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { AddIcon } from "@chakra-ui/icons";
 import { responsiveHeaderFontSize } from "services/constants";
+import { useEffect } from "react";
 
 type PageProps = {
   groups: GroupProps[];
 };
 export default function ManageGroups({ groups }: PageProps) {
-  const { data: session } = useSession();
-  const isAdmin = session?.user.isAdmin;
+  //--copy paste on every page--
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
+  //--ret--
   return (
-    <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
+    <Layout me={me} loaded={status !== "loading"} authorized={true}>
       <Center>
         <Text fontSize={responsiveHeaderFontSize}>Groups</Text>
       </Center>
@@ -34,7 +40,6 @@ export default function ManageGroups({ groups }: PageProps) {
           name: group.name,
           widget: <GroupWidget group={group} key={group.id} />,
         }))}
-        isEdit={false}
         columns={[2, 3, 3, 4]}
       />
       <FAB
@@ -48,7 +53,7 @@ export default function ManageGroups({ groups }: PageProps) {
               pathname: "/group/" + (await res.json()) + "/explore",
             });
         }}
-        hidden={!isAdmin}
+        hidden={!me?.isAdmin}
       />
     </Layout>
   );

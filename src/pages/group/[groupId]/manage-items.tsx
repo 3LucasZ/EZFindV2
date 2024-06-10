@@ -17,20 +17,29 @@ import SearchWidget from "components/Widget/ItemStorageWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
-import { getPerms } from "services/utils";
+import { getGroupPerm } from "services/utils";
+import { responsiveHeaderFontSize } from "services/constants";
+import { useEffect } from "react";
 
 type PageProps = {
   group: GroupProps;
 };
 export default function ManageItems({ group }: PageProps) {
   //--copy paste on every page--
-  const { data: session, status } = useSession();
-  const { isAdmin, pagePerm } = getPerms(session?.user, group);
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
-  //--ret
+  //--state--
+  const groupPerm = getGroupPerm(session?.user, group);
+  //--ret--
   return (
-    <Layout isAdmin={isAdmin} group={group}>
-      <Box minH="8px"></Box>
+    <Layout me={me} loaded={status !== "loading"} authorized={me != undefined}>
+      <Text fontSize={responsiveHeaderFontSize} textAlign={"center"}>
+        Machines
+      </Text>
       <SearchView
         set={group.items!.map((item) => ({
           name: item.name,
@@ -47,9 +56,8 @@ export default function ManageItems({ group }: PageProps) {
             />
           ),
         }))}
-        isEdit={false}
       />
-      {pagePerm >= 1 && (
+      {groupPerm >= 1 && (
         <FAB
           icon={AddIcon}
           onClick={async () => {

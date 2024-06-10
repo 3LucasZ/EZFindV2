@@ -29,7 +29,7 @@ import { GroupProps } from "components/Widget/GroupWidget";
 import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";
-import { getPerms } from "services/utils";
+import { getGroupPerm } from "services/utils";
 import { responsivePx } from "services/constants";
 
 type PageProps = {
@@ -41,7 +41,7 @@ type PageProps = {
 export default function StoragePage({ storage, items, group }: PageProps) {
   //--copy paste on every page--
   const { data: session, status } = useSession();
-  const { isAdmin, pagePerm } = getPerms(session?.user, group);
+  const { isAdmin, pagePerm } = getGroupPerm(session?.user, group);
   const toaster = useToast();
   //--state--
   const [isEdit, setIsEdit] = useState(false);

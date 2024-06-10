@@ -16,8 +16,6 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
     restart: always
-    networks:
-      - ezserver-network
   app:
     platform: ${ARCH} # change based on host
     image: daftdove/ezfind-app:latest
@@ -39,18 +37,16 @@ services:
       - "3001:3000"
     environment: #change @<name>-db to container name of db service
       - DATABASE_URL=postgresql://${CMP_PG_USER}:${CMP_PG_PW}@ezfind-db:5432/${CMP_PG_DB}
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - GOOGLE_ID=${GOOGLE_ID}
       - GOOGLE_SECRET=${GOOGLE_SECRET}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
+    volumes:
+      - app:/app/uploads
     restart: always
-    networks:
-      - ezserver-network
 volumes:
   db:
     driver: local
-networks:
-  ezserver-network:
-    name: ezserver-network
-    external: true
+  app:
+    driver: local
 # NOTE: DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA

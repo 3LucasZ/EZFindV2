@@ -69,6 +69,7 @@ export default function SearchView(props: SearchViewProps) {
   //--ret--
   return (
     <>
+      <Box minH={"8px"}></Box>
       <Flex gap={"8px"} w={["95%", "90%", "80%", "70%"]} alignSelf={"center"}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
@@ -95,8 +96,8 @@ export default function SearchView(props: SearchViewProps) {
           </Checkbox>
         )}
       </Flex>
-      <Box minH={"8px"}></Box>
-      <Divider></Divider>
+      <Box h={"8px"}></Box>
+      {/* <Divider></Divider> */}
       <Stack
         overflowY="auto"
         sx={{ "::-webkit-scrollbar": { display: "none" } }} //remove annoying scrollbar

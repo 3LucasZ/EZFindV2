@@ -38,7 +38,7 @@ import { IoIosLock } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { FiEye, FiLock, FiUsers } from "react-icons/fi";
-import { getPerms } from "services/utils";
+import { getGroupPerm } from "services/utils";
 import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import UserWidget from "components/Widget/UserWidget";
@@ -52,7 +52,7 @@ type PageProps = {
 export default function GroupPage({ group, users }: PageProps) {
   //--default--
   const { data: session, status } = useSession();
-  const { isAdmin, pagePerm } = getPerms(session?.user, group);
+  const { isAdmin, pagePerm } = getGroupPerm(session?.user, group);
   const toaster = useToast();
 
   //--state--

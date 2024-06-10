@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { debugMode } from "./constants";
 import { GroupProps } from "components/Widget/GroupWidget";
 import { User } from "next-auth";
 
@@ -11,15 +10,15 @@ export function getIPFromReq(req: NextApiRequest) {
   if (ip?.substring(0, 7) == "::ffff:") {
     ip = ip.substring(7);
   }
-  if (debugMode) console.log("IP:", ip);
+  // console.log("IP:", ip);
   return ip;
 }
 
-export function getPerms(user: User | undefined, group: GroupProps) {
+export function getGroupPerm(user: User | undefined, group: GroupProps) {
   const isAdmin = user ? user.isAdmin : false;
   const relation = group.userRelations?.find((x) => x.userId == user?.id);
-  const pagePerm = isAdmin
+  const groupPerm = isAdmin
     ? 2
     : Math.max(group.minPerm, relation?.perm ? relation.perm : -1);
-  return { isAdmin, pagePerm };
+  return groupPerm;
 }

@@ -9,11 +9,18 @@ import {
   HStack,
   Icon,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { IconType } from "react-icons";
-import { FiAtSign, FiPhone, FiMapPin, FiSun } from "react-icons/fi";
+import {
+  FiAtSign,
+  FiPhone,
+  FiMapPin,
+  FiSun,
+  FiChevronDown,
+} from "react-icons/fi";
 
-export default function FAQ() {
-  const titleSz = [130, 130, 200, 300];
+export function FAQHeader() {
+  const titleSz = [130, 130, 200, 200, 260, 300];
   const titleHR = 5 / 6; //(title height / title fontSize) ratio
   const subtitleR = 1 / 6; //(subtitle fontSize / title fontSize) ratio
   return (
@@ -46,8 +53,9 @@ export default function FAQ() {
         <Card
           boxShadow={"md"}
           rounded={"3xl"}
-          w="380px"
-          maxW="100%"
+          minW="260px"
+          w="100%"
+          maxW="380px"
           ml={"auto"}
           mr={["auto", "auto", "0"]}
           // ml={"auto"}
@@ -62,12 +70,13 @@ export default function FAQ() {
             <VStack align={"start"}>
               <ContactItem
                 title="Email"
-                subtitle="sahuber@vcs.net"
+                subtitle="vcs.rnd.ezsuite@gmail.com"
                 icon={FiAtSign}
               />
               <ContactItem
                 title="Phone"
-                subtitle="+1 (408) 123 4567"
+                // subtitle="+1 (408) 123 4567"
+                subtitle="Not available"
                 icon={FiPhone}
               />
               <ContactItem
@@ -119,5 +128,59 @@ function ContactItem(props: ContactItemProps) {
         </Text>
       </VStack>
     </HStack>
+  );
+}
+
+type FAQItemProps = {
+  Q: string;
+  A: string;
+};
+export function FAQItem(props: FAQItemProps) {
+  const [active, setActive] = useState(false);
+  const transitionTime = 0.25;
+  return (
+    <Box
+      //--color--
+      // bg="gray.50"
+      bg={active ? "" : "gray.100"}
+      color="gray.700"
+      // color={active ? "black" : "white"}
+      transition={`background-color ${transitionTime}s linear, color ${transitionTime}s linear, border-color ${transitionTime}s linear`}
+      //--sizing--
+      w="100%"
+      maxW="800px"
+      px={"4"}
+      pt={"2"}
+      pb={active ? "0" : "2"}
+      position={"relative"}
+      //--border--
+      borderRadius={"xl"}
+      borderColor={active ? "gray.300" : "gray.100"}
+      // borderColor={"orange.200"}
+      borderWidth={1}
+      //function
+      cursor={"pointer"}
+      onClick={() => setActive(!active)}
+    >
+      <HStack>
+        <Text w="100%">{props.Q}</Text>
+        <Icon
+          as={FiChevronDown}
+          transform={active ? "rotate(180deg)" : ""}
+          transition={`transform ${transitionTime}s linear`}
+        />
+      </HStack>
+      <Box
+        display={"grid"}
+        gridTemplateRows={active ? "1fr" : "0fr"}
+        transition={`grid-template-rows ${transitionTime}s ease-out`}
+      >
+        <Box overflow={"hidden"}>
+          <Box h="4" />
+          <Text>{props.A}</Text>
+          <Box h="2" />
+        </Box>
+      </Box>
+    </Box>
   );
 }

@@ -31,8 +31,8 @@ export const FAB = ({
     <HStack
       //---position
       position={"fixed"}
-      right={"8px"}
-      bottom={`calc(58px + env(safe-area-inset-bottom) + ${bottomOffset}px)`}
+      right={"10px"}
+      bottom={`calc(50px + 10px + env(safe-area-inset-bottom) + ${bottomOffset}px)`}
       //---sizing + spacing
       minH="16"
       minW="16"

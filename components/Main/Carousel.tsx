@@ -35,7 +35,7 @@ export default function Carousel({ cards }: CarouselProps) {
         sm: 2,
         md: 3,
       },
-      { fallback: "md", ssr: false }
+      { fallback: "md", ssr: true }
     ) || 3;
   const [cur, setCur] = useState(0);
   const cnt = cards.length;
@@ -45,7 +45,7 @@ export default function Carousel({ cards }: CarouselProps) {
     setCur((s) => Math.max(s - 1, 0));
   };
   const next = () => {
-    setCur((s) => Math.min(s + 1, cnt - 1));
+    setCur((s) => Math.min(s + 1, cnt - cols));
   };
 
   //cyclic
@@ -79,18 +79,22 @@ export default function Carousel({ cards }: CarouselProps) {
         <Box left="0" h="100%" w="9px" bg="white" pos={"absolute"} />
         <Box right="0" h="100%" w="9px" bg="white" pos={"absolute"} />
         {/* control buttons */}
-        <CarouselControl
-          onClick={prev}
-          left="0"
-          top="50%"
-          icon={FiChevronLeft}
-        />
-        <CarouselControl
-          onClick={next}
-          right="0"
-          top="50%"
-          icon={FiChevronRight}
-        />
+        {cols < cards.length && (
+          <>
+            <CarouselControl
+              onClick={prev}
+              left="0"
+              top="50%"
+              icon={FiChevronLeft}
+            />
+            <CarouselControl
+              onClick={next}
+              right="0"
+              top="50%"
+              icon={FiChevronRight}
+            />
+          </>
+        )}
       </Flex>
     </Flex>
   );

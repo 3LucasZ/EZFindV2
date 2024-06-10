@@ -11,7 +11,7 @@ import {
 import Admin from "archive/old_UserWidget";
 import { UserProps } from "types/db";
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
@@ -29,14 +29,16 @@ type PageProps = {
   users: UserProps[];
 };
 export default function ManageAdmin({ users }: PageProps) {
-  //---template---
-  const { data: session } = useSession();
-  const isAdmin = session?.user.isAdmin;
+  //--copy paste on every page--
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
-  //---protect-action-modal---
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  //--ret--
   return (
-    <Layout isAdmin={isAdmin}>
+    <Layout me={me} loaded={status !== "loading"} authorized={true}>
       <Box minH="8px"></Box>
       <Flex px={responsivePx} textAlign={"center"} w="100%" flexDir="column">
         <Text w="100%" fontSize={responsiveHeaderFontSize}>

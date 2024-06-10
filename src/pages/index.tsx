@@ -24,17 +24,23 @@ import { FAB } from "components/Layout/FAB/FAB";
 import { FiEdit2, FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 import { responsivePx } from "services/constants";
+import { useEffect } from "react";
 
 type PageProps = {
   groups: GroupProps[];
 };
 
 export default function Home({ groups }: PageProps) {
-  const { data: session, status } = useSession();
-  const isAdmin = session?.user.isAdmin;
+  //--copy paste on every page--
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
+  //--ret--
   return (
-    <Layout isAdmin={session?.user.isAdmin} loading={status === "loading"}>
+    <Layout me={me} loaded={status !== "loading"} authorized={true}>
       <Box px={responsivePx}>
         <Heading py="1" textAlign={"center"}>
           Welcome!
@@ -50,7 +56,6 @@ export default function Home({ groups }: PageProps) {
           name: group.name,
           widget: <GroupWidget group={group} key={group.id} />,
         }))}
-        isEdit={false}
         columns={[2, 3, 3, 4]}
       />
       <FAB
@@ -64,7 +69,7 @@ export default function Home({ groups }: PageProps) {
               pathname: "/group/" + (await res.json()) + "/explore",
             });
         }}
-        hidden={!isAdmin}
+        hidden={me?.isAdmin == false}
       />
     </Layout>
   );
