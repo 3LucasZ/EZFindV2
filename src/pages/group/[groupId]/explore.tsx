@@ -17,7 +17,7 @@ import Layout from "components/Layout/MainLayout";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "types/db";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { poster } from "services/poster";
@@ -28,6 +28,7 @@ import EditableSubtitle from "components/Composable/EditableSubtitle";
 import { CustomStat } from "components/Main/CustomStat";
 import { FiCompass, FiPackage, FiTool, FiUsers } from "react-icons/fi";
 import { responsivePx } from "services/constants";
+import { getGroupPerm } from "services/utils";
 
 type PageProps = {
   group: GroupProps;
@@ -35,23 +36,20 @@ type PageProps = {
 };
 
 export default function GroupPage({ group, users }: PageProps) {
+  //--copy paste on every page--
   const { data: session, status, update } = useSession();
-  const isAdmin = session?.user.isAdmin;
-  const userGroupRelation = group.userRelations?.find(
-    (x) => x.userId == session?.user.id
-  );
-  const perm =
-    isAdmin == true
-      ? 2
-      : Math.max(
-          group.minPerm,
-          userGroupRelation?.perm != undefined ? userGroupRelation.perm : -1
-        );
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
+  const toaster = useToast();
+  //--state--
+  const groupPerm = getGroupPerm(session?.user, group);
   return (
     <Layout
-      isAdmin={session?.user.isAdmin}
-      loading={status === "loading"}
-      authorized={perm > -1}
+      me={me}
+      loaded={status !== "loading"}
+      authorized={groupPerm >= 0}
       group={group}
     >
       <Box overflow={"auto"}>

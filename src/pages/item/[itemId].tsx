@@ -128,7 +128,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   };
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={me != undefined}>
+    <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 1}>
       <Flex px={responsivePx}>
         <EditableTitle
           value={isEdit ? newName : item.name}
@@ -166,10 +166,10 @@ export default function ItemPage({ item, storages, group }: PageProps) {
               onClose={onCloseViewer}
               isOpen={isOpenViewer}
               onUpload={uploadImage}
-              canUpload={pagePerm >= 1} //PROTECTED
+              canUpload={groupPerm >= 1} //PROTECTED
               imageStr={item.image}
             />
-            {pagePerm >= 1 && ( //PROTECTED
+            {groupPerm >= 1 && ( //PROTECTED
               <IconButton
                 colorScheme="red"
                 aria-label=""
@@ -255,10 +255,9 @@ export default function ItemPage({ item, storages, group }: PageProps) {
             ),
           }))}
           invertible={true}
-          isEdit={isEdit}
         />
       )}
-      {pagePerm >= 1 && (
+      {groupPerm >= 1 && (
         <EditFAB
           isEdit={isEdit}
           onEdit={() => {

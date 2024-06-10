@@ -26,7 +26,7 @@ import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 import { UserProps } from "types/db";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { poster } from "services/poster";
@@ -50,14 +50,16 @@ type PageProps = {
 };
 
 export default function GroupPage({ group, users }: PageProps) {
-  //--default--
-  const { data: session, status } = useSession();
-  const { isAdmin, pagePerm } = getGroupPerm(session?.user, group);
+  //--copy paste on every page--
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
-
   //--state--
+  const groupPerm = getGroupPerm(me, group);
   const [isEdit, setIsEdit] = useState(false);
-
   //--new state--
   const [newName, setNewName] = useState(group.name);
   const [newDescription, setNewDescription] = useState(group.description);
@@ -128,7 +130,7 @@ export default function GroupPage({ group, users }: PageProps) {
     value: isEdit ? newMinPerm : "" + group.minPerm,
     onChange: (e) => {
       //PROTECTED
-      if (isEdit && pagePerm >= 2) {
+      if (isEdit && groupPerm >= 2) {
         setNewMinPerm(e);
       }
     },
@@ -171,7 +173,7 @@ export default function GroupPage({ group, users }: PageProps) {
 
   //--ret--
   return (
-    <Layout isAdmin={isAdmin} group={group} loading={status === "loading"}>
+    <Layout me={me} group={group} loaded={status !== "loading"}>
       <Flex px={responsivePx}>
         <AutoResizeTextarea
           value={isEdit ? newName : group.name}
@@ -201,11 +203,11 @@ export default function GroupPage({ group, users }: PageProps) {
               onClose={onCloseViewer}
               isOpen={isOpenViewer}
               onUpload={uploadImage}
-              canUpload={pagePerm >= 1} //PROTECTED
+              canUpload={groupPerm >= 1} //PROTECTED
               imageStr={group.image}
             />
 
-            {pagePerm >= 2 && ( //PROTECTED
+            {groupPerm >= 2 && ( //PROTECTED
               <IconButton
                 colorScheme="red"
                 aria-label=""
@@ -262,7 +264,7 @@ export default function GroupPage({ group, users }: PageProps) {
               name={option.name}
               description={option.desc}
               icon={option.icon}
-              disabled={!(isEdit && pagePerm >= 2)}
+              disabled={!(isEdit && groupPerm >= 2)}
             />
           );
         })}
@@ -282,7 +284,7 @@ export default function GroupPage({ group, users }: PageProps) {
               perm={relation.perm}
               isAdmin={relation.user.isAdmin}
               //state
-              isEdit={isEdit && pagePerm >= 2} //PROTECTED
+              isEdit={isEdit && groupPerm >= 2} //PROTECTED
               inverted={relation.inverted!}
               handleAdd={() => {
                 const relationCpy = cloneUserGroupRelationProps(relation);
@@ -307,7 +309,7 @@ export default function GroupPage({ group, users }: PageProps) {
         }))}
         invertible={true}
       />
-      {pagePerm >= 1 && ( //PROTECTED
+      {groupPerm >= 1 && ( //PROTECTED
         <EditFAB
           isEdit={isEdit}
           onEdit={() => {

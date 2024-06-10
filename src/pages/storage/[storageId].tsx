@@ -17,7 +17,7 @@ import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemStorageRelationProps } from "types/db";
 import React from "react";
 import { poster } from "services/poster";
@@ -40,10 +40,14 @@ type PageProps = {
 
 export default function StoragePage({ storage, items, group }: PageProps) {
   //--copy paste on every page--
-  const { data: session, status } = useSession();
-  const { isAdmin, pagePerm } = getGroupPerm(session?.user, group);
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
   //--state--
+  const groupPerm = getGroupPerm(me, group);
   const [isEdit, setIsEdit] = useState(false);
   //new state
   const [newName, setNewName] = useState(storage.name);
@@ -159,11 +163,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
   }
 
   return (
-    <Layout
-      isAdmin={session?.user.isAdmin}
-      loading={status === "loading"}
-      group={storage.group}
-    >
+    <Layout me={me} loaded={status !== "loading"} authorized={me?.isAdmin}>
       <Flex px={responsivePx}>
         <EditableTitle
           value={isEdit ? newName : storage.name}
@@ -196,16 +196,16 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               onClose={onCloseViewer}
               isOpen={isOpenViewer}
               onUpload={uploadImage}
-              canUpload={pagePerm >= 1} //PROTECTED
+              canUpload={groupPerm >= 1} //PROTECTED
               imageStr={storage.image}
             />
-            {pagePerm >= 1 && (
+            {groupPerm >= 1 && (
               <IconButton
                 colorScheme="red"
                 aria-label=""
                 icon={<DeleteIcon />}
                 onClick={onOpenTrash}
-                hidden={pagePerm < 1}
+                hidden={groupPerm < 1}
               />
             )}
 
@@ -246,10 +246,9 @@ export default function StoragePage({ storage, items, group }: PageProps) {
             ),
           ]}
           invertible={true}
-          isEdit={isEdit}
         />
       )}
-      {pagePerm >= 1 && (
+      {groupPerm >= 1 && (
         <EditFAB
           isEdit={isEdit}
           onEdit={() => {
@@ -287,7 +286,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
 
-  //redirect if invalid storageId
+  //redirect if invalid id
   if (storage == null) {
     return {
       redirect: {

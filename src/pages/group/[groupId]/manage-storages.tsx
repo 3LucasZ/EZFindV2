@@ -16,15 +16,30 @@ import SearchWidget from "components/Widget/ItemStorageWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
+import { useEffect } from "react";
+import { getGroupPerm } from "services/utils";
 
 type PageProps = {
   group: GroupProps;
 };
 export default function ManageStorages({ group }: PageProps) {
-  const { data: session } = useSession();
+  //--copy paste on every page--
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
   const toaster = useToast();
+  //--state--
+  const groupPerm = getGroupPerm(me, group);
+  //--ret--
   return (
-    <Layout isAdmin={session?.user.isAdmin} group={group}>
+    <Layout
+      me={me}
+      group={group}
+      authorized={groupPerm >= 0}
+      loaded={status !== "loading"}
+    >
       <Box minH="8px"></Box>
       <SearchView
         set={group.storages!.map((storage) => ({
@@ -42,7 +57,6 @@ export default function ManageStorages({ group }: PageProps) {
             />
           ),
         }))}
-        isEdit={false}
       />
       <FAB
         icon={AddIcon}

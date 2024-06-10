@@ -20,6 +20,7 @@ import {
   FiHelpCircle,
   FiHome,
   FiInfo,
+  FiMonitor,
 } from "react-icons/fi";
 import { IoMdHelp, IoMdInformation } from "react-icons/io";
 import { LuHelpCircle, LuInfo } from "react-icons/lu";
@@ -39,6 +40,7 @@ export default function AppBar() {
         // borderTopRightRadius={"20"}
       >
         <AppBarBtn icon={FiHome} href="/" />
+        <AppBarBtn icon={FiMonitor} href="/manage-admin" />
         <AppBarBtn icon={FiCompass} href="/manage-groups" />
         <AppBarBtn icon={FiBookOpen} href="/help" />
       </HStack>

@@ -13,7 +13,7 @@ import { FAQHeader, FAQItem } from "components/Layout/FAQ";
 import { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import Router from "next/router";
-import UserLayout from "components/Layout/MainLayout";
+import Layout from "components/Layout/MainLayout";
 
 export default function Home() {
   //--copy paste on every page--
@@ -25,11 +25,7 @@ export default function Home() {
   const toaster = useToast();
   //--ret--
   return (
-    <UserLayout
-      me={me}
-      loaded={status !== "loading"}
-      authorized={me != undefined}
-    >
+    <Layout me={me} loaded={status !== "loading"} authorized={true}>
       <Box px={[5, 10, 10, 28, 48, 60]} overflowY="auto">
         <FAQHeader />
         <Box h="8" />
@@ -91,6 +87,6 @@ export default function Home() {
         </Box>
         <Box h="8"></Box>
       </Box>
-    </UserLayout>
+    </Layout>
   );
 }

@@ -9,6 +9,7 @@ import {
   Image as ChImage,
   Box,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useQRCode } from "next-qrcode";
@@ -21,12 +22,15 @@ import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
 import Header from "components/Layout/Header";
 import { UserProps } from "types/db";
+import { getGroupPerm } from "services/utils";
+import { GroupProps } from "components/Widget/GroupWidget";
 
-type Props = {
+type PageProps = {
   url: string;
   xml: string;
   id: number;
   name: string;
+  group: GroupProps;
 };
 
 type LabelWriterPrinter = {
@@ -38,11 +42,18 @@ type LabelWriterPrinter = {
   isTwinTurbo: boolean;
 };
 
-const StoragePage: React.FC<Props> = (props) => {
-  const { data: session } = useSession();
+export default function PrintPage(props: PageProps) {
+  //--copy paste on every page--
+  const { data: session, status, update } = useSession();
+  useEffect(() => {
+    update();
+  }, []);
+  const me = session?.user;
+  const toaster = useToast();
   //rest
+  const groupPerm = getGroupPerm(me, props.group);
   const [img, setImg] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
+  const [printerStatus, setPrinterStatus] = useState<string>("");
   const [printers, setPrinters] = useState<LabelWriterPrinter[]>([]);
   const [options, setOptions] = useState<{ value: number; label: string }[]>(
     []
@@ -81,10 +92,10 @@ const StoragePage: React.FC<Props> = (props) => {
       await dymo //get service connection status
         .getStatus()
         .then((dymoStatus: string) => {
-          setStatus(dymoStatus);
+          setPrinterStatus(dymoStatus);
         })
         .catch((err: any) => {
-          setStatus("");
+          setPrinterStatus("");
         });
       await dymo //get connected printers
         .getPrinters()
@@ -147,7 +158,7 @@ const StoragePage: React.FC<Props> = (props) => {
   // console.log("xml", props.xml);
 
   return (
-    <Layout isAdmin={session?.user.isAdmin}>
+    <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 1}>
       <Box overflowY="auto">
         <SimpleGrid columns={[1, 2]} spacing={10} px={5}>
           {/* DYMO Printing */}
@@ -197,13 +208,13 @@ const StoragePage: React.FC<Props> = (props) => {
                     Print
                   </Button>
                   <Box
-                    bg={status ? "green.400" : "tomato"}
+                    bg={printerStatus ? "green.400" : "tomato"}
                     color="white"
                     rounded="md"
                     p={2}
                     textAlign={"center"}
                   >
-                    {status
+                    {printerStatus
                       ? "DYMO Service Connected"
                       : "DYMO Service Disconnected"}
                   </Box>
@@ -273,7 +284,7 @@ const StoragePage: React.FC<Props> = (props) => {
       </Box>
     </Layout>
   );
-};
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const storage = await prisma.storage.findUnique({
@@ -281,10 +292,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: Number(context.params?.storageId),
     },
     include: {
-      itemRelations: true,
+      group: true,
     },
   });
-
+  //redirect if invalid id
+  if (storage == null) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404",
+      },
+    };
+  }
   const domain = context.req.headers.host;
   const path = "/storage/" + storage?.id;
   const url = "https://" + domain + path;
@@ -303,8 +322,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       xml,
       id: storage?.id,
       name: storage?.name,
+      group: storage.group,
     },
   };
 };
-
-export default StoragePage;

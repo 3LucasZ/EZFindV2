@@ -38,19 +38,19 @@ export default function ManageAdmin({ users }: PageProps) {
   const toaster = useToast();
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={true}>
+    <Layout me={me} loaded={status !== "loading"} authorized={me?.isAdmin}>
       <Box minH="8px"></Box>
       <Flex px={responsivePx} textAlign={"center"} w="100%" flexDir="column">
         <Text w="100%" fontSize={responsiveHeaderFontSize}>
           Admins
         </Text>
-        <Text color="grey" textAlign={"start"}>
+        {/* <Text color="grey" textAlign={"start"}>
           Admins can perform any operation on the app. Be cautious to only give
           admin priveleges to trusted individuals. You can only grant admin
           access to pre-registered users.
-        </Text>
+        </Text> */}
       </Flex>
-      <Box minH={"8px"} />
+
       {session?.user.isAdmin && (
         <SearchView
           set={users.map((user) => ({

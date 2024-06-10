@@ -8,10 +8,12 @@ import Header from "./Header";
 import AvatarMenu from "./AvatarMenu";
 import { User } from "next-auth";
 import AppBar from "./AppBar";
+import { GroupProps } from "components/Widget/GroupWidget";
 
 type LayoutProps = {
   me?: User;
-  authorized: boolean;
+  group?: GroupProps;
+  authorized?: boolean;
   loaded: boolean;
   children?: ReactNode;
 };

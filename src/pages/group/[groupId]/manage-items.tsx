@@ -36,7 +36,7 @@ export default function ManageItems({ group }: PageProps) {
   const groupPerm = getGroupPerm(session?.user, group);
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={me != undefined}>
+    <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 0}>
       <Text fontSize={responsiveHeaderFontSize} textAlign={"center"}>
         Machines
       </Text>
