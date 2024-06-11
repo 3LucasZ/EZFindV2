@@ -9,12 +9,12 @@ import { TypedRequestBody } from "@/types";
 export default async function handle(
   req: TypedRequestBody<{
     groupId: number;
-    itemId: number;
+    id: number;
   }>,
   res: NextApiResponse
 ) {
   //--rcv--
-  const { groupId, itemId } = req.body;
+  const { groupId, id } = req.body;
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
   const groupPerm = getGroupPerm(session?.user, groupId);
@@ -23,7 +23,7 @@ export default async function handle(
   try {
     const op = await prisma.item.delete({
       where: {
-        id: itemId,
+        id,
       },
     });
     return res.status(200).json(op);

@@ -3,23 +3,46 @@ import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
 import { TypedRequestBody } from "types/types";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
+import { getGroupPerm } from "services/utils";
 
 export default async function handle(
   req: TypedRequestBody<{
+    groupId: number;
     id: number;
     newName: string;
     newDescription: string;
     newLink: string;
-    newRelations: ItemStorageRelationProps[];
+    addStorageRelations: ItemStorageRelationProps[];
+    rmStorageRelations: ItemStorageRelationProps[];
   }>,
   res: NextApiResponse
 ) {
-  const { id, newName, newDescription, newLink, newRelations } = req.body;
-  const relations = newRelations.map((relation) => ({
+  //--rcv--
+  const {
+    groupId,
+    id,
+    newName,
+    newDescription,
+    newLink,
+    addStorageRelations,
+    rmStorageRelations,
+  } = req.body;
+  const addRelations = addStorageRelations.map((relation) => ({
     count: relation.count,
     storageId: relation.storageId,
   }));
+  const rmRelations = addStorageRelations.map((relation) => ({
+    count: relation.count,
+    storageId: relation.storageId,
+  }));
+  //--API Protection--
+  const session = await getServerSession(req, res, authOptions);
+  const groupPerm = getGroupPerm(session?.user, groupId);
+  if (groupPerm < 1) return res.status(403).json("Forbidden");
   if (newName == "") return res.status(500).json("Item name can not be empty.");
+  //--operation--
   try {
     const op = await prisma.item.update({
       where: {
@@ -30,8 +53,8 @@ export default async function handle(
         description: newDescription,
         link: newLink,
         storageRelations: {
-          deleteMany: {}, //extremely important, this denotes that you want to delete relations too
-          createMany: { data: relations },
+          deleteMany: rmRelations, //extremely important, this denotes that you want to delete relations too
+          createMany: { data: addRelations },
         },
       },
     });

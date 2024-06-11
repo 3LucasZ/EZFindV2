@@ -13,26 +13,42 @@ export default async function handle(
     id: number;
     newName: string;
     newDescription: string;
-    newUserRelations: UserGroupRelationProps[];
+    addUserRelations: UserGroupRelationProps[];
+    rmUserRelations: UserGroupRelationProps[];
     newMinPerm: boolean;
   }>,
   res: NextApiResponse
 ) {
   //--rcv--
-  const { id, newName, newDescription, newUserRelations, newMinPerm } =
-    req.body;
-  const addRelations = newUserRelations.map((relation) => ({
-    perm: relation.perm,
-    userId: relation.userId,
-  }));
+  const {
+    id,
+    newName,
+    newDescription,
+    addUserRelations,
+    rmUserRelations,
+    newMinPerm,
+  } = req.body;
+  const addRelations = addUserRelations
+    ? addUserRelations.map((relation) => ({
+        perm: relation.perm,
+        userId: relation.userId,
+      }))
+    : [];
+  const rmRelations = rmUserRelations
+    ? rmUserRelations.map((relation) => ({
+        perm: relation.perm,
+        userId: relation.userId,
+      }))
+    : [];
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
   const groupPerm = getGroupPerm(session?.user, id);
   if (groupPerm < 1) return res.status(403).json("Forbidden");
-  //--operation--
-
+  if (groupPerm < 2 && (addRelations || rmRelations))
+    return res.status(403).json("Forbidden");
   if (newName == "")
     return res.status(500).json("Group name can not be empty.");
+  //--operation--
   try {
     const op = await prisma.group.update({
       where: {
@@ -43,7 +59,7 @@ export default async function handle(
         description: newDescription,
         minPerm: Number(newMinPerm),
         userRelations: {
-          deleteMany: {},
+          deleteMany: rmRelations,
           createMany: { data: addRelations },
         },
       },

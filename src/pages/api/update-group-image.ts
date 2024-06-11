@@ -3,6 +3,9 @@ import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
 import { TypedRequestBody } from "types/types";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
+import { getGroupPerm } from "services/utils";
 
 export default async function handle(
   req: TypedRequestBody<{
@@ -11,7 +14,13 @@ export default async function handle(
   }>,
   res: NextApiResponse
 ) {
+  //--rcv--
   const { id, image } = req.body;
+  //--API Protection--
+  const session = await getServerSession(req, res, authOptions);
+  const groupPerm = getGroupPerm(session?.user, id);
+  if (groupPerm < 1) return res.status(403).json("Forbidden");
+  //--operation--
   try {
     const op = await prisma.group.update({
       where: {

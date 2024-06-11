@@ -25,3 +25,4 @@
 - prisma-client
 - browser-image-compression
 - dymojs
+- pwa-asset-generator
