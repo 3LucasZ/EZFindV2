@@ -78,10 +78,15 @@ export default function Layout(props: LayoutProps) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="manifest" href="/manifest.json" />
         {/*Icons*/}
-        <link rel="icon" href="/icon/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="196x196"
+          href="/icon/favicon-196.png"
+        />
         {/* #dev-only: trick to instantly refresh the favicon, using full pathname */}
         {/* <link rel="icon" href="https://localhost:3000/icon/favicon.ico" /> */}
-        <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png"></link>
+        <link rel="apple-touch-icon" href="/icon/apple-icon-180.png" />
         {splashScreenLinks}
         {/*Forced CSS styling underlay*/}
         <style>{css}</style>
