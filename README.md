@@ -8,7 +8,8 @@
 
 - npm run dev (run the project)
 - assets
-  - npx pwa-asset-generator public/icon/base_icon.png public/icon --icon-only # generate icons
+  - npx pwa-asset-generator public/icon/icon-base.png --favicon --icon-only --padding "0px" --path-override /icon --manifest public/manifest.json # generate favicon
+  - npx pwa-asset-generator public/icon/icon-base.png --icon-only --padding "10px" --path-override /icon --manifest public/manifest.json # generate app icons
 
 # Libraries
 
