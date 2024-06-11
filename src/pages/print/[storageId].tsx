@@ -51,7 +51,7 @@ export default function PrintPage(props: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //rest
-  const groupPerm = getGroupPerm(me, props.group);
+  const groupPerm = getGroupPerm(me, props.group.id);
   const [img, setImg] = useState<string>("");
   const [printerStatus, setPrinterStatus] = useState<string>("");
   const [printers, setPrinters] = useState<LabelWriterPrinter[]>([]);

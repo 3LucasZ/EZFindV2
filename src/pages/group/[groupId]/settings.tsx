@@ -58,7 +58,7 @@ export default function GroupPage({ group, users }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(me, group);
+  const groupPerm = getGroupPerm(me, group.id);
   const [isEdit, setIsEdit] = useState(false);
   //--new state--
   const [newName, setNewName] = useState(group.name);

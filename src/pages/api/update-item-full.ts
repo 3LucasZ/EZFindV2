@@ -14,29 +14,18 @@ export default async function handle(
     newName: string;
     newDescription: string;
     newLink: string;
-    addStorageRelations: ItemStorageRelationProps[];
-    rmStorageRelations: ItemStorageRelationProps[];
+    newStorageRelations: ItemStorageRelationProps[];
   }>,
   res: NextApiResponse
 ) {
   //--rcv--
-  const {
-    groupId,
-    id,
-    newName,
-    newDescription,
-    newLink,
-    addStorageRelations,
-    rmStorageRelations,
-  } = req.body;
-  const addRelations = addStorageRelations.map((relation) => ({
+  const { groupId, id, newName, newDescription, newLink, newStorageRelations } =
+    req.body;
+  const newRelations = newStorageRelations.map((relation) => ({
     count: relation.count,
     storageId: relation.storageId,
   }));
-  const rmRelations = addStorageRelations.map((relation) => ({
-    count: relation.count,
-    storageId: relation.storageId,
-  }));
+
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
   const groupPerm = getGroupPerm(session?.user, groupId);
@@ -53,8 +42,8 @@ export default async function handle(
         description: newDescription,
         link: newLink,
         storageRelations: {
-          deleteMany: rmRelations, //extremely important, this denotes that you want to delete relations too
-          createMany: { data: addRelations },
+          deleteMany: {}, //extremely important, this denotes that you want to delete relations too
+          createMany: { data: newRelations },
         },
       },
     });

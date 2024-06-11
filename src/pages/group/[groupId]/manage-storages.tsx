@@ -31,7 +31,7 @@ export default function ManageStorages({ group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(me, group);
+  const groupPerm = getGroupPerm(me, group.id);
   //--ret--
   return (
     <Layout

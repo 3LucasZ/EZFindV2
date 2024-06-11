@@ -47,7 +47,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(session?.user, group);
+  const groupPerm = getGroupPerm(session?.user, group.id);
   const [isEdit, setIsEdit] = useState(false);
   //--new state--
   const [newName, setNewName] = useState(item.name);

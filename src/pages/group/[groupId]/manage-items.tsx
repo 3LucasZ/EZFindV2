@@ -33,7 +33,7 @@ export default function ManageItems({ group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(session?.user, group);
+  const groupPerm = getGroupPerm(session?.user, group.id);
   //--ret--
   return (
     <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 0}>

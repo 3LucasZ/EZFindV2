@@ -25,6 +25,7 @@ import { FiEdit2, FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 import { responsivePx } from "services/constants";
 import { useEffect } from "react";
+import PWAPrompt from "components/PWAPrompt";
 
 type PageProps = {
   groups: GroupProps[];
@@ -42,12 +43,14 @@ export default function Home({ groups }: PageProps) {
   return (
     <Layout me={me} loaded={status !== "loading"} authorized={true}>
       <Box px={responsivePx}>
-        <Heading py="1" textAlign={"center"}>
-          Welcome!
-        </Heading>
-        <Text textAlign={"center"}>
-          Get started by selecting a group to view.
-        </Text>
+        {!me && (
+          <>
+            <Heading py="1" textAlign={"center"}>
+              Welcome!
+            </Heading>
+            <Text textAlign={"center"}>Get started by selecting a group.</Text>
+          </>
+        )}
       </Box>
 
       <Box minH="8px"></Box>
@@ -71,6 +74,7 @@ export default function Home({ groups }: PageProps) {
         }}
         hidden={me?.isAdmin == false}
       />
+      <PWAPrompt />
     </Layout>
   );
 }

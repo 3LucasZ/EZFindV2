@@ -13,29 +13,16 @@ export default async function handle(
     id: number;
     newName: string;
     newDescription: string;
-    addUserRelations: UserGroupRelationProps[];
-    rmUserRelations: UserGroupRelationProps[];
+    newUserRelations: UserGroupRelationProps[];
     newMinPerm: boolean;
   }>,
   res: NextApiResponse
 ) {
   //--rcv--
-  const {
-    id,
-    newName,
-    newDescription,
-    addUserRelations,
-    rmUserRelations,
-    newMinPerm,
-  } = req.body;
-  const addRelations = addUserRelations
-    ? addUserRelations.map((relation) => ({
-        perm: relation.perm,
-        userId: relation.userId,
-      }))
-    : [];
-  const rmRelations = rmUserRelations
-    ? rmUserRelations.map((relation) => ({
+  const { id, newName, newDescription, newUserRelations, newMinPerm } =
+    req.body;
+  const newRelations = newUserRelations
+    ? newUserRelations.map((relation) => ({
         perm: relation.perm,
         userId: relation.userId,
       }))
@@ -44,8 +31,7 @@ export default async function handle(
   const session = await getServerSession(req, res, authOptions);
   const groupPerm = getGroupPerm(session?.user, id);
   if (groupPerm < 1) return res.status(403).json("Forbidden");
-  if (groupPerm < 2 && (addRelations || rmRelations))
-    return res.status(403).json("Forbidden");
+  if (groupPerm < 2 && newRelations) return res.status(403).json("Forbidden");
   if (newName == "")
     return res.status(500).json("Group name can not be empty.");
   //--operation--
@@ -59,8 +45,8 @@ export default async function handle(
         description: newDescription,
         minPerm: Number(newMinPerm),
         userRelations: {
-          deleteMany: rmRelations,
-          createMany: { data: addRelations },
+          deleteMany: {},
+          createMany: { data: newRelations },
         },
       },
     });
