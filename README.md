@@ -8,8 +8,8 @@
 
 - npm run dev (run the project)
 - assets
-  - Note: although jpg compresses images better than png, it does not support transparency at all. Therefore, we use --type png on all commands.
-  - npx pwa-asset-generator public/icon/icon-base.png public/icon --favicon --icon-only --padding "0px" --path-override /icon --manifest public/manifest.json --opaque false --type png --xhtml && npx pwa-asset-generator public/icon/icon-base.png public/icon --icon-only --padding "10px" --path-override /icon --manifest public/manifest.json --opaque true --type png --xhtml && npx pwa-asset-generator public/splashscreens/splash-base.png public/splashscreens --splash-only --path-override /splashscreens --manifest public/manifest.json --opaque false --type png --xhtml # generate icons and splashscreens
+  - Note: although jpg compresses images better than png, it does not support transparency. Use --type png and --opaque false if you want an icon to be transparent.
+  - npx pwa-asset-generator public/icon/icon-base.png public/icon --favicon --icon-only --padding "0px" --path-override /icon --manifest public/manifest.json --opaque false --type png --xhtml && npx pwa-asset-generator public/icon/icon-base.png public/icon --icon-only --padding "10px" --path-override /icon --manifest public/manifest.json --opaque true --type png --xhtml && npx pwa-asset-generator public/splashscreens/splash-base.png public/splashscreens --splash-only --path-override /splashscreens --manifest public/manifest.json --opaque true --type jpg --xhtml # generate icons and splashscreens
 
 # Libraries
 
