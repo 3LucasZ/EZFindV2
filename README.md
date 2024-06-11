@@ -8,9 +8,7 @@
 
 - npm run dev (run the project)
 - assets
-  - npx pwa-asset-generator public/icon/icon-base.png public/icon --favicon --icon-only --padding "0px" --path-override /icon --manifest public/manifest.json # generate favicon
-  - npx pwa-asset-generator public/icon/icon-base.png public/icon--icon-only --padding "10px" --path-override /icon --manifest public/manifest.json # generate app icons
-  - npx pwa-asset-generator public/splashscreens/splash-base.png public/splashscreens --splash-only --path-override /icon --manifest public/manifest.json # generate splashes
+  - npx pwa-asset-generator public/icon/icon-base.png public/icon --favicon --icon-only --padding "0px" --path-override /icon --manifest public/manifest.json && npx pwa-asset-generator public/icon/icon-base.png public/icon--icon-only --padding "10px" --path-override /icon --manifest public/manifest.json && npx pwa-asset-generator public/splashscreens/splash-base.png public/splashscreens --splash-only --path-override /icon --manifest public/manifest.json # generate favicon, icons, and splashscreens
 
 # Libraries
 
