@@ -1,27 +1,17 @@
 import {
   AspectRatio,
-  Box,
-  Button,
-  ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
-  Divider,
-  Grid,
-  Heading,
   Image,
-  Show,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import BaseWidget from "./BaseWidget";
-import { ItemStorageRelationProps } from "types/db";
-import imagePlaceholder from "public/images/image-placeholder.png";
 import Router from "next/router";
 import { UserGroupRelationProps } from "types/db";
 import { ItemProps } from "types/db";
 import { StorageProps } from "types/db";
 import { genGradient } from "services/gradientGenerator";
+import { btnBase } from "services/constants";
 
 export type GroupProps = {
   id: number;
@@ -51,6 +41,9 @@ export default function GroupWidget({ group }: GroupWidgetProps) {
       mx={1} //necessary so card shadow is not clipped
       mb={2} //ensure consistent spacing, due to added mx above
       boxShadow={"md"}
+      _hover={{ bgColor: "gray.100" }}
+      {...btnBase}
+      color="black"
     >
       <CardBody p={0}>
         <AspectRatio ratio={1} bgGradient={genGradient(group.name)}>

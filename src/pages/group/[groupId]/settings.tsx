@@ -25,7 +25,6 @@ import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { UserProps } from "types/db";
 import { useEffect, useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
@@ -43,10 +42,11 @@ import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import UserWidget from "components/Widget/UserWidget";
 import { responsiveHeaderFontSize, responsivePx } from "services/constants";
+import { User } from "next-auth";
 
 type PageProps = {
   group: GroupProps;
-  users: UserProps[];
+  users: User[];
 };
 
 export default function GroupPage({ group, users }: PageProps) {
@@ -58,7 +58,7 @@ export default function GroupPage({ group, users }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(me, group.id);
+  const groupPerm = getGroupPerm(me, group);
   const [isEdit, setIsEdit] = useState(false);
   //--new state--
   const [newName, setNewName] = useState(group.name);
@@ -173,7 +173,12 @@ export default function GroupPage({ group, users }: PageProps) {
 
   //--ret--
   return (
-    <Layout me={me} group={group} loaded={status !== "loading"}>
+    <Layout
+      me={me}
+      group={group}
+      loaded={status !== "loading"}
+      authorized={groupPerm >= 0}
+    >
       <Flex px={responsivePx}>
         <AutoResizeTextarea
           value={isEdit ? newName : group.name}

@@ -45,3 +45,28 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   process.env.NEXTAUTH_URL = "https://" + host + "/api/auth";
   return NextAuth(authOptions)(req, res);
 }
+
+//--Extend prisma adapter--
+//Extend official open-source: https://github.com/nextauthjs/next-auth/blob/main/packages/adapter-prisma/src/index.ts
+//Extra help: https://next-auth.js.org/configuration/events#createuser
+//retrieve relational columns from user ("include" tag)
+prismaAdapter.getSessionAndUser = async (sessionToken) => {
+  // console.log("GET SESSION + USER");
+  const userAndSession = await prisma.session.findUnique({
+    where: { sessionToken },
+    include: {
+      user: {
+        include: {
+          groupRelations: {
+            include: {
+              group: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!userAndSession) return null;
+  const { user, ...session } = userAndSession;
+  return { user, session };
+};

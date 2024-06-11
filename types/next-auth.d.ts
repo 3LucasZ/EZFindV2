@@ -1,5 +1,5 @@
 import NextAuth, { DefaultSession } from "next-auth";
-import { UserGroupRelation } from "./db";
+import { UserGroupRelationProps } from "./db";
 
 declare module "next-auth" {
   /**
@@ -14,7 +14,7 @@ declare module "next-auth" {
       image: string;
       //custom
       isAdmin: boolean;
-      groupRelations: UserGroupRelation[];
+      groupRelations: UserGroupRelationProps[];
     } & DefaultSession["user"];
   }
   interface User {
@@ -25,6 +25,6 @@ declare module "next-auth" {
     image: string;
     //custom
     isAdmin: boolean;
-    groupRelations: UserGroupRelation[];
+    groupRelations: UserGroupRelationProps[];
   }
 }

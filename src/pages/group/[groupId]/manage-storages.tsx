@@ -1,20 +1,14 @@
-import StorageWidget from "components/Widget/ItemStorageWidget";
-import { StorageProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import SearchView from "components/Main/SearchView";
 import prisma from "services/prisma";
-import { UserProps } from "types/db";
 import { useSession } from "next-auth/react";
-import { errorToast } from "services/toasty";
 import Router from "next/router";
-import { Box, Center, useToast, Text } from "@chakra-ui/react";
-import Header from "components/Layout/Header";
+import { Box, useToast } from "@chakra-ui/react";
 import { poster } from "services/poster";
 import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ItemStorageWidget";
 import { FAB } from "components/Layout/FAB/FAB";
-import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { getGroupPerm } from "services/utils";
@@ -31,7 +25,7 @@ export default function ManageStorages({ group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(me, group.id);
+  const groupPerm = getGroupPerm(me, group);
   //--ret--
   return (
     <Layout

@@ -1,6 +1,7 @@
 import { GroupProps } from "components/Widget/GroupWidget";
 import { ItemProps, StorageProps } from "./db";
 import { MouseEventHandler } from "react";
+import { User } from "next-auth";
 
 export type ItemProps = {
   id: number;
@@ -19,16 +20,9 @@ export type StorageProps = {
   image: string;
   group: GroupProps;
 };
-export type UserProps = {
-  id: string;
-  email: string;
-  name: string;
-  isAdmin: boolean;
-  image: string;
-};
 
 export type UserGroupRelationProps = {
-  user: UserProps;
+  user: User;
   userId: string;
   group: GroupProps;
   groupId: number;

@@ -41,7 +41,12 @@ export default function Home({ groups }: PageProps) {
   const toaster = useToast();
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={true}>
+    <Layout
+      me={me}
+      loaded={status !== "loading"}
+      authorized={true}
+      noAppBar={true}
+    >
       <Box px={responsivePx}>
         {!me && (
           <>

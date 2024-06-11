@@ -16,7 +16,7 @@ import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
-import { UserProps } from "types/db";
+
 import { useEffect, useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
@@ -29,10 +29,11 @@ import { CustomStat } from "components/Main/CustomStat";
 import { FiCompass, FiPackage, FiTool, FiUsers } from "react-icons/fi";
 import { responsivePx } from "services/constants";
 import { getGroupPerm } from "services/utils";
+import { User } from "next-auth";
 
 type PageProps = {
   group: GroupProps;
-  users: UserProps[];
+  users: User[];
 };
 
 export default function GroupPage({ group, users }: PageProps) {
@@ -44,7 +45,8 @@ export default function GroupPage({ group, users }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(session?.user, group.id);
+  const groupPerm = getGroupPerm(session?.user, group);
+  console.log("groupPerm", groupPerm);
   //--ret--
   return (
     <Layout

@@ -1,21 +1,14 @@
-import ItemWidget from "components/Widget/ItemStorageWidget";
-import { ItemProps } from "types/db";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
 import { GetServerSideProps } from "next";
 import prisma from "services/prisma";
-import { getSession, useSession } from "next-auth/react";
-import { UserProps } from "types/db";
+import { useSession } from "next-auth/react";
 import Router from "next/router";
-import { errorToast } from "services/toasty";
-import { Box, useToast, Text, Heading, Center } from "@chakra-ui/react";
-import Header from "components/Layout/Header";
+import { useToast, Text } from "@chakra-ui/react";
 import { poster } from "services/poster";
-import { Session } from "next-auth";
 import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ItemStorageWidget";
 import { FAB } from "components/Layout/FAB/FAB";
-import { FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 import { getGroupPerm } from "services/utils";
 import { responsiveHeaderFontSize } from "services/constants";
@@ -33,7 +26,7 @@ export default function ManageItems({ group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(session?.user, group.id);
+  const groupPerm = getGroupPerm(session?.user, group);
   //--ret--
   return (
     <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 0}>

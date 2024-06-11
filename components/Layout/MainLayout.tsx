@@ -16,6 +16,7 @@ type LayoutProps = {
   authorized?: boolean;
   loaded: boolean;
   children?: ReactNode;
+  noAppBar?: boolean;
 };
 export default function Layout(props: LayoutProps) {
   //--set content based on: loaded, authorized--
@@ -112,7 +113,7 @@ export default function Layout(props: LayoutProps) {
         >
           <Header right={<AvatarMenu me={props.me} />} />
           {content}
-          <AppBar />
+          {!props.noAppBar && <AppBar />}
         </Flex>
       </main>
     </>
