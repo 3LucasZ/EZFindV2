@@ -1,4 +1,5 @@
 import NextAuth, { DefaultSession } from "next-auth";
+import { UserGroupRelation } from "./db";
 
 declare module "next-auth" {
   /**

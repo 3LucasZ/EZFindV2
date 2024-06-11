@@ -4,6 +4,9 @@ import type { NextApiResponse } from "next";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
 import { TypedRequestBody } from "types/types";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
+import { getGroupPerm } from "services/utils";
 
 export default async function handle(
   req: TypedRequestBody<{
@@ -15,12 +18,19 @@ export default async function handle(
   }>,
   res: NextApiResponse
 ) {
+  //--rcv--
   const { id, newName, newDescription, newUserRelations, newMinPerm } =
     req.body;
-  const _newUserRelations = newUserRelations.map((relation) => ({
+  const addRelations = newUserRelations.map((relation) => ({
     perm: relation.perm,
     userId: relation.userId,
   }));
+  //--API Protection--
+  const session = await getServerSession(req, res, authOptions);
+  const groupPerm = getGroupPerm(session?.user, id);
+  if (groupPerm < 1) return res.status(403).json("Forbidden");
+  //--operation--
+
   if (newName == "")
     return res.status(500).json("Group name can not be empty.");
   try {
@@ -34,7 +44,7 @@ export default async function handle(
         minPerm: Number(newMinPerm),
         userRelations: {
           deleteMany: {},
-          createMany: { data: _newUserRelations },
+          createMany: { data: addRelations },
         },
       },
     });

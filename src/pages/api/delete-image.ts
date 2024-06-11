@@ -10,7 +10,7 @@ export default async function handle(
   }>,
   res: NextApiResponse
 ) {
-  //--image
+  //--rcv--
   const { image } = req.body;
   //--imagePath
   const imagePath = join(process.cwd(), image);

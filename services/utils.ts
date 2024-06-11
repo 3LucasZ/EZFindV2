@@ -14,11 +14,13 @@ export function getIPFromReq(req: NextApiRequest) {
   return ip;
 }
 
-export function getGroupPerm(user: User | undefined, group: GroupProps) {
+export function getGroupPerm(user: User | undefined, groupId: number) {
   const isAdmin = user ? user.isAdmin : false;
-  const relation = group.userRelations?.find((x) => x.userId == user?.id);
+  const relation = user?.groupRelations?.find(
+    (groupRelation) => groupRelation.groupId == groupId
+  );
   const groupPerm = isAdmin
     ? 2
-    : Math.max(group.minPerm, relation?.perm ? relation.perm : -1);
+    : Math.max(relation.group.minPerm, relation.perm ? relation.perm : -1);
   return groupPerm;
 }

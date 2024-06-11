@@ -1,11 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
+import { authOptions } from "./auth/[...nextauth]";
+import { TypedRequestBody } from "types/types";
 
 export default async function handle(
-  req: NextApiRequest,
+  req: TypedRequestBody<{}>,
   res: NextApiResponse
 ) {
+  //--API Protection--
+  const session = await getServerSession(req, res, authOptions);
+  if (!session?.user.isAdmin) return res.status(403).json("Forbidden");
+  //--operation--
   try {
     const op = await prisma.group.create({
       data: {

@@ -45,6 +45,7 @@ export default function GroupPage({ group, users }: PageProps) {
   const toaster = useToast();
   //--state--
   const groupPerm = getGroupPerm(session?.user, group);
+  //--ret--
   return (
     <Layout
       me={me}
