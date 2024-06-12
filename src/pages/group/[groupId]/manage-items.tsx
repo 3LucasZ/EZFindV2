@@ -29,9 +29,14 @@ export default function ManageItems({ group }: PageProps) {
   const groupPerm = getGroupPerm(session?.user, group);
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 0}>
+    <Layout
+      me={me}
+      loaded={status !== "loading"}
+      authorized={groupPerm >= 0}
+      group={group}
+    >
       <Text fontSize={responsiveHeaderFontSize} textAlign={"center"}>
-        Machines
+        Items
       </Text>
       <SearchView
         set={group.items!.map((item) => ({

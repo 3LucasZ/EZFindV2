@@ -19,6 +19,7 @@ import { genGradient } from "services/gradientGenerator";
 
 import { throttle } from "lodash";
 import _ from "lodash";
+import { btnBase } from "services/constants";
 
 type CarouselProps = {
   cards: {
@@ -155,6 +156,8 @@ function CarouselCard(props: CarouselCardProps) {
             p={2}
             boxSize={"8"}
             onClick={() => Router.push(props.url)}
+            {...btnBase}
+            color="black"
           />
         </HStack>
       </Box>
@@ -188,6 +191,7 @@ function CarouselControl(props: CarouselControlProps) {
         bg: "black",
         cursor: "pointer",
       }}
+      transition="opacity 0.3s"
       opacity={0.3}
       bg={"black"}
       rounded={"full"}

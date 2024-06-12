@@ -1,27 +1,14 @@
-import {
-  Box,
-  Center,
-  Heading,
-  SimpleGrid,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
-import { RouteButton } from "components/Main/RouteButton";
+import { Box, Heading, Text, useToast } from "@chakra-ui/react";
 import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
-import { FaTools } from "react-icons/fa";
-import { FaBoxes } from "react-icons/fa";
-import { UserProps } from "types/db";
-import Header from "components/Layout/Header";
 import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
 import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
 import Router from "next/router";
 import { FAB } from "components/Layout/FAB/FAB";
-import { FiEdit2, FiPlus } from "react-icons/fi";
 import { AddIcon } from "@chakra-ui/icons";
 import { responsivePx } from "services/constants";
 import { useEffect } from "react";
@@ -39,6 +26,7 @@ export default function Home({ groups }: PageProps) {
   }, []);
   const me = session?.user;
   const toaster = useToast();
+  console.log("admin", me?.isAdmin);
   //--ret--
   return (
     <Layout
@@ -77,7 +65,7 @@ export default function Home({ groups }: PageProps) {
               pathname: "/group/" + (await res.json()) + "/explore",
             });
         }}
-        hidden={me?.isAdmin == false}
+        hidden={!me?.isAdmin}
       />
       <PWAPrompt />
     </Layout>

@@ -4,7 +4,7 @@ import SearchView from "components/Main/SearchView";
 import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import Router from "next/router";
-import { Box, useToast } from "@chakra-ui/react";
+import { Box, useToast, Text } from "@chakra-ui/react";
 import { poster } from "services/poster";
 import { GroupProps } from "components/Widget/GroupWidget";
 import SearchWidget from "components/Widget/ItemStorageWidget";
@@ -12,6 +12,7 @@ import { FAB } from "components/Layout/FAB/FAB";
 import { AddIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { getGroupPerm } from "services/utils";
+import { responsiveHeaderFontSize } from "services/constants";
 
 type PageProps = {
   group: GroupProps;
@@ -34,7 +35,9 @@ export default function ManageStorages({ group }: PageProps) {
       authorized={groupPerm >= 0}
       loaded={status !== "loading"}
     >
-      <Box minH="8px"></Box>
+      <Text fontSize={responsiveHeaderFontSize} textAlign={"center"}>
+        Storages
+      </Text>
       <SearchView
         set={group.storages!.map((storage) => ({
           name: storage.name,

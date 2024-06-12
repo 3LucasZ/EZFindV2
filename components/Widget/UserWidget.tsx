@@ -33,6 +33,12 @@ type UserWidgetProps = {
 
 export default function UserWidget(props: UserWidgetProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log(
+    "perm, inverted, isEdit",
+    props.perm,
+    props.inverted,
+    props.isEdit
+  );
   return (
     <>
       <Box
@@ -40,10 +46,35 @@ export default function UserWidget(props: UserWidgetProps) {
         rounded="md"
         boxShadow={"md"}
         mx={1} //so we can see the side shadows
-        onClick={onOpen}
+        onClick={() => {
+          if (!props.isEdit) onOpen();
+        }}
         px="2"
-        _hover={{ bg: "gray.100" }}
+        bg={
+          // props.perm == 2
+          //   ? "purple.100"
+          //   : props.perm == 1
+          //   ? "blue.100"
+          //   :
+          "white"
+        }
+        _hover={
+          props.isEdit
+            ? {}
+            : {
+                bg:
+                  // props.perm == 2
+                  //   ? "purple.200"
+                  //   : props.perm == 1
+                  //   ? "blue.200"
+                  //   :
+                  "gray.100",
+              }
+        }
+        // borderWidth={"3px"}
+        // borderColor="purple.100"
         minH="60px"
+        transition={"background-color 0.3s"}
       >
         <HStack h="100%">
           <AspectRatio
@@ -83,32 +114,40 @@ export default function UserWidget(props: UserWidgetProps) {
               {props.email}
             </Text>
           </Stack>
-          {!props.inverted && props.perm && (
-            <Select
-              //--looks--
-              rounded={"lg"}
-              border="none"
-              size={"sm"}
-              pointerEvents={props.isEdit ? "auto" : "none"}
-              iconSize={props.isEdit ? "md" : "0"}
-              minW="80px"
-              maxW="20%"
-              //---behavior---
-              onClick={(e) => e.stopPropagation()}
-              onChange={(e) => {
-                const num = parseInt(e.target.value);
-                props.handleNewPerm!(
-                  Number.isNaN(num) ? 0 : parseInt(e.target.value)
-                );
-              }}
-              value={props.perm}
-              display={props.inverted ? "none" : ""}
-            >
-              <option value="0">Viewer</option>
-              <option value="1">Editor</option>
-              <option value="2">Manager</option>
-            </Select>
-          )}
+          <Select
+            //--looks--
+            color={
+              props.perm == 2
+                ? "purple.400"
+                : props.perm == 1
+                ? "blue.400"
+                : "black"
+            }
+            rounded={"lg"}
+            size={"sm"}
+            borderColor={"gray.200"}
+            borderWidth={props.isEdit ? "1px" : "0px"}
+            pointerEvents={props.isEdit ? "auto" : "none"}
+            iconSize={props.isEdit ? "md" : "0"}
+            minW="80px"
+            maxW="20%"
+            h="10"
+            //---behavior---
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => {
+              const num = parseInt(e.target.value);
+              props.handleNewPerm!(
+                Number.isNaN(num) ? 0 : parseInt(e.target.value)
+              );
+            }}
+            value={props.perm}
+            display={props.inverted || props.perm == undefined ? "none" : ""}
+          >
+            <option value="0">Viewer</option>
+            <option value="1">Editor</option>
+            <option value="2">Manager</option>
+          </Select>
+
           <AddRemoveButton
             mode={props.inverted ? 1 : -1}
             invisible={!props.isEdit}

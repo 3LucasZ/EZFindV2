@@ -48,7 +48,7 @@ export const FAB = ({
       //---misc
       onClick={(e) => onClick()}
       zIndex={100}
-      transition={"bottom 0.3s"}
+      transition={"bottom 0.3s, background-color 0.3s"}
       hidden={hidden}
     >
       <Icon as={icon} boxSize="6" p="0" m="0" w="100%" />

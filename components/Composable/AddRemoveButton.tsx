@@ -33,7 +33,7 @@ export default function AddRemoveButton({
         color="black"
         //---border
         rounded="xl"
-        borderColor={"grey.200"}
+        borderColor={"gray.200"}
         borderWidth={"1px"}
         //---display
         as={mode == 1 ? FiPlus : FiX}

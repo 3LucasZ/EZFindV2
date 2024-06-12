@@ -21,13 +21,20 @@ import {
   FiHome,
   FiInfo,
   FiMonitor,
+  FiPackage,
+  FiSettings,
+  FiTool,
 } from "react-icons/fi";
 import { IoMdHelp, IoMdInformation } from "react-icons/io";
 import { LuHelpCircle, LuInfo } from "react-icons/lu";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { LiaQuestionCircle } from "react-icons/lia";
+import { GroupProps } from "components/Widget/GroupWidget";
 
-export default function AppBar() {
+type AppBarProps = {
+  group?: GroupProps;
+};
+export default function AppBar(props: AppBarProps) {
   return (
     <Box position="fixed" bottom="0" w="100%">
       {/* ---basic-outline--- */}
@@ -39,10 +46,30 @@ export default function AppBar() {
         // borderTopLeftRadius={"20"}
         // borderTopRightRadius={"20"}
       >
-        <AppBarBtn icon={FiHome} href="/" />
-        <AppBarBtn icon={FiMonitor} href="/manage-admin" />
+        {/* <AppBarBtn icon={FiHome} href="/" /> */}
+        {/* <AppBarBtn icon={FiMonitor} href="/manage-admin" />
         <AppBarBtn icon={FiCompass} href="/manage-groups" />
-        <AppBarBtn icon={FiBookOpen} href="/help" />
+        <AppBarBtn icon={FiBookOpen} href="/help" /> */}
+        {props.group && (
+          <>
+            <AppBarBtn
+              icon={FiHome}
+              href={`/group/${props.group.id}/explore`}
+            />
+            <AppBarBtn
+              icon={FiTool}
+              href={`/group/${props.group.id}/manage-items`}
+            />
+            <AppBarBtn
+              icon={FiPackage}
+              href={`/group/${props.group.id}/manage-storages`}
+            />
+            <AppBarBtn
+              icon={FiSettings}
+              href={`/group/${props.group.id}/settings`}
+            />
+          </>
+        )}
       </HStack>
     </Box>
   );

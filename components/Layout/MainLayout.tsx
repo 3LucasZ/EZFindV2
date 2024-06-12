@@ -113,7 +113,7 @@ export default function Layout(props: LayoutProps) {
         >
           <Header right={<AvatarMenu me={props.me} />} />
           {content}
-          {!props.noAppBar && <AppBar />}
+          {!props.noAppBar && <AppBar group={props.group} />}
         </Flex>
       </main>
     </>

@@ -51,7 +51,7 @@ export default function AvatarMenu({ me }: AvatarMenuProps) {
             e.preventDefault();
             me
               ? signOut({ callbackUrl: "/" })
-              : signIn("google", { callbackUrl: "/main" });
+              : signIn("google", { callbackUrl: "/" });
           }}
         >
           <Icon as={FcGoogle} pr="2" boxSize={6} />

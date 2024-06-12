@@ -35,6 +35,7 @@ export const CustomStat = (props: Props) => {
       bg={props.xlight}
       _hover={{ bg: props.light }}
       onClick={() => Router.push(props.link)}
+      transition="background-color 0.3s"
     >
       <HStack direction={"row"} p="0" m="0" gap="1">
         <Icon
