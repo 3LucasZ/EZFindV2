@@ -16,8 +16,7 @@ export default async function handle(
   const { id } = req.body;
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
-  const groupPerm = getGroupPerm(session?.user, id);
-  if (groupPerm < 1) return res.status(403).json("Forbidden");
+  if (!session?.user.isAdmin) return res.status(403).json("Forbidden");
   //--operation--
   try {
     const op = await prisma.group.delete({

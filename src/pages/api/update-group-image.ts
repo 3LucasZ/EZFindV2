@@ -18,7 +18,9 @@ export default async function handle(
   const { id, image } = req.body;
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
-  const groupPerm = getGroupPerm(session?.user, id);
+  const group = await prisma.group.findUnique({ where: { id } });
+  if (group == undefined) return res.status(500).json("Internal Error");
+  const groupPerm = getGroupPerm(session?.user, group);
   if (groupPerm < 1) return res.status(403).json("Forbidden");
   //--operation--
   try {

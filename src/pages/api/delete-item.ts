@@ -8,16 +8,21 @@ import { TypedRequestBody } from "@/types";
 
 export default async function handle(
   req: TypedRequestBody<{
-    groupId: number;
     id: number;
   }>,
   res: NextApiResponse
 ) {
   //--rcv--
-  const { groupId, id } = req.body;
+  const { id } = req.body;
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
-  const groupPerm = getGroupPerm(session?.user, groupId);
+  const item = await prisma.item.findUnique({
+    where: { id },
+    include: { group: true },
+  });
+  const group = item?.group;
+  if (group == undefined) return res.status(500).json("Internal Error");
+  const groupPerm = getGroupPerm(session?.user, group);
   if (groupPerm < 1) return res.status(403).json("Forbidden");
   //--operation--
   try {

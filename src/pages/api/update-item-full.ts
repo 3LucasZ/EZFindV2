@@ -9,7 +9,6 @@ import { getGroupPerm } from "services/utils";
 
 export default async function handle(
   req: TypedRequestBody<{
-    groupId: number;
     id: number;
     newName: string;
     newDescription: string;
@@ -19,7 +18,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   //--rcv--
-  const { groupId, id, newName, newDescription, newLink, newStorageRelations } =
+  const { id, newName, newDescription, newLink, newStorageRelations } =
     req.body;
   const newRelations = newStorageRelations.map((relation) => ({
     count: relation.count,
@@ -28,7 +27,13 @@ export default async function handle(
 
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
-  const groupPerm = getGroupPerm(session?.user, groupId);
+  const item = await prisma.item.findUnique({
+    where: { id },
+    include: { group: true },
+  });
+  const group = item?.group;
+  if (group == undefined) return res.status(500).json("Internal Error");
+  const groupPerm = getGroupPerm(session?.user, group);
   if (groupPerm < 1) return res.status(403).json("Forbidden");
   if (newName == "") return res.status(500).json("Item name can not be empty.");
   //--operation--

@@ -7,6 +7,7 @@ import { TypedRequestBody } from "types/types";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 import { getGroupPerm } from "services/utils";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export default async function handle(
   req: TypedRequestBody<{
@@ -29,7 +30,9 @@ export default async function handle(
     : [];
   //--API Protection--
   const session = await getServerSession(req, res, authOptions);
-  const groupPerm = getGroupPerm(session?.user, id);
+  const group = await prisma.group.findUnique({ where: { id } });
+  if (group == undefined) return res.status(500).json("Internal Error");
+  const groupPerm = getGroupPerm(session?.user, group);
   if (groupPerm < 1) return res.status(403).json("Forbidden");
   if (groupPerm < 2 && newRelations) return res.status(403).json("Forbidden");
   if (newName == "")
