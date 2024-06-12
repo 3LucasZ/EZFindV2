@@ -5,7 +5,6 @@ import {
   Heading,
   SimpleGrid,
   Stack,
-  Link,
   Image as ChImage,
   Box,
   Flex,
@@ -20,8 +19,6 @@ import Layout from "components/Layout/MainLayout";
 import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
-import Header from "components/Layout/Header";
-import { UserProps } from "types/db";
 import { getGroupPerm } from "services/utils";
 import { GroupProps } from "components/Widget/GroupWidget";
 
@@ -51,7 +48,7 @@ export default function PrintPage(props: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //rest
-  const groupPerm = getGroupPerm(me, props.group.id);
+  const groupPerm = getGroupPerm(me, props.group);
   const [img, setImg] = useState<string>("");
   const [printerStatus, setPrinterStatus] = useState<string>("");
   const [printers, setPrinters] = useState<LabelWriterPrinter[]>([]);
@@ -158,7 +155,12 @@ export default function PrintPage(props: PageProps) {
   // console.log("xml", props.xml);
 
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 1}>
+    <Layout
+      me={me}
+      loaded={status !== "loading"}
+      authorized={groupPerm >= 1}
+      group={props.group}
+    >
       <Box overflowY="auto">
         <SimpleGrid columns={[1, 2]} spacing={10} px={5}>
           {/* DYMO Printing */}
@@ -244,8 +246,8 @@ export default function PrintPage(props: PageProps) {
             </Center>
             <Center>
               <Text>
-                To manually print a QR code, take a screenshot of the image
-                below and print it.
+                To manually print a QR code, double click the image below to
+                save and print it.
               </Text>
             </Center>
             <Box h="8px" />

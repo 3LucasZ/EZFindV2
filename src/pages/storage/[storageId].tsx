@@ -47,7 +47,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(me, group.id);
+  const groupPerm = getGroupPerm(me, group);
   const [isEdit, setIsEdit] = useState(false);
   //new state
   const [newName, setNewName] = useState(storage.name);
@@ -163,7 +163,12 @@ export default function StoragePage({ storage, items, group }: PageProps) {
   }
 
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={me?.isAdmin}>
+    <Layout
+      me={me}
+      loaded={status !== "loading"}
+      authorized={me?.isAdmin}
+      group={group}
+    >
       <Flex px={responsivePx}>
         <EditableTitle
           value={isEdit ? newName : storage.name}

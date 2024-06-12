@@ -47,7 +47,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   const me = session?.user;
   const toaster = useToast();
   //--state--
-  const groupPerm = getGroupPerm(session?.user, group.id);
+  const groupPerm = getGroupPerm(session?.user, group);
   const [isEdit, setIsEdit] = useState(false);
   //--new state--
   const [newName, setNewName] = useState(item.name);
@@ -128,7 +128,12 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   };
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={groupPerm >= 1}>
+    <Layout
+      me={me}
+      loaded={status !== "loading"}
+      authorized={groupPerm >= 1}
+      group={group}
+    >
       <Flex px={responsivePx}>
         <EditableTitle
           value={isEdit ? newName : item.name}

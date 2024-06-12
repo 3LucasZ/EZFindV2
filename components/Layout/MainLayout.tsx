@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, type ReactNode } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex, Icon } from "@chakra-ui/react";
 
 import RedirectPage from "@/pages/404";
 import { splashScreenLinks } from "services/splashscreenLinks";
@@ -9,6 +9,8 @@ import AvatarMenu from "./AvatarMenu";
 import { User } from "next-auth";
 import AppBar from "./AppBar";
 import { GroupProps } from "components/Widget/GroupWidget";
+import { FiArrowLeft } from "react-icons/fi";
+import BackButton from "./BackButton";
 
 type LayoutProps = {
   me?: User;
@@ -111,9 +113,15 @@ export default function Layout(props: LayoutProps) {
             WebkitTapHighlightColor: "rgba(0,0,0,0)",
           }}
         >
-          <Header right={<AvatarMenu me={props.me} />} />
+          <Header
+            right={<AvatarMenu me={props.me} />}
+            // left={<BackButton />}
+          ></Header>
           {content}
           {!props.noAppBar && <AppBar group={props.group} />}
+          {!props.noAppBar && (
+            <Box h={"calc(50px + env(safe-area-inset-bottom))"} />
+          )}
         </Flex>
       </main>
     </>
