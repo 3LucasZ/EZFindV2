@@ -137,7 +137,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
     <Layout
       me={me}
       loaded={status !== "loading"}
-      authorized={groupPerm >= 1}
+      authorized={groupPerm >= 0}
       group={group}
     >
       <Flex px={responsivePx}>

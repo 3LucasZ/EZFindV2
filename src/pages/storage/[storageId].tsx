@@ -185,15 +185,17 @@ export default function StoragePage({ storage, items, group }: PageProps) {
         />
         <Center>
           <ButtonGroup spacing="2" pl="2" isAttached>
-            <IconButton
-              {...orangeBtn}
-              icon={<Icon as={FiPrinter} boxSize={5} />}
-              onClick={() =>
-                Router.push({
-                  pathname: "/print/" + storage.id,
-                })
-              }
-            />
+            {groupPerm >= 1 && (
+              <IconButton
+                {...orangeBtn}
+                icon={<Icon as={FiPrinter} boxSize={5} />}
+                onClick={() =>
+                  Router.push({
+                    pathname: "/print/" + storage.id,
+                  })
+                }
+              />
+            )}
             <IconButton
               {...blueBtn}
               icon={<Icon as={FiImage} boxSize={5} />}
