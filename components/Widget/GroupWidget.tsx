@@ -68,7 +68,11 @@ export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
     </Card>
   );
 }
-export function MaskedGroupWidget({ authorized }: { authorized: boolean }) {
+export function MaskedGroupWidget({
+  authorized,
+}: {
+  authorized: boolean | undefined;
+}) {
   const toaster = useToast();
   return (
     <Box

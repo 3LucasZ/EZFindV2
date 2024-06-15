@@ -52,8 +52,9 @@ export default function AppBar(props: AppBarProps) {
         <AppBarBtn icon={FiBookOpen} href="/help" /> */}
         {props.group ? (
           <>
+            <AppBarBtn icon={FiHome} href={`/`} />
             <AppBarBtn
-              icon={FiHome}
+              icon={FiCompass}
               href={`/group/${props.group.id}/explore`}
             />
             <AppBarBtn
