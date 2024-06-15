@@ -76,7 +76,8 @@ export default function StoragePage({ storage, items, group }: PageProps) {
   const handleDelete = async () => {
     const body = { id: storage.id };
     const res = await poster("/api/delete-storage", body, toaster);
-    if (res.status == 200) await Router.push({ pathname: "/manage-storages" });
+    if (res.status == 200)
+      await Router.push({ pathname: `/group/${group.id}/manage-storages` });
   };
   // handle view modal
   const {

@@ -12,12 +12,17 @@ export default async function handle(
     id: number;
     newName: string;
     newDescription: string;
-    newItemRelations: ItemStorageRelationProps[];
+    newRelations: ItemStorageRelationProps[];
   }>,
   res: NextApiResponse
 ) {
   //--rcv--
-  const { id, newName, newDescription, newItemRelations } = req.body;
+  const {
+    id,
+    newName,
+    newDescription,
+    newRelations: newItemRelations,
+  } = req.body;
   const newRelations = newItemRelations.map((relation) => ({
     count: relation.count,
     itemId: relation.itemId,

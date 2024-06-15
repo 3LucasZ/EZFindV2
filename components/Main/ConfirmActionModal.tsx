@@ -13,19 +13,21 @@ type PageProps = {
   onClose: () => void;
   isOpen: boolean;
   actionStr?: string;
+  overrideStr?: string;
   protectedAction: () => Promise<void> | void;
 };
 export default function ConfirmActionModal(props: PageProps) {
+  const text = props.overrideStr
+    ? props.overrideStr
+    : "Are you sure you want to " +
+      (props.actionStr ? props.actionStr + "?" : "perform this action?");
   return (
     <Modal onClose={props.onClose} isOpen={props.isOpen} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Confirm Action</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          Are you sure you want to{" "}
-          {props.actionStr ? props.actionStr : "perform this action"}?
-        </ModalBody>
+        <ModalBody whiteSpace={"pre-line"}>{text}</ModalBody>
         <ModalFooter>
           <Button
             onClick={props.onClose}

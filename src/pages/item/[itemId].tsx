@@ -84,7 +84,8 @@ export default function ItemPage({ item, storages, group }: PageProps) {
   const handleDelete = async () => {
     const body = { id: item.id };
     const res = await poster("/api/delete-item", body, toaster);
-    if (res.status == 200) await Router.push({ pathname: "/manage-items" });
+    if (res.status == 200)
+      await Router.push({ pathname: `/group/${group.id}/manage-items` });
   };
   //--handle view modal--
   const {
@@ -154,7 +155,11 @@ export default function ItemPage({ item, storages, group }: PageProps) {
             <ConfirmActionModal
               isOpen={isOpenLink}
               onClose={onCloseLink}
-              actionStr={"visit the website: " + item.link}
+              overrideStr={
+                "Are you sure you want to visit the website: " +
+                item.link +
+                "? \n\n Read the url very carefully so you are certain you will not be redirected to a scam/malware/virus containing site."
+              }
               protectedAction={() => {
                 window.open(item.link, "_blank");
               }}
