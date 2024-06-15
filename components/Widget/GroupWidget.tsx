@@ -89,13 +89,15 @@ export function MaskedGroupWidget({ authorized }: { authorized: boolean }) {
       borderColor="gray.300"
       //--color
       color="black"
-      w="100%"
-      h="237px"
       _hover={{ bgColor: "gray.100" }}
       transition="background-color 0.3s"
       hidden={authorized ? false : true}
+      //align
+      display={"flex"}
+      justifyContent={"center"}
+      alignItems={"center"}
     >
-      <AddIcon w="100%" h="100%" p="16" strokeWidth={"8px"} color="gray.400" />
+      <AddIcon color="gray.400" boxSize={12} />
     </Box>
   );
 }
