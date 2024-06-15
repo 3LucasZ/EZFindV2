@@ -13,9 +13,10 @@ import { GroupProps } from "types/db";
 
 type GroupWidgetProps = {
   group: GroupProps;
+  authorized: boolean;
 };
 
-export default function GroupWidget({ group }: GroupWidgetProps) {
+export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
   return (
     <Card
       onClick={() =>
@@ -30,6 +31,8 @@ export default function GroupWidget({ group }: GroupWidgetProps) {
       _hover={{ bgColor: "gray.100" }}
       {...btnBase}
       color="black"
+      opacity={authorized ? "1" : "0.5"}
+      pointerEvents={authorized ? "auto" : "none"}
     >
       <CardBody p={0}>
         <AspectRatio ratio={1} bgGradient={genGradient(group.name)}>
