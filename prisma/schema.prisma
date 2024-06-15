@@ -94,7 +94,7 @@ model Item {
   image String @default("")
   //relations
   storageRelations ItemStorageRelation[]
-  group Group @relation(fields: [groupId], references: [id])
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade) //if group is deleted, all its items deleted too
   groupId Int
 }
 
@@ -105,7 +105,7 @@ model Storage {
   image String @default("")
   //relations
   itemRelations ItemStorageRelation[]
-  group Group @relation(fields: [groupId], references: [id])
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade) //if group is deleted, all its storages deleted too
   groupId Int
 }
 
