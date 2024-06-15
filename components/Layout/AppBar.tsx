@@ -111,6 +111,7 @@ function AppBarBtn({ icon, href }: AppBarBtnProps) {
       bgGradient="linear(to-b, teal.200, blue.200)"
       color="white"
       _hover={{ color: "blue.300" }}
+      // transition={"color 0.3s"}
     >
       {
         <Center>

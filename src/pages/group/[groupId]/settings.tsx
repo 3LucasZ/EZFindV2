@@ -36,12 +36,17 @@ import RadioCard from "components/Main/RadioCard";
 import { IoIosLock } from "react-icons/io";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
-import { FiEye, FiLock, FiUsers } from "react-icons/fi";
+import { FiEye, FiImage, FiLock, FiTrash2, FiUsers } from "react-icons/fi";
 import { getGroupPerm } from "services/utils";
 import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import UserWidget from "components/Widget/UserWidget";
-import { responsiveHeaderFontSize, responsivePx } from "services/constants";
+import {
+  blueBtn,
+  redBtn,
+  responsiveHeaderFontSize,
+  responsivePx,
+} from "services/constants";
 import { User } from "next-auth";
 
 type PageProps = {
@@ -198,9 +203,8 @@ export default function GroupPage({ group, users }: PageProps) {
           <ButtonGroup spacing="2" pl="2" isAttached>
             <IconButton
               ml="2"
-              colorScheme="blue"
-              aria-label=""
-              icon={<Icon as={IoImageOutline} boxSize={5} />}
+              {...blueBtn}
+              icon={<Icon as={FiImage} boxSize={5} />}
               onClick={() => {
                 onOpenViewer();
               }}
@@ -215,9 +219,8 @@ export default function GroupPage({ group, users }: PageProps) {
 
             {groupPerm >= 2 && ( //PROTECTED
               <IconButton
-                colorScheme="red"
-                aria-label=""
-                icon={<DeleteIcon />}
+                {...redBtn}
+                icon={<Icon as={FiTrash2} boxSize={5} />}
                 onClick={onOpenTrash}
               />
             )}

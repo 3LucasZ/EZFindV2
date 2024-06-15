@@ -13,6 +13,13 @@ export const btnBase = {
   "aria-label": "",
 };
 
+export const blueBtn = {
+  bg: "blue.300",
+  _hover: { bg: "blue.400" },
+  _active: { bg: "blue.500" },
+  ...btnBase,
+};
+
 export const tealBtn = {
   bg: "teal.300",
   _hover: { bg: "teal.400" },

@@ -30,7 +30,8 @@ import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";
 import { getGroupPerm } from "services/utils";
-import { responsivePx } from "services/constants";
+import { blueBtn, orangeBtn, redBtn, responsivePx } from "services/constants";
+import { FiImage, FiPrinter, FiTrash2 } from "react-icons/fi";
 
 type PageProps = {
   storage: StorageProps;
@@ -181,9 +182,8 @@ export default function StoragePage({ storage, items, group }: PageProps) {
         <Center>
           <ButtonGroup spacing="2" pl="2" isAttached>
             <IconButton
-              colorScheme="purple"
-              aria-label=""
-              icon={<Icon as={SlPrinter} />}
+              {...orangeBtn}
+              icon={<Icon as={FiPrinter} boxSize={5} />}
               onClick={() =>
                 Router.push({
                   pathname: "/print/" + storage.id,
@@ -191,9 +191,8 @@ export default function StoragePage({ storage, items, group }: PageProps) {
               }
             />
             <IconButton
-              colorScheme="blue"
-              aria-label=""
-              icon={<Icon as={IoImageOutline} boxSize={5} />}
+              {...blueBtn}
+              icon={<Icon as={FiImage} boxSize={5} />}
               onClick={() => {
                 onOpenViewer();
               }}
@@ -207,9 +206,8 @@ export default function StoragePage({ storage, items, group }: PageProps) {
             />
             {groupPerm >= 1 && (
               <IconButton
-                colorScheme="red"
-                aria-label=""
-                icon={<DeleteIcon />}
+                {...redBtn}
+                icon={<Icon as={FiTrash2} boxSize={5} />}
                 onClick={onOpenTrash}
                 hidden={groupPerm < 1}
               />

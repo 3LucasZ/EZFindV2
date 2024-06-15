@@ -47,6 +47,7 @@ export default function SearchWidget(props: SearchWidgetProps) {
       onClick={() => Router.push(props.url)}
       pr="2"
       _hover={{ bg: "gray.100" }}
+      transition={"background-color 0.3s"}
       minH="60px"
     >
       <HStack>

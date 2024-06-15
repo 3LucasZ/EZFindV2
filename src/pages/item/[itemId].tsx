@@ -30,7 +30,8 @@ import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";
 import { getGroupPerm } from "services/utils";
-import { responsivePx } from "services/constants";
+import { blueBtn, orangeBtn, redBtn, responsivePx } from "services/constants";
+import { FiImage, FiShoppingCart, FiTrash, FiTrash2 } from "react-icons/fi";
 
 type PageProps = {
   item: ItemProps;
@@ -146,9 +147,8 @@ export default function ItemPage({ item, storages, group }: PageProps) {
         <Center>
           <ButtonGroup spacing="2" pl="2" isAttached>
             <IconButton
-              colorScheme="purple"
-              aria-label=""
-              icon={<Icon as={TiShoppingCart} boxSize={5} />}
+              {...orangeBtn}
+              icon={<Icon as={FiShoppingCart} boxSize={5} />}
               onClick={onOpenLink}
               isDisabled={item.link == ""}
             />
@@ -165,9 +165,8 @@ export default function ItemPage({ item, storages, group }: PageProps) {
               }}
             />
             <IconButton
-              colorScheme="blue"
-              aria-label=""
-              icon={<Icon as={IoImageOutline} boxSize={5} />}
+              {...blueBtn}
+              icon={<Icon as={FiImage} boxSize={5} />}
               onClick={() => {
                 onOpenViewer();
               }}
@@ -181,9 +180,8 @@ export default function ItemPage({ item, storages, group }: PageProps) {
             />
             {groupPerm >= 1 && ( //PROTECTED
               <IconButton
-                colorScheme="red"
-                aria-label=""
-                icon={<DeleteIcon />}
+                {...redBtn}
+                icon={<Icon as={FiTrash2} boxSize={5} />}
                 onClick={onOpenTrash}
               />
             )}
