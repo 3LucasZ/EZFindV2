@@ -35,7 +35,7 @@ export default function Home({ groups }: PageProps) {
       me={me}
       loaded={status !== "loading"}
       authorized={true}
-      noAppBar={false}
+      noAppBar={true}
     >
       <Box px={responsivePx}>
         {!me ? (
@@ -77,6 +77,7 @@ export default function Home({ groups }: PageProps) {
             });
         }}
         hidden={!me?.isAdmin}
+        noAppBar
       />
       <PWAPrompt />
     </Layout>

@@ -27,11 +27,19 @@ export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
       overflow={"clip"}
       mx={1} //necessary so card shadow is not clipped
       mb={2} //ensure consistent spacing, due to added mx above
+      //--shadow, outline, border
       boxShadow={"md"}
-      _hover={{ bgColor: "gray.100" }}
+      outlineColor="blue.200"
+      _hover={{
+        // bgColor: "gray.100",
+        outlineWidth: "3px",
+        outlineStyle: "solid",
+      }}
       {...btnBase}
+      //--color
       color="black"
-      opacity={authorized ? "1" : "0.5"}
+      opacity={authorized ? "1" : "0.2"}
+      //--state
       pointerEvents={authorized ? "auto" : "none"}
     >
       <CardBody p={0}>
