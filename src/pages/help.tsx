@@ -5,7 +5,10 @@ import {
   Heading,
   HStack,
   Icon,
+  Link,
+  ListItem,
   Text,
+  UnorderedList,
   useToast,
   VStack,
 } from "@chakra-ui/react";
@@ -42,6 +45,16 @@ export default function Home() {
             Q="Why can't I edit certain things, like group user permissions?"
             A="You do not have the permissions to do so."
           />
+          <FAQItem
+            Q="What are the numbers displayed in the widgets?"
+            A="In the manage items page, the number shown is the total stock of
+          the item. In the manage storages page, the number shown is the total
+          number of items contained in that storage. When viewing a specific
+          item, the number shown next to each storage is the amount of that item
+          the storage contains. When viewing a specific storage, the number
+          shown next to each item is the amount of that item the storage
+          contains."
+          />
           {/* <FAQItem
             Q="Why are only VCS accounts allowed to use the system?"
             A="For security reasons."
@@ -50,6 +63,34 @@ export default function Home() {
             Q="Why are some widgets colored differently in some places?"
             A="Orange: machine is in use by the user in focus. Red: machine is in use. Purple: user is supervising. "
           /> */}
+          <Text fontSize="2xl" id="DymoInstructions">
+            Dymo Instructions
+          </Text>
+          <Text>In order to have dymo printing functionality:</Text>
+          <UnorderedList>
+            <ListItem>
+              Install the official{" "}
+              <Link
+                href="https://www.dymo.com/support?cfid=online-support-sdk"
+                color="teal.400"
+              >
+                Dymo Connect SDK
+              </Link>{" "}
+              for Mac or Windows.
+            </ListItem>
+            <ListItem>
+              Accept and allow any changes the SDK wants to make on your device.
+            </ListItem>
+          </UnorderedList>
+          <Text>Make sure:</Text>
+          <UnorderedList>
+            <ListItem>
+              Dymo Connect Service is running on your computer.
+            </ListItem>
+            <ListItem>The service port is at 41951 (default).</ListItem>{" "}
+            <ListItem>You are connected to a DYMO printer via USB.</ListItem>
+            <ListItem>The DYMO certificate is trusted.</ListItem>
+          </UnorderedList>
         </VStack>
         <Box h="8"></Box>
         <Box

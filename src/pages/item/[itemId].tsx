@@ -150,12 +150,14 @@ export default function ItemPage({ item, storages, group }: PageProps) {
         />
         <Center>
           <ButtonGroup spacing="2" pl="2" isAttached>
-            <IconButton
-              {...orangeBtn}
-              icon={<Icon as={FiShoppingCart} boxSize={5} />}
-              onClick={onOpenLink}
-              pointerEvents={item.link == "" ? "none" : "auto"}
-            />
+            {item.link != "" && (
+              <IconButton
+                {...orangeBtn}
+                icon={<Icon as={FiShoppingCart} boxSize={5} />}
+                onClick={onOpenLink}
+                pointerEvents={item.link == "" ? "none" : "auto"}
+              />
+            )}
             <ConfirmActionModal
               isOpen={isOpenLink}
               onClose={onCloseLink}

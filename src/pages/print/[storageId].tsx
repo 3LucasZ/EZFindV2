@@ -9,6 +9,7 @@ import {
   Box,
   Flex,
   useToast,
+  Link,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { useQRCode } from "next-qrcode";
@@ -64,10 +65,11 @@ export default function PrintPage(props: PageProps) {
       </Center>
       <Text fontSize="2xl">
         Sorry, you can not use the automatic DYMO print feature. We could not
-        detect the DYMO Connect service on your device. Please checkout
-        <Box color="teal.500" onClick={() => Router.push("/help")}>
-          {" our instructions "}
-        </Box>
+        detect the "DYMO Connect" service on your device. Please checkout our
+        instructions on the
+        <Link color="teal.500" href="/help#DymoInstructions">
+          {" help page "}
+        </Link>
         on how to enable the service. Thank you!
       </Text>
     </Stack>
