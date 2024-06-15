@@ -15,6 +15,7 @@ type FABProps = {
   hoverBg?: string;
   bottomOffset?: number;
   hidden?: boolean;
+  noAppBar?: boolean;
 };
 
 export const FAB = ({
@@ -25,6 +26,7 @@ export const FAB = ({
   hoverBg,
   bottomOffset,
   hidden,
+  noAppBar,
 }: FABProps) => {
   !bottomOffset && (bottomOffset = 0);
   return (
@@ -32,7 +34,9 @@ export const FAB = ({
       //---position
       position={"fixed"}
       right={"10px"}
-      bottom={`calc(50px + 10px + env(safe-area-inset-bottom) + ${bottomOffset}px)`}
+      bottom={`calc(${
+        noAppBar ? "0px" : "50px"
+      } + 10px + env(safe-area-inset-bottom) + ${bottomOffset}px)`}
       //---sizing + spacing
       minH="16"
       minW="16"
