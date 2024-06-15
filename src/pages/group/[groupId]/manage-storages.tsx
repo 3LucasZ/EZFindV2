@@ -55,17 +55,19 @@ export default function ManageStorages({ group }: PageProps) {
           ),
         }))}
       />
-      <FAB
-        icon={AddIcon}
-        onClick={async () => {
-          const body = {
-            groupId: group.id,
-          };
-          const res = await poster("/api/create-storage", body, toaster);
-          if (res.status == 200)
-            await Router.push({ pathname: "/storage/" + (await res.json()) });
-        }}
-      />
+      {groupPerm >= 1 && (
+        <FAB
+          icon={AddIcon}
+          onClick={async () => {
+            const body = {
+              groupId: group.id,
+            };
+            const res = await poster("/api/create-storage", body, toaster);
+            if (res.status == 200)
+              await Router.push({ pathname: "/storage/" + (await res.json()) });
+          }}
+        />
+      )}
     </Layout>
   );
 }
