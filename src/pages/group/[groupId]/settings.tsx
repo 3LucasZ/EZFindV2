@@ -30,7 +30,7 @@ import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { poster } from "services/poster";
 import ImageModal from "components/Main/ImageModal";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import { UserGroupRelationProps } from "types/db";
 import RadioCard from "components/Main/RadioCard";
 import { IoIosLock } from "react-icons/io";

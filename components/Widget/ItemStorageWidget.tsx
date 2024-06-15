@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 import { ItemStorageRelationProps } from "types/db";
-import { GroupProps } from "./GroupWidget";
+import { GroupProps } from "@/db";
 import Router from "next/router";
 import { genGradient } from "services/gradientGenerator";
 import { count } from "console";

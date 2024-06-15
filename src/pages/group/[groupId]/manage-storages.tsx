@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import Router from "next/router";
 import { Box, useToast, Text } from "@chakra-ui/react";
 import { poster } from "services/poster";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import SearchWidget from "components/Widget/ItemStorageWidget";
 import { FAB } from "components/Layout/FAB/FAB";
 import { AddIcon } from "@chakra-ui/icons";

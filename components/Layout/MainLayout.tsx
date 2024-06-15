@@ -8,7 +8,7 @@ import Header from "./Header";
 import AvatarMenu from "./AvatarMenu";
 import { User } from "next-auth";
 import AppBar from "./AppBar";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import { FiArrowLeft } from "react-icons/fi";
 import BackButton from "./BackButton";
 

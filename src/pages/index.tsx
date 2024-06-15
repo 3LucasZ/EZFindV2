@@ -4,7 +4,8 @@ import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
-import GroupWidget, { GroupProps } from "components/Widget/GroupWidget";
+import GroupWidget from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
 import Router from "next/router";
@@ -13,6 +14,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { responsivePx } from "services/constants";
 import { useEffect } from "react";
 import PWAPrompt from "components/PWAPrompt";
+import { getGroupPerm } from "services/utils";
 
 type PageProps = {
   groups: GroupProps[];

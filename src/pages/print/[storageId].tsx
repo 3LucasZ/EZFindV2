@@ -20,7 +20,7 @@ import prisma from "services/prisma";
 import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
 import { getGroupPerm } from "services/utils";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 
 type PageProps = {
   url: string;

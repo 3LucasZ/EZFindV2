@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import { User } from "next-auth";
 import { UserGroupRelationProps } from "@/db";
 

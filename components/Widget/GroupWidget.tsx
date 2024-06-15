@@ -7,24 +7,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Router from "next/router";
-import { UserGroupRelationProps } from "types/db";
-import { ItemProps } from "types/db";
-import { StorageProps } from "types/db";
 import { genGradient } from "services/gradientGenerator";
 import { btnBase } from "services/constants";
+import { GroupProps } from "types/db";
 
-export type GroupProps = {
-  id: number;
-  name: string;
-  description: string;
-  image?: string;
-  minPerm: number;
-
-  //relations
-  userRelations?: UserGroupRelationProps[];
-  items?: ItemProps[];
-  storages?: StorageProps[];
-};
 type GroupWidgetProps = {
   group: GroupProps;
 };

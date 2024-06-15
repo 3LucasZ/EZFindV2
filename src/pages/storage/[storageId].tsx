@@ -25,7 +25,7 @@ import { IoImageOutline } from "react-icons/io5";
 import ImageModal from "components/Main/ImageModal";
 import EditableTitle from "components/Composable/EditableTitle";
 import EditableSubtitle from "components/Composable/EditableSubtitle";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import ShortSearchWidget from "components/Widget/ItemStorageWidget";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
 import { cloneItemStorageRelationProps } from "services/clone";

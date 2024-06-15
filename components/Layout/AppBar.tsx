@@ -29,7 +29,7 @@ import { IoMdHelp, IoMdInformation } from "react-icons/io";
 import { LuHelpCircle, LuInfo } from "react-icons/lu";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { LiaQuestionCircle } from "react-icons/lia";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 
 type AppBarProps = {
   group?: GroupProps;

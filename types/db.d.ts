@@ -1,5 +1,4 @@
-import { GroupProps } from "components/Widget/GroupWidget";
-import { ItemProps, StorageProps } from "./db";
+import { ItemProps, StorageProps, UserGroupRelationProps } from "./db";
 import { MouseEventHandler } from "react";
 import { User } from "next-auth";
 
@@ -36,4 +35,16 @@ export type ItemStorageRelationProps = {
   storageId: number;
   count: number;
   inverted?: boolean = false;
+};
+export type GroupProps = {
+  id: number;
+  name: string;
+  description: string;
+  image?: string;
+  minPerm: number;
+
+  //relations
+  userRelations?: UserGroupRelationProps[];
+  items?: ItemProps[];
+  storages?: StorageProps[];
 };

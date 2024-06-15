@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
 import { poster } from "services/poster";
-import { GroupProps } from "components/Widget/GroupWidget";
+import { GroupProps } from "@/db";
 import EditableTitle from "components/Composable/EditableTitle";
 import Carousel from "components/Main/Carousel";
 import EditableSubtitle from "components/Composable/EditableSubtitle";
