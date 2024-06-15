@@ -45,7 +45,7 @@ export default function Home() {
             Q="Why can't I edit certain things, like group user permissions?"
             A="You do not have the permissions to do so."
           />
-          <FAQItem
+          {/* <FAQItem
             Q="What are the numbers displayed in the widgets?"
             A="In the manage items page, the number shown is the total stock of
           the item. In the manage storages page, the number shown is the total
@@ -54,7 +54,7 @@ export default function Home() {
           the storage contains. When viewing a specific storage, the number
           shown next to each item is the amount of that item the storage
           contains."
-          />
+          /> */}
           {/* <FAQItem
             Q="Why are only VCS accounts allowed to use the system?"
             A="For security reasons."
