@@ -71,14 +71,16 @@ export default function AvatarMenu({ me }: AvatarMenuProps) {
           <Icon as={FiNavigation} pr="2" boxSize={6} />
           Landing Page
         </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            Router.push("/manage-admin");
-          }}
-        >
-          <Icon as={FiMonitor} pr="2" boxSize={6} />
-          Admin Dashboard
-        </MenuItem>
+        {me?.isAdmin && (
+          <MenuItem
+            onClick={(e) => {
+              Router.push("/manage-admin");
+            }}
+          >
+            <Icon as={FiMonitor} pr="2" boxSize={6} />
+            Admin Dashboard
+          </MenuItem>
+        )}
         <MenuItem
           onClick={(e) => {
             Router.reload();
