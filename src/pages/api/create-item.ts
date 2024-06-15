@@ -22,9 +22,10 @@ export default async function handle(
   if (groupPerm < 1) return res.status(403).json("Forbidden");
   //--operation--
   try {
+    const suffix = await prisma.item.count();
     const op = await prisma.item.create({
       data: {
-        name: "Item-" + new Date().getTime(),
+        name: "Item-" + suffix,
         description: "",
         groupId: groupId,
       },

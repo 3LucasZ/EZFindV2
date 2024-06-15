@@ -14,9 +14,10 @@ export default async function handle(
   if (!session?.user.isAdmin) return res.status(403).json("Forbidden");
   //--operation--
   try {
+    const suffix = await prisma.group.count();
     const op = await prisma.group.create({
       data: {
-        name: "Group-" + new Date().getTime(),
+        name: "Group-" + suffix,
         description: "",
       },
     });
