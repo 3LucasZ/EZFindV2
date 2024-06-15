@@ -111,7 +111,8 @@ export default function ItemPage({ item, storages, group }: PageProps) {
         const body = { id: item.id, image: imageUrl };
         const res = await poster("/api/update-item-image", body, toaster);
         if (res.status == 200) {
-          Router.reload();
+          Router.push(`/item/${item.id}`);
+          onCloseViewer();
         }
       }
     }
@@ -126,7 +127,10 @@ export default function ItemPage({ item, storages, group }: PageProps) {
       newRelations,
     };
     const res = await poster("/api/update-item-full", body, toaster);
-    if (res.status == 200) Router.reload();
+    if (res.status == 200) {
+      Router.push(`/item/${item.id}`);
+      setIsEdit(false);
+    }
   };
   //--ret--
   return (

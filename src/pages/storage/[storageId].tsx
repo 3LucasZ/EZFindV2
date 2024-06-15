@@ -102,7 +102,8 @@ export default function StoragePage({ storage, items, group }: PageProps) {
         const body = { id: storage.id, image: imageUrl };
         const res = await poster("/api/update-storage-image", body, toaster);
         if (res.status == 200) {
-          Router.reload();
+          Router.push(`/storage/${storage.id}`);
+          onCloseViewer();
         }
       }
     }
@@ -116,7 +117,10 @@ export default function StoragePage({ storage, items, group }: PageProps) {
       newRelations,
     };
     const res = await poster("/api/update-storage-full", body, toaster);
-    if (res.status == 200) Router.reload();
+    if (res.status == 200) {
+      Router.push(`/storage/${storage.id}`);
+      setIsEdit(false);
+    }
   };
 
   //widget generator
