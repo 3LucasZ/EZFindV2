@@ -7,10 +7,12 @@ import {
   Stack,
   Select,
   useDisclosure,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import AddRemoveButton from "components/Composable/AddRemoveButton";
 import { UserCardModal } from "components/Main/UserCardModal";
+import WidgetTitles from "./WidgetTitles";
 
 type UserWidgetProps = {
   //data
@@ -29,6 +31,8 @@ type UserWidgetProps = {
   handleAdd?: Function;
   handleRemove?: Function;
   handleNewPerm?: Function;
+
+  forceMini?: boolean;
 };
 
 export default function UserWidget(props: UserWidgetProps) {
@@ -39,6 +43,16 @@ export default function UserWidget(props: UserWidgetProps) {
   //   props.inverted,
   //   props.isEdit
   // );
+  //--column
+  const column =
+    useBreakpointValue(
+      {
+        base: true,
+        sm: false,
+      },
+      { fallback: "md", ssr: typeof window === "undefined" }
+    ) || props.forceMini == true;
+  //--ret
   return (
     <>
       <Box
@@ -91,29 +105,11 @@ export default function UserWidget(props: UserWidgetProps) {
             ></Image>
           </AspectRatio>
           <Box w="2"></Box>
-          <Stack
-            w="100%"
-            direction={["column", "column", "row"]}
-            gap={["0", "0", "2"]}
-            spacing={0}
-          >
-            <Text
-              w={["100%", "100%", "40%"]}
-              noOfLines={1} //do not render more than one line
-              wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
-            >
-              {props.name}
-            </Text>
-            <Text
-              w={["100%", "100%", "60%"]}
-              fontSize={["sm", "sm", "md"]}
-              color={["grey", "grey", "black"]}
-              noOfLines={1}
-              wordBreak={"break-all"}
-            >
-              {props.email}
-            </Text>
-          </Stack>
+          <WidgetTitles
+            title={props.name}
+            subtitle={props.email}
+            column={column}
+          />
           <Select
             //--looks--
             color={

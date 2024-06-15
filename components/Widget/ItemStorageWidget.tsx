@@ -8,6 +8,7 @@ import {
   AspectRatio,
   Stack,
   Show,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import { ItemStorageRelationProps } from "types/db";
@@ -18,6 +19,7 @@ import { count } from "console";
 import EditableCounter from "components/Composable/EditableCounter";
 import AddRemoveButton from "components/Composable/AddRemoveButton";
 import { ChangeEventHandler } from "react";
+import WidgetTitles from "./WidgetTitles";
 
 type SearchWidgetProps = {
   //data
@@ -35,9 +37,21 @@ type SearchWidgetProps = {
   handleAdd?: Function;
   handleRemove?: Function;
   handleNewCount?: ChangeEventHandler<HTMLInputElement>;
+
+  forceMini?: boolean;
 };
 
 export default function SearchWidget(props: SearchWidgetProps) {
+  //--column
+  const column =
+    useBreakpointValue(
+      {
+        base: true,
+        sm: false,
+      },
+      { fallback: "md", ssr: typeof window === "undefined" }
+    ) || props.forceMini == true;
+  //--ret
   return (
     <Box
       overflow={"hidden"}
@@ -58,20 +72,11 @@ export default function SearchWidget(props: SearchWidgetProps) {
             <></>
           )}
         </AspectRatio>
-        <HStack w="100%">
-          <Text
-            w={["100%", "40%"]}
-            noOfLines={1} //do not render more than one line
-            wordBreak={"break-all"} //ellipsis in the middle of word, not only on new word
-          >
-            {props.name}
-          </Text>
-          <Show above="sm">
-            <Text w="60%" noOfLines={1} wordBreak={"break-all"}>
-              {props.description ? props.description : "No description."}
-            </Text>
-          </Show>
-        </HStack>
+        <WidgetTitles
+          title={props.name}
+          subtitle={props.description ? props.description : "No description."}
+          column={column}
+        />
         {!props.inverted && (
           <EditableCounter
             count={props.count}
