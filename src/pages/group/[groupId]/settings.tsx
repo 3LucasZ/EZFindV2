@@ -97,7 +97,7 @@ export default function GroupPage({ group, users }: PageProps) {
   const handleDelete = async () => {
     const body = { id: group.id };
     const res = await poster("/api/delete-group", body, toaster);
-    if (res.status == 200) await Router.push({ pathname: "/manage-groups" });
+    if (res.status == 200) await Router.push({ pathname: "/" });
   };
 
   //--handle view modal--
