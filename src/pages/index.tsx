@@ -11,7 +11,7 @@ import { poster } from "services/poster";
 import Router from "next/router";
 import { FAB } from "components/Layout/FAB/FAB";
 import { AddIcon } from "@chakra-ui/icons";
-import { responsivePx } from "services/constants";
+import { responsiveHeaderFontSize, responsivePx } from "services/constants";
 import { useEffect } from "react";
 import PWAPrompt from "components/PWAPrompt";
 import { getGroupPerm } from "services/utils";
@@ -35,20 +35,23 @@ export default function Home({ groups }: PageProps) {
       me={me}
       loaded={status !== "loading"}
       authorized={true}
-      noAppBar={true}
+      noAppBar={false}
     >
       <Box px={responsivePx}>
-        {!me && (
+        {!me ? (
           <>
             <Heading py="1" textAlign={"center"}>
               Welcome!
             </Heading>
             <Text textAlign={"center"}>Get started by selecting a group.</Text>
           </>
+        ) : (
+          <Text fontSize={responsiveHeaderFontSize} textAlign={"center"}>
+            Groups
+          </Text>
         )}
       </Box>
-
-      <Box minH="8px"></Box>
+      {/* <Box minH="8px"></Box> */}
       <SearchView
         set={groups.map((group) => ({
           name: -getGroupPerm(me, group) + group.name, //sort1: most perm, sort2: name

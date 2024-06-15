@@ -79,9 +79,9 @@ model Group {
   name String @unique @db.VarChar(255)
   description String @db.VarChar(255)
   image String @default("")
-  userRelations UserGroupRelation[]
   minPerm Int @default(-1) //users are PURPOSEFULLY restricted by default from interacting with new groups
   // //relations
+  userRelations UserGroupRelation[]
   items Item[]
   storages Storage[]
 }

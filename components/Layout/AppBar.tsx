@@ -50,7 +50,7 @@ export default function AppBar(props: AppBarProps) {
         {/* <AppBarBtn icon={FiMonitor} href="/manage-admin" />
         <AppBarBtn icon={FiCompass} href="/manage-groups" />
         <AppBarBtn icon={FiBookOpen} href="/help" /> */}
-        {props.group && (
+        {props.group ? (
           <>
             <AppBarBtn
               icon={FiHome}
@@ -69,6 +69,12 @@ export default function AppBar(props: AppBarProps) {
               href={`/group/${props.group.id}/settings`}
             />
           </>
+        ) : (
+          <Box
+            bgGradient="linear(to-b, teal.200, blue.200)"
+            w="100%"
+            h="100%"
+          ></Box>
         )}
       </HStack>
     </Box>

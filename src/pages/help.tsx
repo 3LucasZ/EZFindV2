@@ -25,7 +25,7 @@ export default function Home() {
   const toaster = useToast();
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={true}>
+    <Layout me={me} loaded={status !== "loading"} authorized={true} noAppBar>
       <Box px={[5, 10, 10, 28, 48, 60]} overflowY="auto">
         <FAQHeader />
         <Box h="8" />
@@ -37,6 +37,10 @@ export default function Home() {
           <FAQItem
             Q="What does the invert checkbox do?"
             A="When invert mode is on, the display will tell you the opposite of what it originally shows. Example: instead of showing what items a storage contains, the display will show what items a storage does not contain."
+          />
+          <FAQItem
+            Q="Why can't I edit certain things, like group user permissions?"
+            A="You do not have the permissions to do so."
           />
           {/* <FAQItem
             Q="Why are only VCS accounts allowed to use the system?"

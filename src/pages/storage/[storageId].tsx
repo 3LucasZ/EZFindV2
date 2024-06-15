@@ -167,7 +167,7 @@ export default function StoragePage({ storage, items, group }: PageProps) {
     <Layout
       me={me}
       loaded={status !== "loading"}
-      authorized={me?.isAdmin}
+      authorized={groupPerm >= 0}
       group={group}
     >
       <Flex px={responsivePx}>

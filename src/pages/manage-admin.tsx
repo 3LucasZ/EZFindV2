@@ -38,7 +38,12 @@ export default function ManageAdmin({ users }: PageProps) {
   const toaster = useToast();
   //--ret--
   return (
-    <Layout me={me} loaded={status !== "loading"} authorized={me?.isAdmin}>
+    <Layout
+      me={me}
+      loaded={status !== "loading"}
+      authorized={me?.isAdmin}
+      noAppBar
+    >
       <Box minH="8px"></Box>
       <Flex px={responsivePx} textAlign={"center"} w="100%" flexDir="column">
         <Text w="100%" fontSize={responsiveHeaderFontSize}>

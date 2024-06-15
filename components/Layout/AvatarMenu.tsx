@@ -15,7 +15,12 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { User } from "next-auth";
 import Image from "next/image";
-import { FiBookOpen, FiNavigation, FiRefreshCcw } from "react-icons/fi";
+import {
+  FiBookOpen,
+  FiMonitor,
+  FiNavigation,
+  FiRefreshCcw,
+} from "react-icons/fi";
 
 type AvatarMenuProps = {
   me?: User;
@@ -65,6 +70,14 @@ export default function AvatarMenu({ me }: AvatarMenuProps) {
         >
           <Icon as={FiNavigation} pr="2" boxSize={6} />
           Landing Page
+        </MenuItem>
+        <MenuItem
+          onClick={(e) => {
+            Router.push("/manage-admin");
+          }}
+        >
+          <Icon as={FiMonitor} pr="2" boxSize={6} />
+          Admin Dashboard
         </MenuItem>
         <MenuItem
           onClick={(e) => {
