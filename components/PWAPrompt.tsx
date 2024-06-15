@@ -6,6 +6,8 @@ import { IoShareOutline } from "react-icons/io5";
 export default function PWAPrompt() {
   //can not call navigator on server side since it is strictly a web API.
   //we wrap it inside useEffect to force it to be called on the client only.
+  //default true so that it never "accidentally" shows
+  const [invisible, setInvisible] = useState(true);
   useEffect(() => {
     const isIos =
       [
@@ -26,8 +28,6 @@ export default function PWAPrompt() {
     console.log("isCancelled:", isCancelled);
     setInvisible(!isIos || isInStandaloneMode || isCancelled);
   });
-  //default true so that it never "accidentally" shows
-  const [invisible, setInvisible] = useState(true);
 
   return (
     <Box
