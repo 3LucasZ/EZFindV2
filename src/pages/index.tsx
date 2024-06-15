@@ -50,10 +50,12 @@ export default function Home({ groups }: PageProps) {
 
       <Box minH="8px"></Box>
       <SearchView
-        set={groups.map((group) => ({
-          name: group.name,
-          widget: <GroupWidget group={group} key={group.id} />,
-        }))}
+        set={groups
+          .filter((group) => getGroupPerm(me, group) >= 0) //Only show groups you have access to so its not troll. An alternative is to show the groups you don't have access to but make them have transparency and unclickable.
+          .map((group) => ({
+            name: group.name,
+            widget: <GroupWidget group={group} key={group.id} />,
+          }))}
         columns={[2, 3, 3, 4]}
       />
       <FAB
