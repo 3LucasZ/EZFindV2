@@ -1,15 +1,19 @@
 import {
   AspectRatio,
+  Box,
   Card,
   CardBody,
   Image,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import Router from "next/router";
 import { genGradient } from "services/gradientGenerator";
 import { btnBase } from "services/constants";
 import { GroupProps } from "types/db";
+import { AddIcon } from "@chakra-ui/icons";
+import { poster } from "services/poster";
 
 type GroupWidgetProps = {
   group: GroupProps;
@@ -62,5 +66,36 @@ export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
         </Stack>
       </CardBody>
     </Card>
+  );
+}
+export function MaskedGroupWidget({ authorized }: { authorized: boolean }) {
+  const toaster = useToast();
+  return (
+    <Box
+      onClick={async () => {
+        const body = JSON.stringify("");
+        const res = await poster("/api/create-group", body, toaster);
+        if (res.status == 200)
+          await Router.push({
+            pathname: "/group/" + (await res.json()) + "/explore",
+          });
+      }}
+      mx={1} //copy card in all attrib
+      mb={2} //ensure consistent spacing, due to added mx above
+      //--shadow, outline, border
+      borderStyle={"dashed"}
+      borderWidth={"5px"}
+      borderRadius={"lg"}
+      borderColor="gray.300"
+      //--color
+      color="black"
+      w="100%"
+      h="237px"
+      _hover={{ bgColor: "gray.100" }}
+      transition="background-color 0.3s"
+      hidden={authorized ? false : true}
+    >
+      <AddIcon w="100%" h="100%" p="16" strokeWidth={"8px"} color="gray.400" />
+    </Box>
   );
 }

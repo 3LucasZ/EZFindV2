@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
-import GroupWidget from "components/Widget/GroupWidget";
+import GroupWidget, { MaskedGroupWidget } from "components/Widget/GroupWidget";
 import { GroupProps } from "@/db";
 import SearchView from "components/Main/SearchView";
 import { poster } from "services/poster";
@@ -52,19 +52,24 @@ export default function Home({ groups }: PageProps) {
       </Box>
       {/* <Box minH="8px"></Box> */}
       <SearchView
-        set={groups.map((group) => ({
-          name: -getGroupPerm(me, group) + group.name, //sort1: most perm, sort2: name
-          widget: (
-            <GroupWidget
-              group={group}
-              key={group.id}
-              authorized={getGroupPerm(me, group) >= 0}
-            />
-          ),
-        }))}
+        set={groups
+          .map((group) => ({
+            name: -getGroupPerm(me, group) + group.name, //sort1: most perm, sort2: name
+            widget: (
+              <GroupWidget
+                group={group}
+                key={group.id}
+                authorized={getGroupPerm(me, group) >= 0}
+              />
+            ),
+          }))
+          .concat({
+            name: "",
+            widget: <MaskedGroupWidget authorized={me?.isAdmin} />,
+          })}
         columns={[2, 3, 3, 4]}
       />
-      <FAB
+      {/* <FAB
         // name="Create"
         icon={AddIcon}
         onClick={async () => {
@@ -77,7 +82,7 @@ export default function Home({ groups }: PageProps) {
         }}
         hidden={!me?.isAdmin}
         noAppBar
-      />
+      /> */}
       <PWAPrompt />
     </Layout>
   );
