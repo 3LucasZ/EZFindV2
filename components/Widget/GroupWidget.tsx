@@ -32,7 +32,7 @@ export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
       outlineColor="blue.200"
       _hover={{
         // bgColor: "gray.100",
-        outlineWidth: "3px",
+        outlineWidth: "5px",
         outlineStyle: "solid",
       }}
       {...btnBase}
@@ -51,7 +51,7 @@ export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
           />
         </AspectRatio>
         <Stack spacing="3" py="1" px="1">
-          <Text fontSize="md" textAlign={"center"} noOfLines={2}>
+          <Text fontSize="md" textAlign={"center"} noOfLines={2} h="47px">
             {group.name}
           </Text>
           {/* <Show above="lg">
