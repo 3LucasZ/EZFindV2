@@ -112,18 +112,26 @@ export default function GroupPage({ group, users }: PageProps) {
               </AbsoluteCenter>
             </Box>
             <Carousel
-              cards={group.items!.map((item) => ({
-                image: item.image,
-                title: item.name,
-                url: "/item/" + item.id,
-              }))}
+              cards={
+                group
+                  .items!.map((item) => ({
+                    image: item.image,
+                    title: item.name,
+                    url: "/item/" + item.id,
+                  }))
+                  .reverse() //this forces last edited to be shown first
+              }
             />
             <Carousel
-              cards={group.storages!.map((storage) => ({
-                image: storage.image,
-                title: storage.name,
-                url: "/storage/" + storage.id,
-              }))}
+              cards={
+                group
+                  .storages!.map((storage) => ({
+                    image: storage.image,
+                    title: storage.name,
+                    url: "/storage/" + storage.id,
+                  }))
+                  .reverse() //this forces last edited to be shown first
+              }
             />
           </Box>
         )}

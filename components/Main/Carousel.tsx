@@ -9,6 +9,7 @@ import {
   AspectRatio,
   VStack,
   HStack,
+  Center,
 } from "@chakra-ui/react";
 import Router from "next/router";
 
@@ -128,13 +129,16 @@ function CarouselCard(props: CarouselCardProps) {
         <Box
           minH="75%"
           maxH="75%"
-          w="100%"
+          minW="100%"
+          maxW="100%"
           bgGradient={genGradient(props.title)}
-          alignContent={"center"}
+          overflow={"clip"}
         >
-          {props.image.length > 5 && (
-            <Image src={"/api" + props.image} maxH="100%" maxW="100%" />
-          )}
+          <Center>
+            {props.image.length > 5 && (
+              <Image src={"/api" + props.image} h="164px" />
+            )}
+          </Center>
         </Box>
         <HStack h="25%" px="3" w="100%">
           <Text

@@ -13,7 +13,7 @@ import {
 import { ChangeEvent, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import imageCompression from "browser-image-compression";
-import { debugMode } from "services/constants";
+
 import imagePlaceholder from "public/images/image-placeholder.png";
 type PageProps = {
   onClose: () => void;
@@ -35,8 +35,8 @@ export default function ImageModal(props: PageProps) {
         }
       };
       const imageFile = input.target.files[0];
-      if (debugMode)
-        console.log(`original file size: ${imageFile.size / 1024 / 1024} MB`);
+
+      // console.log(`original file size: ${imageFile.size / 1024 / 1024} MB`);
       const options = {
         maxSizeMB: 0.05,
         maxWidthOrHeight: 1000,
@@ -44,10 +44,10 @@ export default function ImageModal(props: PageProps) {
       };
       try {
         const compressedFile = await imageCompression(imageFile, options);
-        if (debugMode)
-          console.log(
-            `compressed file size: ${compressedFile.size / 1024 / 1024} MB`
-          );
+
+        // console.log(
+        //   `compressed file size: ${compressedFile.size / 1024 / 1024} MB`
+        // );
         reader.readAsDataURL(compressedFile);
       } catch (error) {
         console.log(error);
