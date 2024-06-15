@@ -1,18 +1,15 @@
 import { Prisma } from "@prisma/client";
-import { debugMode } from "./constants";
 
 export function prismaErrHandler(e: any): string {
   if (e instanceof Prisma.PrismaClientKnownRequestError) {
-    if (debugMode) {
-      console.log(
-        "code: " +
-          e.code +
-          ", meta: " +
-          JSON.stringify(e.meta) +
-          ", msg: " +
-          e.message
-      );
-    }
+    console.log(
+      "code: " +
+        e.code +
+        ", meta: " +
+        JSON.stringify(e.meta) +
+        ", msg: " +
+        e.message
+    );
     if (e.code == "P2000") {
       //varChar constraint
       return "Field " + e.meta?.column_name + " is too long.";

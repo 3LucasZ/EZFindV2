@@ -52,10 +52,11 @@ export default function SearchWidget(props: SearchWidgetProps) {
     >
       <HStack>
         <AspectRatio minW="60px" ratio={1} bgGradient={genGradient(props.name)}>
-          <Image
-            src={`/api/${props.image}`}
-            hidden={props.image.length < 5}
-          ></Image>
+          {props.image.length > 5 ? (
+            <Image src={`/api/${props.image}`} />
+          ) : (
+            <></>
+          )}
         </AspectRatio>
         <HStack w="100%">
           <Text
