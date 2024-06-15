@@ -9,7 +9,7 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import { signOut, signIn, useSession } from "next-auth/react";
+import { signOut, signIn } from "next-auth/react";
 import Router from "next/router";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";

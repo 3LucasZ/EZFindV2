@@ -1,8 +1,7 @@
-import { join } from "path";
 import { unlink } from "fs/promises";
-import _ from "lodash";
-import { TypedRequestBody } from "types/types";
 import { NextApiResponse } from "next";
+import { join } from "path";
+import { TypedRequestBody } from "types/types";
 
 export default async function handle(
   req: TypedRequestBody<{

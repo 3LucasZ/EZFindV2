@@ -3,11 +3,8 @@ import {
   Flex,
   Text,
   Image,
-  IconButton,
   Icon,
   useBreakpointValue,
-  AspectRatio,
-  VStack,
   HStack,
   Center,
 } from "@chakra-ui/react";

@@ -1,24 +1,16 @@
 import {
+  AspectRatio,
   Box,
-  Grid,
   HStack,
   Image,
-  VStack,
-  Text,
-  AspectRatio,
-  Stack,
-  Show,
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-import { ItemStorageRelationProps } from "types/db";
-import { GroupProps } from "@/db";
-import Router from "next/router";
-import { genGradient } from "services/gradientGenerator";
-import { count } from "console";
-import EditableCounter from "components/Composable/EditableCounter";
 import AddRemoveButton from "components/Composable/AddRemoveButton";
+import EditableCounter from "components/Composable/EditableCounter";
+import Router from "next/router";
 import { ChangeEventHandler } from "react";
+import { genGradient } from "services/gradientGenerator";
 import WidgetTitles from "./WidgetTitles";
 
 type SearchWidgetProps = {

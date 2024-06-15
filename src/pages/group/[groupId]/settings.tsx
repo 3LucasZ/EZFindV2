@@ -1,53 +1,41 @@
+import { GroupProps } from "@/db";
+import { Icon } from "@chakra-ui/icons";
 import {
-  Center,
-  Flex,
-  IconButton,
-  useDisclosure,
-  useToast,
-  Text,
-  HStack,
-  useRadioGroup,
   Box,
   ButtonGroup,
+  Center,
+  Flex,
+  HStack,
+  IconButton,
+  useDisclosure,
+  useRadioGroup,
+  useToast,
 } from "@chakra-ui/react";
-import {
-  CheckIcon,
-  CloseIcon,
-  DeleteIcon,
-  EditIcon,
-  Icon,
-} from "@chakra-ui/icons";
-import { IoImageOutline } from "react-icons/io5";
-import { GetServerSideProps } from "next";
-import ConfirmActionModal from "components/Main/ConfirmActionModal";
-import Router from "next/router";
-import Layout from "components/Layout/MainLayout";
-import SearchView from "components/Main/SearchView";
-import { useSession } from "next-auth/react";
-import prisma from "services/prisma";
-import { useEffect, useState } from "react";
-import React from "react";
 import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
-import { poster } from "services/poster";
-import ImageModal from "components/Main/ImageModal";
-import { GroupProps } from "@/db";
-import { UserGroupRelationProps } from "types/db";
-import RadioCard from "components/Main/RadioCard";
-import { IoIosLock } from "react-icons/io";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { FaEye } from "react-icons/fa";
-import { FiEye, FiImage, FiLock, FiTrash2, FiUsers } from "react-icons/fi";
-import { getGroupPerm } from "services/utils";
-import { cloneUserGroupRelationProps } from "services/clone";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
+import Layout from "components/Layout/MainLayout";
+import ConfirmActionModal from "components/Main/ConfirmActionModal";
+import ImageModal from "components/Main/ImageModal";
+import RadioCard from "components/Main/RadioCard";
+import SearchView from "components/Main/SearchView";
 import UserWidget from "components/Widget/UserWidget";
+import { GetServerSideProps } from "next";
+import { User } from "next-auth";
+import { useSession } from "next-auth/react";
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { FiEye, FiImage, FiLock, FiTrash2, FiUsers } from "react-icons/fi";
+import { cloneUserGroupRelationProps } from "services/clone";
 import {
   blueBtn,
   redBtn,
   responsiveHeaderFontSize,
   responsivePx,
 } from "services/constants";
-import { User } from "next-auth";
+import { poster } from "services/poster";
+import prisma from "services/prisma";
+import { getGroupPerm } from "services/utils";
+import { UserGroupRelationProps } from "types/db";
 
 type PageProps = {
   group: GroupProps;

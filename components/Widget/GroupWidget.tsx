@@ -1,3 +1,4 @@
+import { AddIcon } from "@chakra-ui/icons";
 import {
   AspectRatio,
   Box,
@@ -9,11 +10,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Router from "next/router";
-import { genGradient } from "services/gradientGenerator";
 import { btnBase } from "services/constants";
-import { GroupProps } from "types/db";
-import { AddIcon } from "@chakra-ui/icons";
+import { genGradient } from "services/gradientGenerator";
 import { poster } from "services/poster";
+import { GroupProps } from "types/db";
 
 type GroupWidgetProps = {
   group: GroupProps;

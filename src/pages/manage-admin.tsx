@@ -1,30 +1,17 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Input,
-  useToast,
-  Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import Admin from "archive/old_UserWidget";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
 
-import { GetServerSideProps } from "next";
-import { useEffect, useState } from "react";
-import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
 import SearchView from "components/Main/SearchView";
-import { errorToast, successToast } from "services/toasty";
-import prisma from "services/prisma";
-import { AddIcon } from "@chakra-ui/icons";
+import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
-import Header from "components/Layout/Header";
+import Router from "next/router";
+import { useEffect } from "react";
 import { poster } from "services/poster";
+import prisma from "services/prisma";
 
-import { responsiveHeaderFontSize, responsivePx } from "services/constants";
 import UserWidget from "components/Widget/UserWidget";
 import { User } from "next-auth";
+import { responsiveHeaderFontSize, responsivePx } from "services/constants";
 
 type PageProps = {
   users: User[];

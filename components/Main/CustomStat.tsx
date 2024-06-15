@@ -1,15 +1,6 @@
-import {
-  Box,
-  Divider,
-  HStack,
-  Heading,
-  Icon,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, HStack, Heading, Icon, Text } from "@chakra-ui/react";
 import Router from "next/router";
 import { IconType } from "react-icons";
-import { FiTool } from "react-icons/fi";
 
 interface Props {
   //Text

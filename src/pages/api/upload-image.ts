@@ -1,8 +1,7 @@
-import { join } from "path";
-import { stat, mkdir, writeFile } from "fs/promises";
-import _ from "lodash";
-import { TypedRequestBody } from "types/types";
+import { mkdir, stat, writeFile } from "fs/promises";
 import { NextApiResponse } from "next";
+import { join } from "path";
+import { TypedRequestBody } from "types/types";
 
 export default async function handle(
   req: TypedRequestBody<{

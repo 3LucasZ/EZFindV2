@@ -1,8 +1,6 @@
-import { SmallAddIcon, SmallCloseIcon } from "@chakra-ui/icons";
-import { AspectRatio, Icon, IconButton, useDisclosure } from "@chakra-ui/react";
+import { Icon, useDisclosure } from "@chakra-ui/react";
 import ConfirmActionModal from "components/Main/ConfirmActionModal";
-import { MouseEventHandler } from "react";
-import { FiHome, FiMinus, FiPlus, FiX } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 
 type AddRemoveButtonProps = {
   mode: number;

@@ -1,27 +1,27 @@
+import { GroupProps } from "@/db";
 import {
-  Text,
+  Box,
   Button,
   Center,
+  Image as ChImage,
+  Flex,
   Heading,
+  Link,
   SimpleGrid,
   Stack,
-  Image as ChImage,
-  Box,
-  Flex,
+  Text,
   useToast,
-  Link,
 } from "@chakra-ui/react";
+import { Select } from "chakra-react-select";
+import Layout from "components/Layout/MainLayout";
 import { GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
 import { useQRCode } from "next-qrcode";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { Select } from "chakra-react-select";
-import Layout from "components/Layout/MainLayout";
-import prisma from "services/prisma";
-import { useSession } from "next-auth/react";
 import { fixate, genXML } from "services/genXML";
+import prisma from "services/prisma";
 import { getGroupPerm } from "services/utils";
-import { GroupProps } from "@/db";
 
 type PageProps = {
   url: string;

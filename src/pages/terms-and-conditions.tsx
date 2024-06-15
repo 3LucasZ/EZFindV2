@@ -1,10 +1,10 @@
 import {
-  Heading,
-  Text,
-  Link,
-  UnorderedList,
-  ListItem,
   Box,
+  Heading,
+  Link,
+  ListItem,
+  Text,
+  UnorderedList,
 } from "@chakra-ui/react";
 export default function Home() {
   return (

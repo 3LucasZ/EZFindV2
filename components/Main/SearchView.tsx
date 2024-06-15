@@ -2,7 +2,6 @@ import {
   Box,
   Center,
   Checkbox,
-  Divider,
   Flex,
   Icon,
   Input,
@@ -11,7 +10,7 @@ import {
   SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { FiSearch } from "react-icons/fi";
 

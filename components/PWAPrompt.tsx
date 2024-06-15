@@ -1,6 +1,6 @@
 import { Box, Icon, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FiPlusSquare, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import { IoShareOutline } from "react-icons/io5";
 
 export default function PWAPrompt() {

@@ -1,7 +1,7 @@
 import {
-  Heading,
-  Button,
   Box,
+  Button,
+  Heading,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";

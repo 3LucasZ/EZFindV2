@@ -1,5 +1,4 @@
-import { Heading, Button, Box, Text } from "@chakra-ui/react";
-import Router from "next/router";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 type PageProps = {
   errorCode?: string;

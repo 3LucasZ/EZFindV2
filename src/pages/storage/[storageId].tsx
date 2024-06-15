@@ -1,3 +1,5 @@
+import { GroupProps } from "@/db";
+import { Icon } from "@chakra-ui/icons";
 import {
   ButtonGroup,
   Center,
@@ -6,32 +8,25 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { DeleteIcon, Icon } from "@chakra-ui/icons";
-import { SlPrinter } from "react-icons/sl";
-import { ItemProps } from "types/db";
-import { GetServerSideProps } from "next";
-import { StorageProps } from "types/db";
-import ConfirmActionModal from "components/Main/ConfirmActionModal";
-import Router from "next/router";
-import Layout from "components/Layout/MainLayout";
-import SearchView from "components/Main/SearchView";
-import { useSession } from "next-auth/react";
-import prisma from "services/prisma";
-import { useEffect, useState } from "react";
-import { ItemStorageRelationProps } from "types/db";
-import React from "react";
-import { poster } from "services/poster";
-import { IoImageOutline } from "react-icons/io5";
-import ImageModal from "components/Main/ImageModal";
-import EditableTitle from "components/Composable/EditableTitle";
 import EditableSubtitle from "components/Composable/EditableSubtitle";
-import { GroupProps } from "@/db";
-import ShortSearchWidget from "components/Widget/ItemStorageWidget";
+import EditableTitle from "components/Composable/EditableTitle";
 import { EditFAB } from "components/Layout/FAB/EditFAB";
-import { cloneItemStorageRelationProps } from "services/clone";
-import { getGroupPerm } from "services/utils";
-import { blueBtn, orangeBtn, redBtn, responsivePx } from "services/constants";
+import Layout from "components/Layout/MainLayout";
+import ConfirmActionModal from "components/Main/ConfirmActionModal";
+import ImageModal from "components/Main/ImageModal";
+import SearchView from "components/Main/SearchView";
+import ShortSearchWidget from "components/Widget/ItemStorageWidget";
+import { GetServerSideProps } from "next";
+import { useSession } from "next-auth/react";
+import Router from "next/router";
+import React, { useEffect, useState } from "react";
 import { FiImage, FiPrinter, FiTrash2 } from "react-icons/fi";
+import { cloneItemStorageRelationProps } from "services/clone";
+import { blueBtn, orangeBtn, redBtn, responsivePx } from "services/constants";
+import { poster } from "services/poster";
+import prisma from "services/prisma";
+import { getGroupPerm } from "services/utils";
+import { ItemProps, ItemStorageRelationProps, StorageProps } from "types/db";
 
 type PageProps = {
   storage: StorageProps;

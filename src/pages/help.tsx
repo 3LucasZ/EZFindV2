@@ -13,10 +13,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FAQHeader, FAQItem } from "components/Layout/FAQ";
+import Layout from "components/Layout/MainLayout";
+import Router from "next/router";
 import { useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
-import Router from "next/router";
-import Layout from "components/Layout/MainLayout";
 
 export default function Home() {
   //--copy paste on every page--

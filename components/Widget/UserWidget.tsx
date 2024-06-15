@@ -1,13 +1,11 @@
 import {
+  AspectRatio,
   Box,
   HStack,
   Image,
-  Text,
-  AspectRatio,
-  Stack,
   Select,
-  useDisclosure,
   useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import AddRemoveButton from "components/Composable/AddRemoveButton";

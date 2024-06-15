@@ -1,9 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import prisma from "services/prisma";
 import { prismaErrHandler } from "services/prismaErrHandler";
-import { authOptions } from "./auth/[...nextauth]";
 import { TypedRequestBody } from "types/types";
+import { authOptions } from "./auth/[...nextauth]";
 
 export default async function handle(
   req: TypedRequestBody<{}>,

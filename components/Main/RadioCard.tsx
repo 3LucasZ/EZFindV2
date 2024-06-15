@@ -1,13 +1,12 @@
 import {
   Box,
+  HStack,
   Icon,
+  Radio,
+  Show,
+  Text,
   UseRadioProps,
   useRadio,
-  Text,
-  HStack,
-  Radio,
-  Tooltip,
-  Show,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 

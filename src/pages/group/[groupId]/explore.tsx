@@ -1,35 +1,29 @@
 import {
   AbsoluteCenter,
   Box,
-  Container,
   Divider,
   Flex,
   HStack,
   Icon,
   SimpleGrid,
-  VStack,
-  useToast,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { GetServerSideProps } from "next";
-import Router from "next/router";
 import Layout from "components/Layout/MainLayout";
+import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import prisma from "services/prisma";
 
-import { useEffect, useState } from "react";
-import React from "react";
-import AutoResizeTextarea from "components/Composable/AutoResizeTextarea";
-import { poster } from "services/poster";
 import { GroupProps } from "@/db";
+import EditableSubtitle from "components/Composable/EditableSubtitle";
 import EditableTitle from "components/Composable/EditableTitle";
 import Carousel from "components/Main/Carousel";
-import EditableSubtitle from "components/Composable/EditableSubtitle";
 import { CustomStat } from "components/Main/CustomStat";
+import { User } from "next-auth";
+import { useEffect } from "react";
 import { FiCompass, FiPackage, FiTool, FiUsers } from "react-icons/fi";
 import { responsivePx } from "services/constants";
 import { getGroupPerm } from "services/utils";
-import { User } from "next-auth";
 
 type PageProps = {
   group: GroupProps;
