@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Admin from "archive/old_UserWidget";
-import { UserProps } from "types/db";
+
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import Router from "next/router";
@@ -24,9 +24,10 @@ import { poster } from "services/poster";
 
 import { responsiveHeaderFontSize, responsivePx } from "services/constants";
 import UserWidget from "components/Widget/UserWidget";
+import { User } from "next-auth";
 
 type PageProps = {
-  users: UserProps[];
+  users: User[];
 };
 export default function ManageAdmin({ users }: PageProps) {
   //--copy paste on every page--
