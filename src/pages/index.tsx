@@ -28,7 +28,6 @@ export default function Home({ groups }: PageProps) {
   }, []);
   const me = session?.user;
   const toaster = useToast();
-  console.log("admin", me?.isAdmin);
   //--ret--
   return (
     <Layout

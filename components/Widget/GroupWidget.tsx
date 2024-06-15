@@ -44,11 +44,11 @@ export default function GroupWidget({ group, authorized }: GroupWidgetProps) {
     >
       <CardBody p={0}>
         <AspectRatio ratio={1} bgGradient={genGradient(group.name)}>
-          <Image
-            src={`/api/${group.image}`}
-            alt={group.description}
-            hidden={group.image!.length < 5}
-          />
+          {group.image!.length > 5 ? (
+            <Image src={`/api/${group.image}`} alt={group.description} />
+          ) : (
+            <></>
+          )}
         </AspectRatio>
         <Stack spacing="3" py="1" px="1">
           <Text fontSize="md" textAlign={"center"} noOfLines={2} h="47px">

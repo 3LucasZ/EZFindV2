@@ -33,12 +33,12 @@ type UserWidgetProps = {
 
 export default function UserWidget(props: UserWidgetProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(
-    "perm, inverted, isEdit",
-    props.perm,
-    props.inverted,
-    props.isEdit
-  );
+  // console.log(
+  //   "perm, inverted, isEdit",
+  //   props.perm,
+  //   props.inverted,
+  //   props.isEdit
+  // );
   return (
     <>
       <Box

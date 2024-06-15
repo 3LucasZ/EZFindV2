@@ -83,7 +83,7 @@ export default function ManageAdmin({ users }: PageProps) {
                     toaster
                   );
                   if (res.status == 200) {
-                    Router.reload();
+                    Router.push("/manage-admin");
                   }
                 }}
                 handleRemove={async () => {
@@ -94,7 +94,7 @@ export default function ManageAdmin({ users }: PageProps) {
                     toaster
                   );
                   if (res.status == 200) {
-                    Router.reload();
+                    Router.push("/manage-admin");
                   }
                 }}
               />

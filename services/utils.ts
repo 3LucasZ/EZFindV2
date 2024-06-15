@@ -20,8 +20,8 @@ export function getGroupPerm(user: User | undefined, group: GroupProps) {
   const relation = user?.groupRelations?.find(
     (groupRelation) => groupRelation.groupId == group.id
   );
-  console.log("isAdmin", isAdmin);
-  console.log("minPerm", group.minPerm);
+  // console.log("isAdmin", isAdmin);
+  // console.log("minPerm", group.minPerm);
   const groupPerm = isAdmin
     ? 2
     : Math.max(group.minPerm, relation?.perm ? relation.perm : -1);

@@ -150,7 +150,7 @@ export default function ItemPage({ item, storages, group }: PageProps) {
               {...orangeBtn}
               icon={<Icon as={FiShoppingCart} boxSize={5} />}
               onClick={onOpenLink}
-              isDisabled={item.link == ""}
+              pointerEvents={item.link == "" ? "none" : "auto"}
             />
             <ConfirmActionModal
               isOpen={isOpenLink}

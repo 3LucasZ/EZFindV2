@@ -124,7 +124,8 @@ export default function GroupPage({ group, users }: PageProps) {
         const body = { id: group.id, image: imageUrl };
         const res = await poster("/api/update-group-image", body, toaster);
         if (res.status == 200) {
-          Router.reload();
+          Router.push(`/group/${group.id}/settings`);
+          onCloseViewer();
         }
       }
     }
@@ -173,9 +174,12 @@ export default function GroupPage({ group, users }: PageProps) {
       newMinPerm,
     };
     const res = await poster("/api/update-group-full", body, toaster);
-    if (res.status == 200) Router.reload();
+    if (res.status == 200) {
+      Router.push(`/group/${group.id}/settings`);
+      setIsEdit(false);
+    }
   };
-  console.log(users);
+  // console.log(users);
 
   //--ret--
   return (
